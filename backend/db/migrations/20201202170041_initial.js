@@ -1,4 +1,4 @@
-//add, remove table lugar, item, item_inventario, empleado, rol, compañia, telefono
+//add, remove table lugar, item, item_inventario, empleado, rol, empresa, telefono
 //import { tableName, role } from '../../src/constants/String';
 const { tableNames, role } = require('../../src/constants/string');
 const {
@@ -13,43 +13,79 @@ const {
  * @param {import('knex')} knex
  */
 exports.up = async function (knex) {
-    await knex.schema.createTable(tableNames.telefono, table => {
-        table.increments();
-        table.string('telefono_1').notNullable();
-        table.string('telefono_2')
-        addDefaultColumns(table);
-    })
-    await knex.schema.createTable(tableNames.compañia, table => {
-        table.increments().notNullable();
+    await Promise.all(
+        [
+            knex.schema.createTable(tableNames.cheque, table => {
+                createTableIncrementsStringNotNullable(table, 'name');
+                table.integer('cheque_num', 20).notNullable();
+                table.string('banco', 20).notNullable();
+                table.float('cantidad').notNullable();
+                addDefaultColumns(table);
+            }),
+            knex.schema.createTable(tableNames.telefono, table => {
+                table.increments();
+                table.string('telefono_1').notNullable();
+                table.string('telefono_2')
+                addDefaultColumns(table);
+            }),
+            knex.schema.createTable(tableNames.lugar, table => {
+                createTableIncrementsStringNotNullable(table, 'nombre');
+                addDefaultColumns(table);
+            })
+        ]);
+
+    await knex.schema.createTable(tableNames.empresa, table => {
+        createTableIncrementsStringNotNullable(table, 'nombre');
         references(table, tableNames.telefono);
-        table.string('nombre').notNullable();
         addEmail(table)
         addUrl(table, 'website_url');
-        addUrl(table, 'logo_url')
+        addUrl(table, 'logo_url');
+        table.string('direccion');
         addDefaultColumns(table);
     })
-    await knex.schema.createTable(tableNames.empleado, table => {
+
+    await knex.schema.createTable(tableNames.proveedor, table => {
         createTableIncrementsStringNotNullable(table, 'nombre');
         references(table, tableNames.telefono);
-        references(table, tableNames.compañia);
         addEmail(table);
-        addUrl(table, 'image_url');
-        table.string('password', 127).notNullable();
-        table.enum('rol', Object.values(role))
-        addDefaultColumns(table);
-    });
-    await knex.schema.createTable(tableNames.lugar, table => {
-        createTableIncrementsStringNotNullable(table, 'nombre');
+        addUrl(table, 'website_url'),
+            addUrl(table, 'logo_url');
+        table.string('country', 50);
+        table.string('direccion');
         addDefaultColumns(table);
     })
+
+    await knex.schema.createTable(tableNames.empresa_cliente, table => {
+        createTableIncrementsStringNotNullable(table, 'nombre');
+        references(table, tableNames.telefono);
+        addEmail(table)
+        addUrl(table, 'website_url');
+        addUrl(table, 'logo_url');
+        table.string('direccion');
+        addDefaultColumns(table);
+    })
+
+    await knex.schema.createTable(tableNames.precio, table => {
+        table.increments().notNullable();
+        table.float('precio').unsigned();
+        table.boolean('oferta');
+        table.float('oferta_precio').unsigned();
+        table.float('costo').unsigned();
+        table.float('precio_min').unsigned();
+        references(table, tableNames.proveedor);
+        addDefaultColumns(table);
+    })
+
     await knex.schema.createTable(tableNames.item, table => {
         createTableIncrementsStringNotNullable(table, 'nombre');
         table.string('descripcion');
         table.string('barcode');
-        table.string('codigo_item').notNullable();
+        table.string('sku', 12).unique();
         addUrl(table, 'image_url');
-        table.float('precio').notNullable();
+        references(table, tableNames.precio);
+        addDefaultColumns(table);
     })
+
     await knex.schema.createTable(tableNames.item_inventario, table => {
         references(table, tableNames.item, true, '', true);
         /*table.integer(tableNames.item + '_id')
@@ -62,28 +98,36 @@ exports.up = async function (knex) {
         references(table, tableNames.lugar);
         table.string('basura').unsigned();
         table.string('color');
+        addDefaultColumns(table);
     })
+
+    await knex.schema.createTable(tableNames.empleado, table => {
+        createTableIncrementsStringNotNullable(table, 'nombre');
+        references(table, tableNames.telefono);
+        references(table, tableNames.empresa);
+        addEmail(table);
+        addUrl(table, 'image_url');
+        table.string('password', 127).notNullable();
+        table.enum('rol', Object.values(role))
+        addDefaultColumns(table);
+    });
+
 
 };
 
 exports.down = async function (knex) {
+    await knex.schema.dropTableIfExists(tableNames.empleado);
     await knex.schema.dropTableIfExists(tableNames.item_inventario);
     await knex.schema.dropTableIfExists(tableNames.item);
-    await knex.schema.dropTableIfExists(tableNames.lugar);
-    await knex.schema.dropTableIfExists(tableNames.empleado);
-    await knex.schema.dropTableIfExists(tableNames.compañia);
-    await knex.schema.dropTableIfExists(tableNames.telefono);
-    /*     await Promise.all(
-            [
-                tableNames.item_inventario,
-                tableNames.item,
-                tableNames.lugar,
-                tableNames.empleado,
-                tableNames.compañia,
-                tableNames.telefono,
-            ].map(tableName => {
-                console.log('dropping table ', tableName);
-                knex.schema.dropTableIfExists(tableName)
-            })
-        ); */
+    await knex.schema.dropTableIfExists(tableNames.precio);
+    await knex.schema.dropTableIfExists(tableNames.empresa_cliente);
+    await knex.schema.dropTableIfExists(tableNames.proveedor);
+    await knex.schema.dropTableIfExists(tableNames.empresa);
+    await Promise.all(
+        [
+            knex.schema.dropTableIfExists(tableNames.lugar),
+            knex.schema.dropTableIfExists(tableNames.telefono),
+            knex.schema.dropTableIfExists(tableNames.cheque)
+        ]
+    );
 };
