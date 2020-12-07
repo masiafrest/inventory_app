@@ -1,4 +1,4 @@
-//add, remove table lugar, item, item_inventario, empleado, rol, empresa, telefono
+//add, remove table lugar, item, item_inventario, empleado, rol, empresa, 
 //import { tableName, role } from '../../src/constants/String';
 const { tableNames, role } = require('../../src/constants/string');
 const {
@@ -7,7 +7,8 @@ const {
     addUrl,
     createTableOneStringColumn,
     createTableIncrementsStringNotNullable,
-    references
+    references,
+    addTwoTelephoneColumns
 } = require('../../src/lib/tableUtils')
 /**
  * @param {import('knex')} knex
@@ -22,48 +23,42 @@ exports.up = async function (knex) {
                 table.float('cantidad').notNullable();
                 addDefaultColumns(table);
             }),
-            knex.schema.createTable(tableNames.telefono, table => {
-                table.increments();
-                table.string('telefono_1').notNullable();
-                table.string('telefono_2')
-                addDefaultColumns(table);
-            }),
             knex.schema.createTable(tableNames.lugar, table => {
                 createTableIncrementsStringNotNullable(table, 'nombre');
                 addDefaultColumns(table);
+            }),
+            knex.schema.createTable(tableNames.empresa, table => {
+                createTableIncrementsStringNotNullable(table, 'nombre');
+                addEmail(table)
+                addUrl(table, 'website_url');
+                addUrl(table, 'logo_url');
+                table.string('direccion');
+                addDefaultColumns(table);
+                addTwoTelephoneColumns(table);
+            }),
+
+            knex.schema.createTable(tableNames.proveedor, table => {
+                createTableIncrementsStringNotNullable(table, 'nombre');
+                addEmail(table);
+                addUrl(table, 'website_url'),
+                    addUrl(table, 'logo_url');
+                table.string('country', 50);
+                table.string('direccion');
+                addDefaultColumns(table);
+                addTwoTelephoneColumns(table);
+            }),
+
+            knex.schema.createTable(tableNames.empresa_cliente, table => {
+                createTableIncrementsStringNotNullable(table, 'nombre');
+                addEmail(table)
+                addUrl(table, 'website_url');
+                addUrl(table, 'logo_url');
+                table.string('direccion');
+                addDefaultColumns(table);
+                addTwoTelephoneColumns(table);
             })
+
         ]);
-
-    await knex.schema.createTable(tableNames.empresa, table => {
-        createTableIncrementsStringNotNullable(table, 'nombre');
-        references(table, tableNames.telefono);
-        addEmail(table)
-        addUrl(table, 'website_url');
-        addUrl(table, 'logo_url');
-        table.string('direccion');
-        addDefaultColumns(table);
-    })
-
-    await knex.schema.createTable(tableNames.proveedor, table => {
-        createTableIncrementsStringNotNullable(table, 'nombre');
-        references(table, tableNames.telefono);
-        addEmail(table);
-        addUrl(table, 'website_url'),
-            addUrl(table, 'logo_url');
-        table.string('country', 50);
-        table.string('direccion');
-        addDefaultColumns(table);
-    })
-
-    await knex.schema.createTable(tableNames.empresa_cliente, table => {
-        createTableIncrementsStringNotNullable(table, 'nombre');
-        references(table, tableNames.telefono);
-        addEmail(table)
-        addUrl(table, 'website_url');
-        addUrl(table, 'logo_url');
-        table.string('direccion');
-        addDefaultColumns(table);
-    })
 
     await knex.schema.createTable(tableNames.precio, table => {
         table.increments().notNullable();
@@ -103,13 +98,13 @@ exports.up = async function (knex) {
 
     await knex.schema.createTable(tableNames.empleado, table => {
         createTableIncrementsStringNotNullable(table, 'nombre');
-        references(table, tableNames.telefono);
         references(table, tableNames.empresa);
         addEmail(table);
         addUrl(table, 'image_url');
         table.string('password', 127).notNullable();
         table.enum('rol', Object.values(role))
         addDefaultColumns(table);
+        addTwoTelephoneColumns(table);
     });
 
 
@@ -126,7 +121,6 @@ exports.down = async function (knex) {
     await Promise.all(
         [
             knex.schema.dropTableIfExists(tableNames.lugar),
-            knex.schema.dropTableIfExists(tableNames.telefono),
             knex.schema.dropTableIfExists(tableNames.cheque)
         ]
     );

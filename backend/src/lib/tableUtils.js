@@ -5,6 +5,11 @@ function addDefaultColumns(table) {
     table.datetime('deleted_at');
 }
 
+function addTwoTelephoneColumns(table) {
+    table.string('telefono', 15).unique();
+    table.string('telefono_2', 15).unique();
+}
+
 function references(table, tableName, notNullable = true, columnName = '', isPrimary = false) {
     const definition = table
         .integer(`${columnName || tableName}_id`)
@@ -50,5 +55,6 @@ module.exports = {
     addEmail,
     addDefaultColumns,
     references,
-    createTableIncrementsStringNotNullable
+    createTableIncrementsStringNotNullable,
+    addTwoTelephoneColumns
 }

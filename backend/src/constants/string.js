@@ -1,14 +1,13 @@
 const tableNames = {
     cheque: 'cheque',
-    telefono: 'telefono',
     lugar: 'lugar',
-    empresa: 'empresa', //dpnd on telefono.id
-    proveedor: 'proveedor',//dpdn on telefono.id
-    empresa_cliente: 'empresa_cliente',//dpnd on telefono.id
+    empresa: 'empresa',
+    proveedor: 'proveedor',
+    empresa_cliente: 'empresa_cliente',
     precio: 'precio',//dpnd on proveedor.id
     item: 'item',//dpnd on precio.id
     item_inventario: 'item_inventario',//dpnd on item.id, lugar.id
-    empleado: 'empleado',//dpnd on telefono.id, empresa.id
+    empleado: 'empleado',//dpnd on empresa.id
     //
     cliente_empleado: 'cliente_empleado',//dpnd on empresa_cliente.id, empleado.id
     cotizacion: 'cotizacion',//dpnd on cliente_empleado.id
