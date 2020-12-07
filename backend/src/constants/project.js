@@ -1,3 +1,3 @@
 const message = '🐱‍🚀  hello inventario celloo 🐱‍🚀';
 
-module.export = {message}
+module.exports = { message }

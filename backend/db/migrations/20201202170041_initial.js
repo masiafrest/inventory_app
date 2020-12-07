@@ -1,4 +1,4 @@
-//add, remove table lugar, item, item_inventario, empleado, rol, empresa, 
+//add, remove table lugar, item, item_inventario, usuario, rol, empresa, 
 //import { tableName, role } from '../../src/constants/String';
 const { tableNames, role } = require('../../src/constants/string');
 const {
@@ -27,7 +27,7 @@ exports.up = async function (knex) {
                 createTableIncrementsStringNotNullable(table, 'nombre');
                 addDefaultColumns(table);
             }),
-            knex.schema.createTable(tableNames.empresa, table => {
+            knex.schema.createTable(tableNames.empresa_owner, table => {
                 createTableIncrementsStringNotNullable(table, 'nombre');
                 addEmail(table)
                 addUrl(table, 'website_url');
@@ -96,9 +96,9 @@ exports.up = async function (knex) {
         addDefaultColumns(table);
     })
 
-    await knex.schema.createTable(tableNames.empleado, table => {
+    await knex.schema.createTable(tableNames.usuario, table => {
         createTableIncrementsStringNotNullable(table, 'nombre');
-        references(table, tableNames.empresa);
+        references(table, tableNames.empresa_owner);
         addEmail(table);
         addUrl(table, 'image_url');
         table.string('password', 127).notNullable();
@@ -111,13 +111,13 @@ exports.up = async function (knex) {
 };
 
 exports.down = async function (knex) {
-    await knex.schema.dropTableIfExists(tableNames.empleado);
+    await knex.schema.dropTableIfExists(tableNames.usuario);
     await knex.schema.dropTableIfExists(tableNames.item_inventario);
     await knex.schema.dropTableIfExists(tableNames.item);
     await knex.schema.dropTableIfExists(tableNames.precio);
     await knex.schema.dropTableIfExists(tableNames.empresa_cliente);
     await knex.schema.dropTableIfExists(tableNames.proveedor);
-    await knex.schema.dropTableIfExists(tableNames.empresa);
+    await knex.schema.dropTableIfExists(tableNames.empresa_owner);
     await Promise.all(
         [
             knex.schema.dropTableIfExists(tableNames.lugar),

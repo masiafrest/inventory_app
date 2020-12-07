@@ -1,4 +1,4 @@
-const { tableNames, tipo_recibo, tipo_pago } = require('../../src/constants/string');
+const { tableNames } = require('../../src/constants/string');
 const {
     addDefaultColumns,
     addEmail,
@@ -15,7 +15,7 @@ exports.up = async function (knex) {
     await knex.schema.createTable(tableNames.cliente_empleado, table => {
         table.increments().notNullable();
         references(table, tableNames.empresa_cliente);
-        references(table, tableNames.empleado);
+        references(table, tableNames.usuario);
         addDefaultColumns(table);
     })
     await knex.schema.createTable(tableNames.cotizacion, table => {
@@ -97,14 +97,14 @@ exports.up = async function (knex) {
     await knex.schema.createTable(tableNames.item_inventario_log, table => {
         references(table, tableNames.item, true, '', true);
         references(table, tableNames.proveedor, false)
-        references(table, tableNames.empleado);
+        references(table, tableNames.usuario);
         table.enum('evento', ['transferencia', 'venta', 'garantia', 'devolucion', 'nota credito']).notNullable();
         table.integer('ajuste').notNullable();
     })
     await knex.schema.createTable(tableNames.precio_log, table => {
         table.increments().notNullable();
         references(table, tableNames.precio);
-        references(table, tableNames.empleado);
+        references(table, tableNames.usuario);
         references(table, tableNames.proveedor, false)
         table.float('precio_viejo');
         table.float('costo_viejo');
