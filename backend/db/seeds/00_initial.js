@@ -1,7 +1,8 @@
 const { tableNames } = require('../../src/constants/string');
-const { empresa, empresa_clientes, proveedor } = require('../../db/source/data');
+const { empresa, empresa_clientes, proveedor, usuario } = require('../../db/source/data');
 exports.seed = async (knex) => {
   // Deletes ALL existing entries
+  await Promise.all(Object.keys(tableNames).map(name => knex(name).del()))
   //await knex('table_name').del()
 
   // Inserts seed entries

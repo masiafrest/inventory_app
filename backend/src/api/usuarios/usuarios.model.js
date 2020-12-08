@@ -1,7 +1,6 @@
 const { Model } = require('objection');
 
 const { tableNames } = require('../../constants/string');
-const { tableName } = require('../empresa_owner/empresa_owner.model');
 
 class Usuario extends Model {
     static get tableName() {
@@ -11,7 +10,7 @@ class Usuario extends Model {
     static get relationMappings() {
         const Empresa_owner = require('../empresa_owner/empresa_owner.model');
         return {
-            usuarios: {
+            empresas: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Empresa_owner,
                 join: {

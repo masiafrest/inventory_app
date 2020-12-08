@@ -31,8 +31,21 @@ const proveedor = [
     }
 
 ]
+
+const usuario = [
+    {
+        nombre: 'sonia',
+        password: 'aA1@123',
+    },
+    {
+        nombre: 'hello',
+        password: 'aA1@123',
+    }
+]
+
 module.exports = {
     empresa,
     empresa_clientes,
-    proveedor
+    proveedor,
+    usuario
 }
