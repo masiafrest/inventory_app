@@ -1,7 +1,5 @@
-const { Model } = require("objection")
-
 const { Model } = require('objection');
-const { tableNames } = require('../constants/string');
+const { tableNames } = require('../../constants/string');
 
 class Recibo_encabezado extends Model {
     static get tableName() {
@@ -9,8 +7,8 @@ class Recibo_encabezado extends Model {
     }
 
     static get relationMappings() {
-        const Usuario = require('./usuarios/usuarios.model');
-        const Empresa_cliente = require('./empresa_clientes/empresa_clientes.model');
+        const Usuario = require('../usuarios/usuarios.model');
+        const Empresa_cliente = require('../empresa_clientes/empresa_clientes.model');
 
         return {
             vendedores: {
