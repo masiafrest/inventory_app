@@ -29,18 +29,16 @@ const errorMessages = {
  * @param {import('objection')} objection 
  */
 router.post('/signup', async (req, res, next) => {
-    const { nombre, password } = req.body;
+    const { nombre, password, rol } = req.body;
     try {
         const crearUsuario = {
             nombre,
             password,
-            //empresa_owner_id: 10
+            rol
         }
-        console.log(crearUsuario)
         await yupSchema.validate(crearUsuario, {
             abortEarly: false
         })
-        // TODO check is user exist
         const existingUser = await Usuario.query().where({ nombre }).first();
         console.log('this is auth existingUser', existingUser)
         if (existingUser) {
@@ -48,37 +46,25 @@ router.post('/signup', async (req, res, next) => {
             res.status(403);
             throw error;
         }
-        console.log('hashing password');
         const hashedPassword = await bcrypt.hash(password, 12);
-        // TODO insert user
-        //const cello = await Empresa_owner.query().where('nombre', 'cello');
-        //console.log('cello: ', cello)
-        console.log('inserting...')
-        const insertedUserRelational = await Empresa_owner.query().insertGraph({
-            nombre: 'cello',
-            usuarios: [
-                {
-                    nombre,
-                    password: hashedPassword,
-                }
-            ]
-        })
-        /*         const insertedUser = await Usuario.query().insert({
-                    nombre,
-                    password: hashedPassword
-                }) */
-        console.log('insertedUserRelational ', insertedUserRelational)
-        //build token
-        const payload = {
-            id: insertedUserRelational.id,
-            token,
-        }
-        console.log('signing token payload')
-        const token = await jwt.sign(payload);
-        console.log('payload signed')
-        res.json({
-            user: payload,
-            token
+        const cello = await Empresa_owner.query().where('nombre', 'cello').first();
+
+        await Empresa_owner.transaction(async trx => {
+            const insertedUser = await Empresa_owner.relatedQuery('usuarios', trx).for(cello.id).insert({ nombre, password: hashedPassword, rol })
+            console.log('insertedUser: ', insertedUser)
+            console.log('create payload obj')
+            const payload = {
+                id: insertedUser.id,
+                nombre,
+            }
+            console.log('payload', payload)
+            console.log('signing token payload')
+            const token = await jwt.sign(payload);
+            console.log('payload signed')
+            return res.json({
+                user: payload,
+                token
+            })
         })
     } catch (err) {
         next(err);
@@ -87,10 +73,40 @@ router.post('/signup', async (req, res, next) => {
 
 router.get('/signin', async (req, res, next) => {
     const { nombre, password } = req.body
-    console.log('sign innnn');
-    const usuarios = await Usuario.query();
-    res.json({
-        usuarios
-    })
+    try {
+        await yupSchema.validate({
+            nombre,
+            password
+        },
+            {
+                abortEarly: false,
+            });
+
+        const usuario = await Usuario.query().where({ nombre }).first();
+        if (!usuario) {
+            const error = new Error(errorMessages.invalidLogin);
+            res.status(403);
+            throw error;
+        }
+        const validPassword = await bcrypt.compare(password, usuario.password);
+        if (!validPassword) {
+            const error = new Error(errorMessages.invalidLogin);
+            res.status(403);
+            throw error;
+        }
+        const payload = {
+            id: usuario.id,
+            nombre: usuario.nombre,
+            rol: usuario.rol
+        }
+        const token = await jwt.sign(payload);
+        res.json({
+            usuario: payload,
+            token
+        })
+
+    } catch (err) {
+        next(err);
+    }
 })
 module.exports = router;

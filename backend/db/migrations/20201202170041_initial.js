@@ -1,5 +1,3 @@
-//add, remove table lugar, item, item_inventario, usuario, rol, empresa, 
-//import { tableName, role } from '../../src/constants/String';
 const { tableNames, role } = require('../../src/constants/string');
 const {
     addDefaultColumns,
