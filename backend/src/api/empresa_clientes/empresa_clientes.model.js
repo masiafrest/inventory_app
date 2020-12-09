@@ -1,7 +1,7 @@
 const { Model } = require('objection');
 const { tableNames } = require('../../constants/string');
 
-class Empresa_clientes extends Model {
+class Empresa_cliente extends Model {
     static get tableName() {
         return tableNames.empresa_clientes;
     }
@@ -22,4 +22,4 @@ class Empresa_clientes extends Model {
     }
 }
 
-module.exports = Empresa_clientes;
+module.exports = Empresa_cliente;
