@@ -10,7 +10,7 @@ class Usuario extends Model {
     static get relationMappings() {
         const Empresa_owner = require('../empresa_owner/empresa_owner.model');
         return {
-            empresas: {
+            empresa: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Empresa_owner,
                 join: {

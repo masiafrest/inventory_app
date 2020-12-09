@@ -9,13 +9,13 @@ const tableNames = {
     item_inventario: 'item_inventario',//dpnd on item.id, lugar.id
     usuario: 'usuario',//dpnd on empresa.id
     //
-    cliente_empleado: 'cliente_empleado',//dpnd on empresa_cliente.id, empleado.id
-    cotizacion: 'cotizacion',//dpnd on cliente_empleado.id
-    garantia: 'garantia',//dpnd on cliente_empleado.id
-    nota_credito: 'nota_credito',//dpnd on cliente_empleado.id
-    devolucion: 'devolucion',//dpnd on  cliente_empleado.id
+    recibo_encabezado: 'recibo_encabezado',//dpnd on empresa_cliente.id, empleado.id
+    cotizacion: 'cotizacion',//dpnd on recibo_encabezado.id
+    garantia: 'garantia',//dpnd on recibo_encabezado.id
+    nota_credito: 'nota_credito',//dpnd on recibo_encabezado.id
+    devolucion: 'devolucion',//dpnd on  recibo_encabezado.id
     pago: 'pago', //dpnd on nota_credito.id, cheque.id, 
-    venta: 'venta',//dpnd on cliente_empleado.id, pago.id 
+    venta: 'venta',//dpnd on recibo_encabezado.id, pago.id 
     linea_venta_cotizacion: 'linea_venta_cotizacion',//dpnd on item.id, cotizacion.id || venta.id
     linea_garantia: 'linea_garantia',//dpnd on item.id, garantia.id, venta.id
     linea_nota_credito: 'linea_nota_credito',//dpnd on nota_credito.id, garantia.id, venta.id

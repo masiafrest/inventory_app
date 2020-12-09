@@ -12,33 +12,33 @@ const {
  * @param {import('knex')} knex
  */
 exports.up = async function (knex) {
-    await knex.schema.createTable(tableNames.cliente_empleado, table => {
+    await knex.schema.createTable(tableNames.recibo_encabezado, table => {
         table.increments().notNullable();
-        references(table, tableNames.empresa_cliente);
+        references(table, tableNames.recibo_encabezado);
         references(table, tableNames.usuario);
         addDefaultColumns(table);
     })
     await knex.schema.createTable(tableNames.cotizacion, table => {
         table.increments().notNullable();
-        references(table, tableNames.cliente_empleado);
+        references(table, tableNames.recibo_encabezado);
         table.float('total');
         table.float('sub_total');
         table.float('tax');
     })
     await knex.schema.createTable(tableNames.garantia, table => {
         table.increments().notNullable();
-        references(table, tableNames.cliente_empleado);
+        references(table, tableNames.recibo_encabezado);
         table.boolean('resuelto');
     })
 
     await knex.schema.createTable(tableNames.nota_credito, table => {
         table.increments().notNullable();
-        references(table, tableNames.cliente_empleado);
+        references(table, tableNames.recibo_encabezado);
         table.float('total');
     })
     await knex.schema.createTable(tableNames.devolucion, table => {
         table.increments().notNullable();
-        references(table, tableNames.cliente_empleado);
+        references(table, tableNames.recibo_encabezado);
         table.float('total');
     })
     await knex.schema.createTable(tableNames.pago, table => {
@@ -52,7 +52,7 @@ exports.up = async function (knex) {
     })
     await knex.schema.createTable(tableNames.venta, table => {
         table.increments().notNullable();
-        references(table, tableNames.cliente_empleado);
+        references(table, tableNames.recibo_encabezado);
         table.float('total');
         table.float('sub_total');
         table.float('tax');
@@ -127,7 +127,7 @@ exports.down = async function (knex) {
             tableNames.nota_credito,
             tableNames.garantia,
             tableNames.cotizacion,
-            tableNames.cliente_empleado,
+            tableNames.recibo_encabezado,
         ].map(tableName => knex.schema.dropTableIfExists(tableName))
     );
 };
