@@ -1,5 +1,5 @@
 const { Model } = require('objection');
-const { tableNames } = require('../../../constants/string');
+const { tableNames } = require('../../constants/string');
 
 class Linea_venta_cotizacion extends Model {
     static get tableName() {
@@ -7,9 +7,9 @@ class Linea_venta_cotizacion extends Model {
     }
 
     static get relationMappings() {
-        const Cotizacion = require('../../recibos/cotizaciones/cotizaciones.model');
-        const Item = require('../../items/items.model');
-        const Venta = require('../../recibos/ventas/ventas.model');
+        const Cotizacion = require('./cotizaciones/cotizaciones.model');
+        const Item = require('../items/items.model');
+        const Venta = require('./ventas/ventas.model');
         return {
             cotizacion: {
                 relation: Model.BelongsToOneRelation,

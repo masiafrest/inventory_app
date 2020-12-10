@@ -8,7 +8,7 @@ class Garantia extends Model {
 
     static get relationMappings() {
         const Recibo_encabezado = require('../../noRoute/recibo_encabezado.model');
-        const Linea_garantia = require('../lineas/garantias.model');
+        const Linea_garantia = require('../linea_garantias.model');
         return {
             encabezado: {
                 relation: Model.BelongsToOneRelation,
