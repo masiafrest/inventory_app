@@ -8,8 +8,6 @@ class Precio extends Model {
 
     static get relationMappings() {
         const Proveedor = require('../proveedors/proveedores.model');
-        const Usuario = require('../usuarios/usuarios.model');
-        const Empresa_cliente = require('../empresa_clientes/empresa_clientes.model');
 
         return {
             proveedor: {

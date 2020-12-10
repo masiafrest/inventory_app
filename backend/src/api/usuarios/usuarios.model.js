@@ -9,7 +9,7 @@ class Usuario extends Model {
 
     static get relationMappings() {
         const Empresa_owner = require('../empresa_owner/empresa_owner.model');
-        const Recibo_encabezado = require('../recibo_encabezado.model');
+        const Recibo_encabezado = require('../noRoute/recibo_encabezado.model');
         return {
             empresa: {
                 relation: Model.BelongsToOneRelation,
