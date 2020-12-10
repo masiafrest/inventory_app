@@ -8,6 +8,7 @@ class Item_inventario extends Model {
 
     static get relationMappings() {
         const Item = require('../items.model');
+        const Lugar = require('../../lugares/lugares.model');
         return {
             inventario: {
                 relation: Model.BelongsToOneRelation,
@@ -18,7 +19,7 @@ class Item_inventario extends Model {
                 }
             },
             lugares: {
-                relation: Model.HasManyRelation,
+                relation: Model.BelongsToOneRelation,
                 modelClass: Lugar,
                 join: {
                     from: `${tableNames.item_inventario}.${tableNames.lugar}_id`,

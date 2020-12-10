@@ -7,7 +7,6 @@ class Empresa_cliente extends Model {
     }
 
     static get relationMappings() {
-        const Usuario = require('../usuarios/usuarios.model')
         const Recibo_encabezado = require('../noRoute/recibo_encabezado.model');
         return {
             encabezados: {

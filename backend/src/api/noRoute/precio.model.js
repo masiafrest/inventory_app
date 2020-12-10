@@ -8,7 +8,7 @@ class Precio extends Model {
 
     static get relationMappings() {
         const Proveedor = require('../proveedors/proveedores.model');
-
+        const Item = require('../items/items.model');
         return {
             proveedor: {
                 relation: Model.BelongsToOneRelation,
@@ -24,14 +24,6 @@ class Precio extends Model {
                 join: {
                     from: `${tableNames.precio}.id`,
                     to: `${tableNames.item}.${tableNames.precio}_id`
-                }
-            },
-            precio_logs: {
-                relation: Model.HasManyRelation,
-                modelClass: Precio_log,
-                join: {
-                    from: `${tableNames.precio}.id`,
-                    to: `${tableNames.precio_log}.${tableNames.precio}_id`
                 }
             },
         }

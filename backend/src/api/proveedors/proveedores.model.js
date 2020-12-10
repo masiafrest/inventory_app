@@ -6,7 +6,8 @@ class Proveedor extends Model {
         return tableNames.proveedor;
     }
     static get relationMappings() {
-        //TODO add item_ivnetario_log, precio class
+        const Item_inventario_log = require('../logs/item/item_inventario_logs.model')
+        const Precio = require('../logs/precio/precio_logs.model');
         return {
             item_logs: {
                 relation: Model.HasManyRelation,

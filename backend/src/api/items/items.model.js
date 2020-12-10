@@ -8,6 +8,8 @@ class Item extends Model {
 
     static get relationMappings() {
         const Precio = require('../noRoute/precio.model');
+        const Item_inventario_Log = require('../logs/item/item_inventario_logs.model');
+        const Item_inventario = require('../items/item_inventarios/item_inventarios.model');
         return {
             precio: {
                 relation: Model.BelongsToOneRelation,
