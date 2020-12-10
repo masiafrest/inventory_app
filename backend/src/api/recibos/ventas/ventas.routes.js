@@ -1,13 +1,13 @@
 const express = require('express');
 
-const Cotizacion = require('./cotizaciones.model');
+const Venta = require('./ventas.model');
 
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     try {
-        const cotizaciones = await Cotizacion.query();
-        res.json(cotizaciones)
+        const ventas = await Venta.query();
+        res.json(ventas);
     } catch (err) {
         next(err);
     }
