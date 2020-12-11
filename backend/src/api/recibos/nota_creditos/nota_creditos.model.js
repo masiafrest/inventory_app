@@ -9,6 +9,7 @@ class Nota_credito extends Model {
     static get relationMappings() {
         const Recibo_encabezado = require('../../noRoute/recibo_encabezado.model');
         const Linea_nota_credito = require('../linea_nota_creditos.model');
+        const Pago = require('../../noRoute/pago.model');
         return {
             encabezado: {
                 relation: Model.BelongsToOneRelation,
@@ -24,6 +25,22 @@ class Nota_credito extends Model {
                 join: {
                     from: `${tableNames.nota_credito}.id`,
                     to: `${tableNames.linea_nota_credito}.${tableNames.nota_credito}_id`
+                }
+            },
+            pago: {
+                relation: Model.HasManyRelation,
+                modelClass: Pago,
+                join: {
+                    from: `${tableNames.nota_credito}.id`,
+                    to: `${tableNames.pago}.${tableNames.nota_credito}_id`
+                }
+            },
+            pago2: {
+                relation: Model.HasManyRelation,
+                modelClass: Pago,
+                join: {
+                    from: `${tableNames.nota_credito}.id`,
+                    to: `${tableNames.pago}.${tableNames.nota_credito}_2_id`
                 }
             },
         }
