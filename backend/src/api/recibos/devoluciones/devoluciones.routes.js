@@ -1,14 +1,14 @@
 const express = require('express');
 
-const Cotizacion = require('./cotizaciones.model');
+const Devolucion = require('./devoluciones.model');
 
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     try {
         //TODO probar agregando un recibo de encabezado y con lineas 
-        const cotizaciones = await Cotizacion.query();
-        res.json(cotizaciones)
+        const devoluciones = await Devolucion.query();
+        res.json(devoluciones)
     } catch (err) {
         next(err);
     }
