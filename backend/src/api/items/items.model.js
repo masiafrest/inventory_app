@@ -7,18 +7,10 @@ class Item extends Model {
     }
 
     static get relationMappings() {
-        const Precio = require('../noRoute/precio.model');
         const Item_inventario_Log = require('../logs/item/item_inventario_logs.model');
         const Item_inventario = require('../items/item_inventarios/item_inventarios.model');
+        const Categoria = require('../noRoute/categorias.model');
         return {
-            precio: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: Precio,
-                join: {
-                    from: `${tableNames.item}.${tableNames.precio}_id`,
-                    to: `${tableNames.precio}.id`
-                }
-            },
             item_logs: {
                 relation: Model.HasManyRelation,
                 modelClass: Item_inventario_Log,
@@ -35,6 +27,24 @@ class Item extends Model {
                     to: `${tableNames.item_inventario}.${tableNames.item}_id`
                 }
             },
+            categoria: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Categoria,
+                join:
+                {
+                    from: `${tableNames.item}.${tableNames.categoria}_id`,
+                    to: `${tableNames.categoria}.id`
+                }
+            },
+            categoria2: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Categoria,
+                join:
+                {
+                    from: `${tableNames.item}.${tableNames.categoria}_2_id`,
+                    to: `${tableNames.categoria}.id`
+                }
+            }
         }
     }
 }

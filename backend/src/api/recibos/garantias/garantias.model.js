@@ -7,7 +7,7 @@ class Garantia extends Model {
     }
 
     static get relationMappings() {
-        const Recibo_encabezado = require('../../noRoute/recibo_encabezado.model');
+        const Recibo_encabezado = require('../../noRoute/recibo_encabezados.model');
         const Linea_garantia = require('../linea_garantias.model');
         return {
             encabezado: {

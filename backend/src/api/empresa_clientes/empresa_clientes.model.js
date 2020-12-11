@@ -7,7 +7,7 @@ class Empresa_cliente extends Model {
     }
 
     static get relationMappings() {
-        const Recibo_encabezado = require('../noRoute/recibo_encabezado.model');
+        const Recibo_encabezado = require('../noRoute/recibo_encabezados.model');
         return {
             encabezados: {
                 relation: Model.HasManyRelation,

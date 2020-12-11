@@ -1,4 +1,5 @@
 const tableNames = {
+    categoria: 'categoria',
     cheque: 'cheque',
     lugar: 'lugar',
     empresa_owner: 'empresa_owner',
@@ -46,9 +47,15 @@ const role = {
     vendedor: 'vendedor'
 }
 
+const tipo_lugar = {
+    bodega: 'bodega',
+    tienda: 'tienda'
+}
+
 module.exports = {
     tableNames,
     tipo_recibo,
     tipo_pago,
     role,
+    tipo_lugar,
 } 

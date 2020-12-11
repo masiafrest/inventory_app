@@ -7,9 +7,9 @@ class Nota_credito extends Model {
     }
 
     static get relationMappings() {
-        const Recibo_encabezado = require('../../noRoute/recibo_encabezado.model');
+        const Recibo_encabezado = require('../../noRoute/recibo_encabezados.model');
         const Linea_nota_credito = require('../linea_nota_creditos.model');
-        const Pago = require('../../noRoute/pago.model');
+        const Pago = require('../../noRoute/pagos.model');
         return {
             encabezado: {
                 relation: Model.BelongsToOneRelation,

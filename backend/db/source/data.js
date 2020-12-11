@@ -36,16 +36,20 @@ const usuario = [
     {
         nombre: 'sonia',
         password: 'aA1@123',
+        rol: 'jefe'
     },
     {
         nombre: 'hello',
         password: 'aA1@123',
+        rol: 'vendedor'
     }
 ]
+
+
 
 module.exports = {
     empresa,
     empresa_clientes,
     proveedor,
-    usuario
+    usuario,
 }

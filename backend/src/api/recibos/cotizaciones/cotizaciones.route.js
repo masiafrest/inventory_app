@@ -6,11 +6,18 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     try {
-        //TODO probar agregando un recibo de encabezado y con lineas 
         const cotizaciones = await Cotizacion.query();
         res.json(cotizaciones)
     } catch (err) {
         next(err);
+    }
+})
+
+router.post('/', async (req, res, next) => {
+    try {
+
+    } catch (err) {
+
     }
 })
 

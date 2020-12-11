@@ -1,4 +1,5 @@
-const { tableNames, role } = require('../../src/constants/string');
+const { ref } = require('yup');
+const { tableNames, role, tipo_lugar } = require('../../src/constants/string');
 const {
     addDefaultColumns,
     addEmail,
@@ -14,15 +15,21 @@ const {
 exports.up = async function (knex) {
     await Promise.all(
         [
+            knex.schema.createTable(tableNames.categoria, table => {
+                createTableIncrementsStringNotNullable(table, 'nombre');
+                addDefaultColumns(table);
+            }),
             knex.schema.createTable(tableNames.cheque, table => {
-                createTableIncrementsStringNotNullable(table, 'name');
+                createTableIncrementsStringNotNullable(table, 'nombre');
                 table.integer('cheque_num', 20).notNullable();
                 table.string('banco', 20).notNullable();
                 table.float('cantidad').notNullable();
                 addDefaultColumns(table);
             }),
             knex.schema.createTable(tableNames.lugar, table => {
-                createTableIncrementsStringNotNullable(table, 'nombre');
+                createTableIncrementsStringNotNullable(table);
+                table.enum('tipo', Object.values(tipo_lugar));
+                table.string('dirrecion');
                 addDefaultColumns(table);
             }),
             knex.schema.createTable(tableNames.empresa_owner, table => {
@@ -65,32 +72,29 @@ exports.up = async function (knex) {
         table.float('oferta_precio').unsigned();
         table.float('costo').unsigned();
         table.float('precio_min').unsigned();
-        references(table, tableNames.proveedor);
+        references(table, tableNames.proveedor, false);
         addDefaultColumns(table);
     })
 
     await knex.schema.createTable(tableNames.item, table => {
         createTableIncrementsStringNotNullable(table, 'nombre');
         table.string('descripcion');
+        table.string('modelo');
         table.string('barcode');
         table.string('sku', 12).unique();
         addUrl(table, 'image_url');
-        references(table, tableNames.precio);
+        references(table, tableNames.categoria, true);
+        references(table, tableNames.categoria, false, `${tableNames.categoria}_2`)
         addDefaultColumns(table);
     })
 
     await knex.schema.createTable(tableNames.item_inventario, table => {
         references(table, tableNames.item, true, '', true);
-        /*table.integer(tableNames.item + '_id')
-                    .unsigned()
-                    .primary()
-                    .references('id')
-                    .inTable(tableNames.item)
-                    .onDelete('cascade'); */
-        table.string('qyt').notNullable().unsigned();
+        table.string('qty').notNullable().unsigned();
         references(table, tableNames.lugar);
         table.string('basura').unsigned();
         table.string('color');
+        references(table, tableNames.precio);
         addDefaultColumns(table);
     })
 
@@ -119,7 +123,8 @@ exports.down = async function (knex) {
     await Promise.all(
         [
             knex.schema.dropTableIfExists(tableNames.lugar),
-            knex.schema.dropTableIfExists(tableNames.cheque)
+            knex.schema.dropTableIfExists(tableNames.cheque),
+            knex.schema.dropTableIfExists(tableNames.categoria)
         ]
     );
 };
