@@ -19,4 +19,4 @@ recibo.cotizacion = {
 }
 
 console.log(recibo.cotizacion);
-module.exports = { message }
+module.exports = { message, recibo }

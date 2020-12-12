@@ -10,7 +10,7 @@ function addTwoTelephoneColumns(table) {
     table.string('telefono_2', 15).unique();
 }
 
-function references(table, tableName, notNullable = true, columnName = '', isPrimary = false) {
+function references(table, tableName, notNullable = true, columnName = '') {
     const definition = table
         .integer(`${columnName || tableName}_id`)
         .unsigned()
@@ -21,9 +21,7 @@ function references(table, tableName, notNullable = true, columnName = '', isPri
     if (notNullable) {
         definition.notNullable();
     }
-    if (isPrimary) {
-        definition.primary();
-    }
+
     return definition;
 }
 

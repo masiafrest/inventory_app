@@ -89,6 +89,7 @@ exports.up = async function (knex) {
     })
 
     await knex.schema.createTable(tableNames.item_inventario, table => {
+        createTableIncrementsStringNotNullable(table);
         references(table, tableNames.item, true, '', true);
         table.string('qty').notNullable().unsigned();
         references(table, tableNames.lugar);
