@@ -14,7 +14,7 @@ const {
 exports.up = async function (knex) {
     await knex.schema.createTable(tableNames.recibo_encabezado, table => {
         table.increments().notNullable();
-        references(table, tableNames.recibo_encabezado);
+        references(table, tableNames.empresa_cliente);
         references(table, tableNames.usuario);
         addDefaultColumns(table);
     })
@@ -64,6 +64,7 @@ exports.up = async function (knex) {
         table.increments().unsigned();
         references(table, tableNames.venta, false);
         references(table, tableNames.cotizacion, false);
+        references(table, tableNames.item);
         table.integer('qty').unsigned();
         table.float('total');
         table.float('tax');

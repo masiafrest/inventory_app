@@ -9,14 +9,15 @@ recibo.cotizacion = {
         {
             item_id: 1,
             qty: 30,
+            color: 'negro'
         },
         {
             item_id: 2,
-            qty: 20
+            qty: 20,
+            color: 'rojo'
         }
-    ]
-
+    ],
+    total: 450.00
 }
 
-console.log(recibo.cotizacion);
 module.exports = { message, recibo }

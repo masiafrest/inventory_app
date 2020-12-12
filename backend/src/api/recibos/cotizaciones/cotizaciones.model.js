@@ -3,7 +3,7 @@ const { tableNames } = require('../../../constants/string');
 
 class Cotizacion extends Model {
     static get tableName() {
-        return tableNames.recibo_encabezado;
+        return tableNames.cotizacion;
     }
 
     static get relationMappings() {

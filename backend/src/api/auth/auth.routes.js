@@ -50,7 +50,11 @@ router.post('/signup', async (req, res, next) => {
         const cello = await Empresa_owner.query().where('nombre', 'cello').first();
 
         await Empresa_owner.transaction(async trx => {
-            const insertedUser = await Empresa_owner.relatedQuery('usuarios', trx).for(cello.id).insert({ nombre, password: hashedPassword, rol })
+            const insertedUser = await Empresa_owner.relatedQuery('usuarios', trx)
+                .for(cello.id).
+                insert({
+                    nombre, password: hashedPassword, rol
+                })
             console.log('insertedUser: ', insertedUser)
             console.log('create payload obj')
             const payload = {
