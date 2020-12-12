@@ -5,6 +5,7 @@ const auth = require('./auth/auth.routes');
 
 const empresa_owner = require('./empresa_owner/empresa_owner.routes');
 const usuarios = require('./usuarios/usuarios.routes');
+const item = require('./items/items.routes');
 const item_inventario = require('./items/item_inventarios/item_inventarios.routes');
 const contizacion = require('./recibos/cotizaciones/cotizaciones.route');
 
@@ -19,6 +20,7 @@ router.get('/', (req, res) => {
 })
 router.use('/auth', auth);
 router.use('/cotizacion', contizacion)
+router.use('/items', item)
 router.use('/item_inventario', item_inventario)
 router.use('/empresa_owner', empresa_owner);
 router.use('/usuarios', checkToken, usuarios)
