@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Item = require("./items.model");
+const Item_inventario = require("./item_inventarios/item_inventarios.model");
 
 router.get("/", (req, res, next) => {
   try {
@@ -9,6 +10,7 @@ router.get("/", (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
+    //TODO create Categoria Model and route to post
     console.log(req.body);
     const {
       nombre,
@@ -21,6 +23,9 @@ router.post("/", async (req, res, next) => {
       lugar_id,
       color,
       precio,
+      precio_min,
+      proveedor_id,
+      costo,
     } = req.body;
     const existingItem = await Item.query().where({ nombre }).first();
     console.log("this is auth existingItem", existingItem);
@@ -29,7 +34,46 @@ router.post("/", async (req, res, next) => {
       res.status(403);
       throw error;
     }
-    await Item.relatedQuery("categoria").res.send("items");
+    const insertedItemInventory = await Item_inventario.transaction(
+      async (trx) => {
+        const insertedItem = await Item_inventario.query(trx).insertGraph({
+          qty,
+          color,
+          lugares: [
+            {
+              lugar_id,
+            },
+          ],
+          item: [
+            {
+              nombre,
+              descripcion,
+              modelo,
+              barcode,
+              sku,
+              categoria: [
+                {
+                  categoria_id,
+                },
+              ],
+            },
+          ],
+          precio: [
+            {
+              precio,
+              precio_min,
+              costo,
+              proveedor: [
+                {
+                  proveedor_id,
+                },
+              ],
+            },
+          ],
+        });
+      }
+    );
+    res.send(insertedItemInventory);
   } catch (err) {
     next(err);
   }

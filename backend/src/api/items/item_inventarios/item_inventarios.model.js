@@ -11,7 +11,7 @@ class Item_inventario extends Model {
     const Lugar = require("../../lugares/lugares.model");
     const Precio = require("../../noRoute/precios.model");
     return {
-      inventario: {
+      item: {
         relation: Model.BelongsToOneRelation,
         modelClass: Item,
         join: {
