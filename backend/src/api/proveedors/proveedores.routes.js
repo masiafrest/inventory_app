@@ -1,14 +1,14 @@
-const router = require('express').Router
-const Proveedores = require('./proveedores.model');
+const router = require("express").Router;
+const Proveedores = require("./proveedores.model");
 
-router.get('/', async (req, res, next) => {
-    try {
-        const proveedores = await Proveedores.query();
-        res.json(proveedores);
-    } catch (err) {
-        next(err);
-    }
-})
-
+router.get("/", async (req, res, next) => {
+  try {
+    const proveedores = await Proveedores.query();
+    res.json(proveedores);
+  } catch (err) {
+    next(err);
+  }
+});
+// TODO add post
 
 module.exports = router;

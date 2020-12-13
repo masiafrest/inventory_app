@@ -145,6 +145,12 @@ router.post("/", async (req, res, next) => {
                     ],
                   },
                 ],
+                precio_logs: [
+                  {
+                    usuario_id: req.userData.id,
+                    proveedor: [{ id: proveedor_id }],
+                  },
+                ],
               },
             ],
           },
