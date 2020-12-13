@@ -5,12 +5,14 @@ const Item_inventario = require("./item_inventarios/item_inventarios.model");
 router.get("/", (req, res, next) => {
   try {
     res.send("item");
-  } catch (err) {}
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.post("/", async (req, res, next) => {
   try {
-    //TODO create Categoria Model and route to post
+    //TODO use Categoria MOdel here
     console.log(req.body);
     const {
       nombre,

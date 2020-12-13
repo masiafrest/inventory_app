@@ -3,6 +3,7 @@ const project = require("../constants/project");
 
 const auth = require("./auth/auth.routes");
 
+const categoria = require("./categorias/categorias.routes");
 const empresa_owner = require("./empresa_owner/empresa_owner.routes");
 const usuarios = require("./usuarios/usuarios.routes");
 const item = require("./items/items.routes");
@@ -19,6 +20,7 @@ router.get("/", (req, res) => {
     message: project.message + " API route 👩",
   });
 });
+router.use("/categorias", categoria);
 router.use("/auth", auth);
 router.use("/cotizacion", contizacion);
 router.use("/items", item);
