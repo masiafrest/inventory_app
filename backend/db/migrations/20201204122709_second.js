@@ -119,6 +119,8 @@ exports.up = async function (knex) {
         "garantia",
         "devolucion",
         "nota credito",
+        "crear",
+        "modificar",
       ])
       .notNullable();
     table.integer("ajuste").notNullable();

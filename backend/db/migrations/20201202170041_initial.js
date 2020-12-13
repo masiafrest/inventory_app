@@ -78,7 +78,6 @@ exports.up = async function (knex) {
     table.string("descripcion");
     table.string("modelo");
     table.string("barcode");
-    table.string("sku", 12).unique();
     addUrl(table, "image_url");
     references(table, tableNames.categoria, true);
     references(table, tableNames.categoria, false, `${tableNames.categoria}_2`);
@@ -93,6 +92,8 @@ exports.up = async function (knex) {
     table.string("basura").unsigned();
     table.string("color");
     references(table, tableNames.precio);
+    table.string("sku", 12);
+    table.unique(["sku", "color", "item_id"]);
     addDefaultColumns(table);
   });
 

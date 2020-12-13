@@ -6,7 +6,6 @@ const items = [
     descripcion: "un equipo",
     modelo: "qwer",
     barcode: "0000000000",
-    sku: "so-qwe",
     image_url: "www.com",
   },
   {
@@ -14,7 +13,6 @@ const items = [
     descripcion: "un audifono",
     modelo: "yuio",
     barcode: "00000001111",
-    sku: "hua-yui",
     image_url: "www.huaw.com",
   },
 ];
@@ -70,6 +68,7 @@ exports.seed = async (knex) => {
       lugar_id: lugar_ids[0],
       color: "negro",
       precio_id: precio_id,
+      sku: "so-qwe",
     },
     {
       item_id: item_ids[1],
@@ -77,6 +76,7 @@ exports.seed = async (knex) => {
       lugar_id: lugar_ids[1],
       color: "rojo",
       precio_id: precio_id,
+      sku: "hua-yui",
     },
   ]);
 };
