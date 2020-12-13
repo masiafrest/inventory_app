@@ -11,14 +11,6 @@ class Item extends Model {
     const Item_inventario = require("../items/item_inventarios/item_inventarios.model");
     const Categoria = require("../noRoute/categorias.model");
     return {
-      logs: {
-        relation: Model.HasManyRelation,
-        modelClass: Item_inventario_Log,
-        join: {
-          from: `${tableNames.item}.id`,
-          to: `${tableNames.item_inventario_log}.${tableNames.item}_id`,
-        },
-      },
       inventarios: {
         relation: Model.HasManyRelation,
         modelClass: Item_inventario,

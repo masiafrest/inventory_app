@@ -4,6 +4,7 @@ const Item_inventario = require("./item_inventarios/item_inventarios.model");
 
 router.get("/", async (req, res, next) => {
   try {
+    console.log("items, route, req.userData: ", req.userData);
     const items = await Item.query().withGraphFetched(
       "[inventarios, categoria]"
     );
@@ -16,17 +17,16 @@ router.get("/", async (req, res, next) => {
 router.get("/:nombre", async (req, res, next) => {
   try {
     const items = await Item.query()
-      .withGraphFetched("[inventarios, categoria]")
+      .withGraphFetched("[inventarios.[item_logs], categoria]")
       .where("nombre", req.params.nombre);
     res.json(items);
   } catch (err) {
     next(err);
   }
 });
-// TODO add log function 
+// TODO add log function
 router.post("/", async (req, res, next) => {
   try {
-    console.log(req.body);
     const {
       nombre,
       descripcion,
@@ -43,9 +43,9 @@ router.post("/", async (req, res, next) => {
       costo,
     } = req.body;
     const existingItem = await Item.query().where({ nombre }).first();
-    console.log("this is auth existingItem", existingItem);
     if (existingItem) {
       await Item_inventario.transaction(async (trx) => {
+        console.log("existing item");
         const insertedItem = await Item_inventario.query(trx).insertGraph(
           {
             item_id: existingItem.id,
@@ -69,12 +69,24 @@ router.post("/", async (req, res, next) => {
                 ],
               },
             ],
-            logs:[
+            precio_logs: [
               {
-                item_id: existingItem.id,
-                evento: 
-              }
-            ]
+                usuario_id: req.userData.id,
+                proveedor: [{ id: proveedor_id }],
+              },
+            ],
+            item_logs: [
+              {
+                usuario_id: req.userData.id,
+                ajuste: qty,
+                evento: "crear",
+                proveedor: [
+                  {
+                    id: proveedor_id,
+                  },
+                ],
+              },
+            ],
           },
           {
             relate: true,
@@ -85,6 +97,7 @@ router.post("/", async (req, res, next) => {
       });
     }
 
+    console.log("Item insert: ", req.userData.id);
     const insertedItem = await Item.transaction(async (trx) => {
       const insertedItem = await Item.query(trx)
         .insertGraph(
@@ -103,6 +116,18 @@ router.post("/", async (req, res, next) => {
                 qty,
                 color,
                 sku,
+                item_logs: [
+                  {
+                    usuario_id: req.userData.id,
+                    ajuste: qty,
+                    evento: "crear",
+                    proveedor: [
+                      {
+                        id: proveedor_id,
+                      },
+                    ],
+                  },
+                ],
                 lugares: [
                   {
                     id: lugar_id,
@@ -135,6 +160,5 @@ router.post("/", async (req, res, next) => {
     next(err);
   }
 });
-
 
 module.exports = router;

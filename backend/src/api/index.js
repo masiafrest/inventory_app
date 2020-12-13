@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
 router.use("/categorias", categoria);
 router.use("/auth", auth);
 router.use("/cotizacion", contizacion);
-router.use("/items", item);
+router.use("/items", checkToken, item);
 router.use("/item_inventario", item_inventario);
 router.use("/lugares", lugar);
 router.use("/empresa_owner", empresa_owner);

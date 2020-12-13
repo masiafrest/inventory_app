@@ -32,22 +32,26 @@ exports.up = async function (knex) {
     table.float("total");
     table.float("sub_total");
     table.float("tax");
+    addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.garantia, (table) => {
     table.increments().notNullable();
     references(table, tableNames.recibo_encabezado);
     table.boolean("resuelto");
+    addDefaultColumns(table);
   });
 
   await knex.schema.createTable(tableNames.nota_credito, (table) => {
     table.increments().notNullable();
     references(table, tableNames.recibo_encabezado);
     table.float("total");
+    addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.devolucion, (table) => {
     table.increments().notNullable();
     references(table, tableNames.recibo_encabezado);
     table.float("total");
+    addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.pago, (table) => {
     table.increments().notNullable();
@@ -62,6 +66,7 @@ exports.up = async function (knex) {
       true,
       tableNames.nota_credito + "_2"
     );
+    addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.venta, (table) => {
     table.increments().notNullable();
@@ -72,6 +77,7 @@ exports.up = async function (knex) {
     table.boolean("pagado");
     table.boolean("entregado");
     references(table, tableNames.pago);
+    addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.linea_venta_cotizacion, (table) => {
     table.increments().unsigned();
@@ -81,6 +87,7 @@ exports.up = async function (knex) {
     table.integer("qty").unsigned();
     table.float("total");
     table.float("tax");
+    addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.linea_garantia, (table) => {
     table.increments().unsigned();
@@ -89,6 +96,7 @@ exports.up = async function (knex) {
     references(table, tableNames.venta, false);
     table.integer("qty");
     table.string("descripcion", 500);
+    addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.linea_nota_credito, (table) => {
     table.increments().unsigned();
@@ -97,6 +105,7 @@ exports.up = async function (knex) {
     references(table, tableNames.venta, false);
     table.boolean("valido");
     table.string("descripcion", 500);
+    addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.linea_devolucion, (table) => {
     table.increments().unsigned();
@@ -107,9 +116,11 @@ exports.up = async function (knex) {
     table.integer("qty");
     table.string("descripcion", 500);
     table.integer("total");
+    addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.item_inventario_log, (table) => {
-    references(table, tableNames.item, true, "", true);
+    table.increments().notNullable();
+    references(table, tableNames.item_inventario, true, "", true);
     references(table, tableNames.proveedor, false);
     references(table, tableNames.usuario);
     table
@@ -124,15 +135,18 @@ exports.up = async function (knex) {
       ])
       .notNullable();
     table.integer("ajuste").notNullable();
+    addDefaultColumns(table);
   });
+
   await knex.schema.createTable(tableNames.precio_log, (table) => {
     table.increments().notNullable();
-    references(table, tableNames.precio);
+    references(table, tableNames.item_inventario);
     references(table, tableNames.usuario);
     references(table, tableNames.proveedor, false);
     table.float("precio_viejo");
     table.float("costo_viejo");
     table.float("precio_min_viejo");
+    addDefaultColumns(table);
   });
 };
 
