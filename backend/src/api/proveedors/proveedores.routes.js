@@ -10,7 +10,6 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
-// TODO add post
 router.post("/", async (req, res, next) => {
   try {
     await yupSchema.validate(req.body, {

@@ -7,6 +7,7 @@ const categoria = require("./categorias/categorias.routes");
 const empresa_owner = require("./empresa_owner/empresa_owner.routes");
 const usuarios = require("./usuarios/usuarios.routes");
 const proveedores = require("./proveedors/proveedores.routes");
+const precio_logs = require("./logs/precio/precio_logs.routes");
 const item = require("./items/items.routes");
 const item_inventario = require("./items/item_inventarios/item_inventarios.routes");
 const item_inventario_log = require("./logs/item/item_inventario_logs.routes");
@@ -14,6 +15,7 @@ const lugar = require("./lugares/lugares.route");
 const contizacion = require("./recibos/cotizaciones/cotizaciones.routes");
 
 const { checkToken } = require("../lib/helpers");
+const { route } = require("./auth/auth.routes");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -21,6 +23,7 @@ router.get("/", (req, res) => {
     message: project.message + " API route 👩",
   });
 });
+router.use("/precio_logs", precio_logs);
 router.use("/auth", auth);
 router.use("/categorias", categoria);
 router.use("/cotizacion", contizacion);

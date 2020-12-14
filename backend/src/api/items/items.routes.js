@@ -24,7 +24,7 @@ router.get("/:nombre", async (req, res, next) => {
     next(err);
   }
 });
-// TODO add log function
+
 router.post("/", async (req, res, next) => {
   try {
     const {
@@ -166,5 +166,5 @@ router.post("/", async (req, res, next) => {
     next(err);
   }
 });
-
+// TODO add a update qty
 module.exports = router;
