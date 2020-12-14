@@ -10,6 +10,5 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
-//TODO add post user from role jefe
-
+// to post user, se usa auth desde rol jefa
 module.exports = router;

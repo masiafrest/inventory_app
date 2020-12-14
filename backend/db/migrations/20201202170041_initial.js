@@ -1,4 +1,3 @@
-const { ref } = require("yup");
 const { tableNames, role, tipo_lugar } = require("../../src/constants/string");
 const {
   addDefaultColumns,
@@ -45,7 +44,7 @@ exports.up = async function (knex) {
       createTableIncrementsStringNotNullable(table, "nombre");
       addEmail(table);
       addUrl(table, "website_url"), addUrl(table, "logo_url");
-      table.string("country", 50);
+      table.string("pais", 50);
       table.string("direccion");
       addDefaultColumns(table);
       addTwoTelephoneColumns(table);

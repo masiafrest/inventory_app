@@ -6,6 +6,7 @@ const auth = require("./auth/auth.routes");
 const categoria = require("./categorias/categorias.routes");
 const empresa_owner = require("./empresa_owner/empresa_owner.routes");
 const usuarios = require("./usuarios/usuarios.routes");
+const proveedores = require("./proveedors/proveedores.routes");
 const item = require("./items/items.routes");
 const item_inventario = require("./items/item_inventarios/item_inventarios.routes");
 const item_inventario_log = require("./logs/item/item_inventario_logs.routes");
@@ -20,8 +21,8 @@ router.get("/", (req, res) => {
     message: project.message + " API route 👩",
   });
 });
-router.use("/categorias", categoria);
 router.use("/auth", auth);
+router.use("/categorias", categoria);
 router.use("/cotizacion", contizacion);
 router.use("/items", checkToken, item);
 router.use("/item_inventario", item_inventario);
@@ -29,4 +30,5 @@ router.use("/item_inventario_logs", item_inventario_log);
 router.use("/lugares", lugar);
 router.use("/empresa_owner", empresa_owner);
 router.use("/usuarios", checkToken, usuarios);
+router.use("/proveedores", proveedores);
 module.exports = router;
