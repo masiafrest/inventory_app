@@ -1,7 +1,5 @@
 const { Model } = require("objection");
 const { tableNames } = require("../../../constants/string");
-const Item_inventario_log = require("../../logs/item/item_inventario_logs.model");
-const Precio_log = require("../../logs/precio/precio_logs.model");
 
 class Item_inventario extends Model {
   static get tableName() {
@@ -12,6 +10,8 @@ class Item_inventario extends Model {
     const Item = require("../items.model");
     const Lugar = require("../../lugares/lugares.model");
     const Precio = require("../../noRoute/precios.model");
+    const Item_inventario_log = require("../../logs/item/item_inventario_logs.model");
+    const Precio_log = require("../../logs/precio/precio_logs.model");
     return {
       item_logs: {
         relation: Model.HasManyRelation,
@@ -52,6 +52,22 @@ class Item_inventario extends Model {
           from: `${tableNames.item_inventario}.${tableNames.precio}_id`,
           to: `${tableNames.precio}.id`,
         },
+      },
+    };
+  }
+  static get modifiers() {
+    return {
+      defaultSelects(builder) {
+        builder.select(
+          "id",
+          "item_id",
+          "qty",
+          "lugar_id",
+          "basura",
+          "color",
+          "precio_id",
+          "sku"
+        );
       },
     };
   }

@@ -1,13 +1,11 @@
 const jwt = require("jsonwebtoken");
 const checkToken = (req, res, next) => {
   const header = req.headers["authorization"];
-  console.log("checktoken 🎨 header: ", header !== "undefined");
   if (typeof header !== "undefined") {
     const bearear = header.split(" ");
     const token = bearear[1];
-    console.log("verifin... ");
     const decode = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decode);
+    console.log("decode", decode);
     req.userData = decode;
     next();
   } else {

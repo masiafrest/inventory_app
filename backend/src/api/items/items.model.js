@@ -37,6 +37,23 @@ class Item extends Model {
       },
     };
   }
+
+  static get modifiers() {
+    return {
+      defaultSelects(builder) {
+        builder.select(
+          "id",
+          "nombre",
+          "descripcion",
+          "modelo",
+          "barcode",
+          "image_url",
+          "categoria_id",
+          "categoria_2_id"
+        );
+      },
+    };
+  }
 }
 
 module.exports = Item;

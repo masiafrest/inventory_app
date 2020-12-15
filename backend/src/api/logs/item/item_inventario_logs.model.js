@@ -37,6 +37,20 @@ class Item_inventario_log extends Model {
       },
     };
   }
+  static get modifiers() {
+    return {
+      defaultSelects(builder) {
+        builder.select(
+          "id",
+          "item_inventario_id",
+          "usuario_id",
+          "proveedor_id",
+          "evento",
+          "ajuste"
+        );
+      },
+    };
+  }
 }
 
 module.exports = Item_inventario_log;
