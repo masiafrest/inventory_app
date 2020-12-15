@@ -45,6 +45,21 @@ class Pago extends Model {
       },
     };
   }
+  static get modifiers() {
+    return {
+      defaultSelects(builder) {
+        builder.select(
+          "id",
+          "nequi",
+          "transferencia",
+          "efectivo",
+          "yappi",
+          "nota_credito_id",
+          "nota_creditos_2_id"
+        );
+      },
+    };
+  }
 }
 
 module.exports = Pago;

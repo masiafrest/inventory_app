@@ -7,9 +7,8 @@ class Item extends Model {
   }
 
   static get relationMappings() {
-    const Item_inventario_Log = require("../logs/item/item_inventario_logs.model");
     const Item_inventario = require("../items/item_inventarios/item_inventarios.model");
-    const Categoria = require("../noRoute/categorias.model");
+    const Categoria = require("../categorias/categorias.model");
     return {
       inventarios: {
         relation: Model.HasManyRelation,
