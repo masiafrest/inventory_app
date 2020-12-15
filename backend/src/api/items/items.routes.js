@@ -167,4 +167,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 // TODO add a update qty
+router.patch("/", async (req, res, next) => {
+  const { qty, item_id } = req.body;
+  await Item.transaction((trx) => {
+    const itemUpdated = Item.query(trx).upsertGraph(
+      {},
+      {
+        noDelete: true,
+      }
+    );
+  });
+});
 module.exports = router;

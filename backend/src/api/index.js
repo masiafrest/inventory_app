@@ -15,7 +15,6 @@ const lugar = require("./lugares/lugares.route");
 const contizacion = require("./recibos/cotizaciones/cotizaciones.routes");
 
 const { checkToken } = require("../lib/helpers");
-const { route } = require("./auth/auth.routes");
 const router = express.Router();
 
 router.get("/", (req, res) => {

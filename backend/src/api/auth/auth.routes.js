@@ -16,29 +16,45 @@ const errorMessages = {
 };
 //el signup en front end lo usa desde el usuario con rol jefe
 router.post("/signup", async (req, res, next) => {
+  const {
+    nombre,
+    email,
+    password,
+    rol,
+    image_url,
+    telefono,
+    telefono_2,
+  } = req.body;
   try {
-    await yupSchema.validate(req.body, {
+    const createUser = {
+      nombre,
+      email,
+      password,
+      rol,
+      image_url,
+      telefono,
+      telefono_2,
+    };
+    await yupSchema.validate(createUser, {
       abortEarly: false,
     });
-    const existingUser = await Usuario.query()
-      .where("nombre", req.body.nombre)
-      .first();
+    const existingUser = await Usuario.query().where("nombre", nombre).first();
     console.log("this is auth existingUser", existingUser);
     if (existingUser) {
       const error = new Error(errorMessages.nameInUse);
       res.status(403);
       throw error;
     }
-    const hashedPassword = await bcrypt.hash(req.body.password, 12);
-    req.body.password = hashedPassword;
+    const hashedPassword = await bcrypt.hash(password, 12);
     const cello = await Empresa_owner.query().where("nombre", "cello").first();
     await Empresa_owner.transaction(async (trx) => {
+      createUser.password = hashedPassword;
       const insertedUser = await Empresa_owner.relatedQuery("usuarios", trx)
         .for(cello.id)
-        .insert(req.body);
+        .insert(createUser);
       const payload = {
         id: insertedUser.id,
-        nombre: req.body.nombre,
+        nombre: nombre,
       };
       const token = await jwt.sign(payload);
       return res.json({
