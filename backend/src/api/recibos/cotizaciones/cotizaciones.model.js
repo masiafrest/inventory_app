@@ -29,6 +29,19 @@ class Cotizacion extends Model {
       },
     };
   }
+  static get modifiers() {
+    return {
+      defaultSelects(builder) {
+        builder.select(
+          "id",
+          "recibo_encabezado_id",
+          "total",
+          "sub_total",
+          "tax"
+        );
+      },
+    };
+  }
 }
 
 module.exports = Cotizacion;
