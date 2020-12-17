@@ -92,6 +92,7 @@ exports.up = async function (knex) {
     table.string("color");
     references(table, tableNames.precio);
     table.string("sku", 12);
+    //sku is unique, theres is a skugenerator in lib helper to use in the front end
     table.unique(["sku", "color", "item_id"]);
     addDefaultColumns(table);
   });

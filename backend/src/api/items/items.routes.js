@@ -136,8 +136,13 @@ router.post("/", async (req, res, next) => {
   }
 });
 // TODO add a update qty
-router.patch("/", async (req, res, next) => {
-  const { qty, item_id } = req.body;
+router.patch("/:id", async (req, res, next) => {
+  const key = Object.keys(req.body);
+  const objToPatch = {
+    inventarios: [],
+    categorias: [],
+  };
+  res.send(key);
   await Item.transaction((trx) => {
     const itemUpdated = Item.query(trx).upsertGraph(
       {},
