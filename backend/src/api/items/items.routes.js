@@ -135,21 +135,17 @@ router.post("/", async (req, res, next) => {
     next(err);
   }
 });
-// TODO add a update qty
+
 router.patch("/:id", async (req, res, next) => {
-  const key = Object.keys(req.body);
-  const objToPatch = {
-    inventarios: [],
-    categorias: [],
-  };
-  res.send(key);
-  await Item.transaction((trx) => {
-    const itemUpdated = Item.query(trx).upsertGraph(
-      {},
-      {
-        noDelete: true,
-      }
+  if (req.body.hasOwnProperty("nombre") || req.body.hasOwnProperty("modelo")) {
+    //patch itemInvnetory sku, sku generate on client side, so if nombre or modelo if change should generate a new
+  }
+  await Item.transaction(async (trx) => {
+    const itemUpdated = await Item.query(trx).patchAndFetchById(
+      req.params.id,
+      req.body
     );
+    res.send(itemUpdated);
   });
 });
 module.exports = router;
