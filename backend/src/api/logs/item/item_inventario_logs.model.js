@@ -1,7 +1,8 @@
+const BaseModel = require("../../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../../constants/string");
 
-class Item_inventario_log extends Model {
+class Item_inventario_log extends BaseModel {
   static get tableName() {
     return tableNames.item_inventario_log;
   }

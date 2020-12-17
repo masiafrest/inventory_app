@@ -1,7 +1,8 @@
+const BaseModel = require("../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../constants/string");
 //TODO resolver si tneer venta y cotizaciones por separado
-class Linea_venta_cotizacion extends Model {
+class Linea_venta_cotizacion extends BaseModel {
   static get tableName() {
     return tableNames.linea_venta_cotizacion;
   }

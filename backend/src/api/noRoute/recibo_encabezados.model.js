@@ -1,7 +1,8 @@
+const BaseModel = require("../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../constants/string");
 
-class Recibo_encabezado extends Model {
+class Recibo_encabezado extends BaseModel {
   static get tableName() {
     return tableNames.recibo_encabezado;
   }
