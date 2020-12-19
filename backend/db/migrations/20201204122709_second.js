@@ -140,6 +140,7 @@ exports.up = async function (knex) {
 
   await knex.schema.createTable(tableNames.precio_log, (table) => {
     table.increments().notNullable();
+    references(table, tableNames.precio);
     references(table, tableNames.item_inventario);
     references(table, tableNames.usuario);
     references(table, tableNames.proveedor, false);

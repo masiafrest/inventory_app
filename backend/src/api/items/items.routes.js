@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const Item = require("./items.model");
-const Item_inventario = require("./item_inventarios/item_inventarios.model");
+const Item_inventario = require("./inventarios/inventarios.model");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -36,7 +36,9 @@ router.get("/:nombre", async (req, res, next) => {
   }
 });
 
+// TODO logs si pueden ser automatico al insert or update precio y inventario, tal vez tenga q ver con beforeInsert y beforeUpdate
 router.post("/", async (req, res, next) => {
+  console.log(req.userData);
   try {
     const {
       nombre,
@@ -54,6 +56,7 @@ router.post("/", async (req, res, next) => {
       costo,
     } = req.body;
     const itemInventarioObj = {
+      "#id": "item_inventory_id",
       qty,
       color,
       sku,
@@ -72,14 +75,16 @@ router.post("/", async (req, res, next) => {
               id: proveedor_id,
             },
           ],
+          precio_logs: [
+            {
+              item_inventario_id: "#ref{item_inventory_id.id}",
+              usuario_id: req.userData.id,
+              proveedor: [{ id: proveedor_id }],
+            },
+          ],
         },
       ],
-      precio_logs: [
-        {
-          usuario_id: req.userData.id,
-          proveedor: [{ id: proveedor_id }],
-        },
-      ],
+      //TODO FIX precio_log no se inserta ahora, pueda q precio_log vaya dentro de precio
       item_logs: [
         {
           usuario_id: req.userData.id,
@@ -102,6 +107,7 @@ router.post("/", async (req, res, next) => {
           itemInventarioObj,
           {
             relate: true,
+            allowRefs: true,
           }
         );
         console.log(insertedItem);
@@ -125,10 +131,10 @@ router.post("/", async (req, res, next) => {
           },
           {
             relate: true,
+            allowRefs: true,
           }
         )
         .returning("*");
-      console.log(insertedItem);
       res.json(insertedItem);
     });
   } catch (err) {

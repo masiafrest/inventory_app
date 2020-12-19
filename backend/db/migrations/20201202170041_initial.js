@@ -3,7 +3,6 @@ const {
   addDefaultColumns,
   addEmail,
   addUrl,
-  createTableOneStringColumn,
   createTableIncrementsStringNotNullable,
   references,
   addTwoTelephoneColumns,

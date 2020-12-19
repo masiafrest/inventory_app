@@ -8,7 +8,7 @@ class Lugar extends BaseModel {
   }
 
   static get relationMappings() {
-    const Item_inventario = require("../items/item_inventarios/item_inventarios.model");
+    const Item_inventario = require("../items/inventarios/inventarios.model");
     return {
       inventarios: {
         relation: Model.BelongsToOneRelation,

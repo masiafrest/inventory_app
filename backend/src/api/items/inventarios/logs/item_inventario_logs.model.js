@@ -1,0 +1,57 @@
+const BaseModel = require("../../../BaseModel");
+const { Model } = require("objection");
+const { tableNames } = require("../../../../constants/string");
+
+class Item_inventario_log extends BaseModel {
+  static get tableName() {
+    return tableNames.item_inventario_log;
+  }
+
+  static get relationMappings() {
+    const Item_inventario = require("../inventarios.model");
+    const Usuario = require("../../../usuarios/usuarios.model");
+    const Proveedor = require("../../../proveedors/proveedores.model");
+    return {
+      inventario: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Item_inventario,
+        join: {
+          from: `${tableNames.item_inventario_log}.${tableNames.item_inventario}_id`,
+          to: `${tableNames.item_inventario}.id`,
+        },
+      },
+      usuario: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Usuario,
+        join: {
+          from: `${tableNames.item_inventario_log}.${tableNames.usuario}_id`,
+          to: `${tableNames.usuario}.id`,
+        },
+      },
+      proveedor: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Proveedor,
+        join: {
+          from: `${tableNames.item_inventario_log}.${tableNames.proveedor}_id`,
+          to: `${tableNames.proveedor}.id`,
+        },
+      },
+    };
+  }
+  static get modifiers() {
+    return {
+      defaultSelects(builder) {
+        builder.select(
+          "id",
+          "item_inventario_id",
+          "usuario_id",
+          "proveedor_id",
+          "evento",
+          "ajuste"
+        );
+      },
+    };
+  }
+}
+
+module.exports = Item_inventario_log;

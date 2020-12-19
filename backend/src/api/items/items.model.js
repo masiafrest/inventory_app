@@ -8,7 +8,7 @@ class Item extends BaseModel {
   }
 
   static get relationMappings() {
-    const Item_inventario = require("../items/item_inventarios/item_inventarios.model");
+    const Item_inventario = require("./inventarios/inventarios.model");
     const Categoria = require("../categorias/categorias.model");
     return {
       inventarios: {

@@ -5,7 +5,6 @@ const checkToken = (req, res, next) => {
     const bearear = header.split(" ");
     const token = bearear[1];
     const decode = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("decode", decode);
     req.userData = decode;
     next();
   } else {

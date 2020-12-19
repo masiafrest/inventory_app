@@ -7,10 +7,10 @@ const categoria = require("./categorias/categorias.routes");
 const empresa_owner = require("./empresa_owner/empresa_owner.routes");
 const usuarios = require("./usuarios/usuarios.routes");
 const proveedores = require("./proveedors/proveedores.routes");
-const precio_logs = require("./logs/precio/precio_logs.routes");
+const precio_logs = require("./precio/logs/precio_logs.routes");
 const item = require("./items/items.routes");
-const item_inventario = require("./items/item_inventarios/item_inventarios.routes");
-const item_inventario_log = require("./logs/item/item_inventario_logs.routes");
+const item_inventario = require("./items/inventarios/inventarios.routes");
+const item_inventario_log = require("./items/inventarios/logs/item_inventario_logs.routes");
 const lugar = require("./lugares/lugares.route");
 const contizacion = require("./recibos/cotizaciones/cotizaciones.routes");
 

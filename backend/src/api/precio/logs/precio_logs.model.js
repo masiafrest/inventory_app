@@ -2,38 +2,39 @@ const BaseModel = require("../../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../../constants/string");
 
-class Item_inventario_log extends BaseModel {
+class Precio_log extends BaseModel {
   static get tableName() {
-    return tableNames.item_inventario_log;
+    return tableNames.precio_log;
   }
 
   static get relationMappings() {
-    const Item_inventario = require("../../items/item_inventarios/item_inventarios.model");
     const Usuario = require("../../usuarios/usuarios.model");
+    const Item_inventario = require("../../items/inventarios/inventarios.model");
     const Proveedor = require("../../proveedors/proveedores.model");
+
     return {
-      inventario: {
+      items: {
         relation: Model.BelongsToOneRelation,
         modelClass: Item_inventario,
         join: {
-          from: `${tableNames.item_inventario_log}.${tableNames.item_inventario}_id`,
-          to: `${tableNames.item_inventario}.id`,
+          from: `${tableNames.item}.id`,
+          to: `${tableNames.precio_log}.${tableNames.item_inventario}_id`,
         },
       },
-      usuario: {
+      usuarios: {
         relation: Model.BelongsToOneRelation,
         modelClass: Usuario,
         join: {
-          from: `${tableNames.item_inventario_log}.${tableNames.usuario}_id`,
-          to: `${tableNames.usuario}.id`,
+          from: `${tableNames.usuario}.id`,
+          to: `${tableNames.precio_log}.${tableNames.usuario}_id`,
         },
       },
       proveedor: {
         relation: Model.BelongsToOneRelation,
         modelClass: Proveedor,
         join: {
-          from: `${tableNames.item_inventario_log}.${tableNames.proveedor}_id`,
-          to: `${tableNames.proveedor}.id`,
+          from: `${tableNames.proveedor}.id`,
+          to: `${tableNames.precio_log}.${tableNames.proveedor}_id`,
         },
       },
     };
@@ -46,12 +47,13 @@ class Item_inventario_log extends BaseModel {
           "item_inventario_id",
           "usuario_id",
           "proveedor_id",
-          "evento",
-          "ajuste"
+          "precio_viejo",
+          "costo_viejo",
+          "precio_min_viejo"
         );
       },
     };
   }
 }
 
-module.exports = Item_inventario_log;
+module.exports = Precio_log;
