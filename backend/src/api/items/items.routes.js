@@ -114,6 +114,7 @@ router.post("/", async (req, res, next) => {
         res.json(insertedItem);
       });
     }
+    console.log("no existe item");
     await Item.transaction(async (trx) => {
       const insertedItem = await Item.query(trx)
         .insertGraph(
