@@ -8,12 +8,14 @@ const errorMessages = {
 };
 
 function notFound(req, res, next) {
+  console.log("not found");
   const error = new Error(`No encontrado ${req.originalUrl}`);
   res.status(404);
   next(error);
 }
 
 function errorHandler(error, req, res, next) {
+  console.log("error handler: ", error);
   const statusCode =
     res.statusCode === 200 ? errorType[error.name] || 500 : res.statusCode;
   res.status(statusCode);
