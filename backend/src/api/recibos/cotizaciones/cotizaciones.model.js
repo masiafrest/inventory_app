@@ -9,7 +9,7 @@ class Cotizacion extends BaseModel {
 
   static get relationMappings() {
     const Recibo_encabezado = require("../../noRoute/recibo_encabezados.model");
-    const Linea_venta_cotizacion = require("../linea_ventas.model");
+    const Linea_cotizacion = require("../linea_ventas.model");
     return {
       encabezado: {
         relation: Model.BelongsToOneRelation,
@@ -22,7 +22,7 @@ class Cotizacion extends BaseModel {
 
       lineas: {
         relation: Model.HasManyRelation,
-        modelClass: Linea_venta_cotizacion,
+        modelClass: Linea_cotizacion,
         join: {
           from: `${tableNames.cotizacion}.id`,
           to: `${tableNames.linea_venta_cotizacion}.${tableNames.cotizacion}_id`,
