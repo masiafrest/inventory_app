@@ -1,5 +1,9 @@
 const router = require("express").Router();
+const logs = require("./logs/item_inventario_logs.routes");
+
 const Item_inventario = require("../inventarios/inventarios.model");
+
+router.use("/logs", logs);
 
 router.get("/", (req, res, next) => {
   res.send("item_inventarios");

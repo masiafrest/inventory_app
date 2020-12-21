@@ -1,5 +1,7 @@
 const router = require("express").Router();
 
+const inventarios = require("./inventarios/inventarios.routes");
+
 const Item = require("./items.model");
 const Item_inventario = require("./inventarios/inventarios.model");
 const Precio = require("../precio/precios.model");
@@ -7,6 +9,8 @@ const getItemGraph = `[inventarios(defaultSelects).[
         precio(defaultSelects),
           lugares(defaultSelects)
         ], categoria(defaultSelects)]`;
+
+router.use("/inventarios", inventarios);
 
 router.get("/", async (req, res, next) => {
   try {
