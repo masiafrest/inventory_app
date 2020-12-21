@@ -8,7 +8,7 @@ class Venta extends BaseModel {
   }
 
   static get relationMappings() {
-    const Linea_tranferencia = require("../linea_tranferencias.model");
+    const Linea_tranferencia = require("./linea_tranferencias.model");
     return {
       lineas: {
         relation: Model.HasManyRelation,

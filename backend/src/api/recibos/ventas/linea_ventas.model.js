@@ -1,6 +1,6 @@
-const BaseModel = require("../BaseModel");
+const BaseModel = require("../../BaseModel");
 const { Model } = require("objection");
-const { tableNames } = require("../../constants/string");
+const { tableNames } = require("../../../constants/string");
 
 class Linea_venta extends BaseModel {
   static get tableName() {
@@ -8,8 +8,8 @@ class Linea_venta extends BaseModel {
   }
 
   static get relationMappings() {
-    const Venta = require("./ventas/ventas.model");
-    const Inventario = require("../items/inventarios/inventarios.model");
+    const Venta = require("./ventas.model");
+    const Inventario = require("../../items/inventarios/inventarios.model");
     return {
       venta: {
         relation: Model.BelongsToOneRelation,

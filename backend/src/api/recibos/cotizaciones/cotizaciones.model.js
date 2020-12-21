@@ -9,7 +9,7 @@ class Cotizacion extends BaseModel {
 
   static get relationMappings() {
     const Recibo_encabezado = require("../../noRoute/recibo_encabezados.model");
-    const Linea_cotizacion = require("../linea_cotizaciones.model");
+    const Linea_cotizacion = require("./linea_cotizaciones.model");
     return {
       encabezado: {
         relation: Model.BelongsToOneRelation,

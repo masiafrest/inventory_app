@@ -1,6 +1,6 @@
-const BaseModel = require("../BaseModel");
+const BaseModel = require("../../BaseModel");
 const { Model } = require("objection");
-const { tableNames } = require("../../constants/string");
+const { tableNames } = require("../../../constants/string");
 //TODO resolver si tneer venta y cotizaciones por separado
 class Linea_tranferencia extends BaseModel {
   static get tableName() {
@@ -8,8 +8,8 @@ class Linea_tranferencia extends BaseModel {
   }
 
   static get relationMappings() {
-    const Transferencia = require("./transferencias/transferencias.model");
-    const Inventario = require("../items/inventarios/inventarios.model");
+    const Transferencia = require("./transferencias.model");
+    const Inventario = require("../../items/inventarios/inventarios.model");
     return {
       cotizacion: {
         relation: Model.BelongsToOneRelation,
