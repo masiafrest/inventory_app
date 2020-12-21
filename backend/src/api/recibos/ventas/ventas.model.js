@@ -1,6 +1,7 @@
 const { tableNames } = require("../../../constants/string");
 const BaseModel = require("../../BaseModel");
 const { Model } = require("objection");
+const Pago = require("../../noRoute/pagos.model");
 
 class Venta extends BaseModel {
   static get tableName() {
@@ -25,6 +26,14 @@ class Venta extends BaseModel {
         join: {
           from: `${tableNames.venta}.id`,
           to: `${tableNames.linea_venta}.${tableNames.venta}_id`,
+        },
+      },
+      pago: {
+        relatio: Model.BelongsToOneRelation,
+        modelClass: Pago,
+        join: {
+          from: `${tableNames.venta}.${tableNames.pago}_id`,
+          to: `${tableNames.pago}.id`,
         },
       },
     };

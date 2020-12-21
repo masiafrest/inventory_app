@@ -55,7 +55,13 @@ exports.seed = async (knex) => {
 
   const item_ids = await knex(tableNames.item).insert(itemCategory, "id");
   let [precio_id] = await knex(tableNames.precio).insert(
-    { precio: 10.99 },
+    {
+      precio: 10.99,
+      precio_min: 7.99,
+      costo: 5.99,
+      oferta: true,
+      oferta_precio: 6.99,
+    },
     "id"
   );
   console.log("👩 precio_id: ", precio_id);

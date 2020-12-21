@@ -1,9 +1,10 @@
-const BaseModel = require("objection");
+const BaseModel = require("../BaseModel");
+const { Model } = require("objection");
 const { tableNames } = require("../../constants/string");
 
 class Empresa_cliente extends BaseModel {
   static get tableName() {
-    return tableNames.empresa_clientes;
+    return tableNames.empresa_cliente;
   }
 
   static get relationMappings() {
@@ -13,8 +14,8 @@ class Empresa_cliente extends BaseModel {
         relation: Model.HasManyRelation,
         modelClass: Recibo_encabezado,
         join: {
-          from: "empresa_cliente.id",
-          to: "recibo_encabezado.empresa_cliente_id",
+          from: `${tableNames.empresa_cliente}.id`,
+          to: `${tableNames.recibo_encabezado}.${tableNames.empresa_cliente}_id`,
         },
       },
     };
