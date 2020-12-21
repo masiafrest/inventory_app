@@ -24,7 +24,7 @@ class Linea_venta extends BaseModel {
         modelClass: Inventario,
         join: {
           from: `${tableNames.inventario}.id`,
-          to: `${tableNames.linea_venta}.${tableNames.item}_id`,
+          to: `${tableNames.linea_venta}.${tableNames.inventario}_id`,
         },
       },
     };

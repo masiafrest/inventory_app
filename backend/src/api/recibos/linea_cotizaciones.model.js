@@ -24,7 +24,7 @@ class Linea_cotizacion extends BaseModel {
         modelClass: Inventario,
         join: {
           from: `${tableNames.inventario}.id`,
-          to: `${tableNames.linea_cotizacion}.${tableNames.item}_id`,
+          to: `${tableNames.linea_cotizacion}.${tableNames.inventario}_id`,
         },
       },
     };
