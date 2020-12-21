@@ -10,8 +10,6 @@ const proveedores = require("./proveedors/proveedores.routes");
 const precio_logs = require("./precio/logs/precio_logs.routes");
 const item = require("./items/items.routes");
 const lugar = require("./lugares/lugares.route");
-const contizacion = require("./recibos/cotizaciones/cotizaciones.routes");
-const transferencias = require("./recibos/transferencias/transferencias.routes");
 
 const { checkToken } = require("../lib/helpers");
 const router = express.Router();
@@ -22,11 +20,9 @@ router.get("/", (req, res) => {
   });
 });
 router.use("/recibos", recibos);
-router.use("/transferencias", transferencias);
 router.use("/precio_logs", precio_logs);
 router.use("/auth", auth);
 router.use("/categorias", categoria);
-router.use("/cotizacion", contizacion);
 router.use("/items", checkToken, item);
 router.use("/lugares", lugar);
 router.use("/empresa_owner", empresa_owner);
