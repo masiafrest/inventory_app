@@ -36,7 +36,6 @@ router.get("/:nombre", async (req, res, next) => {
   }
 });
 
-// TODO logs si pueden ser automatico al insert or update precio y inventario, tal vez tenga q ver con beforeInsert y beforeUpdate
 router.post("/", async (req, res, next) => {
   console.log(req.userData);
   try {
@@ -84,7 +83,6 @@ router.post("/", async (req, res, next) => {
           ],
         },
       ],
-      //TODO FIX precio_log no se inserta ahora, pueda q precio_log vaya dentro de precio
       item_logs: [
         {
           usuario_id: req.userData.id,
@@ -146,9 +144,6 @@ router.post("/", async (req, res, next) => {
 router.patch("/", async (req, res, next) => {
   console.log("patch 😀 req.body: ", req.body);
   if (req.body.hasOwnProperty("inventarios")) {
-    console.log("has property inventarios");
-    //check if has precio mod
-    // TODO add inventory log
     const updatedInventario = req.body.inventarios[0];
     const inventario = await Inventario.query().findById(updatedInventario.id);
     await Inventario.transaction(async (trx) => {
@@ -162,23 +157,16 @@ router.patch("/", async (req, res, next) => {
         });
     });
     if (req.body.inventarios[0].hasOwnProperty("precio")) {
-      //make a precio history
-      console.log("has property precio 😁", req.userData);
       const updatedPrecio = req.body.inventarios[0].precio;
       const precio = await Precio.query().findById(updatedPrecio.id);
-      console.log(precio);
-      // TODO before insert check if the same
-      const newPrecioLog = await Precio.relatedQuery("logs")
-        .for(precio.id)
-        .insert({
-          inventario_id: req.body.inventarios[0].id,
-          usuario_id: req.userData.id,
-          precio_viejo: precio.precio,
-          costo_viejo: precio.costo,
-          precio_min_viejo: precio.precio_min,
-          proveedor_id: precio.proveedor_id,
-        });
-      console.log("new precio log", newPrecioLog);
+      await Precio.relatedQuery("logs").for(precio.id).insert({
+        inventario_id: req.body.inventarios[0].id,
+        usuario_id: req.userData.id,
+        precio_viejo: precio.precio,
+        costo_viejo: precio.costo,
+        precio_min_viejo: precio.precio_min,
+        proveedor_id: precio.proveedor_id,
+      });
     }
   }
   await Item.transaction(async (trx) => {
@@ -188,7 +176,6 @@ router.patch("/", async (req, res, next) => {
         noDelete: true,
       }
     );
-    console.log("item Updated: ", itemUpdated);
     res.send(itemUpdated);
   });
 });

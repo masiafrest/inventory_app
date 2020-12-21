@@ -79,7 +79,17 @@ exports.up = async function (knex) {
     references(table, tableNames.pago);
     addDefaultColumns(table);
   });
-  await knex.schema.createTable(tableNames.linea_venta_cotizacion, (table) => {
+  await knex.schema.createTable(tableNames.linea_cotizacion, (table) => {
+    table.increments().unsigned();
+    references(table, tableNames.venta, false);
+    references(table, tableNames.cotizacion, false);
+    references(table, tableNames.item, true, "inventario");
+    table.integer("qty").unsigned();
+    table.float("total");
+    table.float("tax");
+    addDefaultColumns(table);
+  });
+  await knex.schema.createTable(tableNames.linea_venta, (table) => {
     table.increments().unsigned();
     references(table, tableNames.venta, false);
     references(table, tableNames.cotizacion, false);
@@ -159,7 +169,8 @@ exports.down = async function (knex) {
       tableNames.linea_devolucion,
       tableNames.linea_nota_credito,
       tableNames.linea_garantia,
-      tableNames.linea_venta_cotizacion,
+      tableNames.linea_venta,
+      tableNames.linea_cotizacion,
       tableNames.venta,
       tableNames.pago,
       tableNames.devolucion,

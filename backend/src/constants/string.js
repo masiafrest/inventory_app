@@ -17,7 +17,10 @@ const tableNames = {
   devolucion: "devolucion", //dpnd on  recibo_encabezado.id
   pago: "pago", //dpnd on nota_credito.id, cheque.id,
   venta: "venta", //dpnd on recibo_encabezado.id, pago.id
-  linea_venta_cotizacion: "linea_venta_cotizacion", //dpnd on item.id, cotizacion.id || venta.id
+  transferencia: "transferencia",
+  linea_transferencia: "linea_transferencia",
+  linea_cotizacion: "linea_cotizacion",
+  linea_venta: "linea_venta", //dpnd on item.id, cotizacion.id || venta.id
   linea_garantia: "linea_garantia", //dpnd on item.id, garantia.id, venta.id
   linea_nota_credito: "linea_nota_credito", //dpnd on nota_credito.id, garantia.id, venta.id
   linea_devolucion: "linea_devolucion", //dpnd on garantia.id, item.id as salida y entrada, devolution.id
