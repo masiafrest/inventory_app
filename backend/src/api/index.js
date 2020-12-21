@@ -2,7 +2,7 @@ const express = require("express");
 const project = require("../constants/project");
 
 const auth = require("./auth/auth.routes");
-
+const recibos = require("./recibos");
 const categoria = require("./categorias/categorias.routes");
 const empresa_owner = require("./empresa_owner/empresa_owner.routes");
 const usuarios = require("./usuarios/usuarios.routes");
@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
     message: project.message + " API route 👩",
   });
 });
-
+router.use("/recibos", recibos);
 router.use("/transferencias", transferencias);
 router.use("/precio_logs", precio_logs);
 router.use("/auth", auth);
