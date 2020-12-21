@@ -144,12 +144,14 @@ router.patch("/:id", async (req, res, next) => {
   if (req.body.hasOwnProperty("inventarios")) {
     console.log("has property inventarios");
     //check if has precio mod
+    // TODO add inventory log
     if (req.body.inventarios[0].hasOwnProperty("precio")) {
       //make a precio history
       console.log("has property precio 😁", req.userData);
       const updatedPrecio = req.body.inventarios[0].precio;
       const precio = await Precio.query().findById(updatedPrecio.id);
       console.log(precio);
+      // TODO before insert check if the same
       const newPrecioLog = await Precio.relatedQuery("precio_logs")
         .for(precio.id)
         .insert({
