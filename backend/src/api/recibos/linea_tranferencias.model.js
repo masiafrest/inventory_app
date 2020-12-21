@@ -2,30 +2,21 @@ const BaseModel = require("../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../constants/string");
 //TODO resolver si tneer venta y cotizaciones por separado
-class Linea_venta_cotizacion extends BaseModel {
+class Linea_tranferencia extends BaseModel {
   static get tableName() {
-    return tableNames.linea_venta_cotizacion;
+    return tableNames.linea_transferencia;
   }
 
   static get relationMappings() {
-    const Cotizacion = require("./cotizaciones/cotizaciones.model");
-    const Venta = require("./ventas/ventas.model");
+    const Transferencia = require("./transferencias/transferencias.model");
     const Inventario = require("../items/inventarios/inventarios.model");
     return {
       cotizacion: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Cotizacion,
+        modelClass: Transferencia,
         join: {
-          from: `${tableNames.cotizacion}.id`,
-          to: `${tableNames.linea_venta_cotizacion}.${tableNames.cotizacion}_id`,
-        },
-      },
-      venta: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Venta,
-        join: {
-          from: `${tableNames.venta}.id`,
-          to: `${tableNames.linea_venta_cotizacion}.${tableNames.venta}_id`,
+          from: `${tableNames.transferencia}.id`,
+          to: `${tableNames.linea_transferencia}.${tableNames.transferencia}_id`,
         },
       },
       inventario: {
@@ -33,11 +24,11 @@ class Linea_venta_cotizacion extends BaseModel {
         modelClass: Inventario,
         join: {
           from: `${tableNames.inventario}.id`,
-          to: `${tableNames.linea_venta_cotizacion}.${tableNames.item}_id`,
+          to: `${tableNames.transferencia}.${tableNames.inventario}_id`,
         },
       },
     };
   }
 }
 
-module.exports = Linea_venta_cotizacion;
+module.exports = Linea_tranferencia;

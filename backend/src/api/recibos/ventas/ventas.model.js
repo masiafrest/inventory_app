@@ -24,7 +24,7 @@ class Venta extends BaseModel {
         modelClass: Linea_venta,
         join: {
           from: `${tableNames.venta}.id`,
-          to: `${tableNames.linea_venta_cotizacion}.${tableNames.venta}_id`,
+          to: `${tableNames.linea_venta}.${tableNames.venta}_id`,
         },
       },
     };

@@ -1,10 +1,10 @@
 const BaseModel = require("../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../constants/string");
-//TODO resolver si tneer venta y cotizaciones por separado
-class Linea_venta_cotizacion extends BaseModel {
+
+class Linea_cotizacion extends BaseModel {
   static get tableName() {
-    return tableNames.linea_venta_cotizacion;
+    return tableNames.linea_cotizacion;
   }
 
   static get relationMappings() {
@@ -16,7 +16,7 @@ class Linea_venta_cotizacion extends BaseModel {
         modelClass: Cotizacion,
         join: {
           from: `${tableNames.cotizacion}.id`,
-          to: `${tableNames.linea_venta_cotizacion}.${tableNames.cotizacion}_id`,
+          to: `${tableNames.linea_cotizacion}.${tableNames.cotizacion}_id`,
         },
       },
       inventario: {
@@ -24,11 +24,11 @@ class Linea_venta_cotizacion extends BaseModel {
         modelClass: Inventario,
         join: {
           from: `${tableNames.inventario}.id`,
-          to: `${tableNames.linea_venta_cotizacion}.${tableNames.item}_id`,
+          to: `${tableNames.linea_cotizacion}.${tableNames.item}_id`,
         },
       },
     };
   }
 }
 
-module.exports = Linea_venta_cotizacion;
+module.exports = Linea_cotizacion;

@@ -36,3 +36,4 @@ exports.down = async function (knex) {
   await knex.schema.dropTableIfExists(tableNames.linea_transferencia);
   await knex.schema.dropTableIfExists(tableNames.transferencia);
 };
+//add role table

@@ -4,27 +4,18 @@ const { Model } = require("objection");
 
 class Venta extends BaseModel {
   static get tableName() {
-    return tableNames.venta;
+    return tableNames.transferencia;
   }
 
   static get relationMappings() {
-    const Recibo_encabezado = require("../../noRoute/recibo_encabezados.model");
-    const Linea_venta_cotizacion = require("../linea_ventas.model");
+    const Linea_tranferencia = require("../linea_tranferencias.model");
     return {
-      encabezado: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Recibo_encabezado,
-        join: {
-          from: `${tableNames.venta}.${tableNames.recibo_encabezado}_id`,
-          to: `${tableNames.recibo_encabezado}.id`,
-        },
-      },
       lineas: {
         relation: Model.HasManyRelation,
-        modelClass: Linea_venta_cotizacion,
+        modelClass: Linea_tranferencia,
         join: {
-          from: `${tableNames.venta}.id`,
-          to: `${tableNames.linea_venta_cotizacion}.${tableNames.venta}_id`,
+          from: `${tableNames.transferencia}.id`,
+          to: `${tableNames.linea_transferencia}.${tableNames.transferencia}_id`,
         },
       },
     };
