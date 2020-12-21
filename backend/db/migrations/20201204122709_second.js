@@ -81,22 +81,22 @@ exports.up = async function (knex) {
   });
   await knex.schema.createTable(tableNames.linea_cotizacion, (table) => {
     table.increments().unsigned();
-    references(table, tableNames.venta, false);
     references(table, tableNames.cotizacion, false);
     references(table, tableNames.item, true, "inventario");
     table.integer("qty").unsigned();
-    table.float("total");
+    table.integer("precio_mod").unsigned();
     table.float("tax");
+    table.float("total");
     addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.linea_venta, (table) => {
     table.increments().unsigned();
     references(table, tableNames.venta, false);
-    references(table, tableNames.cotizacion, false);
     references(table, tableNames.item, true, "inventario");
     table.integer("qty").unsigned();
-    table.float("total");
+    table.integer("precio_mod").unsigned();
     table.float("tax");
+    table.float("total");
     addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.linea_garantia, (table) => {
