@@ -9,16 +9,16 @@ class Precio_log extends BaseModel {
 
   static get relationMappings() {
     const Usuario = require("../../usuarios/usuarios.model");
-    const Item_inventario = require("../../items/inventarios/inventarios.model");
+    const Inventario = require("../../items/inventarios/inventarios.model");
     const Proveedor = require("../../proveedors/proveedores.model");
 
     return {
       items: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Item_inventario,
+        modelClass: Inventario,
         join: {
           from: `${tableNames.item}.id`,
-          to: `${tableNames.precio_log}.${tableNames.item_inventario}_id`,
+          to: `${tableNames.precio_log}.${tableNames.inventario}_id`,
         },
       },
       usuarios: {
@@ -44,7 +44,7 @@ class Precio_log extends BaseModel {
       defaultSelects(builder) {
         builder.select(
           "id",
-          "item_inventario_id",
+          "inventario_id",
           "usuario_id",
           "proveedor_id",
           "precio_viejo",

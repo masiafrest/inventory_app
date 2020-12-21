@@ -82,7 +82,7 @@ exports.up = async function (knex) {
     addDefaultColumns(table);
   });
 
-  await knex.schema.createTable(tableNames.item_inventario, (table) => {
+  await knex.schema.createTable(tableNames.inventario, (table) => {
     createTableIncrementsStringNotNullable(table);
     references(table, tableNames.item, true, "", true);
     table.string("qty").notNullable().unsigned();
@@ -92,7 +92,7 @@ exports.up = async function (knex) {
     references(table, tableNames.precio);
     table.string("sku", 12);
     //sku is unique, theres is a skugenerator in lib helper to use in the front end
-    table.unique(["sku", "item_id"]);
+    table.unique(["sku", "item_id", "color"]);
     addDefaultColumns(table);
   });
 
@@ -110,7 +110,7 @@ exports.up = async function (knex) {
 
 exports.down = async function (knex) {
   await knex.schema.dropTableIfExists(tableNames.usuario);
-  await knex.schema.dropTableIfExists(tableNames.item_inventario);
+  await knex.schema.dropTableIfExists(tableNames.inventario);
   await knex.schema.dropTableIfExists(tableNames.item);
   await knex.schema.dropTableIfExists(tableNames.precio);
   await knex.schema.dropTableIfExists(tableNames.empresa_cliente);

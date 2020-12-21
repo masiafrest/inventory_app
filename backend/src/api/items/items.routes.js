@@ -3,7 +3,7 @@ const router = require("express").Router();
 const inventarios = require("./inventarios/inventarios.routes");
 
 const Item = require("./items.model");
-const Item_inventario = require("./inventarios/inventarios.model");
+const Inventario = require("./inventarios/inventarios.model");
 const Precio = require("../precio/precios.model");
 const getItemGraph = `[inventarios(defaultSelects).[
         precio(defaultSelects),
@@ -77,7 +77,7 @@ router.post("/", async (req, res, next) => {
           ],
           precio_logs: [
             {
-              item_inventario_id: "#ref{item_inventory_id.id}",
+              inventario_id: "#ref{item_inventory_id.id}",
               usuario_id: req.userData.id,
               proveedor: [{ id: proveedor_id }],
             },
@@ -100,10 +100,10 @@ router.post("/", async (req, res, next) => {
     };
     const existingItem = await Item.query().where({ nombre }).first();
     if (existingItem) {
-      await Item_inventario.transaction(async (trx) => {
+      await Inventario.transaction(async (trx) => {
         console.log("existing item");
         itemInventarioObj.item_id = existingItem.id;
-        const insertedItem = await Item_inventario.query(trx).insertGraph(
+        const insertedItem = await Inventario.query(trx).insertGraph(
           itemInventarioObj,
           {
             relate: true,
@@ -143,12 +143,24 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.patch("/:id", async (req, res, next) => {
+router.patch("/", async (req, res, next) => {
   console.log("patch 😀 req.body: ", req.body);
   if (req.body.hasOwnProperty("inventarios")) {
     console.log("has property inventarios");
     //check if has precio mod
     // TODO add inventory log
+    const updatedInventario = req.body.inventarios[0];
+    const inventario = await Inventario.query().findById(updatedInventario.id);
+    await Inventario.transaction(async (trx) => {
+      await Inventario.relatedQuery("logs")
+        .for(inventario.id)
+        .insert({
+          usuario_id: req.userData.id,
+          inventario_id: inventario.id,
+          ajuste: updatedInventario.qty - inventario.qty,
+          evento: "modificar",
+        });
+    });
     if (req.body.inventarios[0].hasOwnProperty("precio")) {
       //make a precio history
       console.log("has property precio 😁", req.userData);
@@ -156,10 +168,10 @@ router.patch("/:id", async (req, res, next) => {
       const precio = await Precio.query().findById(updatedPrecio.id);
       console.log(precio);
       // TODO before insert check if the same
-      const newPrecioLog = await Precio.relatedQuery("precio_logs")
+      const newPrecioLog = await Precio.relatedQuery("logs")
         .for(precio.id)
         .insert({
-          item_inventario_id: req.body.inventarios[0].id,
+          inventario_id: req.body.inventarios[0].id,
           usuario_id: req.userData.id,
           precio_viejo: precio.precio,
           costo_viejo: precio.costo,

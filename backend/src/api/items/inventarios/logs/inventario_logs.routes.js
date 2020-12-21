@@ -1,4 +1,4 @@
-const Item_inventario_log = require("./item_inventario_logs.model");
+const Item_inventario_log = require("./inventario_logs.model");
 
 const router = require("express").Router();
 

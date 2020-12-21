@@ -8,15 +8,15 @@ class Item extends BaseModel {
   }
 
   static get relationMappings() {
-    const Item_inventario = require("./inventarios/inventarios.model");
+    const Inventario = require("./inventarios/inventarios.model");
     const Categoria = require("../categorias/categorias.model");
     return {
       inventarios: {
         relation: Model.HasManyRelation,
-        modelClass: Item_inventario,
+        modelClass: Inventario,
         join: {
           from: `${tableNames.item}.id`,
-          to: `${tableNames.item_inventario}.${tableNames.item}_id`,
+          to: `${tableNames.inventario}.${tableNames.item}_id`,
         },
       },
       categoria: {

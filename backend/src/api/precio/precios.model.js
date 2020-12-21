@@ -28,7 +28,7 @@ class Precio extends BaseModel {
           to: `${tableNames.item}.${tableNames.precio}_id`,
         },
       },
-      precio_logs: {
+      logs: {
         relation: Model.HasManyRelation,
         modelClass: Precio_log,
         join: {

@@ -10,7 +10,7 @@ class Linea_venta_cotizacion extends BaseModel {
   static get relationMappings() {
     const Cotizacion = require("./cotizaciones/cotizaciones.model");
     const Venta = require("./ventas/ventas.model");
-    const Item_inventario = require("../items/item_inventarios/item_inventarios.model");
+    const Inventario = require("../items/inventarios/inventarios.model");
     return {
       cotizacion: {
         relation: Model.BelongsToOneRelation,
@@ -28,11 +28,11 @@ class Linea_venta_cotizacion extends BaseModel {
           to: `${tableNames.linea_venta_cotizacion}.${tableNames.venta}_id`,
         },
       },
-      item_inventario: {
+      inventario: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Item_inventario,
+        modelClass: Inventario,
         join: {
-          from: `${tableNames.item_inventario}.id`,
+          from: `${tableNames.inventario}.id`,
           to: `${tableNames.linea_venta_cotizacion}.${tableNames.item}_id`,
         },
       },

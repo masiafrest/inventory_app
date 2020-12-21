@@ -2,29 +2,29 @@ const BaseModel = require("../../../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../../../constants/string");
 
-class Item_inventario_log extends BaseModel {
+class Inventario_log extends BaseModel {
   static get tableName() {
-    return tableNames.item_inventario_log;
+    return tableNames.inventario_log;
   }
 
   static get relationMappings() {
-    const Item_inventario = require("../inventarios.model");
+    const Inventario = require("../inventarios.model");
     const Usuario = require("../../../usuarios/usuarios.model");
     const Proveedor = require("../../../proveedors/proveedores.model");
     return {
       inventario: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Item_inventario,
+        modelClass: Inventario,
         join: {
-          from: `${tableNames.item_inventario_log}.${tableNames.item_inventario}_id`,
-          to: `${tableNames.item_inventario}.id`,
+          from: `${tableNames.inventario_log}.${tableNames.inventario}_id`,
+          to: `${tableNames.inventario}.id`,
         },
       },
       usuario: {
         relation: Model.BelongsToOneRelation,
         modelClass: Usuario,
         join: {
-          from: `${tableNames.item_inventario_log}.${tableNames.usuario}_id`,
+          from: `${tableNames.inventario_log}.${tableNames.usuario}_id`,
           to: `${tableNames.usuario}.id`,
         },
       },
@@ -32,7 +32,7 @@ class Item_inventario_log extends BaseModel {
         relation: Model.BelongsToOneRelation,
         modelClass: Proveedor,
         join: {
-          from: `${tableNames.item_inventario_log}.${tableNames.proveedor}_id`,
+          from: `${tableNames.inventario_log}.${tableNames.proveedor}_id`,
           to: `${tableNames.proveedor}.id`,
         },
       },
@@ -43,7 +43,7 @@ class Item_inventario_log extends BaseModel {
       defaultSelects(builder) {
         builder.select(
           "id",
-          "item_inventario_id",
+          "inventario_id",
           "usuario_id",
           "proveedor_id",
           "evento",
@@ -54,4 +54,4 @@ class Item_inventario_log extends BaseModel {
   }
 }
 
-module.exports = Item_inventario_log;
+module.exports = Inventario_log;

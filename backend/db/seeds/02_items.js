@@ -25,7 +25,7 @@ exports.seed = async (knex) => {
   await knex(tableNames.lugar).del();
   await knex(tableNames.categoria).del();
   await knex(tableNames.item).del();
-  await knex(tableNames.item_inventario).del();
+  await knex(tableNames.inventario).del();
   await knex(tableNames.precio).del();
 
   const lugar_ids = await knex(tableNames.lugar).insert(
@@ -61,7 +61,7 @@ exports.seed = async (knex) => {
   console.log("👩 precio_id: ", precio_id);
   console.log("👩 item_ids: ", item_ids);
   console.log("👩 lugar_ids: ", lugar_ids);
-  await knex(tableNames.item_inventario).insert([
+  await knex(tableNames.inventario).insert([
     {
       item_id: item_ids[0],
       qty: 25,

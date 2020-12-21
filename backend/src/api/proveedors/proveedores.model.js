@@ -7,15 +7,15 @@ class Proveedor extends BaseModel {
     return tableNames.proveedor;
   }
   static get relationMappings() {
-    const Item_inventario_log = require("../items/inventarios/logs/item_inventario_logs.model");
+    const Inventario_log = require("../items/inventarios/logs/inventario_logs.model");
     const Precio = require("../precio/precios.model");
     return {
       item_logs: {
         relation: Model.HasManyRelation,
-        modelClass: Item_inventario_log,
+        modelClass: Inventario_log,
         join: {
           from: `${tableNames.proveedor}.id`,
-          to: `${tableNames.item_inventario_log}.proveedor_id`,
+          to: `${tableNames.inventario_log}.proveedor_id`,
         },
       },
       precios: {
