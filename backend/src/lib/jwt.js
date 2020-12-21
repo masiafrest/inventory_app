@@ -7,7 +7,7 @@ function sign(payload) {
       payload,
       process.env.JWT_SECRET,
       {
-        expiresIn: "1d",
+        //expiresIn: "1d",
       },
       (error, token) => {
         if (error) {

@@ -15,7 +15,7 @@ function notFound(req, res, next) {
 }
 
 function errorHandler(error, req, res, next) {
-  console.log("error handler: ", error);
+  console.log("error handler: ");
   const statusCode =
     res.statusCode === 200 ? errorType[error.name] || 500 : res.statusCode;
   res.status(statusCode);

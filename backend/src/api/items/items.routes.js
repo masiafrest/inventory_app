@@ -2,16 +2,16 @@ const router = require("express").Router();
 
 const Item = require("./items.model");
 const Item_inventario = require("./inventarios/inventarios.model");
+const Precio = require("../precio/precios.model");
+const getItemGraph = `[inventarios(defaultSelects).[
+        precio(defaultSelects),
+          lugares(defaultSelects)
+        ], categoria(defaultSelects)]`;
 
 router.get("/", async (req, res, next) => {
   try {
     const items = await Item.query()
-      .withGraphFetched(
-        `[inventarios(defaultSelects).[
-          item_logs(defaultSelects), precio(defaultSelects), precio_logs(defaultSelects),
-          lugares(defaultSelects)
-        ], categoria(defaultSelects)]`
-      )
+      .withGraphFetched(getItemGraph)
       .modify("defaultSelects");
     res.json(items);
   } catch (err) {
@@ -22,14 +22,10 @@ router.get("/", async (req, res, next) => {
 router.get("/:nombre", async (req, res, next) => {
   try {
     const items = await Item.query()
-      .withGraphFetched(
-        `[inventarios(defaultSelects).[
-          item_logs(defaultSelects), precio(defaultSelects), precio_logs(defaultSelects),
-          lugares(defaultSelects)
-        ], categoria(defaultSelects)]`
-      )
+      .withGraphFetched(getItemGraph)
       .where("nombre", req.params.nombre)
-      .modify("defaultSelects");
+      .modify("defaultSelects")
+      .first();
     res.json(items);
   } catch (err) {
     next(err);
@@ -144,14 +140,37 @@ router.post("/", async (req, res, next) => {
 });
 
 router.patch("/:id", async (req, res, next) => {
-  if (req.body.hasOwnProperty("nombre") || req.body.hasOwnProperty("modelo")) {
-    //patch itemInvnetory sku, sku generate on client side, so if nombre or modelo if change should generate a new
+  console.log("patch 😀 req.body: ", req.body);
+  if (req.body.hasOwnProperty("inventarios")) {
+    console.log("has property inventarios");
+    //check if has precio mod
+    if (req.body.inventarios[0].hasOwnProperty("precio")) {
+      //make a precio history
+      console.log("has property precio 😁", req.userData);
+      const updatedPrecio = req.body.inventarios[0].precio;
+      const precio = await Precio.query().findById(updatedPrecio.id);
+      console.log(precio);
+      const newPrecioLog = await Precio.relatedQuery("precio_logs")
+        .for(precio.id)
+        .insert({
+          item_inventario_id: req.body.inventarios[0].id,
+          usuario_id: req.userData.id,
+          precio_viejo: precio.precio,
+          costo_viejo: precio.costo,
+          precio_min_viejo: precio.precio_min,
+          proveedor_id: precio.proveedor_id,
+        });
+      console.log("new precio log", newPrecioLog);
+    }
   }
   await Item.transaction(async (trx) => {
-    const itemUpdated = await Item.query(trx).patchAndFetchById(
-      req.params.id,
-      req.body
+    const itemUpdated = await Item.query(trx).upsertGraph(
+      { ...req.body },
+      {
+        noDelete: true,
+      }
     );
+    console.log("item Updated: ", itemUpdated);
     res.send(itemUpdated);
   });
 });
