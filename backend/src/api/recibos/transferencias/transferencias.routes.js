@@ -1,13 +1,13 @@
 const express = require("express");
 
-const Venta = require("./transferencias.model");
+const Transferencia = require("./transferencias.model");
 
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const ventas = await Venta.query();
-    res.json(ventas);
+    const transferencias = await Transferencia.query();
+    res.json(transferencias);
   } catch (err) {
     next(err);
   }
