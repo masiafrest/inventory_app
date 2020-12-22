@@ -1,6 +1,7 @@
 const BaseModel = require("../../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../../constants/string");
+const Precio = require("../precios.model");
 
 class Precio_log extends BaseModel {
   static get tableName() {
@@ -53,6 +54,32 @@ class Precio_log extends BaseModel {
         );
       },
     };
+  }
+  static async beforeInsert({ items, inputItems, asFindQuery }) {
+    console.log("PRECIO_LOG before insert 😛");
+    console.log("items:     ", items);
+    console.log("inputItems:", inputItems);
+    const { precio_id } = inputItems[0];
+    //inputItems[0].precio_viejo = 1000;
+    const precioDB = await Precio.query().findById(precio_id);
+    console.log("precioDB: ", precioDB);
+    if (precioDB) {
+      const {
+        precio,
+        oferta,
+        oferta_precio,
+        costo,
+        precio_min,
+        proveedor_id,
+        created_at,
+        updated_at,
+      } = precioDB;
+      if (created_at < updated_at) {
+        inputItems[0].precio_viejo = precio;
+        inputItems[0].precio_min_viejo = precio_min;
+        inputItems[0].costo_viejo = costo;
+      }
+    }
   }
 }
 

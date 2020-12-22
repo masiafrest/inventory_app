@@ -1,7 +1,5 @@
 const router = require("express").Router();
-
 const inventarios = require("./inventarios/inventarios.routes");
-
 const Item = require("./items.model");
 const Inventario = require("./inventarios/inventarios.model");
 const Precio = require("../precio/precios.model");
@@ -37,7 +35,7 @@ router.get("/:nombre", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  console.log(req.userData);
+  console.log("POST items: ", req.userData);
   try {
     const {
       nombre,
@@ -55,7 +53,7 @@ router.post("/", async (req, res, next) => {
       costo,
     } = req.body;
     const itemInventarioObj = {
-      "#id": "item_inventory_id",
+      "#id": "inventory_id",
       qty,
       color,
       sku,
@@ -74,16 +72,16 @@ router.post("/", async (req, res, next) => {
               id: proveedor_id,
             },
           ],
-          precio_logs: [
+          logs: [
             {
-              inventario_id: "#ref{item_inventory_id.id}",
+              inventario_id: "#ref{inventory_id.id}",
               usuario_id: req.userData.id,
               proveedor: [{ id: proveedor_id }],
             },
           ],
         },
       ],
-      item_logs: [
+      logs: [
         {
           usuario_id: req.userData.id,
           ajuste: qty,
@@ -142,8 +140,33 @@ router.post("/", async (req, res, next) => {
 });
 
 router.patch("/", async (req, res, next) => {
-  console.log("patch 😀 req.body: ", req.body);
-  if (req.body.hasOwnProperty("inventarios")) {
+  console.log("patch 😀 req.body: ", req.body.inventarios);
+  /*   const inventarios = req.body.inventarios.map((inventario) => {
+    if ("precio" in inventario) {
+      console.log(";;;;;;;;;;;;;;;;;;;;;;;; ", inventario);
+      const logs = [];
+      logs.push({
+        inventario_id: inventario.id,
+        usuario_id: req.userData.id,
+        proveedor_id: inventario.precio.proveedor_id,
+      });
+      
+    }
+  }); */
+  for (let inventario of req.body.inventarios) {
+    if ("precio" in inventario) {
+      console.log(";;;;;;;;;;;;;;;;;;;;;;;; ", inventario);
+      inventario.precio.logs = [
+        {
+          inventario_id: inventario.id,
+          usuario_id: req.userData.id,
+          proveedor_id: inventario.precio.proveedor_id,
+        },
+      ];
+    }
+  }
+  console.log(".............¡,", req.body.inventarios[0].precio);
+  /*   if (req.body.hasOwnProperty("inventarios")) {
     const updatedInventario = req.body.inventarios[0];
     const inventario = await Inventario.query().findById(updatedInventario.id);
     await Inventario.transaction(async (trx) => {
@@ -168,7 +191,8 @@ router.patch("/", async (req, res, next) => {
         proveedor_id: precio.proveedor_id,
       });
     }
-  }
+  } */
+
   await Item.transaction(async (trx) => {
     const itemUpdated = await Item.query(trx).upsertGraph(
       { ...req.body },
