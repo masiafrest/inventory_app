@@ -64,16 +64,7 @@ class Precio_log extends BaseModel {
     const precioDB = await Precio.query().findById(precio_id);
     console.log("precioDB: ", precioDB);
     if (precioDB) {
-      const {
-        precio,
-        oferta,
-        oferta_precio,
-        costo,
-        precio_min,
-        proveedor_id,
-        created_at,
-        updated_at,
-      } = precioDB;
+      const { precio, costo, precio_min, created_at, updated_at } = precioDB;
       if (created_at < updated_at) {
         inputItems[0].precio_viejo = precio;
         inputItems[0].precio_min_viejo = precio_min;
