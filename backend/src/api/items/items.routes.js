@@ -95,6 +95,8 @@ router.post("/", async (req, res, next) => {
       ],
     };
     const existingItem = await Item.query().where({ nombre }).first();
+
+    //check if item exist then incoming data is item inventory of diferent color
     if (existingItem) {
       await Inventario.transaction(async (trx) => {
         console.log("existing item");
@@ -110,6 +112,7 @@ router.post("/", async (req, res, next) => {
         res.json(insertedItem);
       });
     }
+
     console.log("no existe item");
     await Item.transaction(async (trx) => {
       const insertedItem = await Item.query(trx)
@@ -141,31 +144,26 @@ router.post("/", async (req, res, next) => {
 
 router.patch("/", async (req, res, next) => {
   console.log("patch 😀 req.body: ", req.body.inventarios);
-  /*   const inventarios = req.body.inventarios.map((inventario) => {
-    if ("precio" in inventario) {
-      console.log(";;;;;;;;;;;;;;;;;;;;;;;; ", inventario);
-      const logs = [];
-      logs.push({
-        inventario_id: inventario.id,
-        usuario_id: req.userData.id,
-        proveedor_id: inventario.precio.proveedor_id,
-      });
-      
-    }
-  }); */
   for (let inventario of req.body.inventarios) {
+    const { id, qty, basura, lugar_id, precio } = inventario;
+    const defaultData = {
+      inventario_id: id,
+      usuario_id: req.userData.id,
+      proveedor_id: precio.proveedor_id,
+    };
     if ("precio" in inventario) {
-      console.log(";;;;;;;;;;;;;;;;;;;;;;;; ", inventario);
-      inventario.precio.logs = [
+      inventario.precio.logs = [{ ...defaultData }];
+    }
+    if ("qty" in inventario) {
+      inventario.logs = [
         {
-          inventario_id: inventario.id,
-          usuario_id: req.userData.id,
-          proveedor_id: inventario.precio.proveedor_id,
+          ...defaultData,
+          ajuste: qty,
+          evento: "modificar",
         },
       ];
     }
   }
-  console.log(".............¡,", req.body.inventarios[0].precio);
   /*   if (req.body.hasOwnProperty("inventarios")) {
     const updatedInventario = req.body.inventarios[0];
     const inventario = await Inventario.query().findById(updatedInventario.id);

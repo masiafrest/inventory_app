@@ -1,6 +1,7 @@
 const BaseModel = require("../../../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../../../constants/string");
+const Inventario = require("../inventarios.model");
 
 class Inventario_log extends BaseModel {
   static get tableName() {
@@ -51,6 +52,39 @@ class Inventario_log extends BaseModel {
         );
       },
     };
+  }
+  static async beforeInsert({ items, inputItems, asFindQuery }) {
+    console.log("INVENTARIO LOG before insert 😛");
+    console.log("inputItems:", inputItems);
+    let { inventario_id, ajuste, evento } = inputItems[0];
+    const inventarioDB = await Inventario.query().findById(inventario_id);
+    //TODO fix ajuste de como debe ser el input, por tema de linea ventas y modificar item
+    switch (evento) {
+      case "crear":
+        console.log("ACABARON DE CREAR ITEM", inventario_id);
+        break;
+      case "modificar":
+        console.log("ACABARON DE MODIFICAR ITEM", inventario_id);
+        console.log("ajuste - qty : ", ajuste, inventarioDB.qty);
+        const result = ajuste - inventarioDB.qty;
+        inputItems[0].ajuste = result;
+        break;
+      case "venta":
+        // qty se debe de restar y aparece ajuste como qty negativo
+        console.log("ACABARON DE VENDER ITEM", inventario_id);
+        result = ajuste - inventarioDB.qty;
+        inputItems[0].ajuste = result;
+        break;
+    }
+    console.log("inventarioDB: ", inventarioDB);
+    if (inventarioDB) {
+      const { created_at, updated_at } = inventarioDB;
+      if (created_at < updated_at) {
+        /*         inputItems[0].precio_viejo = precio;
+        inputItems[0].precio_min_viejo = precio_min;
+        inputItems[0].costo_viejo = costo */
+      }
+    }
   }
 }
 
