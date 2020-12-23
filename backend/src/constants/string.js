@@ -10,13 +10,12 @@ const tableNames = {
   inventario: "inventario", //dpnd on item.id, lugar.id
   usuario: "usuario", //dpnd on empresa.id
   //
-  recibo_encabezado: "recibo_encabezado", //dpnd on empresa_cliente.id, empleado.id
-  cotizacion: "cotizacion", //dpnd on recibo_encabezado.id
-  garantia: "garantia", //dpnd on recibo_encabezado.id
-  nota_credito: "nota_credito", //dpnd on recibo_encabezado.id
-  devolucion: "devolucion", //dpnd on  recibo_encabezado.id
-  pago: "pago", //dpnd on nota_credito.id, cheque.id,
-  venta: "venta", //dpnd on recibo_encabezado.id, pago.id
+  cotizacion: "cotizacion",
+  garantia: "garantia",
+  nota_credito: "nota_credito",
+  devolucion: "devolucion",
+  pago: "pago",
+  venta: "venta", //dpnd on  pago.id
   transferencia: "transferencia",
   linea_transferencia: "linea_transferencia",
   linea_cotizacion: "linea_cotizacion",

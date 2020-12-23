@@ -9,17 +9,8 @@ class Venta extends BaseModel {
   }
 
   static get relationMappings() {
-    const Recibo_encabezado = require("../../noRoute/recibo_encabezados.model");
     const Linea_venta = require("./linea_ventas.model");
     return {
-      encabezado: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Recibo_encabezado,
-        join: {
-          from: `${tableNames.venta}.${tableNames.recibo_encabezado}_id`,
-          to: `${tableNames.recibo_encabezado}.id`,
-        },
-      },
       lineas: {
         relation: Model.HasManyRelation,
         modelClass: Linea_venta,
@@ -44,7 +35,6 @@ class Venta extends BaseModel {
       defaultSelects(builder) {
         builder.select(
           "id",
-          "recibo_encabezado_id",
           "total",
           "sub_total",
           "tax",

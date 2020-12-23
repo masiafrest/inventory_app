@@ -2,6 +2,7 @@ const BaseModel = require("../BaseModel");
 const { Model } = require("objection");
 
 const { tableNames } = require("../../constants/string");
+const Venta = require("../recibos/ventas/ventas.model");
 
 class Usuario extends BaseModel {
   static get tableName() {
@@ -10,7 +11,6 @@ class Usuario extends BaseModel {
 
   static get relationMappings() {
     const Empresa_owner = require("../empresa_owner/empresa_owner.model");
-    const Recibo_encabezado = require("../noRoute/recibo_encabezados.model");
     return {
       empresa: {
         relation: Model.BelongsToOneRelation,
@@ -20,12 +20,12 @@ class Usuario extends BaseModel {
           to: `${tableNames.empresa_owner}.id`,
         },
       },
-      recibos: {
+      venta: {
         relation: Model.HasManyRelation,
-        modelClass: Recibo_encabezado,
+        modelClass: Venta,
         join: {
           from: `${tableNames.usuario}.id`,
-          to: `${tableNames.recibo_encabezado}.empleado.id`,
+          to: `${tableNames.venta}.${tableNames.usuario}_id`,
         },
       },
     };

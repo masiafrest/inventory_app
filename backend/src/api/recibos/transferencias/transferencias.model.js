@@ -26,7 +26,6 @@ class Venta extends BaseModel {
       defaultSelects(builder) {
         builder.select(
           "id",
-          "recibo_encabezado_id",
           "total",
           "sub_total",
           "tax",

@@ -44,14 +44,14 @@ router.post("/", async (req, res, next) => {
           // hacer el inventario log
           await Inventario_log.query(trx).insert({
             inventario_id: inventarioDb.id,
-            usuario_id: req.body.encabezado[0].usuario_id,
+            usuario_id: req.body.usuario_id,
             evento: "venta",
             ajuste: -linea.qty,
           });
         });
       });
     }
-    //TODO descontar del inventario la cantidad
+    //insertar la venta
     await Venta.transaction(async (trx) => {
       const ventaPosted = await Venta.query(trx).insertGraph({
         ...req.body,

@@ -20,12 +20,8 @@ router.post("/", async (req, res, next) => {
     await Cotizacion.transaction(async (trx) => {
       const insertedCotizacion = await Cotizacion.query(trx).insertGraph({
         total,
-        encabezado: [
-          {
-            empresa_cliente_id,
-            usuario_id,
-          },
-        ],
+        empresa_cliente_id,
+        usuario_id,
         lineas: lineas,
       });
       console.log("finish insertGraph");

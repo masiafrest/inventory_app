@@ -9,17 +9,8 @@ class Garantia extends BaseModel {
   }
 
   static get relationMappings() {
-    const Recibo_encabezado = require("../../noRoute/recibo_encabezados.model");
     const Linea_garantia = require("../linea_garantias.model");
     return {
-      encabezado: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Recibo_encabezado,
-        join: {
-          from: `${tableNames.garantia}.${tableNames.recibo_encabezado}_id`,
-          to: `${tableNames.recibo_encabezado}.id`,
-        },
-      },
       lineas: {
         relation: Model.HasManyRelation,
         modelClass: Linea_garantia,
@@ -33,7 +24,7 @@ class Garantia extends BaseModel {
   static get modifiers() {
     return {
       defaultSelects(builder) {
-        builder.select("id", "recibo_encabezado_id", "total", "created_at");
+        builder.select("id", "total", "created_at");
       },
     };
   }
