@@ -68,12 +68,6 @@ class Inventario_log extends BaseModel {
         const result = ajuste - inventarioDB.qty;
         inputItems[0].ajuste = result;
         break;
-      case "venta":
-        // qty se debe de restar y aparece ajuste como qty negativo
-        console.log("ACABARON DE VENDER ITEM", inventario_id);
-        result = ajuste - inventarioDB.qty;
-        inputItems[0].ajuste = result;
-        break;
     }
     console.log("inventarioDB: ", inventarioDB);
     if (inventarioDB) {
@@ -83,6 +77,20 @@ class Inventario_log extends BaseModel {
         inputItems[0].precio_min_viejo = precio_min;
         inputItems[0].costo_viejo = costo */
       }
+    }
+  }
+  static async beforeUpdate({ inputItems }) {
+    console.log("INVENTARIO LOG before Update😛");
+    console.log("inputItems:", inputItems);
+    let { inventario_id, ajuste, evento } = inputItems[0];
+    const inventarioDB = await Inventario.query().findById(inventario_id);
+    switch (evento) {
+      case "modificar":
+        console.log("ACABARON DE MODIFICAR ITEM", inventario_id);
+        console.log("ajuste - qty : ", ajuste, inventarioDB.qty);
+        const result = ajuste - inventarioDB.qty;
+        inputItems[0].ajuste = result;
+        break;
     }
   }
 }

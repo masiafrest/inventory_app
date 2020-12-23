@@ -1,5 +1,6 @@
 const express = require("express");
 const Inventario = require("../../items/inventarios/inventarios.model");
+const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
 const Precio = require("../../precio/precios.model");
 
 const Venta = require("./ventas.model");
@@ -21,11 +22,12 @@ router.post("/", async (req, res, next) => {
     if (req.body.hasOwnProperty("lineas")) {
       console.log("has lineas");
       req.body.lineas.map(async (linea) => {
-        const precioId = await Inventario.query()
-          .findById(linea.inventario_id)
-          .select("precio_id");
-
-        const precioDB = await Precio.query().findById(precioId.precio_id);
+        //check is precio is above precio_min
+        const inventarioDb = await Inventario.query().findById(
+          linea.inventario_id
+        );
+        console.log("😀MAP linea inventarioDB: ", inventarioDb);
+        const precioDB = await Precio.query().findById(inventarioDb.precio_id);
         // TODO derepente usando un funcion recursion para saber si es menor q oferta o precio min
         if (linea.precio <= precioDB.oferta_precio) {
           res.status(406);
@@ -35,6 +37,18 @@ router.post("/", async (req, res, next) => {
           res.status(406);
           res.json("precio debajo del minimo");
         }
+        await Inventario.transaction(async (trx) => {
+          //descontar inventario
+          const result = inventarioDb.qty - linea.qty;
+          await inventarioDb.$query(trx).patch({ qty: result });
+          // hacer el inventario log
+          await Inventario_log.query(trx).insert({
+            inventario_id: inventarioDb.id,
+            usuario_id: req.body.encabezado[0].usuario_id,
+            evento: "venta",
+            ajuste: -linea.qty,
+          });
+        });
       });
     }
     //TODO descontar del inventario la cantidad
@@ -42,6 +56,7 @@ router.post("/", async (req, res, next) => {
       const ventaPosted = await Venta.query(trx).insertGraph({
         ...req.body,
       });
+
       res.json(ventaPosted);
     });
   } catch (err) {

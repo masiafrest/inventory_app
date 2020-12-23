@@ -1,6 +1,8 @@
 const BaseModel = require("../../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../../constants/string");
+const Inventario = require("../../items/inventarios/inventarios.model");
+const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
 
 class Linea_venta extends BaseModel {
   static get tableName() {
