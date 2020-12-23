@@ -1,7 +1,6 @@
 const BaseModel = require("../../BaseModel");
 const { Model } = require("objection");
 const { tableNames } = require("../../../constants/string");
-//TODO resolver si tneer venta y cotizaciones por separado
 class Linea_tranferencia extends BaseModel {
   static get tableName() {
     return tableNames.linea_transferencia;
