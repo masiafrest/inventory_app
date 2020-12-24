@@ -8,8 +8,27 @@ const Venta = require("./ventas.model");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
+  console.log("ventas get/", req.body);
   try {
     const ventas = await Venta.query();
+    res.json(ventas);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const ventas = await Venta.query().findById(req.params.id);
+    res.json(ventas);
+  } catch (err) {
+    next(err);
+  }
+});
+router.get("/cliente/:empresa_cliente_id", async (req, res, next) => {
+  try {
+    const { empresa_cliente_id } = req.params;
+    const ventas = await Venta.query().where({ empresa_cliente_id });
     res.json(ventas);
   } catch (err) {
     next(err);
