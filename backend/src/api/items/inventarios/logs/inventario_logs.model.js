@@ -69,7 +69,6 @@ class Inventario_log extends BaseModel {
         inputItems[0].ajuste = result;
         break;
     }
-    console.log("inventarioDB: ", inventarioDB);
     if (inventarioDB) {
       const { created_at, updated_at } = inventarioDB;
       if (created_at < updated_at) {
