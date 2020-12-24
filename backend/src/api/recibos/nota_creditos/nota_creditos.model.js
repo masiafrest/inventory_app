@@ -7,7 +7,7 @@ class Nota_credito extends BaseModel {
   }
 
   static get relationMappings() {
-    const Linea_nota_credito = require("../linea_nota_creditos.model");
+    const Linea_nota_credito = require("./linea_nota_creditos.model");
     const Pago = require("../../noRoute/pagos.model");
     return {
       lineas: {

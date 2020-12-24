@@ -95,7 +95,7 @@ exports.up = async function (knex) {
   });
   await knex.schema.createTable(tableNames.linea_nota_credito, (table) => {
     table.increments().unsigned();
-    references(table, tableNames.garantia);
+    references(table, tableNames.garantia, false);
     references(table, tableNames.nota_credito);
     references(table, tableNames.venta, false);
     table.boolean("valido");
