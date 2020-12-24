@@ -53,7 +53,7 @@ router.post("/", async (req, res, next) => {
       costo,
     } = req.body;
     const itemInventarioObj = {
-      "#id": "inventory_id",
+      "#id": "inventory",
       qty,
       color,
       sku,
@@ -74,7 +74,7 @@ router.post("/", async (req, res, next) => {
           ],
           logs: [
             {
-              inventario_id: "#ref{inventory_id.id}",
+              inventario_id: "#ref{inventory.id}",
               usuario_id: req.userData.id,
               proveedor: [{ id: proveedor_id }],
             },

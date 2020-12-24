@@ -54,9 +54,8 @@ class Precio extends BaseModel {
     };
   }
 
-  static beforeUpdate({ items, inputItems, relation, asFindQuery }) {
-    console.log("PRECIO before Update 😎");
-    console.log("inputItems:", inputItems);
+  static beforeUpdate({ inputItems }) {
+    console.log("PRECIO before Update 😎, add new date to update_at");
     inputItems[0].updated_at = new Date().toISOString();
   }
 }

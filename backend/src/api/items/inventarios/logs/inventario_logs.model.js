@@ -59,9 +59,6 @@ class Inventario_log extends BaseModel {
     let { inventario_id, ajuste, evento } = inputItems[0];
     const inventarioDB = await Inventario.query().findById(inventario_id);
     switch (evento) {
-      case "crear":
-        console.log("ACABARON DE CREAR ITEM", inventario_id);
-        break;
       case "modificar":
         console.log("ACABARON DE MODIFICAR ITEM", inventario_id);
         console.log("ajuste - qty : ", ajuste, inventarioDB.qty);

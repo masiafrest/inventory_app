@@ -59,7 +59,6 @@ class Precio_log extends BaseModel {
     console.log("PRECIO_LOG before insert 😛");
     console.log("inputItems:", inputItems);
     const { precio_id } = inputItems[0];
-    console.log("precioLog precio_id: ", typeof precio_id);
     const precioDB = await Precio.query().findById(precio_id);
     console.log("precioDB: ", precioDB);
     if (precioDB) {
