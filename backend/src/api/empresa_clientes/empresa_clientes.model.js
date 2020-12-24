@@ -1,5 +1,4 @@
 const BaseModel = require("../BaseModel");
-const { Model } = require("objection");
 const { tableNames } = require("../../constants/string");
 
 class Empresa_cliente extends BaseModel {

@@ -11,7 +11,7 @@ class Cheque extends BaseModel {
     const Pago = require("../noRoute/pago.model");
     return {
       pagos: {
-        relation: Model.HasManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: Pago,
         join: {
           from: `${tableNames.cheque}.id`,

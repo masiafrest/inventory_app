@@ -1,5 +1,4 @@
 const BaseModel = require("../../BaseModel");
-const { Model } = require("objection");
 const { tableNames } = require("../../../constants/string");
 
 class Precio_log extends BaseModel {
@@ -14,7 +13,7 @@ class Precio_log extends BaseModel {
 
     return {
       items: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Inventario,
         join: {
           from: `${tableNames.item}.id`,
@@ -22,7 +21,7 @@ class Precio_log extends BaseModel {
         },
       },
       usuarios: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Usuario,
         join: {
           from: `${tableNames.usuario}.id`,
@@ -30,7 +29,7 @@ class Precio_log extends BaseModel {
         },
       },
       proveedor: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Proveedor,
         join: {
           from: `${tableNames.proveedor}.id`,

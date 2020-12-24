@@ -1,4 +1,3 @@
-const { Model } = require("objection");
 const BaseModel = require("../BaseModel");
 const { tableNames } = require("../../constants/string");
 
@@ -12,7 +11,7 @@ class Item extends BaseModel {
     const Categoria = require("../categorias/categorias.model");
     return {
       inventarios: {
-        relation: Model.HasManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: Inventario,
         join: {
           from: `${tableNames.item}.id`,
@@ -20,7 +19,7 @@ class Item extends BaseModel {
         },
       },
       categoria: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Categoria,
         join: {
           from: `${tableNames.item}.${tableNames.categoria}_id`,
@@ -28,7 +27,7 @@ class Item extends BaseModel {
         },
       },
       categoria2: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Categoria,
         join: {
           from: `${tableNames.item}.${tableNames.categoria}_2_id`,

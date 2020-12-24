@@ -1,6 +1,4 @@
 const BaseModel = require("../../BaseModel");
-const { Model } = require("objection");
-
 const { tableNames } = require("../../../constants/string");
 
 class Garantia extends BaseModel {
@@ -9,11 +7,11 @@ class Garantia extends BaseModel {
   }
 
   static get relationMappings() {
-    const Linea_garantia = require("../linea_garantias.model");
+    const linea_garantia = require("./linea_garantias.model");
     return {
       lineas: {
-        relation: Model.HasManyRelation,
-        modelClass: Linea_garantia,
+        relation: BaseModel.HasManyRelation,
+        modelClass: linea_garantia,
         join: {
           from: `${tableNames.garantia}.id`,
           to: `${tableNames.linea_garantia}.${tableNames.garantia}_id`,

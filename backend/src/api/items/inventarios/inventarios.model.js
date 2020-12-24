@@ -1,5 +1,4 @@
 const BaseModel = require("../../BaseModel");
-const { Model } = require("objection");
 const { tableNames } = require("../../../constants/string");
 
 class Inventario extends BaseModel {
@@ -15,7 +14,7 @@ class Inventario extends BaseModel {
     //const Precio_log = require("../../precio/precio_logs.model");
     return {
       logs: {
-        relation: Model.HasManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: Inventario_log,
         join: {
           from: `${tableNames.inventario}.id`,
@@ -23,7 +22,7 @@ class Inventario extends BaseModel {
         },
       },
       /*     precio_logs: {
-        relation: Model.HasManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: Precio_log,
         join: {
           from: `${tableNames.inventario}.id`,
@@ -31,7 +30,7 @@ class Inventario extends BaseModel {
         },
       } */
       item: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Item,
         join: {
           from: `${tableNames.inventario}.${tableNames.item}_id`,
@@ -39,7 +38,7 @@ class Inventario extends BaseModel {
         },
       },
       lugares: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Lugar,
         join: {
           from: `${tableNames.inventario}.${tableNames.lugar}_id`,
@@ -47,7 +46,7 @@ class Inventario extends BaseModel {
         },
       },
       precio: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Precio,
         join: {
           from: `${tableNames.inventario}.${tableNames.precio}_id`,

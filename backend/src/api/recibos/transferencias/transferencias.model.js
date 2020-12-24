@@ -1,7 +1,5 @@
 const { tableNames } = require("../../../constants/string");
 const BaseModel = require("../../BaseModel");
-const { Model } = require("objection");
-
 class Venta extends BaseModel {
   static get tableName() {
     return tableNames.transferencia;
@@ -11,7 +9,7 @@ class Venta extends BaseModel {
     const Linea_tranferencia = require("./linea_tranferencias.model");
     return {
       lineas: {
-        relation: Model.HasManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: Linea_tranferencia,
         join: {
           from: `${tableNames.transferencia}.id`,

@@ -19,7 +19,9 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const ventas = await Venta.query().findById(req.params.id);
+    const ventas = await Venta.query()
+      .findById(req.params.id)
+      .withGraphFetched("lineas");
     res.json(ventas);
   } catch (err) {
     next(err);

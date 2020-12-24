@@ -12,7 +12,7 @@ class Linea_nota_credito extends BaseModel {
     const Venta = require("./ventas/ventas.model");
     return {
       garantia: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Garantia,
         join: {
           from: `${tableNames.garantia}.id`,
@@ -20,7 +20,7 @@ class Linea_nota_credito extends BaseModel {
         },
       },
       venta: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Venta,
         join: {
           from: `${tableNames.venta}.id`,
@@ -28,7 +28,7 @@ class Linea_nota_credito extends BaseModel {
         },
       },
       nota_credito: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Nota_credito,
         join: {
           from: `${tableNames.nota_credito}.id`,

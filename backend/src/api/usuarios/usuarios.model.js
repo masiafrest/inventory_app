@@ -1,6 +1,4 @@
 const BaseModel = require("../BaseModel");
-const { Model } = require("objection");
-
 const { tableNames } = require("../../constants/string");
 const Venta = require("../recibos/ventas/ventas.model");
 
@@ -13,7 +11,7 @@ class Usuario extends BaseModel {
     const Empresa_owner = require("../empresa_owner/empresa_owner.model");
     return {
       empresa: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Empresa_owner,
         join: {
           from: `${tableNames.usuario}.empresa_owner_id`,
@@ -21,7 +19,7 @@ class Usuario extends BaseModel {
         },
       },
       venta: {
-        relation: Model.HasManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: Venta,
         join: {
           from: `${tableNames.usuario}.id`,

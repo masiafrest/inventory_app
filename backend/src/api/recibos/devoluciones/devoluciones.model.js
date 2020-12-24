@@ -1,5 +1,4 @@
 const BaseModel = require("../../BaseModel");
-const { Model } = require("objection");
 const { tableNames } = require("../../../constants/string");
 
 class Devolucion extends BaseModel {
@@ -11,7 +10,7 @@ class Devolucion extends BaseModel {
     const Linea_devolucion = require("../linea_devoluciones.model");
     return {
       lineas: {
-        relation: Model.HasManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: Linea_devolucion,
         join: {
           from: `${tableNames.devolucion}.id`,
