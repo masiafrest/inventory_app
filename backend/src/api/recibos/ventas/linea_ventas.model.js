@@ -1,6 +1,5 @@
 const BaseModel = require("../../BaseModel");
 const { tableNames } = require("../../../constants/string");
-const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
 
 class Linea_venta extends BaseModel {
   static get tableName() {
@@ -28,14 +27,6 @@ class Linea_venta extends BaseModel {
         },
       },
     };
-  }
-  static async beforeInsert({ inputItems }) {
-    console.log("LINEA VENTA before Insert");
-    console.log("inputItems:", inputItems);
-  }
-  static async afterInsert({ inputItems }) {
-    console.log("LINEA VENTA before Insert");
-    console.log("inputItems:", inputItems);
   }
 }
 

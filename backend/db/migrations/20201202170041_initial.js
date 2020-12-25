@@ -27,6 +27,7 @@ exports.up = async function (knex) {
       createTableIncrementsStringNotNullable(table);
       table.enum("tipo", Object.values(tipo_lugar));
       table.string("direccion");
+      table.unique(["direccion", "tipo"]);
       addDefaultColumns(table);
     }),
     knex.schema.createTable(tableNames.empresa_owner, (table) => {

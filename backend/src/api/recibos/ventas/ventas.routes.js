@@ -47,7 +47,7 @@ router.post("/", async (req, res, next) => {
 
     //insertar la venta
     await Venta.transaction(async (trx) => {
-      /*       if (req.body.hasOwnProperty("lineas")) {
+      if (req.body.hasOwnProperty("lineas")) {
         console.log("has lineas");
         // descontar la qty de inventario y agregar historial al inv_log
         await Promise.all(
@@ -102,7 +102,7 @@ router.post("/", async (req, res, next) => {
             });
           })
         );
-      } */
+      }
 
       req.body = { ...req.body, sub_total, tax, total };
       const ventaPosted = await Venta.query(trx).insertGraph({

@@ -52,6 +52,7 @@ const role = {
 const tipo_lugar = {
   bodega: "bodega",
   tienda: "tienda",
+  basura: "basura",
 };
 
 module.exports = {

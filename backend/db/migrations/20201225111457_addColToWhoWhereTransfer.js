@@ -13,9 +13,9 @@ exports.up = async function (knex) {
  * @param {import('knex')} knex
  */
 exports.down = async function (knex) {
-  await Promise.all()[(tableNames.empresa_cliente, tableNames.venta)].map(
-    (tableName) => {
+  await Promise.all(
+    [(tableNames.empresa_cliente, tableNames.venta)].map((tableName) => {
       knex.schema.dropTableIfExists(tableName + "_id");
-    }
+    })
   );
 };
