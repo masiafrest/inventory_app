@@ -4,6 +4,7 @@ const tableNames = {
   lugar: "lugar",
   empresa_owner: "empresa_owner",
   proveedor: "proveedor",
+  rol: "rol",
   empresa_cliente: "empresa_cliente",
   precio: "precio", //dpnd on proveedor.id
   item: "item", //dpnd on precio.id

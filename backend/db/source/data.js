@@ -34,12 +34,12 @@ const usuarios = [
   {
     nombre: "sonia",
     password: "aA1@123",
-    rol: "jefe",
+    rol_id: "1",
   },
   {
     nombre: "hello",
     password: "aA1@123",
-    rol: "vendedor",
+    rol_id: "2",
   },
 ];
 

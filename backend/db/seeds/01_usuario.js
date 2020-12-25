@@ -8,6 +8,10 @@ const bcrypt = require("bcrypt");
 exports.seed = async (knex) => {
   // Deletes ALL existing entries
   await knex(tableNames.usuario).del();
+  await knex(tableNames.rol).del();
+
+  await knex(tableNames.rol).insert({ tipo: "jefe" });
+  await knex(tableNames.rol).insert({ tipo: "vendedor" });
   const [empresa_owner_id] = await knex
     .select("id")
     .from(tableNames.empresa_owner);

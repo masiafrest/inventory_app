@@ -12,6 +12,10 @@ const {
  */
 exports.up = async function (knex) {
   await Promise.all([
+    knex.schema.createTable(tableNames.rol, (table) => {
+      createTableIncrementsStringNotNullable(table);
+      table.string("tipo").unique();
+    }),
     knex.schema.createTable(tableNames.categoria, (table) => {
       createTableIncrementsStringNotNullable(table, "nombre");
       addDefaultColumns(table);
@@ -103,7 +107,7 @@ exports.up = async function (knex) {
     addEmail(table);
     addUrl(table, "image_url");
     table.string("password", 127).notNullable();
-    table.enum("rol", Object.values(role));
+    references(table, tableNames.rol);
     addDefaultColumns(table);
     addTwoTelephoneColumns(table);
   });
@@ -121,5 +125,6 @@ exports.down = async function (knex) {
     knex.schema.dropTableIfExists(tableNames.lugar),
     knex.schema.dropTableIfExists(tableNames.cheque),
     knex.schema.dropTableIfExists(tableNames.categoria),
+    knex.schema.dropTableIfExists(tableNames.rol),
   ]);
 };
