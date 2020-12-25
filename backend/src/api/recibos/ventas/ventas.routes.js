@@ -47,7 +47,7 @@ router.post("/", async (req, res, next) => {
 
     //insertar la venta
     await Venta.transaction(async (trx) => {
-      if (req.body.hasOwnProperty("lineas")) {
+      /*       if (req.body.hasOwnProperty("lineas")) {
         console.log("has lineas");
         // descontar la qty de inventario y agregar historial al inv_log
         await Promise.all(
@@ -55,7 +55,6 @@ router.post("/", async (req, res, next) => {
           req.body.lineas.map(async (linea) => {
             console.log("Map Linea ", linea.inventario_id);
             //limpiar precio para q tenga 2 decimales
-            console.log("linea precio", linea.precio);
             linea.precio = linea.precio.toFixed(2);
             //check is precio is above precio_min
             const inventarioDb = await Inventario.query().findById(
@@ -64,7 +63,6 @@ router.post("/", async (req, res, next) => {
             const precioDB = await Precio.query().findById(
               inventarioDb.precio_id
             );
-            // TODO derepente usando un funcion recursion para saber si es menor q oferta o precio min
             if (linea.precio < precioDB.oferta_precio) {
               res.status(406);
               error = new Error(
@@ -72,12 +70,6 @@ router.post("/", async (req, res, next) => {
               );
               throw error;
             }
-            console.log(
-              "check null or undefined: ",
-              precioDB.oferta_precio,
-              "on precio id: ",
-              precioDB.id
-            );
             if (
               linea.precio < precioDB.precio_min &&
               precioDB.oferta_precio == null
@@ -106,10 +98,12 @@ router.post("/", async (req, res, next) => {
               usuario_id: req.body.usuario_id,
               evento: "venta",
               ajuste: -linea.qty,
+              //venta_id:
             });
           })
         );
-      }
+      } */
+
       req.body = { ...req.body, sub_total, tax, total };
       const ventaPosted = await Venta.query(trx).insertGraph({
         ...req.body,
