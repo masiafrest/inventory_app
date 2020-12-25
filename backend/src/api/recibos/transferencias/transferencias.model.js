@@ -1,6 +1,6 @@
 const { tableNames } = require("../../../constants/string");
 const BaseModel = require("../../BaseModel");
-class Venta extends BaseModel {
+class Transferencia extends BaseModel {
   static get tableName() {
     return tableNames.transferencia;
   }
@@ -37,4 +37,4 @@ class Venta extends BaseModel {
   }
 }
 
-module.exports = Venta;
+module.exports = Transferencia;
