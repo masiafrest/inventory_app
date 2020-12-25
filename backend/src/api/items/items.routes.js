@@ -144,6 +144,7 @@ router.post("/", async (req, res, next) => {
 
 router.patch("/", async (req, res, next) => {
   console.log("patch 😀 req.body: ", req.body.inventarios);
+  //TODO basura deberia ser un lugar_id
   for (let inventario of req.body.inventarios) {
     const { id, qty, basura, lugar_id, precio } = inventario;
     const defaultData = {
@@ -164,33 +165,6 @@ router.patch("/", async (req, res, next) => {
       ];
     }
   }
-  /*   if (req.body.hasOwnProperty("inventarios")) {
-    const updatedInventario = req.body.inventarios[0];
-    const inventario = await Inventario.query().findById(updatedInventario.id);
-    await Inventario.transaction(async (trx) => {
-      await Inventario.relatedQuery("logs")
-        .for(inventario.id)
-        .insert({
-          usuario_id: req.userData.id,
-          inventario_id: inventario.id,
-          ajuste: updatedInventario.qty - inventario.qty,
-          evento: "modificar",
-        });
-    });
-    if (req.body.inventarios[0].hasOwnProperty("precio")) {
-      const updatedPrecio = req.body.inventarios[0].precio;
-      const precio = await Precio.query().findById(updatedPrecio.id);
-      await Precio.relatedQuery("logs").for(precio.id).insert({
-        inventario_id: req.body.inventarios[0].id,
-        usuario_id: req.userData.id,
-        precio_viejo: precio.precio,
-        costo_viejo: precio.costo,
-        precio_min_viejo: precio.precio_min,
-        proveedor_id: precio.proveedor_id,
-      });
-    }
-  } */
-
   await Item.transaction(async (trx) => {
     const itemUpdated = await Item.query(trx).upsertGraph(
       { ...req.body },
