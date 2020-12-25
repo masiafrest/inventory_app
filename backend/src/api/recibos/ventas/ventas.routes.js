@@ -22,7 +22,7 @@ router.get("/:id", async (req, res, next) => {
     const ventas = await Venta.query()
       .findById(req.params.id)
       .withGraphFetched("lineas");
-    res.json(ventas);
+    res.json(ventas ? ventas : "no existe ese recibo tipo ventas");
   } catch (err) {
     next(err);
   }
@@ -47,12 +47,17 @@ router.post("/", async (req, res, next) => {
 
     //insertar la venta
     await Venta.transaction(async (trx) => {
+      let encabezado = { ...req.body };
+      let lineas = req.body.lineas;
+      delete encabezado.lineas;
+      const venta = await Venta.query(trx).insert(encabezado).returning("id");
+      console.log("venta_id: ", venta);
       if (req.body.hasOwnProperty("lineas")) {
         console.log("has lineas");
-        // descontar la qty de inventario y agregar historial al inv_log
+        // descontar la qty de inventario y agregar historial al inv_log y agregar venta.id a las lineas
         await Promise.all(
           // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
-          req.body.lineas.map(async (linea) => {
+          lineas.map(async (linea) => {
             console.log("Map Linea ", linea.inventario_id);
             //limpiar precio para q tenga 2 decimales
             linea.precio = linea.precio.toFixed(2);
@@ -96,20 +101,24 @@ router.post("/", async (req, res, next) => {
             await Inventario_log.query(trx).insert({
               inventario_id: inventarioDb.id,
               usuario_id: req.body.usuario_id,
+              empresa_cliente_id: req.body.empresa_cliente_id,
               evento: "venta",
               ajuste: -linea.qty,
-              //venta_id:
+              venta_id: venta.id,
             });
           })
         );
       }
-
-      req.body = { ...req.body, sub_total, tax, total };
-      const ventaPosted = await Venta.query(trx).insertGraph({
-        ...req.body,
+      encabezado = { ...encabezado, sub_total, tax, total };
+      lineas.map((linea) => {
+        linea.venta_id = venta.id;
       });
+      console.log("lineas: ", lineas);
+      console.log("req.body.lineas: ", req.body.lineas);
+      await venta.$query(trx).patch(encabezado);
+      await venta.$relatedQuery("lineas", trx).insert(lineas);
 
-      res.json(ventaPosted);
+      res.json(venta);
     });
   } catch (err) {
     next(err);
