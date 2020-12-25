@@ -110,11 +110,10 @@ router.post("/", async (req, res, next) => {
         );
       }
       encabezado = { ...encabezado, sub_total, tax, total };
+      //objeto pasa por referencia al hacer map en un array q contiene objeto, modificas el obj osea la referencia
       lineas.map((linea) => {
         linea.venta_id = venta.id;
       });
-      console.log("lineas: ", lineas);
-      console.log("req.body.lineas: ", req.body.lineas);
       await venta.$query(trx).patch(encabezado);
       await venta.$relatedQuery("lineas", trx).insert(lineas);
 
