@@ -2,9 +2,6 @@ const { ref } = require("../../src/api/BaseModel");
 const { tableNames } = require("../../src/constants/string");
 const {
   addDefaultColumns,
-  addEmail,
-  addUrl,
-  createTableOneStringColumn,
   createTableIncrementsStringNotNullable,
   references,
 } = require("../../src/lib/tableUtils");
