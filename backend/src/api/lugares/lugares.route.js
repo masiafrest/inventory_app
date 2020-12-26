@@ -12,7 +12,6 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const { direccion, tipo } = req.body;
   try {
     await Lugar.transaction(async (trx) => {
       const lugarInserted = await Lugar.query(trx).insert(req.body);
