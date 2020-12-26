@@ -79,7 +79,19 @@ router.post("/", async (req, res, next) => {
       }
       // add tax and sub_total to req.body.total
       ventaTotal.total = ventaTotal.tax + ventaTotal.sub_total;
-      encabezadox = { ...encabezado, ...ventaTotal };
+      //check if total is less than pago
+      const pagoTotal = Object.values(pago)
+        .reduce((acc, curVal) => {
+          console.log(`acc: ${acc}, curVal: ${curVal}`);
+          return acc + curVal;
+        })
+        .toFixed(2);
+      console.log("pago total: ", pagoTotal, "venta total: ", ventaTotal.total);
+      if (ventaTotal.total > pagoTotal) {
+        const error = new Error("pago no es suficiente");
+        throw error;
+      }
+      encabezado = { ...encabezado, ...ventaTotal };
       //objeto pasa por referencia al hacer map en un array q contiene objeto, modificas el obj osea la referencia
       lineas.map((linea) => {
         linea.venta_id = venta.id;
