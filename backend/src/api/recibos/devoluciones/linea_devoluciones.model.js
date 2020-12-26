@@ -1,4 +1,4 @@
-const BaseModel = require("objection");
+const BaseModel = require("../../BaseModel");
 const { tableNames } = require("../../constants/string");
 
 class Linea_devolucion extends BaseModel {
