@@ -15,8 +15,11 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     // inv_id, qty, lugar_id, para hacer la transferencia
-    // TODO inv log talvez column de aquien se transfirio, cliente_id, venta_id, basura?, todas o algunas col
-    await Transferencia.transaction(async (trx) => {});
+    await Transferencia.transaction(async (trx) => {
+      // descontar inv de un lugar1 y agregar a otro inv lugar2
+      const transfered = await Transferencia.query(trx).upsertGraph(req.body);
+      res.json(transfered);
+    });
   } catch (err) {
     next(err);
   }
