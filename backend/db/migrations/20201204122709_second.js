@@ -43,11 +43,11 @@ exports.up = async function (knex) {
     table.float("transferencia").unsigned();
     table.float("efectivo").unsigned();
     table.float("yappi").unsigned();
-    references(table, tableNames.nota_credito);
+    references(table, tableNames.nota_credito, false);
     references(
       table,
       tableNames.nota_credito,
-      true,
+      false,
       tableNames.nota_credito + "_2"
     );
     addDefaultColumns(table);
