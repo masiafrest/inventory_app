@@ -10,7 +10,7 @@
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
     "rollback": "knex migrate:rollback ...",
-    "test": "jest"
+    "test": "jest ..."
   },
   "author": "",
   "license": "ISC",

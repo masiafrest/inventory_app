@@ -1,4 +1,4 @@
-const { tableNames, role, tipo_lugar } = require("../../src/constants/string");
+const { tableNames, tipo_lugar } = require("../../src/constants/string");
 const {
   addDefaultColumns,
   addEmail,

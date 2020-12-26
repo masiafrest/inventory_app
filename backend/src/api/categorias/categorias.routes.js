@@ -12,8 +12,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { nombre } = req.body;
-    const insertCategoria = await Categoria.query().insert({ nombre });
+    const insertCategoria = await Categoria.query().insert(req.body.nombre);
     return res.json(insertCategoria);
   } catch (err) {
     next(err);

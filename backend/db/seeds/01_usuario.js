@@ -15,12 +15,9 @@ exports.seed = async (knex) => {
   const [empresa_owner_id] = await knex
     .select("id")
     .from(tableNames.empresa_owner);
-  console.log("empresa_owner_id", empresa_owner_id);
 
   const jefa = usuarios[0];
-  console.log(jefa);
   jefa.password = await bcrypt.hash(jefa.password, 12);
   jefa.empresa_owner_id = empresa_owner_id.id;
-  console.log("hashed usuario: ", jefa);
   await knex(tableNames.usuario).insert(jefa);
 };

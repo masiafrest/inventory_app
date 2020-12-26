@@ -46,12 +46,9 @@ exports.seed = async (knex) => {
     [{ nombre: "audifono" }, { nombre: "bocina" }],
     "id"
   );
-  console.log("ids: ", categoria_ids);
   const itemCategory = items.map(
     (item) => (item = { ...item, categoria_id: categoria_ids[0] })
   );
-  console.log("itemsCategory: ", itemCategory);
-  console.log("items", items);
 
   const item_ids = await knex(tableNames.item).insert(itemCategory, "id");
   let [precio_id] = await knex(tableNames.precio).insert(
@@ -64,9 +61,6 @@ exports.seed = async (knex) => {
     },
     "id"
   );
-  console.log("👩 precio_id: ", precio_id);
-  console.log("👩 item_ids: ", item_ids);
-  console.log("👩 lugar_ids: ", lugar_ids);
   await knex(tableNames.inventario).insert([
     {
       item_id: item_ids[0],
