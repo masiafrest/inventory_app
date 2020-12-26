@@ -39,7 +39,6 @@ router.post("/signup", async (req, res, next) => {
       abortEarly: false,
     });
     const existingUser = await Usuario.query().where("nombre", nombre).first();
-    console.log("this is auth existingUser", existingUser);
     if (existingUser) {
       const error = new Error(errorMessages.nameInUse);
       res.status(403);
@@ -67,7 +66,7 @@ router.post("/signup", async (req, res, next) => {
   }
 });
 
-router.get("/signin", async (req, res, next) => {
+router.post("/signin", async (req, res, next) => {
   const { nombre, password } = req.body;
   try {
     await yupSchema.validate(
