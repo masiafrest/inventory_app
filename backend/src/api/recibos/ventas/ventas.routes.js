@@ -1,7 +1,12 @@
 const express = require("express");
-const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
 const Venta = require("./ventas.model");
-const { sumTotal, getPrecioId, checkPrice } = require("../recibo.helpers");
+const {
+  sumTotal,
+  getInvDB,
+  getPrecioDB,
+  checkPrice,
+  InvLogFactory,
+} = require("../recibo.helpers");
 
 const router = express.Router();
 
@@ -45,35 +50,29 @@ router.post("/", async (req, res, next) => {
     };
     //insertar la venta
     await Venta.transaction(async (trx) => {
-      let encabezado = { ...req.body };
+      let invLogs = [];
       let lineas = req.body.lineas;
       const pago = req.body.pago;
+      let encabezado = { ...req.body };
       delete encabezado.lineas;
       delete encabezado.pago;
-      console.log("encabezado: ", encabezado);
       const venta = await Venta.query(trx).insert(encabezado);
       if (req.body.hasOwnProperty("lineas")) {
         // descontar la qty de inventario y agregar historial al inv_log y agregar venta.id a las lineas
         await Promise.all(
           // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
           lineas.map(async (linea) => {
-            const { precioDB, inventarioDb } = await getPrecioId(linea);
+            const invDB = await getInvDB(linea);
+            const precioDB = await getPrecioDB(invDB);
             //check is precio is above precio_min
             checkPrice(linea, precioDB, res);
             ventaTotal = sumTotal(linea, ventaTotal);
             // descontar y hacer historial del inventario
             //descontar inventario
-            const result = inventarioDb.qty - linea.qty;
-            await inventarioDb.$query(trx).patch({ qty: result });
+            const result = invDB.qty - linea.qty;
+            await invDB.$query(trx).patch({ qty: result });
             // hacer el inventario log
-            await Inventario_log.query(trx).insert({
-              inventario_id: linea.inventario_id,
-              usuario_id: req.body.usuario_id,
-              empresa_cliente_id: req.body.empresa_cliente_id,
-              evento: "venta",
-              ajuste: -linea.qty,
-              venta_id: venta.id,
-            });
+            invLogs.push(InvLogFactory(req.body, linea, "venta", venta.id));
           })
         );
       }
@@ -82,7 +81,6 @@ router.post("/", async (req, res, next) => {
       //check if total is less than pago
       const pagoTotal = Object.values(pago)
         .reduce((acc, curVal) => {
-          console.log(`acc: ${acc}, curVal: ${curVal}`);
           return acc + curVal;
         })
         .toFixed(2);
@@ -92,13 +90,10 @@ router.post("/", async (req, res, next) => {
         throw error;
       }
       encabezado = { ...encabezado, ...ventaTotal };
-      //objeto pasa por referencia al hacer map en un array q contiene objeto, modificas el obj osea la referencia
-      lineas.map((linea) => {
-        linea.venta_id = venta.id;
-      });
       await venta.$query(trx).patch(encabezado);
       await venta.$relatedQuery("lineas", trx).insert(lineas);
       await venta.$relatedQuery("pago", trx).insert(pago);
+      await venta.$relatedQuery("inv_logs", trx).insert(invLogs);
       res.json(venta);
     });
   } catch (err) {

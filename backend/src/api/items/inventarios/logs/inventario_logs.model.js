@@ -55,38 +55,6 @@ class Inventario_log extends BaseModel {
   static async beforeInsert({ items, inputItems, asFindQuery }) {
     console.log("INVENTARIO LOG before insert 😛");
     console.log("inputItems:", inputItems);
-    let { inventario_id, ajuste, evento } = inputItems[0];
-    const inventarioDB = await Inventario.query().findById(inventario_id);
-    switch (evento) {
-      case "modificar":
-        console.log("ACABARON DE MODIFICAR ITEM", inventario_id);
-        console.log("ajuste - qty : ", ajuste, inventarioDB.qty);
-        const result = ajuste - inventarioDB.qty;
-        inputItems[0].ajuste = result;
-        break;
-    }
-    if (inventarioDB) {
-      const { created_at, updated_at } = inventarioDB;
-      if (created_at < updated_at) {
-        /*         inputItems[0].precio_viejo = precio;
-        inputItems[0].precio_min_viejo = precio_min;
-        inputItems[0].costo_viejo = costo */
-      }
-    }
-  }
-  static async beforeUpdate({ inputItems }) {
-    console.log("INVENTARIO LOG before Update😛");
-    console.log("inputItems:", inputItems);
-    let { inventario_id, ajuste, evento } = inputItems[0];
-    const inventarioDB = await Inventario.query().findById(inventario_id);
-    switch (evento) {
-      case "modificar":
-        console.log("ACABARON DE MODIFICAR ITEM", inventario_id);
-        console.log("ajuste - qty : ", ajuste, inventarioDB.qty);
-        const result = ajuste - inventarioDB.qty;
-        inputItems[0].ajuste = result;
-        break;
-    }
   }
 }
 

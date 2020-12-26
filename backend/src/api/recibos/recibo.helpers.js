@@ -1,6 +1,3 @@
-const Precio = require("../precio/precios.model");
-const Inventario = require("../items/inventarios/inventarios.model");
-
 function sumTotal(linea, ventaTotal) {
   let { sub_total, tax } = ventaTotal;
   //sum precio * qty and add to req.body.sub_total
@@ -30,13 +27,30 @@ function checkPrice(linea, precioDB, res) {
   }
 }
 
-async function getPrecioId(linea) {
-  const inventarioDb = await Inventario.query().findById(linea.inventario_id);
-  const precioDB = await Precio.query().findById(inventarioDb.precio_id);
-  return { precioDB, inventarioDb };
+async function getInvDB(linea) {
+  const Inventario = require("../items/inventarios/inventarios.model");
+  return await Inventario.query().findById(linea.inventario_id);
+}
+
+async function getPrecioDB(invDB) {
+  const Precio = require("../precio/precios.model");
+  return await Precio.query().findById(invDB.precio_id);
+}
+
+function InvLogFactory(headers, linea, evento, id) {
+  return {
+    inventario_id: linea.inventario_id,
+    usuario_id: headers.usuario_id,
+    empresa_cliente_id: headers.empresa_cliente_id,
+    evento,
+    ajuste: -linea.qty,
+    venta_id: id,
+  };
 }
 module.exports = {
-  getPrecioId,
+  InvLogFactory,
+  getInvDB,
+  getPrecioDB,
   checkPrice,
   sumTotal,
 };

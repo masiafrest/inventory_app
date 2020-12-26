@@ -1,7 +1,12 @@
 const express = require("express");
 const Cotizacion = require("./cotizaciones.model");
 
-const { sumTotal, getPrecioId, checkPrice } = require("../recibo.helpers");
+const {
+  sumTotal,
+  getInvDB,
+  getPrecioDB,
+  checkPrice,
+} = require("../recibo.helpers");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -26,7 +31,7 @@ router.post("/", async (req, res, next) => {
     await Cotizacion.transaction(async (trx) => {
       await Promise.all(
         lineas.map(async (linea) => {
-          const { precioDB } = await getPrecioId(linea);
+          const precioDB = await getPrecioDB(linea);
           //check is precio is above precio_min
           checkPrice(linea, precioDB, res);
           ventaTotal = sumTotal(linea, ventaTotal);
