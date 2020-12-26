@@ -51,8 +51,6 @@ router.post("/", async (req, res, next) => {
     //insertar la venta
     await Venta.transaction(async (trx) => {
       let invLogs = [];
-      let lineas = req.body.lineas;
-      const pago = req.body.pago;
       let encabezado = { ...req.body };
       delete encabezado.lineas;
       delete encabezado.pago;
@@ -61,7 +59,7 @@ router.post("/", async (req, res, next) => {
         // descontar la qty de inventario y agregar historial al inv_log y agregar venta.id a las lineas
         await Promise.all(
           // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
-          lineas.map(async (linea) => {
+          req.body.lineas.map(async (linea) => {
             const invDB = await getInvDB(linea);
             const precioDB = await getPrecioDB(invDB);
             //check is precio is above precio_min
@@ -79,7 +77,7 @@ router.post("/", async (req, res, next) => {
       // add tax and sub_total to req.body.total
       ventaTotal.total = ventaTotal.tax + ventaTotal.sub_total;
       //check if total is less than pago
-      const pagoTotal = Object.values(pago)
+      const pagoTotal = Object.values(req.body.pago)
         .reduce((acc, curVal) => {
           return acc + curVal;
         })
@@ -91,8 +89,8 @@ router.post("/", async (req, res, next) => {
       }
       encabezado = { ...encabezado, ...ventaTotal };
       await venta.$query(trx).patch(encabezado);
-      await venta.$relatedQuery("lineas", trx).insert(lineas);
-      await venta.$relatedQuery("pago", trx).insert(pago);
+      await venta.$relatedQuery("lineas", trx).insert(req.body.lineas);
+      await venta.$relatedQuery("pago", trx).insert(req.body.pago);
       await venta.$relatedQuery("inv_logs", trx).insert(invLogs);
       res.json(venta);
     });
