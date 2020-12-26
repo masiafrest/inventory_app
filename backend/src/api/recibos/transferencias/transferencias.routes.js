@@ -16,7 +16,7 @@ router.post("/", async (req, res, next) => {
   try {
     // inv_id, qty, lugar_id, para hacer la transferencia
     await Transferencia.transaction(async (trx) => {
-      // descontar inv de un lugar1 y agregar a otro inv lugar2
+      // TODO descontar inv de un lugar1 y agregar a otro inv lugar2
       const transfered = await Transferencia.query(trx).upsertGraph(req.body);
       res.json(transfered);
     });
