@@ -98,7 +98,7 @@ router.post("/", async (req, res, next) => {
 
 module.exports = router;
 
-// TODO test this refactor
+// TODO make those function below a helper for cotizacion to re use
 
 function sumTotal(linea, ventaTotal) {
   let { sub_total, tax, total } = ventaTotal;
