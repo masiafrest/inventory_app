@@ -12,7 +12,7 @@ class Linea_garantia extends BaseModel {
     const Venta = require("../ventas/ventas.model");
     return {
       garantia: {
-        relation: BaseBaseModel.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Garantia,
         join: {
           from: `${tableNames.garantia}.id`,
