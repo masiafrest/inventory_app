@@ -19,7 +19,7 @@ class Venta extends BaseModel {
         },
       },
       pago: {
-        relatio: BaseModel.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: Pago,
         join: {
           from: `${tableNames.venta}.${tableNames.pago}_id`,

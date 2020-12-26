@@ -47,7 +47,10 @@ router.post("/", async (req, res, next) => {
     await Venta.transaction(async (trx) => {
       let encabezado = { ...req.body };
       let lineas = req.body.lineas;
+      const pago = req.body.pago;
       delete encabezado.lineas;
+      delete encabezado.pago;
+      console.log("encabezado: ", encabezado);
       const venta = await Venta.query(trx).insert(encabezado);
       if (req.body.hasOwnProperty("lineas")) {
         // descontar la qty de inventario y agregar historial al inv_log y agregar venta.id a las lineas
@@ -76,14 +79,14 @@ router.post("/", async (req, res, next) => {
       }
       // add tax and sub_total to req.body.total
       ventaTotal.total = ventaTotal.tax + ventaTotal.sub_total;
-      encabezado = { ...encabezado, ...ventaTotal };
+      encabezadox = { ...encabezado, ...ventaTotal };
       //objeto pasa por referencia al hacer map en un array q contiene objeto, modificas el obj osea la referencia
       lineas.map((linea) => {
         linea.venta_id = venta.id;
       });
       await venta.$query(trx).patch(encabezado);
       await venta.$relatedQuery("lineas", trx).insert(lineas);
-
+      await venta.$relatedQuery("pago", trx).insert(pago);
       res.json(venta);
     });
   } catch (err) {

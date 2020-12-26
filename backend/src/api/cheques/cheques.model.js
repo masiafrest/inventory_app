@@ -1,6 +1,5 @@
-const BaseModel = require("objection");
+const BaseModel = require("../BaseModel");
 const { tableNames } = require("../../constants/string");
-const Nota_credito = require("../recibos/nota_creditos/nota_creditos.model");
 
 class Cheque extends BaseModel {
   static get tableName() {
@@ -8,7 +7,7 @@ class Cheque extends BaseModel {
   }
 
   static get relationMappings() {
-    const Pago = require("../noRoute/pago.model");
+    const Pago = require("../noRoute/pagos.model");
     return {
       pagos: {
         relation: BaseModel.HasManyRelation,
