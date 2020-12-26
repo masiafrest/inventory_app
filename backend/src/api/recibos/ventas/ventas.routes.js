@@ -1,9 +1,7 @@
 const express = require("express");
-const Inventario = require("../../items/inventarios/inventarios.model");
 const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
-const Precio = require("../../precio/precios.model");
-
 const Venta = require("./ventas.model");
+const { sumTotal, getPrecioId, checkPrice } = require("../recibo.helpers");
 
 const router = express.Router();
 
@@ -50,18 +48,15 @@ router.post("/", async (req, res, next) => {
       let encabezado = { ...req.body };
       let lineas = req.body.lineas;
       delete encabezado.lineas;
-      const venta = await Venta.query(trx).insert(encabezado).returning("id");
-      console.log("venta_id: ", venta);
+      const venta = await Venta.query(trx).insert(encabezado);
       if (req.body.hasOwnProperty("lineas")) {
-        console.log("has lineas");
         // descontar la qty de inventario y agregar historial al inv_log y agregar venta.id a las lineas
         await Promise.all(
           // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
           lineas.map(async (linea) => {
-            console.log("Map Linea ", linea.inventario_id);
             const { precioDB, inventarioDb } = await getPrecioId(linea);
             //check is precio is above precio_min
-            checkPrice(linea, precioDB);
+            checkPrice(linea, precioDB, res);
             ventaTotal = sumTotal(linea, ventaTotal);
             // descontar y hacer historial del inventario
             //descontar inventario
@@ -97,40 +92,3 @@ router.post("/", async (req, res, next) => {
 });
 
 module.exports = router;
-
-// TODO make those function below a helper for cotizacion to re use
-
-function sumTotal(linea, ventaTotal) {
-  let { sub_total, tax, total } = ventaTotal;
-  //sum precio * qty and add to req.body.sub_total
-  const lineaTotal = linea.precio * linea.qty;
-  sub_total += lineaTotal;
-  //sum tax to req.body.tax
-  const notRoundedTax = (lineaTotal / 100) * 7;
-  tax += Math.round((notRoundedTax + Number.EPSILON) * 100) / 100;
-  ventaTotal = { sub_total, tax };
-  return ventaTotal;
-}
-
-function checkPrice(linea, precioDB) {
-  if (linea.precio < precioDB.oferta_precio) {
-    res.status(406);
-    error = new Error(
-      `precio: ${linea.precio}, de inventario ${linea.inventario_id} debajo a la oferta: ${precioDB.oferta_precio}`
-    );
-    throw error;
-  }
-  if (linea.precio < precioDB.precio_min && precioDB.oferta_precio == null) {
-    res.status(406);
-    error = new Error(
-      `precio: ${linea.precio}, de inventario ${linea.inventario_id} debajo al precio minimo: ${precioDB.precio_min}`
-    );
-    throw error;
-  }
-}
-
-async function getPrecioId(linea) {
-  const inventarioDb = await Inventario.query().findById(linea.inventario_id);
-  const precioDB = await Precio.query().findById(inventarioDb.precio_id);
-  return { precioDB, inventarioDb };
-}
