@@ -144,7 +144,6 @@ router.post("/", async (req, res, next) => {
 
 router.patch("/", async (req, res, next) => {
   console.log("patch 😀 req.body: ", req.body.inventarios);
-  //TODO basura deberia ser un lugar_id
   for (let inventario of req.body.inventarios) {
     const { id, qty, basura, lugar_id, precio } = inventario;
     const defaultData = {
