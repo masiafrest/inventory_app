@@ -15,6 +15,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
+    //TODO hacer garantia
     await Garantia.transaction(async (trx) => {
       const post = await Garantia.query(trx).insertGraph(req.body);
       res.json(post);

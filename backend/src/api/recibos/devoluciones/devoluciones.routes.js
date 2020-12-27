@@ -17,6 +17,7 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     // TODO tal vez crear tabla de cliente_item_comprado, donde acumula los item comprado con columna cliente_id, inventario_id, qty, asi se resta de qty o suma, inv tal vez agregar columna en_reparacion
+    res.json("post Devolucion ");
   } catch (err) {
     next(err);
   }
