@@ -19,7 +19,6 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  console.log("👣 req.body: ", req.body);
   const { usuario_id, empresa_cliente_id, lineas } = req.body;
   //resetear total, subtotal y tax a 0 para calcualr en el server
   let ventaTotal = {
@@ -31,13 +30,16 @@ router.post("/", async (req, res, next) => {
     await Cotizacion.transaction(async (trx) => {
       await Promise.all(
         lineas.map(async (linea) => {
-          const precioDB = await getPrecioDB(linea);
+          console.log("linea");
+          const invDB = await getInvDB(linea);
+          const precioDB = await getPrecioDB(invDB);
           //check is precio is above precio_min
           checkPrice(linea, precioDB, res);
           ventaTotal = sumTotal(linea, ventaTotal);
         })
       );
       // add tax and sub_total to req.body.total
+      console.log("he");
       ventaTotal.total = ventaTotal.tax + ventaTotal.sub_total;
       const insertedCotizacion = await Cotizacion.query(trx).insertGraph({
         ...ventaTotal,
