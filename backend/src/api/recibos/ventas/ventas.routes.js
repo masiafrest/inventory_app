@@ -1,6 +1,7 @@
 const express = require("express");
 const Venta = require("./ventas.model");
 const {
+  invModQty,
   sumTotal,
   getInvDB,
   getPrecioDB,
@@ -67,8 +68,7 @@ router.post("/", async (req, res, next) => {
             ventaTotal = sumTotal(linea, ventaTotal);
             // descontar y hacer historial del inventario
             //descontar inventario
-            const result = invDB.qty - linea.qty;
-            await invDB.$query(trx).patch({ qty: result });
+            await invModQty(invDB, linea.qty, trx);
             // hacer el inventario log
             invLogs.push(InvLogFactory(req.body, linea, "venta", venta.id));
           })

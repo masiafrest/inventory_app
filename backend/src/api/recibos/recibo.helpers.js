@@ -37,7 +37,22 @@ async function getPrecioDB(invDB) {
   return await Precio.query().findById(invDB.precio_id);
 }
 
-function InvLogFactory(headers, linea, evento, id) {
+async function invModQty(invInstance, qty, trx) {
+  // descontar y hacer historial del inventario
+  //descontar inventario
+  const result = invInstance.qty - qty;
+  return await invInstance.$query(trx).patch({ qty: result });
+}
+
+function InvLogFactory(headers, linea, evento, id, inv_b_id) {
+  if ((evento = "transferencia")) {
+    return {
+      inventario_id: inv_b_id || linea.inventario_id,
+      usuario_id: headers.usuario_id,
+      evento,
+      ajuste: inv_b_id ? linea.qty : -linea.qty,
+    };
+  }
   return {
     inventario_id: linea.inventario_id,
     usuario_id: headers.usuario_id,
@@ -53,4 +68,5 @@ module.exports = {
   getPrecioDB,
   checkPrice,
   sumTotal,
+  invModQty,
 };

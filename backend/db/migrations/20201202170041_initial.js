@@ -90,14 +90,14 @@ exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.inventario, (table) => {
     createTableIncrementsStringNotNullable(table);
     references(table, tableNames.item, true, "", true);
-    table.string("qty").notNullable().unsigned();
+    table.integer("qty").notNullable().unsigned();
     references(table, tableNames.lugar);
     table.string("basura").unsigned();
     table.string("color");
     references(table, tableNames.precio);
     table.string("sku", 12);
     //sku is unique, theres is a skugenerator in lib helper to use in the front end
-    table.unique(["sku", "item_id", "color"]);
+    table.unique(["sku", "item_id", "color", "lugar_id"]);
     addDefaultColumns(table);
   });
 

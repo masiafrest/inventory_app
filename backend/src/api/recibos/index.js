@@ -5,7 +5,7 @@ const devoluciones = require("./devoluciones/devoluciones.routes");
 const garantias = require("./garantias/garantias.routes");
 const nota_creditos = require("./nota_creditos/nota_creditos.routes");
 const transferencias = require("./transferencias/transferencias.routes");
-// TODO agregar los recibos
+
 router.get("/", (req, res) => {
   res.send("recibos api");
 });

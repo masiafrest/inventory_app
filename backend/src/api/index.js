@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
   });
 });
 router.use("/cheques", cheques);
-router.use("/recibos", recibos);
+router.use("/recibos", checkToken, recibos);
 router.use("/precio_logs", precio_logs);
 router.use("/auth", auth);
 router.use("/categorias", categoria);
