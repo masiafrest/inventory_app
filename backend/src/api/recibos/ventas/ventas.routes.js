@@ -62,9 +62,6 @@ router.post("/", async (req, res, next) => {
         await Promise.all(
           // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
           req.body.lineas.map(async (linea) => {
-            //TODO refactor tal vez una func getInvPrecioDB donde regresa uno o ambos invDB precioDB
-            // const invDB = await getInvDB(linea);
-            // const precioDB = await getPrecioDB(invDB);
             const { invDB, precioDB } = await getInvAndPrecioDB(linea);
             //check is precio is above precio_min
             checkPrice(linea, precioDB, res);

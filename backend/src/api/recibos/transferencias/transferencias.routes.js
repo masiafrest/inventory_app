@@ -44,7 +44,6 @@ router.post("/", async (req, res, next) => {
           //si no existe el lugar donde va se crea un inv con ese lugar qty en 0
           if (!invALugar) {
             const { color, sku, precio_id, item_id } = invDeLugar;
-            //TODO usar insert en vez de upsert a ver si funciona
             invALugar = await Inventario.query(trx).insertGraph(
               {
                 item_id,
