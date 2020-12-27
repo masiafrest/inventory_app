@@ -27,6 +27,15 @@ function checkPrice(linea, precioDB, res) {
   }
 }
 
+async function getInvAndPrecioDB(inv) {
+  let obj = {};
+  const Inventario = require("../items/inventarios/inventarios.model");
+  obj.invDB = await Inventario.query().findById(inv.inventario_id);
+  const Precio = require("../precio/precios.model");
+  obj.precioDB = await Precio.query().findById(obj.invDB.precio_id);
+  return obj;
+}
+
 async function getInvDB(linea) {
   const Inventario = require("../items/inventarios/inventarios.model");
   return await Inventario.query().findById(linea.inventario_id);
@@ -64,6 +73,7 @@ function InvLogFactory(headers, linea, evento, id, inv_b_id) {
 }
 module.exports = {
   InvLogFactory,
+  getInvAndPrecioDB,
   getInvDB,
   getPrecioDB,
   checkPrice,

@@ -3,6 +3,7 @@ const Cotizacion = require("./cotizaciones.model");
 
 const {
   sumTotal,
+  getInvAndPrecioDB,
   getInvDB,
   getPrecioDB,
   checkPrice,
@@ -30,9 +31,7 @@ router.post("/", async (req, res, next) => {
     await Cotizacion.transaction(async (trx) => {
       await Promise.all(
         lineas.map(async (linea) => {
-          console.log("linea");
-          const invDB = await getInvDB(linea);
-          const precioDB = await getPrecioDB(invDB);
+          const { precioDB } = await getInvAndPrecioDB(linea);
           //check is precio is above precio_min
           checkPrice(linea, precioDB, res);
           ventaTotal = sumTotal(linea, ventaTotal);
