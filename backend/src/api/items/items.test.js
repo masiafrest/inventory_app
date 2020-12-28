@@ -1,14 +1,12 @@
 const supertest = require("supertest");
 const app = require("../../app");
-
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoic29uaWEiLCJyb2wiOiJqZWZlIiwiaWF0IjoxNjA4NTA2NjU4fQ.X5QjjMuxbdLwwnagONmLlD6q9WL4l007yN2EUukx_8w";
+const { BearerToken } = require("../../constants/project");
 
 describe("Items", () => {
   it("GET it should respond with a array", async () => {
     const respond = await supertest(app)
       .get("/api/v1/items")
-      .set("authorization", "Bearear " + token)
+      .set("authorization", BearerToken)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
       .expect(200);
@@ -32,7 +30,7 @@ describe("Items", () => {
         costo: 0.9,
         proveedor_id: 1,
       })
-      .set("authorization", "Bearear " + token)
+      .set("authorization", BearerToken)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
       .expect(200);
@@ -41,7 +39,7 @@ describe("Items", () => {
   it("GET/:name it should respond with the item that has the name", async () => {
     const respond = await supertest(app)
       .get("/api/v1/items/sony")
-      .set("authorization", "Bearear " + token)
+      .set("authorization", BearerToken)
       .expect("Content-Type", /json/)
       .expect(200);
     expect(respond.body).toBeInstanceOf(Object);
@@ -64,7 +62,7 @@ describe("Items", () => {
           },
         ],
       })
-      .set("authorization", "Bearear " + token)
+      .set("authorization", BearerToken)
       .expect("Content-Type", /json/)
       .expect(200);
     expect(respond.body).toBeInstanceOf(Object);

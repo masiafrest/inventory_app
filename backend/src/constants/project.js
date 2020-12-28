@@ -20,4 +20,6 @@ recibo.cotizacion = {
   total: 450.0,
 };
 
-module.exports = { message, recibo };
+const BearerToken =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoic29uaWEiLCJyb2wiOiJqZWZlIiwiaWF0IjoxNjA4NTA2NjU4fQ.X5QjjMuxbdLwwnagONmLlD6q9WL4l007yN2EUukx_8w";
+module.exports = { message, recibo, BearerToken };
