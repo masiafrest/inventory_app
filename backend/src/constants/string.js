@@ -26,6 +26,7 @@ const tableNames = {
   linea_devolucion: "linea_devolucion", //dpnd on garantia.id, item.id as salida y entrada, devolution.id
   inventario_log: "inventario_log", //dpnd on item.id, proveedor.id, empleado.id
   precio_log: "precio_log", //dpnd on precio.id, empleado.id,
+  defectuoso: "defectuoso",
 };
 const tipo_pago = {
   yappi: "yappi",

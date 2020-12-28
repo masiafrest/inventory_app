@@ -6,7 +6,7 @@ const { references } = require("../../src/lib/tableUtils");
 exports.up = async function (knex) {
   await knex.schema.alterTable(tableNames.inventario_log, (table) => {
     references(table, tableNames.empresa_cliente, false);
-    references(table, tableNames.venta, false);
+    table.integer("recibo_evento_id").unsigned();
   });
 };
 /**

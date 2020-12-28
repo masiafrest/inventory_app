@@ -4,8 +4,6 @@ const Cotizacion = require("./cotizaciones.model");
 const {
   sumTotal,
   getInvAndPrecioDB,
-  getInvDB,
-  getPrecioDB,
   checkPrice,
 } = require("../recibo.helpers");
 const router = express.Router();

@@ -21,14 +21,6 @@ class Inventario extends BaseModel {
           to: `${tableNames.inventario_log}.${tableNames.inventario}_id`,
         },
       },
-      /*     precio_logs: {
-        relation: BaseModel.HasManyRelation,
-        modelClass: Precio_log,
-        join: {
-          from: `${tableNames.inventario}.id`,
-          to: `${tableNames.precio_log}.${tableNames.inventario}_id`,
-        },
-      } */
       item: {
         relation: BaseModel.BelongsToOneRelation,
         modelClass: Item,

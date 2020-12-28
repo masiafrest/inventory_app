@@ -5,7 +5,6 @@ const {
   sumTotal,
   getInvAndPrecioDB,
   getInvDB,
-  getPrecioDB,
   checkPrice,
   InvLogFactory,
 } = require("../recibo.helpers");

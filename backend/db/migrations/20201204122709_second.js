@@ -1,4 +1,3 @@
-const { ref } = require("../../src/api/BaseModel");
 const { tableNames } = require("../../src/constants/string");
 const {
   addDefaultColumns,
@@ -104,13 +103,13 @@ exports.up = async function (knex) {
   });
   await knex.schema.createTable(tableNames.linea_devolucion, (table) => {
     table.increments().unsigned();
-    references(table, tableNames.garantia);
-    references(table, tableNames.inventario, false, "inventario_salida");
-    references(table, tableNames.inventario, false, "inventario_entrada");
+    references(table, tableNames.garantia, false);
+    references(table, tableNames.inventario);
+    references(table, tableNames.inventario, false, "salida_inventario");
     references(table, tableNames.devolucion);
+    table.float("a_efectivo").unsigned().nullable();
     table.integer("qty");
     table.string("descripcion", 500);
-    table.integer("total");
     addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.inventario_log, (table) => {

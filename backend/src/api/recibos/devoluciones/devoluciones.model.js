@@ -7,7 +7,7 @@ class Devolucion extends BaseModel {
   }
 
   static get relationMappings() {
-    const Linea_devolucion = require("../linea_devoluciones.model");
+    const Linea_devolucion = require("./linea_devoluciones.model");
     return {
       lineas: {
         relation: BaseModel.HasManyRelation,

@@ -36,9 +36,9 @@ async function getInvAndPrecioDB(inv) {
   return obj;
 }
 
-async function getInvDB(linea) {
+async function getInvDB(id) {
   const Inventario = require("../items/inventarios/inventarios.model");
-  return await Inventario.query().findById(linea.inventario_id);
+  return await Inventario.query().findById(id);
 }
 
 async function getPrecioDB(invDB) {
@@ -47,28 +47,19 @@ async function getPrecioDB(invDB) {
 }
 
 async function invModQty(invInstance, qty, trx) {
-  // descontar y hacer historial del inventario
   //descontar inventario
   const result = invInstance.qty - qty;
   return await invInstance.$query(trx).patch({ qty: result });
 }
 
 function InvLogFactory(headers, linea, evento, id, inv_b_id) {
-  if ((evento = "transferencia")) {
-    return {
-      inventario_id: inv_b_id || linea.inventario_id,
-      usuario_id: headers.usuario_id,
-      evento,
-      ajuste: inv_b_id ? linea.qty : -linea.qty,
-    };
-  }
   return {
-    inventario_id: linea.inventario_id,
+    inventario_id: inv_b_id || linea.inventario_id,
     usuario_id: headers.usuario_id,
     empresa_cliente_id: headers.empresa_cliente_id,
     evento,
-    ajuste: -linea.qty,
-    venta_id: id,
+    ajuste: inv_b_id ? linea.qty : -linea.qty,
+    recibo_evento_id: id, // TODO: tal vez hacer un table q relacione recibo evento y hacer referencia
   };
 }
 module.exports = {

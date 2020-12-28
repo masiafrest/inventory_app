@@ -32,7 +32,7 @@ class Venta extends BaseModel {
         modelClass: Inventario_log,
         join: {
           from: `${tableNames.venta}.id`,
-          to: `${tableNames.inventario_log}.${tableNames.venta}_id`,
+          to: `${tableNames.inventario_log}.recibo_evento_id`,
         },
       },
     };
