@@ -8,7 +8,7 @@ const empresa_owner = require("./empresa_owner/empresa_owner.routes");
 const usuarios = require("./usuarios");
 const proveedores = require("./proveedors/proveedores.routes");
 const precio_logs = require("./precio/logs/precio_logs.routes");
-const item = require("./items/items.routes");
+const item = require("./items/");
 const lugar = require("./lugares/lugares.route");
 const cheques = require("./cheques/cheques.routes");
 
