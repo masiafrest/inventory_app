@@ -17,6 +17,8 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// TODO: add get by id
+
 router.post("/", async (req, res, next) => {
   const { usuario_id, empresa_cliente_id, lineas } = req.body;
   //resetear total, subtotal y tax a 0 para calcualr en el server

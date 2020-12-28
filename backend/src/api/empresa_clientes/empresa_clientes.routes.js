@@ -13,4 +13,5 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// TODO: post a client
 module.exports = router;

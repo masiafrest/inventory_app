@@ -63,6 +63,10 @@ class Inventario extends BaseModel {
       },
     };
   }
+  static beforeUpdate({ inputItems }) {
+    console.log("Inventario before Update 😎, add new date to update_at");
+    inputItems[0].updated_at = new Date().toISOString();
+  }
 }
 
 module.exports = Inventario;

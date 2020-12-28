@@ -10,5 +10,9 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
+
+// TODO: add get by id
+// TODO: post user
+
 // to post user, se usa auth desde rol jefa
 module.exports = router;

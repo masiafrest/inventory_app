@@ -1,5 +1,10 @@
 const router = require("express").Router();
-const { invModQty, getInvDB, InvLogFactory } = require("../recibo.helpers");
+const {
+  addToDefectuoso,
+  invModQty,
+  getInvDB,
+  InvLogFactory,
+} = require("../recibo.helpers");
 const { cloneDeep } = require("lodash");
 const Defectuoso = require("../../items/inventarios/defectuosos/defectuosos.model");
 const Devolucion = require("./devoluciones.model");
@@ -14,11 +19,10 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//TODO: hacer post devolucion
+// TODO: add get by id
+
 // devolucion: item devuelto por efectivo o otro item
 // https://www.ejemplode.com/58-administracion/3158-ejemplo_de_nota_de_devolucion.html
-
-// TODO: crear col (a efectivo, al mismo art, a otro arti) en tabla devoulcion
 router.post("/", async (req, res, next) => {
   try {
     await Devolucion.transaction(async (trx) => {
@@ -74,10 +78,3 @@ router.post("/", async (req, res, next) => {
   }
 });
 module.exports = router;
-
-async function addToDefectuoso(linea, trx) {
-  const cleanLinea = { ...linea };
-  delete cleanLinea.qty;
-  delete cleanLinea.salida_inventario_id;
-  return await Defectuoso.query(trx).insert(cleanLinea);
-}

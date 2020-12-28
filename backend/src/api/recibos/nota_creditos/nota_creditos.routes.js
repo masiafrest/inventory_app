@@ -13,6 +13,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// TODO: add get by id
 router.post("/", async (req, res, next) => {
   try {
     await Nota_credito.transaction(async (trx) => {

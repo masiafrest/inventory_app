@@ -62,7 +62,14 @@ function InvLogFactory(headers, linea, evento, id, inv_b_id) {
     recibo_evento_id: id, // TODO: tal vez hacer un table q relacione recibo evento y hacer referencia
   };
 }
+async function addToDefectuoso(linea, trx) {
+  const cleanLinea = { ...linea };
+  delete cleanLinea.qty;
+  delete cleanLinea.salida_inventario_id;
+  return await Defectuoso.query(trx).insert(cleanLinea);
+}
 module.exports = {
+  addToDefectuoso,
   InvLogFactory,
   getInvAndPrecioDB,
   getInvDB,

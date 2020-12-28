@@ -13,9 +13,8 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-async function findInvByIdWhereLugar(id, lugar, trx) {
-  return await Inventario.query(trx).findById(id).where("lugar_id", lugar);
-}
+// TODO: add get by id
+
 router.post("/", async (req, res, next) => {
   try {
     // inv_id, qty, lugar_id, para hacer la transferencia

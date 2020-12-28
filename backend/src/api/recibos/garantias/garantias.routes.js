@@ -14,6 +14,7 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
+// TODO: add get by id
 
 router.post("/", async (req, res, next) => {
   try {
