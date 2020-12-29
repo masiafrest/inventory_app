@@ -36,5 +36,4 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
-// TODO: post a client
 module.exports = router;
