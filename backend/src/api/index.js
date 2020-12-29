@@ -11,6 +11,7 @@ const precio_logs = require("./precio/logs/precio_logs.routes");
 const item = require("./items/");
 const lugar = require("./lugares/lugares.route");
 const cheques = require("./cheques/cheques.routes");
+const clientes = require("./empresa_clientes/empresa_clientes.routes");
 
 const { checkToken } = require("../lib/helpers");
 const router = express.Router();
@@ -30,4 +31,5 @@ router.use("/lugares", lugar);
 router.use("/empresa_owner", empresa_owner);
 router.use("/usuarios", checkToken, usuarios);
 router.use("/proveedores", proveedores);
+router.use("/clientes", clientes);
 module.exports = router;
