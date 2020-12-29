@@ -1,6 +1,7 @@
 const express = require("express");
 const Usuario = require("./usuarios.model");
 const router = express.Router();
+const { signUp } = require("../auth/auth.controllers");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -11,8 +12,22 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// TODO: add get by id
-// TODO: post user
+router.get("/:x", async (req, res, next) => {
+  try {
+    const paramType = isNaN(req.params.x);
+    let usuario;
+    if (!paramType) {
+      usuario = await Usuario.query().findById(req.params.x);
+    } else {
+      usuario = await Usuario.query().where("nombre", req.params.x);
+    }
+    res.json(usuario);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/addUser", signUp);
 
 // to post user, se usa auth desde rol jefa
 module.exports = router;
