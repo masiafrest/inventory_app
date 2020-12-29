@@ -130,6 +130,7 @@ function errorHandler(err, res) {
 }
 
 function errorHandler2(error, req, res, next) {
+  console.log(typeof error);
   const statusCode =
     res.statusCode === 200 ? errorType[error.name] || 500 : res.statusCode;
   res.status(statusCode);
