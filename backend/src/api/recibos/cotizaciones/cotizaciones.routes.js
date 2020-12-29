@@ -17,7 +17,14 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// TODO: add get by id
+router.get("/:id", async (req, res, next) => {
+  try {
+    const cotizaciones = await Cotizacion.query().findById(req.params.id);
+    res.json(cotizaciones);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post("/", async (req, res, next) => {
   const { usuario_id, empresa_cliente_id, lineas } = req.body;

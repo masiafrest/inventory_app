@@ -21,6 +21,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+//TODO: add a :sku/nombre/id to lookup by one of those maybe using regex
 router.get("/:nombre", async (req, res, next) => {
   try {
     const items = await Item.query()
