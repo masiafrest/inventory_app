@@ -45,7 +45,6 @@ router.post("/", async (req, res, next) => {
         })
       );
       // add tax and sub_total to req.body.total
-      console.log("he");
       ventaTotal.total = ventaTotal.tax + ventaTotal.sub_total;
       const insertedCotizacion = await Cotizacion.query(trx).insertGraph({
         ...ventaTotal,
