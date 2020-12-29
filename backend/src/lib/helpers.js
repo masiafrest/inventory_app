@@ -22,14 +22,14 @@ function skuGenerator(nombre, modelo, color, opcional = "") {
   return sku;
 }
 
-async function findByIdOrName(Model, value, res) {
+async function findByIdOrName(Model, value, res, next) {
   try {
     const paramType = isNaN(value);
     let result;
     if (!paramType) {
       result = await Model.query().findById(value);
     } else {
-      result = await Model.query().where("nombre", value);
+      result = await Model.query().where("nombre", value).first();
     }
     res.json(result);
   } catch (error) {

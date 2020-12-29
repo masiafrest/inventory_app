@@ -115,7 +115,8 @@ function errorHandler(err, res) {
       data: {},
     });
   } else if (err instanceof DBError) {
-    res.status(500).send({
+    res.status(500);
+    res.json({
       message: err.message,
       type: "UnknownDatabaseError",
       data: {},
