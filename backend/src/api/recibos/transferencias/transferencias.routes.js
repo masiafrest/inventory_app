@@ -1,7 +1,8 @@
 const express = require("express");
-const Transferencia = require("./transferencias.model");
 const { InvLogFactory, invModQty } = require("../recibo.helpers");
+const { getById } = require("../recibos.controllers");
 const Inventario = require("../../items/inventarios/inventarios.model");
+const Transferencia = require("./transferencias.model");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -14,6 +15,9 @@ router.get("/", async (req, res, next) => {
 });
 
 // TODO: add get by id
+router.get("/:id", async (req, res, next) => {
+  await getById(Transferencia, req.params.id, res, next);
+});
 
 router.post("/", async (req, res, next) => {
   try {
