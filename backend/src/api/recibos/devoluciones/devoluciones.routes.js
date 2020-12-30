@@ -1,6 +1,7 @@
 const router = require("express").Router();
-const { invModQty, InvLogFactory } = require("../recibo.helpers");
+const { InvLogFactory } = require("../recibo.helpers");
 const {
+  invModQty,
   addToDefectuoso,
   getInvDB,
   getById,

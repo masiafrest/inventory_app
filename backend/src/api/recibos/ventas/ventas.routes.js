@@ -1,12 +1,7 @@
 const express = require("express");
 const Venta = require("./ventas.model");
-const {
-  invModQty,
-  sumTotal,
-  checkPrice,
-  InvLogFactory,
-} = require("../recibo.helpers");
-const { getInvAndPrecioDB } = require("../recibos.controllers");
+const { sumTotal, checkPrice, InvLogFactory } = require("../recibo.helpers");
+const { invModQty, getInvAndPrecioDB } = require("../recibos.controllers");
 
 const router = express.Router();
 

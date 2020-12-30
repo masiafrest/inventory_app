@@ -32,7 +32,13 @@ async function addToDefectuoso(linea, trx) {
   const Defectuoso = require("../items/inventarios/defectuosos/defectuosos.model");
   await Defectuoso.query(trx).insert(cleanLinea);
 }
+async function invModQty(invInstance, qty, trx) {
+  //descontar inventario
+  const result = invInstance.qty - qty;
+  return await invInstance.$query(trx).patch({ qty: result });
+}
 module.exports = {
+  invModQty,
   addToDefectuoso,
   getInvAndPrecioDB,
   getInvDB,

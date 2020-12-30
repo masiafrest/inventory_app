@@ -1,6 +1,6 @@
 const express = require("express");
-const { InvLogFactory, invModQty } = require("../recibo.helpers");
-const { getById } = require("../recibos.controllers");
+const { InvLogFactory } = require("../recibo.helpers");
+const { invModQty, getById } = require("../recibos.controllers");
 const Inventario = require("../../items/inventarios/inventarios.model");
 const Transferencia = require("./transferencias.model");
 const router = express.Router();

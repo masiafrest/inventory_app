@@ -27,12 +27,6 @@ function checkPrice(linea, precioDB, res) {
   }
 }
 
-async function invModQty(invInstance, qty, trx) {
-  //descontar inventario
-  const result = invInstance.qty - qty;
-  return await invInstance.$query(trx).patch({ qty: result });
-}
-
 function InvLogFactory(headers, linea, evento, id, inv_b_id) {
   return {
     inventario_id: inv_b_id || linea.inventario_id,
@@ -47,5 +41,4 @@ module.exports = {
   InvLogFactory,
   checkPrice,
   sumTotal,
-  invModQty,
 };
