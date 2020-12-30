@@ -18,7 +18,14 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// TODO: add get by id
+router.get("/:id", async (req, res, next) => {
+  try {
+    const devolucion = await Devolucion.query().findById(req.params.id);
+    res.json(devolucion);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // devolucion: item devuelto por efectivo o otro item
 // https://www.ejemplode.com/58-administracion/3158-ejemplo_de_nota_de_devolucion.html
