@@ -27,6 +27,8 @@ async function getPrecioDB(invDB) {
 }
 async function addToDefectuoso(linea, trx) {
   const cleanLinea = { ...linea };
+  delete cleanLinea.devolucion_id;
+  delete cleanLinea.id;
   delete cleanLinea.qty;
   delete cleanLinea.salida_inventario_id;
   const Defectuoso = require("../items/inventarios/defectuosos/defectuosos.model");

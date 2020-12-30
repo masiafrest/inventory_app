@@ -10,6 +10,7 @@ const {
 const { cloneDeep } = require("lodash");
 const Devolucion = require("./devoluciones.model");
 const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
+const Linea_devolucion = require("./linea_devoluciones.model");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -29,23 +30,14 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     await Devolucion.transaction(async (trx) => {
-      const insertGraphData = cloneDeep(req.body);
-      insertGraphData.lineas.map((linea) => {
-        delete linea.estado;
-        delete linea.lugar_id;
-      });
-      const devolucion = await Devolucion.query(trx).insertGraph(
-        insertGraphData
-      );
+      const devolucion = await Devolucion.query(trx).insertGraph(req.body);
       await Promise.all(
-        req.body.lineas.map(async (linea) => {
+        devolucion.lineas.map(async (linea) => {
           const {
             a_efectivo,
             qty,
             inventario_id,
             salida_inventario_id,
-            lugar_id,
-            estado,
             descripcion,
           } = linea;
           if (a_efectivo) {
@@ -60,6 +52,9 @@ router.post("/", async (req, res, next) => {
             // cambiar por el mismo item, si otro_inv_id y efectivo es undefini
             const invDB = await getInvDB(inventario_id);
             await invModQty(invDB, qty, trx);
+            await devolucion
+              .$relatedQuery("lineas", trx)
+              .patch({ salida_inventario_id: inventario_id });
           }
           //agregar a item defectuoso a tabla defectuoso
           await addToDefectuoso(linea, trx);
