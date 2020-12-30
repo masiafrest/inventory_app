@@ -18,7 +18,6 @@ router.get("/:id", async (req, res, next) => {
   await getById(Transferencia, req.params.id, res, next);
 });
 
-// FIXME: transferencia de lugar id a otro lugar no es consistente
 router.post("/", async (req, res, next) => {
   try {
     // inv_id, qty, lugar_id, para hacer la transferencia
