@@ -18,7 +18,6 @@ router.get("/:id", async (req, res, next) => {
   await getById(Transferencia, req.params.id, res, next);
 });
 
-// FIXME: esta restando a los 2 item en inventario, uso correcto uno se resta y otro se agrega
 // FIXME: transferencia de lugar id a otro lugar no es consistente
 router.post("/", async (req, res, next) => {
   try {
@@ -50,6 +49,7 @@ router.post("/", async (req, res, next) => {
                 sku,
                 lugares: [
                   {
+                    // se supone q ese lugar ya a sido creado
                     id: linea.a_lugar_id,
                   },
                 ],
@@ -72,7 +72,7 @@ router.post("/", async (req, res, next) => {
           // descontar y hacer historial del inventario
           //descontar inventario
           await invModQty(invDeLugar, qty, trx);
-          await invModQty(invALugar, qty, trx);
+          await invModQty(invALugar, -qty, trx);
           // hacer el inventario log
           let invLogA = [InvLogFactory(req.body, linea, "transferencia")];
           let invLogB = [

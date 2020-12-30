@@ -2,7 +2,6 @@ const router = require("express").Router();
 const inventarios = require("./inventarios/inventarios.routes");
 const Item = require("./items.model");
 const Inventario = require("./inventarios/inventarios.model");
-const Precio = require("../precio/precios.model");
 const getItemGraph = `[inventarios(defaultSelects).[
         precio(defaultSelects),
           lugares(defaultSelects)
