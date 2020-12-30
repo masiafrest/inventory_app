@@ -22,18 +22,31 @@ router.get("/", async (req, res, next) => {
 });
 
 //TODO: add a :sku/nombre/id to lookup by one of those maybe using regex
-router.get("/:nombre", async (req, res, next) => {
+router.get("/:x", async (req, res, next) => {
   try {
-    const items = await Item.query()
-      .withGraphFetched(getItemGraph)
-      .where("nombre", req.params.nombre)
-      .modify("defaultSelects")
-      .first();
-    res.json(items);
+    let item;
+    const x = req.params.x;
+    if (isNaN(x)) {
+      item = await itemGraphFetch("nombre", x);
+    } else {
+      if (x.length < 4) {
+        item = await itemGraphFetch("id", x);
+      }
+      item = await itemGraphFetch("barcode", x);
+    }
+    res.json(item);
   } catch (err) {
     next(err);
   }
 });
+
+async function itemGraphFetch(key, value) {
+  return await Item.query()
+    .withGraphFetched(getItemGraph)
+    .where(key, value)
+    .modify("defaultSelects")
+    .first();
+}
 
 router.post("/", async (req, res, next) => {
   console.log("POST items: ", req.userData);
