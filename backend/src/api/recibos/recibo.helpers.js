@@ -30,7 +30,7 @@ function checkPrice(linea, precioDB, res) {
 function InvLogFactory(headers, linea, evento, id, inv_b_id) {
   return {
     inventario_id: inv_b_id || linea.inventario_id,
-    usuario_id: headers.usuario_id,
+    usuario_id: headers.usuario_id || headers.id,
     empresa_cliente_id: headers.empresa_cliente_id,
     evento,
     ajuste: inv_b_id ? linea.qty : -linea.qty,
