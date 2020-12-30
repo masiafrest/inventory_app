@@ -1,4 +1,5 @@
 const express = require("express");
+const { getById } = require("../recibos.controllers");
 
 const Nota_credito = require("./nota_creditos.model");
 
@@ -13,7 +14,10 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// TODO: add get by id
+router.get("/:id", async (req, res, next) => {
+  await getById(Nota_credito, req.params.id, res, next);
+});
+
 router.post("/", async (req, res, next) => {
   try {
     await Nota_credito.transaction(async (trx) => {

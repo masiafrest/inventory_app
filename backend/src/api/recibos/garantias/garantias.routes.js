@@ -1,7 +1,7 @@
 const express = require("express");
+const { getById } = require("../recibos.controllers");
 const Linea_venta = require("../ventas/linea_ventas.model");
 const Venta = require("../ventas/ventas.model");
-
 const Garantia = require("./garantias.model");
 
 const router = express.Router();
@@ -14,7 +14,10 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
-// TODO: add get by id
+
+router.get("/:id", async (req, res, next) => {
+  await getById(Garantia, req.params.id, res, next);
+});
 
 router.post("/", async (req, res, next) => {
   try {

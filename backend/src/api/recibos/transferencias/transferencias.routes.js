@@ -19,23 +19,18 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // FIXME: esta restando a los 2 item en inventario, uso correcto uno se resta y otro se agrega
+// FIXME: transferencia de lugar id a otro lugar no es consistente
 router.post("/", async (req, res, next) => {
   try {
     // inv_id, qty, lugar_id, para hacer la transferencia
     await Transferencia.transaction(async (trx) => {
       await Promise.all(
         req.body.lineas.map(async (linea) => {
-          const {
-            inventario_id,
-            item_id,
-            qty,
-            de_lugar_id,
-            a_lugar_id,
-            sku,
-          } = linea;
-          const invDeLugar = await Inventario.query(trx)
-            .findById(inventario_id)
-            .where("lugar_id", de_lugar_id);
+          const { inventario_id, item_id, qty, a_lugar_id, sku } = linea;
+          const invDeLugar = await Inventario.query(trx).findById(
+            inventario_id
+          );
+
           let invALugar = await Inventario.query(trx)
             .where({
               sku,
