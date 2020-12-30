@@ -27,25 +27,6 @@ function checkPrice(linea, precioDB, res) {
   }
 }
 
-async function getInvAndPrecioDB(inv) {
-  let obj = {};
-  const Inventario = require("../items/inventarios/inventarios.model");
-  obj.invDB = await Inventario.query().findById(inv.inventario_id);
-  const Precio = require("../precio/precios.model");
-  obj.precioDB = await Precio.query().findById(obj.invDB.precio_id);
-  return obj;
-}
-
-async function getInvDB(id) {
-  const Inventario = require("../items/inventarios/inventarios.model");
-  return await Inventario.query().findById(id);
-}
-
-async function getPrecioDB(invDB) {
-  const Precio = require("../precio/precios.model");
-  return await Precio.query().findById(invDB.precio_id);
-}
-
 async function invModQty(invInstance, qty, trx) {
   //descontar inventario
   const result = invInstance.qty - qty;
@@ -62,19 +43,8 @@ function InvLogFactory(headers, linea, evento, id, inv_b_id) {
     recibo_evento_id: id, // TODO: tal vez hacer un table q relacione recibo evento y hacer referencia
   };
 }
-async function addToDefectuoso(linea, trx) {
-  const cleanLinea = { ...linea };
-  delete cleanLinea.qty;
-  delete cleanLinea.salida_inventario_id;
-  const Defectuoso = require("../items/inventarios/defectuosos/defectuosos.model");
-  await Defectuoso.query(trx).insert(cleanLinea);
-}
 module.exports = {
-  addToDefectuoso,
   InvLogFactory,
-  getInvAndPrecioDB,
-  getInvDB,
-  getPrecioDB,
   checkPrice,
   sumTotal,
   invModQty,

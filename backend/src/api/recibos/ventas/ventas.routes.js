@@ -3,10 +3,10 @@ const Venta = require("./ventas.model");
 const {
   invModQty,
   sumTotal,
-  getInvAndPrecioDB,
   checkPrice,
   InvLogFactory,
 } = require("../recibo.helpers");
+const { getInvAndPrecioDB } = require("../recibos.controllers");
 
 const router = express.Router();
 

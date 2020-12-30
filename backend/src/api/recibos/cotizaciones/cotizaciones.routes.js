@@ -1,11 +1,8 @@
 const express = require("express");
 const Cotizacion = require("./cotizaciones.model");
 
-const {
-  sumTotal,
-  getInvAndPrecioDB,
-  checkPrice,
-} = require("../recibo.helpers");
+const { sumTotal, checkPrice } = require("../recibo.helpers");
+const { getInvAndPrecioDB } = require("../recibos.controllers");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {

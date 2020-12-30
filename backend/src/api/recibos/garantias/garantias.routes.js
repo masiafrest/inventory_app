@@ -28,7 +28,9 @@ router.post("/", async (req, res, next) => {
             const venta = await Venta.query().findById(venta_id);
             if (venta.empresa_cliente_id !== empresa_cliente_id) {
               res.status(406);
-              const error = new Error("el recibo no es de este cliente");
+              const error = new Error(
+                `el recibo de venta id: ${venta_id}, no es de este cliente id: ${empresa_cliente_id}`
+              );
               throw error;
             }
             //check is item exist on linea venta, (meaning is been sold to that client)
@@ -39,7 +41,7 @@ router.post("/", async (req, res, next) => {
             if (lineasVentas.length === 0) {
               res.status(406);
               const error = new Error(
-                "este recibo de venta no tiene este item listado"
+                `este recibo de venta no tiene este item id: ${inventario_id} ,listado`
               );
               throw error;
             }

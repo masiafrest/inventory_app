@@ -1,10 +1,11 @@
 const router = require("express").Router();
+const { invModQty, InvLogFactory } = require("../recibo.helpers");
 const {
   addToDefectuoso,
-  invModQty,
   getInvDB,
-  InvLogFactory,
-} = require("../recibo.helpers");
+  getById,
+} = require("../recibos.controllers");
+
 const { cloneDeep } = require("lodash");
 const Devolucion = require("./devoluciones.model");
 const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
@@ -19,12 +20,7 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:id", async (req, res, next) => {
-  try {
-    const devolucion = await Devolucion.query().findById(req.params.id);
-    res.json(devolucion);
-  } catch (error) {
-    next(error);
-  }
+  await getById(Devolucion, req.params.id, res, next);
 });
 
 // devolucion: item devuelto por efectivo o otro item
