@@ -6,7 +6,6 @@ const {
   InvLogFactory,
 } = require("../recibo.helpers");
 const { cloneDeep } = require("lodash");
-const Defectuoso = require("../../items/inventarios/defectuosos/defectuosos.model");
 const Devolucion = require("./devoluciones.model");
 const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
 
@@ -59,7 +58,7 @@ router.post("/", async (req, res, next) => {
             await invModQty(invDB, qty, trx);
           }
           //agregar a item defectuoso a tabla defectuoso
-          const defectuoso = await addToDefectuoso(linea, trx);
+          await addToDefectuoso(linea, trx);
           //hacer el log
           const invLog = InvLogFactory(
             req.body,
