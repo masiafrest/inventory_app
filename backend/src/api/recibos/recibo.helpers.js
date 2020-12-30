@@ -34,7 +34,7 @@ function InvLogFactory(headers, linea, evento, id, inv_b_id) {
     empresa_cliente_id: headers.empresa_cliente_id,
     evento,
     ajuste: inv_b_id ? linea.qty : -linea.qty,
-    recibo_evento_id: id, // TODO: tal vez hacer un table q relacione recibo evento y hacer referencia
+    recibo_evento_id: id,
   };
 }
 module.exports = {
