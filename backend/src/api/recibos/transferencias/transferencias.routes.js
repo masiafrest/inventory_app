@@ -19,6 +19,7 @@ router.get("/:id", async (req, res, next) => {
   await getById(Transferencia, req.params.id, res, next);
 });
 
+// FIXME: esta restando a los 2 item en inventario, uso correcto uno se resta y otro se agrega
 router.post("/", async (req, res, next) => {
   try {
     // inv_id, qty, lugar_id, para hacer la transferencia
@@ -85,12 +86,16 @@ router.post("/", async (req, res, next) => {
           ];
           await invDeLugar.$relatedQuery("logs", trx).insert(invLogA);
           await invALugar.$relatedQuery("logs", trx).insert(invLogB);
-          res.json({
-            invDeLugar,
-            invALugar,
-          });
+          // borrar sku y item_id ya q no se necesita para insertar en recibo transferencia
+          delete linea.sku;
+          delete linea.item_id;
         })
       );
+      //insert recibo trasnferencia
+      const transferencia = await Transferencia.query(trx).insertGraph(
+        req.body
+      );
+      res.json(transferencia);
     });
   } catch (err) {
     next(err);
