@@ -17,7 +17,21 @@ router.get("/:x", async (req, res, next) => {
   await findByIdOrName(Usuario, req.params.x, res, next);
 });
 
+// to post user, se usa auth desde rol jefa
 router.post("/addUser", signUp);
 
-// to post user, se usa auth desde rol jefa
+// TODO: add patch
+router.patch("/:id", async (req, res, next) => {
+  try {
+    await Usuario.transaction(async (trx) => {
+      const userPatch = await Usuario.query(trx).patchAndFetchById(
+        req.params.id,
+        req.body
+      );
+      res.json(userPatch);
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;
