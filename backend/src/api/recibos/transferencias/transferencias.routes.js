@@ -14,7 +14,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// TODO: add get by id
 router.get("/:id", async (req, res, next) => {
   await getById(Transferencia, req.params.id, res, next);
 });
