@@ -34,6 +34,8 @@ async function addToDefectuoso(linea, trx) {
   const Defectuoso = require("../items/inventarios/defectuosos/defectuosos.model");
   return await Defectuoso.query(trx).insert(cleanLinea);
 }
+
+// MAYBE: should change invModQty to a reducer funcion: invReducer(invInstance: Model, action: {type: string, qty:number, trx: knex.transaction}) => {if actio.type === x increment, else decrement, else return invInstance}
 async function invModQty(invInstance, qty, trx) {
   //descontar inventario
   const result = invInstance.qty - qty;
