@@ -9,23 +9,6 @@ import {
 
 import axios from "axios";
 
-interface Iusuario {
-  id: number;
-  nombre: string;
-}
-
-interface IResToken {
-  usuario: {
-    [key: string]: Iusuario;
-  };
-  token: string;
-}
-
-interface ISignIn {
-  nombre: string;
-  password: string;
-}
-
 export const signInUser = (userData: ISignIn, history: any) => (
   dispatch: any
 ) => {
@@ -33,10 +16,8 @@ export const signInUser = (userData: ISignIn, history: any) => (
   axios
     .post("/signin", userData)
     .then((res) => {
-      const token: string = `Bearer ${res.data.token}`; // TODO: should be res.body, need to test to get the token
-      localStorage.setItem("token", token); // setting token to local storage
-      axios.defaults.headers.common["Authorization"] = token; //setting authorize token to header in axios
-      dispatch(getUserData());
+      setAuthorizationHeader(res.data.token); // TODO: should be res.body, need to test to get the token
+      dispatch({ type: LOADING_USER });
       dispatch({ type: CLEAR_ERRORS });
       console.log("succes");
       // history maybe is react router rom redirect
@@ -55,4 +36,11 @@ export const logOutUser = () => (dispatch: any) => {
     type: SET_UNAUTHENTICATED,
   });
   window.location.href = "/login"; //redirect to index page after login
+};
+
+//helper
+const setAuthorizationHeader = (token: string) => {
+  const tokenStr = `Bearer ${token}`;
+  localStorage.setItem("token", tokenStr); // setting token to local storage
+  axios.defaults.headers.common["Authorization"] = tokenStr; //setting authorize token to header in axios
 };

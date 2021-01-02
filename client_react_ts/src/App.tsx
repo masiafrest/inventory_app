@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
+
+//redux
+import store from "./redux/stores";
+import { Provider } from "react-redux";
+import { logOutUser } from "./redux/actions/userActions";
+import { SET_AUTHENTICATED } from "./redux/types";
+
+axios.defaults.baseURL = "http://localhost:5050/api/v1";
+
+const token = localStorage.Token;
+if (token) {
+  const decodedToken: any = jwtDecode(token);
+  if (decodedToken.exp * 1000 < Date.now()) {
+    store.dispatch(logOutUser);
+    window.location.href = "/login"; //en logOutUser esta esta linea borrar una de las 2?
+  } else {
+    store.dispatch({ type: SET_AUTHENTICATED });
+    axios.defaults.headers.common["Authorization"]; //setting authorize token to header in axios
+    // store.dispatch(getUserData())
+  }
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router></Router>
+    </Provider>
   );
 }
 
