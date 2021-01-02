@@ -1,4 +1,3 @@
-import { stat } from "fs";
 import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from "../types";
 
 const initialState = {
@@ -8,7 +7,7 @@ const initialState = {
 
 export default function (
   state = initialState,
-  action: { type: any; payload: any }
+  action: { type: any; payload?: any }
 ) {
   switch (action.type) {
     case SET_ERRORS:

@@ -11,7 +11,7 @@ const initialState = {
   loading: false,
 };
 
-export default function (state = initialState, action: any) {
+export default function userReducers(state = initialState, action: any) {
   switch (action.type) {
     case SET_AUTHENTICATED:
       return { ...state, authenthicated: true };
