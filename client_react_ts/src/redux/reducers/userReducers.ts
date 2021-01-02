@@ -19,6 +19,7 @@ export default function userReducers(state = initialState, action: any) {
       return initialState;
     case SET_USER:
       return {
+        credentials: action.payload.usuario,
         authenthicated: true,
         loading: false,
       };

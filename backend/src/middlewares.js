@@ -25,8 +25,28 @@ function notFound(req, res, next) {
   next(error);
 }
 
+function yupErrorhandler(err, req, res, next) {
+  if (err.name === "ValidationError") {
+    // yup
+    res.status(500);
+    let errors = {};
+    errors[err.path] = err.message;
+    res.json(errors);
+  } else {
+    next(err);
+  }
+}
+
+function signInErrorHandler(err, req, res, next) {
+  if (err.message === "invalid login") {
+    res.json({ general: err.message });
+  } else {
+    next(err);
+  }
+}
+
 // In this example `res` is an express response object.
-function errorHandler(err, res) {
+function dbErrorHandler(err, req, res, next) {
   if (err instanceof ValidationError) {
     switch (err.type) {
       case "ModelValidation":
@@ -122,15 +142,11 @@ function errorHandler(err, res) {
       data: {},
     });
   } else {
-    res.status(500).send({
-      message: err.message,
-      type: "UnknownError",
-      data: {},
-    });
+    next(err);
   }
 }
 
-function errorHandler2(error, req, res, next) {
+function errorHandler(error, req, res, next) {
   console.log(typeof error);
   const statusCode =
     res.statusCode === 200 ? errorType[error.name] || 500 : res.statusCode;
@@ -145,5 +161,8 @@ function errorHandler2(error, req, res, next) {
 
 module.exports = {
   notFound,
+  yupErrorhandler,
+  signInErrorHandler,
+  dbErrorHandler,
   errorHandler,
 };

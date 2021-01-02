@@ -14,22 +14,22 @@ export const signInUser = (userData: ISignIn, history: any) => (
 ) => {
   dispatch({ type: LOADING_UI });
   axios
-    .post("/signin", userData)
+    .post("auth/signin", userData)
     .then((res) => {
       setAuthorizationHeader(res.data.token); // TODO: should be res.body, need to test to get the token
-      dispatch({ type: LOADING_USER });
+      dispatch({ type: SET_USER, payload: res.data });
       dispatch({ type: CLEAR_ERRORS });
       console.log("succes");
       // history maybe is react router rom redirect
       history.push("/"); //redirect to index page after login
     })
     .catch((err) => {
-      console.log(err);
+      console.log("signIn User error: ", err);
       dispatch({ type: SET_ERRORS, payload: err.response.data });
     });
 };
 
-export const logOutUser = () => (dispatch: any) => {
+export const signOutUser = () => (dispatch: any) => {
   localStorage.removeItem("token");
   delete axios.defaults.headers.common["Authorization"];
   dispatch({
