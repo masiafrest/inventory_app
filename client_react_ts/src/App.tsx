@@ -20,7 +20,7 @@ const token = localStorage.Token;
 if (token) {
   const decodedToken: any = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
-    store.dispatch(signOutUser);
+    store.dispatch(signOutUser as any);
     window.location.href = "/signin"; //en logOutUser esta esta linea borrar una de las 2?
   } else {
     store.dispatch({ type: SET_AUTHENTICATED });

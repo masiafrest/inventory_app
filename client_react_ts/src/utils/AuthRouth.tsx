@@ -9,17 +9,17 @@ interface IAuthProps {
   rest: any;
 }
 
-interface RootState {
-  authenticated: boolean;
-}
-const selectAuth = (state: RootState) => state.authenticated;
+// interface RootState {
+//   authenticated: boolean;
+// }
+// const selectAuth = (state: RootState) => state.authenticated;
 
 export const AuthRouth = ({
   Component,
   authenticated,
   ...rest
 }: IAuthProps) => {
-  authenticated = useSelector(selectAuth);
+  // authenticated = useSelector(selectAuth);
   return (
     <Route
       {...rest}

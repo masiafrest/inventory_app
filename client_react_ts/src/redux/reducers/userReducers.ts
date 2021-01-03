@@ -18,10 +18,7 @@ interface IUserState {
 
 interface IUserAction {
   type: string;
-  payload: IUserPayload;
-}
-interface IUserPayload {
-  usuario: IUserCredentials;
+  payload?: any;
 }
 
 const initialState: IUserState = {
