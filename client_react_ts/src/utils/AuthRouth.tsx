@@ -9,16 +9,20 @@ interface IAuthProps {
   rest: any;
 }
 
+//another way to get the state using selector. part 1/2
 // interface RootState {
 //   authenticated: boolean;
 // }
 // const selectAuth = (state: RootState) => state.authenticated;
+
+//interface of connect
 
 export const AuthRouth = ({
   Component,
   authenticated,
   ...rest
 }: IAuthProps) => {
+  //another way to get the state using selector. part 2/2
   // const authenticated = useSelector(selectAuth);
   return (
     <Route
@@ -34,8 +38,10 @@ export const AuthRouth = ({
   );
 };
 
-function mapStatetoProps(state: IAuthProps) {
+function mapStatetoProps(state: IRootState) {
   return {
     authenticated: state.user.authenticated,
   };
 }
+
+export default connect(mapStatetoProps)(AuthRouth);

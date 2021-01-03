@@ -11,7 +11,7 @@ import { signOutUser } from "./redux/actions/userActions";
 import { SET_AUTHENTICATED } from "./redux/types";
 
 //pages
-import { Home, Home2 } from "./pages/Home";
+import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 
 axios.defaults.baseURL = "http://localhost:5050/api/v1";
