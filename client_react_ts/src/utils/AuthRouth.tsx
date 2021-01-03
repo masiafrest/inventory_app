@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, RouteComponentProps } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import userReducers from "../redux/reducers/userReducers";
 
 interface IAuthProps {
@@ -9,15 +9,27 @@ interface IAuthProps {
   rest: any;
 }
 
-const AuthRouth = ({ Component, authenticated, ...rest }: IAuthProps) => {
-  <Route
-    {...rest}
-    render={(props) =>
-      authenticated === true ? (
-        <Component {...props} />
-      ) : (
-        <Component {...props} />
-      )
-    }
-  />;
+interface RootState {
+  authenticated: boolean;
+}
+const selectAuth = (state: RootState) => state.authenticated;
+
+export const AuthRouth = ({
+  Component,
+  authenticated,
+  ...rest
+}: IAuthProps) => {
+  authenticated = useSelector(selectAuth);
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        authenticated === true ? (
+          <Component {...props} />
+        ) : (
+          <Component {...props} />
+        )
+      }
+    />
+  );
 };
