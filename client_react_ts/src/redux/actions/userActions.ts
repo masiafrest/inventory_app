@@ -38,7 +38,6 @@ export const signInUser = (userData: ISignIn, history: any) => (
       setAuthorizationHeader(res.data.token); // TODO: should be res.body, need to test to get the token
       dispatch({ type: SET_USER, payload: res.data });
       dispatch({ type: CLEAR_ERRORS });
-      console.log("succes");
       // history maybe is react router rom redirect
       history.push("/"); //redirect to index page after login
     })
