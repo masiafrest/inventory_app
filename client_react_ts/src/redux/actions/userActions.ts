@@ -8,7 +8,26 @@ import {
 } from "../types";
 
 import axios from "axios";
+interface ISignIn {
+  nombre: string;
+  password: string;
+}
 
+interface IpostItem {
+  [key: string]: string | number;
+}
+
+interface Iusuario {
+  id: number;
+  nombre: string;
+}
+
+interface IResToken {
+  usuario: {
+    [key: string]: Iusuario;
+  };
+  token: string;
+}
 export const signInUser = (userData: ISignIn, history: any) => (
   dispatch: any
 ) => {
@@ -24,7 +43,7 @@ export const signInUser = (userData: ISignIn, history: any) => (
       history.push("/"); //redirect to index page after login
     })
     .catch((err) => {
-      console.log("signIn User error: ", err);
+      console.log("signIn User error: ", err.response);
       dispatch({ type: SET_ERRORS, payload: err.response.data });
     });
 };

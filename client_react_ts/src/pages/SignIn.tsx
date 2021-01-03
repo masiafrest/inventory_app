@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 //MUI
 import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -49,53 +49,49 @@ function SignIn(props: any) {
   };
 
   return (
-    <Grid container>
-      <Grid item sm />
-      <Grid item sm>
-        <Typography variant="h2">SignIn</Typography>
-        <form noValidate onSubmit={handleSubmit}>
-          <TextField
-            id="nombre"
-            name="nombre"
-            type="nombre"
-            label="Nombre"
-            value={userData.nombre}
-            onChange={handleChange}
-            fullWidth
-            helperText={errors.nombre}
-            error={errors.nombre ? true : false}
-          />
-          <TextField
-            id="password"
-            name="password"
-            type="password"
-            label="Password"
-            value={userData.password}
-            onChange={handleChange}
-            fullWidth
-            helperText={errors.password}
-            error={errors.password ? true : false}
-          />
-          {errors.general && (
-            <Typography variant="body2">{errors.general}</Typography>
-          )}
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disabled={loading}
-          >
-            SignIn
-            {loading && <CircularProgress size={30} />}
-          </Button>
-          <br></br>
-          <span>
+    <Container maxWidth="sm" fixed>
+      <Typography variant="h2">SignIn</Typography>
+      <form noValidate onSubmit={handleSubmit}>
+        <TextField
+          id="nombre"
+          name="nombre"
+          type="nombre"
+          label="Nombre"
+          value={userData.nombre}
+          onChange={handleChange}
+          fullWidth
+          helperText={errors.nombre}
+          error={errors.nombre ? true : false}
+        />
+        <TextField
+          id="password"
+          name="password"
+          type="password"
+          label="Password"
+          value={userData.password}
+          onChange={handleChange}
+          fullWidth
+          helperText={errors.password}
+          error={errors.password ? true : false}
+        />
+        {errors.general && (
+          <Typography variant="body2">{errors.general}</Typography>
+        )}
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={loading}
+        >
+          SignIn
+          {loading && <CircularProgress size={30} />}
+        </Button>
+        <br></br>
+        {/* <span>
             no tienes cuenta? registrate <Link to="/signup">aqui</Link>
-          </span>
-        </form>
-      </Grid>
-      <Grid item sm />
-    </Grid>
+          </span> */}
+      </form>
+    </Container>
   );
 }
 
