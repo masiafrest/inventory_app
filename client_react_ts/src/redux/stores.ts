@@ -7,13 +7,13 @@ const initialState = {};
 
 const middleware = [thunk];
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   user: userReducer,
   UI: uiReducers,
 });
 
 const store = createStore(
-  reducers,
+  rootReducer,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
   // applyMiddleware(...middleware),
@@ -25,4 +25,5 @@ const store = createStore(
   // )
 );
 
+export type RooState = ReturnType<typeof rootReducer>;
 export default store;

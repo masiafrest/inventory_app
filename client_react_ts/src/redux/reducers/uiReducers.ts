@@ -1,13 +1,23 @@
 import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from "../types";
 
-const initialState = {
+interface IUIState {
+  loading: boolean;
+  errors: IErrors | null;
+}
+interface IErrors {
+  nombre: string;
+  password: string;
+  general: string;
+}
+
+const initialState: IUIState = {
   loading: false,
   errors: null,
 };
 
 export default function (
   state = initialState,
-  action: { type: any; payload?: any }
+  action: { type: any; payload?: IErrors }
 ) {
   switch (action.type) {
     case SET_ERRORS:
