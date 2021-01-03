@@ -1,40 +1,35 @@
-import React from "react";
-import { Route, RouteComponentProps } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
-import userReducers from "../redux/reducers/userReducers";
+import React, { ReactNode } from "react";
+import { Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import SignIn from "../pages/SignIn";
 
 interface IAuthProps {
-  Component: React.FC<RouteComponentProps>; //maybe work on funcion component and not class component
+  Component: React.FC; //maybe work on funcion component and not class component
   authenticated: boolean;
   rest: any;
+  [key: string]: any;
 }
 
-//another way to get the state using selector. part 1/2
-// interface RootState {
-//   authenticated: boolean;
-// }
-// const selectAuth = (state: RootState) => state.authenticated;
-
-//interface of connect
-
-export const AuthRouth = ({
+export const AuthRouth: React.FC<IAuthProps> = ({
   Component,
   authenticated,
   ...rest
-}: IAuthProps) => {
-  //another way to get the state using selector. part 2/2
-  // const authenticated = useSelector(selectAuth);
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        authenticated === true ? (
-          <Component {...props} />
-        ) : (
-          <Component {...props} />
-        )
-      }
-    />
+}) => {
+  // let redirectPath = "";
+  // if (!authenticated) {
+  //   redirectPath = "/signin";
+  // }
+  // if (redirectPath) {
+  //   const renderComponent = () => <Redirect to={{ pathname: redirectPath }} />;
+  //   return <Route {...rest} component={renderComponent} render={undefined} />;
+  // } else {
+  //   return <Route {...rest} />;
+  // }
+
+  return authenticated ? (
+    <Route {...rest} />
+  ) : (
+    <Redirect to={{ pathname: "/signin" }} />
   );
 };
 

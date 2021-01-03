@@ -11,6 +11,7 @@ import { signOutUser } from "./redux/actions/userActions";
 import { SET_AUTHENTICATED } from "./redux/types";
 
 //pages
+import AuthRouth from "./utils/AuthRouth";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 
@@ -34,7 +35,8 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <AuthRouth exact path="/" component={Home} />
+          {/* <Route exact path="/" component={Home} /> */}
           <Route exact path="/signin" component={SignIn} />
         </Switch>
       </Router>
