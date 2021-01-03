@@ -4,24 +4,24 @@ import {
   SET_UNAUTHENTICATED,
   LOADING_USER,
 } from "../types";
+// move to global types.
+// interface IUserCredentials {
+//   nombre?: string;
+//   rol?: string;
+//   id?: number;
+// }
+// interface IUserState {
+//   authenticated: boolean;
+//   loading: boolean;
+//   credentials: IUserCredentials;
+// }
 
-interface IUserCredentials {
-  nombre?: string;
-  rol?: string;
-  id?: number;
-}
-interface IUserState {
-  authenticated: boolean;
-  loading: boolean;
-  credentials: IUserCredentials;
-}
+// interface IUserAction {
+//   type: string;
+//   payload?: any;
+// }
 
-interface IUserAction {
-  type: string;
-  payload?: any;
-}
-
-const initialState: IUserState = {
+const initialState: IRootUserState = {
   authenticated: false,
   credentials: {},
   loading: false,
@@ -29,8 +29,8 @@ const initialState: IUserState = {
 
 export default function userReducers(
   state = initialState,
-  action: IUserAction
-): IUserState {
+  action: IActions
+): IRootUserState {
   switch (action.type) {
     case SET_AUTHENTICATED:
       return { ...state, authenticated: true };

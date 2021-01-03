@@ -19,7 +19,7 @@ export const AuthRouth = ({
   authenticated,
   ...rest
 }: IAuthProps) => {
-  // authenticated = useSelector(selectAuth);
+  // const authenticated = useSelector(selectAuth);
   return (
     <Route
       {...rest}
@@ -33,3 +33,9 @@ export const AuthRouth = ({
     />
   );
 };
+
+function mapStatetoProps(state: IAuthProps) {
+  return {
+    authenticated: state.user.authenticated,
+  };
+}
