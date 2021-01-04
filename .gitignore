@@ -2,3 +2,4 @@ node_modules
 docker_data
 db_data
 jsconfig.json
+uploads

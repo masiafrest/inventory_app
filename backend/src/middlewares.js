@@ -45,6 +45,19 @@ function signInErrorHandler(err, req, res, next) {
   }
 }
 
+function multerErrorHandler(err, req, res, next) {
+  if (err instanceof multer.MulterError) {
+    res.status(404).send({
+      error: "multer",
+      message: err,
+    });
+    // A Multer error occurred when uploading.
+  } else if (err) {
+    ç;
+    next(err);
+    // An unknown error occurred when uploading.
+  }
+}
 // In this example `res` is an express response object.
 function dbErrorHandler(err, req, res, next) {
   if (err instanceof ValidationError) {

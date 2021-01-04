@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const inventarios = require("./inventarios/inventarios.routes");
+const upload = require("../../lib/upload");
 const Item = require("./items.model");
 const Inventario = require("./inventarios/inventarios.model");
 const getItemGraph = `[inventarios(defaultSelects).[
@@ -46,8 +47,14 @@ async function itemGraphFetch(key, value) {
     .first();
 }
 
-router.post("/", async (req, res, next) => {
+// {\t"nombre": "dos",\t"descripcion": "laptop",\t"m…_min": 1.99,\t"costo": 0.9,\t"proveedor_id": 1}
+const multerFields = [
+  { name: "image", maxCount: 1 },
+  { name: "images", maxCount: 8 },
+];
+router.post("/", upload.fields(multerFields), async (req, res, next) => {
   console.log("POST items: ", req.userData);
+  // const parseBody
   try {
     const {
       nombre,
@@ -64,6 +71,7 @@ router.post("/", async (req, res, next) => {
       proveedor_id,
       costo,
     } = req.body;
+    const imagePath = req.file.path;
     const itemInventarioObj = {
       "#id": "inventory",
       qty,
