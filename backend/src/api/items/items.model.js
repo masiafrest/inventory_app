@@ -53,6 +53,9 @@ class Item extends BaseModel {
       },
     };
   }
+  static beforeInsert({ inputItems }) {
+    console.log(inputItems);
+  }
 }
 
 module.exports = Item;

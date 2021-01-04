@@ -52,7 +52,7 @@ const multerFields = [
   { name: "image", maxCount: 1 },
   { name: "images", maxCount: 8 },
 ];
-router.post("/", upload.fields(multerFields), async (req, res, next) => {
+router.post("/", upload.array("images", 4), async (req, res, next) => {
   console.log("POST items: ", req.userData);
   // const parseBody
   try {
@@ -71,7 +71,10 @@ router.post("/", upload.fields(multerFields), async (req, res, next) => {
       proveedor_id,
       costo,
     } = req.body;
-    const imagePath = req.file.path;
+    let image_url = req.files.map((file) => {
+      return file.filename;
+    });
+    image_url = JSON.stringify(image_url);
     const itemInventarioObj = {
       "#id": "inventory",
       qty,
@@ -114,30 +117,30 @@ router.post("/", upload.fields(multerFields), async (req, res, next) => {
         },
       ],
     };
-    const existingItem = await Item.query().where({ nombre }).first();
-
-    //check if item exist then incoming data is item inventory of diferent color
-    if (existingItem) {
-      await Inventario.transaction(async (trx) => {
-        console.log("existing item");
-        itemInventarioObj.item_id = existingItem.id;
-        const insertedItem = await Inventario.query(trx).insertGraph(
-          itemInventarioObj,
-          {
-            relate: true,
-            allowRefs: true,
-          }
-        );
-        console.log(insertedItem);
-        res.json(insertedItem);
-      });
-    }
-
     console.log("no existe item");
     await Item.transaction(async (trx) => {
-      const insertedItem = await Item.query(trx)
+      const existingItem = await Item.query().where({ nombre }).first();
+      let insertedItem;
+      //check if item exist then incoming data is item inventory of diferent color
+      if (existingItem) {
+        if (image_url === "undefined" || image_url !== "[]") {
+          await existingItem.$query(trx).patch({ image_url });
+        }
+
+        itemInventarioObj.item_id = existingItem.id;
+        await Inventario.query(trx).insertGraph(itemInventarioObj, {
+          relate: true,
+          allowRefs: true,
+        });
+
+        console.log(existingItem);
+        return res.json(existingItem);
+      }
+
+      insertedItem = await Item.query(trx)
         .insertGraph(
           {
+            image_url,
             nombre,
             descripcion,
             barcode,
