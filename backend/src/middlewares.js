@@ -148,6 +148,10 @@ function dbErrorHandler(err, req, res, next) {
 
 function errorHandler(error, req, res, next) {
   console.log(error);
+  if (error.code === "ECONNREFUSED") {
+    res.statusCode = 500;
+    res.json("base de dato no esta conectado");
+  }
   const statusCode =
     res.statusCode === 200 ? errorType[error.name] || 500 : res.statusCode;
   res.status(statusCode);
