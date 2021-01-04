@@ -53,7 +53,7 @@ export const signOutUser = () => (dispatch: any) => {
   dispatch({
     type: SET_UNAUTHENTICATED,
   });
-  window.location.href = "/login"; //redirect to index page after login
+  window.location.href = "/signin"; //redirect to index page after login
 };
 
 //helper

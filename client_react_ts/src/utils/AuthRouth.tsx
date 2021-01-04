@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import SignIn from "../pages/SignIn";
 
 interface IAuthProps {
-  Component: React.FC; //maybe work on funcion component and not class component
+  Component: React.FC; //maybe work on funcion component and not class component or React.ComponentType<any>;
   authenticated: boolean;
   rest: any;
   [key: string]: any;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 //MUI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -99,8 +98,8 @@ const mapStateToProps = (state: any) => ({
   user: state.user,
   UI: state.UI,
 });
-const mapActionsToProps = {
+const mapDispatchToProps = {
   signInUser,
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

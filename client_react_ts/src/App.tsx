@@ -10,8 +10,12 @@ import { Provider } from "react-redux";
 import { signOutUser } from "./redux/actions/userActions";
 import { SET_AUTHENTICATED } from "./redux/types";
 
-//pages
+// Components
+import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
+import Table from "./components/Table";
+
+//pages
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 
@@ -34,10 +38,12 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
+        <NavBar />
         <Switch>
           <AuthRouth exact path="/" component={Home} />
           {/* <Route exact path="/" component={Home} /> */}
           <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/table" render={Table} />
         </Switch>
       </Router>
     </Provider>
