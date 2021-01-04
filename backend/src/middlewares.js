@@ -147,7 +147,7 @@ function dbErrorHandler(err, req, res, next) {
 }
 
 function errorHandler(error, req, res, next) {
-  console.log(typeof error);
+  console.log(error);
   const statusCode =
     res.statusCode === 200 ? errorType[error.name] || 500 : res.statusCode;
   res.status(statusCode);
