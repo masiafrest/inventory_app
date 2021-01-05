@@ -15,26 +15,25 @@ describe("Items", () => {
   test("POST should respond with a id", async () => {
     const respond = await supertest(app)
       .post("/api/v1/items")
-      .send({
-        nombre: "uno",
-        descripcion: "laptop",
-        modelo: "cblack",
-        barcode: "111111",
-        sku: "dos-yel",
-        categoria_id: 2,
-        qty: 500,
-        lugar_id: 1,
-        color: "yel",
-        precio: 190.9,
-        precio_min: 1.99,
-        costo: 0.9,
-        proveedor_id: 1,
-      })
+      .field("nombre", "uno")
+      .field("descripcion", "laptop")
+      .field("modelo", "cblack")
+      .field("sku", "uno")
+      .field("categoria_id", 2)
+      .field("qty", 500)
+      .field("lugar_id", 1)
+      .field("color", "yel")
+      .field("precio", 9.99)
+      .field("precio_min", 7.99)
+      .field("costo", 5.0)
+      .field("proveedor", 1)
+      // .attach("images", __dirname + "./testimg.png")
       .set("authorization", BearerToken)
-      .set("Accept", "application/json")
       .expect("Content-Type", /json/)
-      .expect(200);
-    expect(respond.body).toHaveProperty("id");
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toHaveProperty("id");
+      });
   });
   it("GET/:name it should respond with the item that has the name", async () => {
     const respond = await supertest(app)
