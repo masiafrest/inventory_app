@@ -4,12 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import AppTwekComponent from "./AppTwekComponent";
-
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <AppTwekComponent />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
