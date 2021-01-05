@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -154,16 +154,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function ItemCard() {
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+function ItemCard(props: any) {
+  // const classes = useStyles();
+  // const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   return (
-    <Card className={classes.root}>
+    <Card>
       <CardHeader
         action={
           <IconButton aria-label="settings">
@@ -174,7 +174,6 @@ function ItemCard() {
         subheader={`Modelo: ${itemData.modelo}`}
       />
       <CardMedia
-        className={classes.media}
         image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvQzSO-hqQB3Onlg23OZ_fS-N59zGI4Wqhvg&usqp=CAU"
         title="Paella dish"
       />
@@ -186,9 +185,6 @@ function ItemCard() {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
