@@ -1,4 +1,6 @@
+import { Button } from "@material-ui/core";
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 // import Table from "../components/Table";
 
@@ -7,7 +9,7 @@ const Home: React.FC<{ authenticated: boolean }> = (props) => {
     <div>
       <h1> Home </h1>
       <pre>authenticated: {props.authenticated ? "true" : "false"}</pre>
-      {/* <Table /> */}
+      <Link to="/card">Card</Link>
     </div>
   );
 };
