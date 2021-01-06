@@ -10,6 +10,12 @@ import Paper from "@material-ui/core/Paper";
 
 const TAX_RATE = 0.07;
 
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
+
 function ccyFormat(num: number) {
   return `${num.toFixed(2)}`;
 }
@@ -46,7 +52,8 @@ const invoiceTaxes = TAX_RATE * invoiceSubtotal;
 const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
 function SpanningTable() {
-  const [Test, setTest] = useState();
+  const classes = useStyles();
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="spanning table">
