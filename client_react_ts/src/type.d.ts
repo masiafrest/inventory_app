@@ -3,6 +3,7 @@ interface IRootState {
   user?: RootUserState;
   UI?: IRootUIState;
   order?: any;
+  itemData?: any
 }
 //user state
 interface IRootUserState {
@@ -36,14 +37,21 @@ interface IActions {
 }
 
 // order
+
+interface IOrderDetail{
+  header:
+}
 interface IOrderHeader {
-  user_id: number;
-  client_id: number;
+  usuario_id: number;
+  cliente_id: number;
 }
 interface IOrderLine {
+  inventario_id: number
   sku: string;
   marca: string;
   modelo: string;
   qty: number;
-  price: number;
+  precio: number;
 }
+// itemData
+interface 
