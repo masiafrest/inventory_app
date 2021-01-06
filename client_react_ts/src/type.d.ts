@@ -2,6 +2,7 @@
 interface IRootState {
   user?: RootUserState;
   UI?: IRootUIState;
+  order?: any;
 }
 //user state
 interface IRootUserState {
@@ -32,4 +33,17 @@ interface IUserSignInErrors {
 interface IActions {
   type: string;
   payload?: any | IUserSignInErrors;
+}
+
+// order
+interface IOrderHeader {
+  user_id: number;
+  client_id: number;
+}
+interface IOrderLine {
+  sku: string;
+  marca: string;
+  modelo: string;
+  qty: number;
+  price: number;
 }
