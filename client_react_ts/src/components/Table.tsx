@@ -56,7 +56,7 @@ function SpanningTable() {
 
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="spanning table">
+      <Table className={classes.table} aria-label="spanning table">
         <TableHead>
           <TableRow>
             <TableCell align="center" colSpan={3}>

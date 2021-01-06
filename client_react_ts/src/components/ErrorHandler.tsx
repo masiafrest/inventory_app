@@ -30,10 +30,10 @@ class ErrorHandler extends Component<any, IState> {
             <br />
             You may also refresh the page or try again later.
           </p>
-          <button type="button" class="btn btn-secondary btn-sm mr-2">
+          <button type="button" className="btn btn-secondary btn-sm mr-2">
             Go Back
           </button>
-          <button type="button" class="btn btn-secondary btn-sm">
+          <button type="button" className="btn btn-secondary btn-sm">
             Try Again
           </button>
         </div>

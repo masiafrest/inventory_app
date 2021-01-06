@@ -155,7 +155,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function ItemCard() {
-  // const classes = useStyles();
+  const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -163,7 +163,7 @@ function ItemCard() {
   };
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardHeader
         action={
           <IconButton aria-label="settings">
@@ -174,7 +174,8 @@ function ItemCard() {
         subheader={`Modelo: ${itemData.modelo}`}
       />
       <CardMedia
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvQzSO-hqQB3Onlg23OZ_fS-N59zGI4Wqhvg&usqp=CAU"
+        className={classes.media}
+        image="https://compuusa.com.pe/4327-large_default/audifonos-iblue-live-hb351l.jpg"
         title="Paella dish"
       />
       <CardContent>
@@ -185,6 +186,9 @@ function ItemCard() {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
