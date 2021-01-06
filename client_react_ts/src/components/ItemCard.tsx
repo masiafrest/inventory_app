@@ -16,121 +16,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 
-const itemData: any = {
-  id: 35,
-  nombre: "dos",
-  descripcion: "hello",
-  modelo: "world",
-  barcode: null,
-  image_url:
-    '["images-1609800290381-555.3852096919965.png","images-1609800290388-708.3983539599237.png"]',
-  categoria_id: 1,
-  categoria_2_id: null,
-  categoria: {
-    id: 1,
-    nombre: "audifono",
-  },
-  inventarios: [
-    {
-      id: 66,
-      item_id: 35,
-      qty: 10,
-      lugar_id: 1,
-      basura: null,
-      color: "red",
-      precio_id: 65,
-      sku: "dos-red",
-      lugares: {
-        id: 1,
-        tipo: "tienda",
-        direccion: "dorado",
-      },
-      precio: {
-        id: 65,
-        precio: 2.99,
-        oferta: null,
-        oferta_precio: null,
-        costo: 0.99,
-        precio_min: 1.99,
-        proveedor_id: 1,
-      },
-    },
-    {
-      id: 68,
-      item_id: 35,
-      qty: 10,
-      lugar_id: 1,
-      basura: null,
-      color: "bl",
-      precio_id: 67,
-      sku: "dos-bl",
-      lugares: {
-        id: 1,
-        tipo: "tienda",
-        direccion: "dorado",
-      },
-      precio: {
-        id: 67,
-        precio: 2.99,
-        oferta: null,
-        oferta_precio: null,
-        costo: 0.99,
-        precio_min: 1.99,
-        proveedor_id: 1,
-      },
-    },
-  ],
-};
-
-const fakeReduxStore = {
-  user: {
-    credentials: {
-      id: 5,
-      nombre: "julio1",
-      rol: "jefe",
-    },
-    authenticated: true,
-    loading: false,
-  },
-  UI: {
-    loading: false,
-    errors: null,
-  },
-  lugares: [
-    {
-      id: 1,
-      tipo: "tienda",
-      direccion: "dorado",
-      created_at: "2020-12-30T20:52:44.212Z",
-      updated_at: "2020-12-30T20:52:44.212Z",
-      deleted_at: null,
-    },
-    {
-      id: 2,
-      tipo: "bodega",
-      direccion: "condado",
-      created_at: "2020-12-30T20:52:44.212Z",
-      updated_at: "2020-12-30T20:52:44.212Z",
-      deleted_at: null,
-    },
-  ],
-  categoria: [
-    {
-      id: 1,
-      nombre: "audifono",
-      created_at: "2020-12-30T20:52:44.224Z",
-      updated_at: "2020-12-30T20:52:44.224Z",
-      deleted_at: null,
-    },
-    {
-      id: 2,
-      nombre: "bocina",
-      created_at: "2020-12-30T20:52:44.224Z",
-      updated_at: "2020-12-30T20:52:44.224Z",
-      deleted_at: null,
-    },
-  ],
-};
+import { fakeReduxStore, itemData, image } from "../fakeDataToTest";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -161,7 +47,31 @@ function ItemCard() {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  const renderInv = itemData.inventarios.map((inv: any) => {
+    return (
+      <>
+        <CardActions>
+          <CardContent>
+            {showKeyValueText(inv, "sku")}
+            {showKeyValueText(inv, "qty")}
+            {showKeyValueText(inv, "color")}
+            {showKeyValueText(inv.precio, "precio")}
+            {inv.precio.oferta
+              ? showKeyValueText(inv.precio, "oferta_precio")
+              : null}
+            {showKeyValueText(inv.precio, "precio_min")}
+          </CardContent>
+          <IconButton>
+            <PostAddIcon />
+          </IconButton>
+          <IconButton>
+            <ReceiptIcon />
+          </IconButton>
+        </CardActions>
+        <Divider />
+      </>
+    );
+  });
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -173,11 +83,7 @@ function ItemCard() {
         title={`Marca: ${itemData.nombre}`}
         subheader={`Modelo: ${itemData.modelo}`}
       />
-      <CardMedia
-        className={classes.media}
-        image="https://compuusa.com.pe/4327-large_default/audifonos-iblue-live-hb351l.jpg"
-        title="Paella dish"
-      />
+      <CardMedia className={classes.media} image={image} title="Paella dish" />
       <CardContent>
         {showKeyValueText(itemData, "descripcion")}
         {showKeyValueText(itemData, "barcode")}
@@ -202,33 +108,6 @@ function ItemCard() {
     </Card>
   );
 }
-
-var renderInv = itemData.inventarios.map((inv: any) => {
-  return (
-    <>
-      <CardActions>
-        <CardContent>
-          {showKeyValueText(inv, "sku")}
-          {showKeyValueText(inv, "qty")}
-          {showKeyValueText(inv, "qty")}
-          {showKeyValueText(inv, "color")}
-          {showKeyValueText(inv.precio, "precio")}
-          {inv.precio.oferta
-            ? showKeyValueText(inv.precio, "oferta_precio")
-            : null}
-          {showKeyValueText(inv.precio, "precio_min")}
-        </CardContent>
-        <IconButton>
-          <PostAddIcon />
-        </IconButton>
-        <IconButton>
-          <ReceiptIcon />
-        </IconButton>
-      </CardActions>
-      <Divider />
-    </>
-  );
-});
 
 function showKeyValueText(data: any, key: string) {
   return <Typography>{`${key}: ${data[key]}`}</Typography>;

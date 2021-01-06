@@ -7,73 +7,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
 
+import AddBoxIcon from "@material-ui/icons/AddBox";
+
+import { fakeReduxStore, itemData } from "../fakeDataToTest";
 const TAX_RATE = 0.07;
-const itemData: any = {
-  id: 35,
-  nombre: "dos",
-  descripcion: "hello",
-  modelo: "world",
-  barcode: null,
-  image_url:
-    '["images-1609800290381-555.3852096919965.png","images-1609800290388-708.3983539599237.png"]',
-  categoria_id: 1,
-  categoria_2_id: null,
-  categoria: {
-    id: 1,
-    nombre: "audifono",
-  },
-  inventarios: [
-    {
-      id: 66,
-      item_id: 35,
-      qty: 10,
-      lugar_id: 1,
-      basura: null,
-      color: "red",
-      precio_id: 65,
-      sku: "dos-red",
-      lugares: {
-        id: 1,
-        tipo: "tienda",
-        direccion: "dorado",
-      },
-      precio: {
-        id: 65,
-        precio: 2.99,
-        oferta: null,
-        oferta_precio: null,
-        costo: 0.99,
-        precio_min: 1.99,
-        proveedor_id: 1,
-      },
-    },
-    {
-      id: 68,
-      item_id: 35,
-      qty: 10,
-      lugar_id: 1,
-      basura: null,
-      color: "bl",
-      precio_id: 67,
-      sku: "dos-bl",
-      lugares: {
-        id: 1,
-        tipo: "tienda",
-        direccion: "dorado",
-      },
-      precio: {
-        id: 67,
-        precio: 2.99,
-        oferta: null,
-        oferta_precio: null,
-        costo: 0.99,
-        precio_min: 1.99,
-        proveedor_id: 1,
-      },
-    },
-  ],
-};
+
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
@@ -159,6 +99,11 @@ function OrderTable() {
               <TableCell align="left">{ccyFormat(row.price)}</TableCell>
             </TableRow>
           ))}
+          <TableRow>
+            <IconButton onClick={() => {}}>
+              <AddBoxIcon />
+            </IconButton>
+          </TableRow>
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={3}>Subtotal</TableCell>

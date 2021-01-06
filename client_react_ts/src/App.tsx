@@ -15,6 +15,7 @@ import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
 import OrderTable from "./components/OrderTable";
 import ItemCard from "./components/ItemCard";
+import ItemAccordion from "./components/ItemAccordion";
 
 //pages
 import Home from "./pages/Home";
@@ -46,6 +47,7 @@ function App() {
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/table" component={OrderTable} />
           <Route exact path="/card" component={ItemCard} />
+          <Route exact path="/accordion" component={ItemAccordion} />
         </Switch>
       </Router>
     </Provider>
