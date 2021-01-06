@@ -4,7 +4,7 @@ const Proveedor = require("./proveedores.model");
 
 router.get("/", async (req, res, next) => {
   try {
-    const proveedores = await Proveedores.query();
+    const proveedores = await Proveedor.query();
     res.json(proveedores);
   } catch (err) {
     next(err);

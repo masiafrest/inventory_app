@@ -15,7 +15,7 @@ describe("Items", () => {
   test("POST should respond with a id", async () => {
     const respond = await supertest(app)
       .post("/api/v1/items")
-      .field("nombre", "uno")
+      .field("marca", "uno")
       .field("descripcion", "laptop")
       .field("modelo", "cblack")
       .field("sku", "uno")

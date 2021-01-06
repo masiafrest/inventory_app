@@ -12,12 +12,11 @@ const checkToken = (req, res, next) => {
   }
 };
 
-function skuGenerator(nombre, modelo, color, opcional = "") {
-  const nom = nombre.slice(0, 3);
-  const sku = `${nombre.slice(0, 3)}-${modelo.slice(0, 3)}-${color.slice(
-    0,
-    3
-  )}${opcional ? "-" + opcional.slice(0, 3) : ""}`;
+function skuGenerator(marca, modelo, color, opcional = "") {
+  const nom = marca.slice(0, 3);
+  const sku = `${marca.slice(0, 3)}-${modelo.slice(0, 3)}-${color.slice(0, 3)}${
+    opcional ? "-" + opcional.slice(0, 3) : ""
+  }`;
   console.log(sku);
   return sku;
 }
@@ -29,7 +28,7 @@ async function findByIdOrName(Model, value, res, next) {
     if (!paramType) {
       result = await Model.query().findById(value);
     } else {
-      result = await Model.query().where("nombre", value).first();
+      result = await Model.query().where("marca", value).first();
     }
     res.json(result);
   } catch (error) {

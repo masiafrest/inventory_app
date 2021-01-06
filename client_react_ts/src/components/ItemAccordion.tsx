@@ -72,7 +72,7 @@ export default function ItemAccordion() {
                 <Grid item xs>
                   <Typography
                     className={classes.heading}
-                  >{`Marca: ${itemData.nombre} `}</Typography>
+                  >{`Marca: ${itemData.marca} `}</Typography>
                 </Grid>
                 <Grid item xs>
                   <Typography

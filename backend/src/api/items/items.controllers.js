@@ -29,7 +29,7 @@ exports.getByParams = async (req, res, next) => {
         .first();
     }
     if (isNaN(x)) {
-      item = await itemGraphFetch("nombre", x);
+      item = await itemGraphFetch("marca", x);
     } else {
       if (x.length < 4) {
         item = await itemGraphFetch("id", x);
@@ -47,7 +47,7 @@ exports.post = async (req, res, next) => {
   // const parseBody
   try {
     const {
-      nombre,
+      marca,
       descripcion,
       modelo,
       barcode,
@@ -109,7 +109,7 @@ exports.post = async (req, res, next) => {
     };
     console.log("no existe item");
     await Item.transaction(async (trx) => {
-      const existingItem = await Item.query().where({ nombre }).first();
+      const existingItem = await Item.query().where({ marca }).first();
       let insertedItem;
       //check if item exist then incoming data is item inventory of diferent color
       if (existingItem) {
@@ -131,7 +131,7 @@ exports.post = async (req, res, next) => {
         .insertGraph(
           {
             image_url,
-            nombre,
+            marca,
             descripcion,
             barcode,
             modelo,

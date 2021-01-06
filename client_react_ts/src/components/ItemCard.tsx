@@ -80,7 +80,7 @@ function ItemCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title={`Marca: ${itemData.nombre}`}
+        title={`Marca: ${itemData.marca}`}
         subheader={`Modelo: ${itemData.modelo}`}
       />
       <CardMedia className={classes.media} image={image} title="Paella dish" />

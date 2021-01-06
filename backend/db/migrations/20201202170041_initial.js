@@ -77,7 +77,7 @@ exports.up = async function (knex) {
   });
 
   await knex.schema.createTable(tableNames.item, (table) => {
-    createTableIncrementsStringNotNullable(table, "nombre");
+    createTableIncrementsStringNotNullable(table, "marca");
     table.string("descripcion");
     table.string("modelo");
     table.string("barcode");

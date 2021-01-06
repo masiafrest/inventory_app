@@ -2,14 +2,14 @@ const { tableNames } = require("../../src/constants/string");
 
 const items = [
   {
-    nombre: "sony",
+    marca: "sony",
     descripcion: "un equipo",
     modelo: "qwer",
     barcode: "0000000000",
     image_url: "www.com",
   },
   {
-    nombre: "huawei",
+    marca: "huawei",
     descripcion: "un audifono",
     modelo: "yuio",
     barcode: "00000001111",
