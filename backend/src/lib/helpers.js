@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const Usuario = require("../api/usuarios/usuarios.model");
 const checkToken = (req, res, next) => {
   const header = req.headers["authorization"];
   if (typeof header !== "undefined") {
@@ -28,7 +29,11 @@ async function findByIdOrName(Model, value, res, next) {
     if (!paramType) {
       result = await Model.query().findById(value);
     } else {
-      result = await Model.query().where("marca", value).first();
+      let type = "marca";
+      if (Model.name === "Usuario") {
+        type = "nombre";
+      }
+      result = await Model.query().where(type, value).first();
     }
     res.json(result);
   } catch (error) {

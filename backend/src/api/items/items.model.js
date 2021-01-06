@@ -42,7 +42,7 @@ class Item extends BaseModel {
       defaultSelects(builder) {
         builder.select(
           "id",
-          "nombre",
+          "marca",
           "descripcion",
           "modelo",
           "barcode",
