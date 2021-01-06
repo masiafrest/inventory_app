@@ -13,7 +13,7 @@ import { SET_AUTHENTICATED } from "./redux/types";
 // Components
 import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
-import Table from "./components/Table";
+import OrderTable from "./components/OrderTable";
 import ItemCard from "./components/ItemCard";
 
 //pages
@@ -44,7 +44,7 @@ function App() {
           <AuthRouth exact path="/" component={Home} />
           {/* <Route exact path="/" component={Home} /> */}
           <Route exact path="/signin" component={SignIn} />
-          <Route exact path="/table" component={Table} />
+          <Route exact path="/table" component={OrderTable} />
           <Route exact path="/card" component={ItemCard} />
         </Switch>
       </Router>
