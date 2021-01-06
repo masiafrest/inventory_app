@@ -42,7 +42,7 @@ export const signInUser = (userData: ISignIn, history: any) => (
       history.push("/"); //redirect to index page after login
     })
     .catch((err) => {
-      console.log("signIn User error: ", err.response);
+      console.log("signIn User error: ", err);
       dispatch({ type: SET_ERRORS, payload: err.response.data });
     });
 };

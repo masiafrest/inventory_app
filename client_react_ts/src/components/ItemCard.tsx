@@ -154,9 +154,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function ItemCard(props: any) {
+function ItemCard() {
   // const classes = useStyles();
-  // const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

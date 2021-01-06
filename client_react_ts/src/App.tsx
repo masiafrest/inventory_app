@@ -44,8 +44,8 @@ function App() {
           <AuthRouth exact path="/" component={Home} />
           {/* <Route exact path="/" component={Home} /> */}
           <Route exact path="/signin" component={SignIn} />
-          <Route exact path="/table" render={Table} />
-          <Route exact path="/card" render={ItemCard} />
+          <Route exact path="/table" component={Table} />
+          <Route exact path="/card" component={ItemCard} />
         </Switch>
       </Router>
     </Provider>
