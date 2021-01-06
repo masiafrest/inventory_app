@@ -1,9 +1,11 @@
+import { idText } from "typescript"
+
 //TODO: add almost all req.body data from server type and use ts Omit or Pick helpers
 interface IRootState {
   user?: RootUserState;
   UI?: IRootUIState;
   order?: any;
-  itemData?: any
+  itemData?: IItem
 }
 //user state
 interface IRootUserState {
@@ -46,12 +48,31 @@ interface IOrderHeader {
   cliente_id: number;
 }
 interface IOrderLine {
-  inventario_id: number
-  sku: string;
-  marca: string;
-  modelo: string;
-  qty: number;
-  precio: number;
+  inventario_id, qty, precio: number
+  sku, marca, modelo: string;
 }
 // itemData
-interface 
+interface IItem{
+  id, catetoria_id, categoria_2_id, barcode: number;
+  marca, modelo, 
+  descripcion,
+  barcode, image_url: string;
+ inventarios: IInv
+}
+
+interface IInv{
+  item_id, lugar_id, qty, basura, precio_id, id: number;
+  color, sku: string;
+  precio:IPrecio;
+  lugares: ILugares;
+}
+
+interface IPrecio {
+  id, precio, precio_min, costo, oferta_precio, proveedor_id: number;
+  oferta: boolean;
+}
+
+interface ILugares {
+  id: number;
+  tipo, dirrecion: string
+}
