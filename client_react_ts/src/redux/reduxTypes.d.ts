@@ -3,7 +3,12 @@ interface ReduxState {
   user?: ReduxUser;
   UI?: ReduxUI;
   order?: ReduxOrder;
-  itemData?: Item;
+  itemData?: ReduxItemData;
+}
+//actions
+interface Actions {
+  type: string;
+  payload?: any | UserSignInErrors;
 }
 //user state
 interface ReduxUser {
@@ -30,12 +35,6 @@ interface UserSignInErrors {
   general: string;
 }
 
-//actions
-interface Actions {
-  type: string;
-  payload?: any | UserSignInErrors;
-}
-
 // order
 
 interface ReduxOrder {
@@ -55,17 +54,17 @@ interface OrderLine {
   modelo: string;
 }
 // itemData
-interface Item {
+interface ReduxItemData {
   id;
   catetoria_id;
   categoria_2_id;
-  barcode: number;
+  barcode: number | null;
   marca;
   modelo;
   descripcion;
   barcode;
   image_url: string;
-  inventarios: Inv;
+  inventarios: Inv[];
 }
 
 interface Inv {
@@ -74,7 +73,7 @@ interface Inv {
   qty;
   basura;
   precio_id;
-  id: number;
+  id: number | null;
   color;
   sku: string;
   precio: Precio;

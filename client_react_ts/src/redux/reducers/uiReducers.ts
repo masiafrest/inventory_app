@@ -1,6 +1,6 @@
 import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from "../types";
 
-const initialState: ReduxUser = {
+const initialState: ReduxUI = {
   loading: false,
   errors: null,
 };

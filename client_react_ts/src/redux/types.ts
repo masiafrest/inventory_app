@@ -14,6 +14,8 @@ export const LOADING_DATA = "LOADING_DATA";
 export const LOADING_ORDER = "LOADING_ORDER";
 export const SET_HEADER = "SET_HEADER";
 export const SET_LINEAS = "SET_LINEAS";
+// ItemData reducer types
+export const SET_ITEM_DATA = "SET_ITEM_DATA";
 // Data reducer types
 export const SET_CARDS = "SET_CARDS";
 export const MORE_CARDS = "MORE_CARDS";
