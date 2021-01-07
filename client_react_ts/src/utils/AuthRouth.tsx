@@ -33,7 +33,7 @@ export const AuthRouth: React.FC<IAuthProps> = ({
   );
 };
 
-function mapStatetoProps(state: IRootState) {
+function mapStatetoProps(state: ReduxState) {
   return {
     authenticated: state.user.authenticated,
   };

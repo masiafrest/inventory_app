@@ -12,13 +12,13 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
 import { signInUser } from "../redux/actions/userActions";
 
-interface IUserInput {
+interface UserInput {
   nombre: string;
   password: string;
 }
 
 function SignIn(props: any) {
-  const initialValue: IUserInput = { nombre: "", password: "" };
+  const initialValue: UserInput = { nombre: "", password: "" };
   const [userData, setUserData] = useState(initialValue);
   const [errors, setErrors] = useState({
     nombre: "",

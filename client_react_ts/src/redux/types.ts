@@ -10,6 +10,10 @@ export const SET_ERRORS = "SET_ERRORS";
 export const LOADING_UI = "LOADING_UI";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const LOADING_DATA = "LOADING_DATA";
+//Order reducer types
+export const LOADING_ORDER = "LOADING_ORDER";
+export const SET_HEADER = "SET_HEADER";
+export const SET_LINEAS = "SET_LINEAS";
 // Data reducer types
 export const SET_CARDS = "SET_CARDS";
 export const MORE_CARDS = "MORE_CARDS";

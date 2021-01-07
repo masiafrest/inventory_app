@@ -13,7 +13,7 @@ const Home = (props: { authenticated: boolean }) => {
   );
 };
 
-function mapStateToProps(state: IRootState) {
+function mapStateToProps(state: ReduxState) {
   return {
     authenticated: state.user.authenticated,
   };

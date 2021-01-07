@@ -42,7 +42,7 @@ function NavBar(props: any) {
   );
 }
 
-function mapStateToProps(state: IRootState) {
+function mapStateToProps(state: ReduxState) {
   return { authenticated: state.user.authenticated };
 }
 
