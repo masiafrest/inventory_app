@@ -15,24 +15,13 @@ interface ReduxUser {
   authenticated: boolean;
   credentials: RootUserCredentialsState;
   loading: boolean;
+  errors: null | UserSignInErrors;
 }
 
 interface RootUserCredentialsState {
   nombre?: string;
   rol?: string;
   id?: number;
-}
-
-//UI state
-type ReduxUI = {
-  loading: boolean;
-  errors: UserSignInError | null;
-};
-
-interface UserSignInErrors {
-  nombre: string;
-  password: string;
-  general: string;
 }
 
 // order

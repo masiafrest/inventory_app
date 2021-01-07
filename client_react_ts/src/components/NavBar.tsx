@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // redux
-import { connect } from "react-redux";
-import { signOutUser } from "../redux/actions/userActions";
+import { useSelector, useDispatch } from "react-redux";
+import { signOut } from "../redux/features/user/userSlice";
+import { RootState } from "../redux/rootReducer";
+
 //MUI
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,9 +15,11 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
 function NavBar(props: any) {
+  const dispath = useDispatch();
+  const user: any = useSelector((state: RootState) => state.user);
   const handleSignOut = () => {
     console.log("handle sign out lcick");
-    props.signOutUser();
+    dispath(signOut());
   };
   const renderLogOutButton = (
     <Button
@@ -35,17 +39,11 @@ function NavBar(props: any) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6">News</Typography>
-          {props.authenticated ? renderLogOutButton : null}
+          {user.authenticated ? renderLogOutButton : null}
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-function mapStateToProps(state: ReduxState) {
-  return { authenticated: state.user.authenticated };
-}
-
-const mapDispatchToProps = { signOutUser };
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default NavBar;

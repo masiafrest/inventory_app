@@ -9,8 +9,9 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 //Redux
-import { connect } from "react-redux";
-import { signInUser } from "../redux/actions/userActions";
+import { RootState } from "../redux/rootReducer";
+import { useSelector, useDispatch } from "react-redux";
+import { signIn, signOut } from "../redux/features/user/userSlice";
 
 interface UserInput {
   nombre: string;
@@ -18,6 +19,8 @@ interface UserInput {
 }
 
 function SignIn(props: any) {
+  const dispatch = useDispatch();
+  const user: any = useSelector((state: RootState) => state.user);
   const initialValue: UserInput = { nombre: "", password: "" };
   const [userData, setUserData] = useState(initialValue);
   const [errors, setErrors] = useState({
@@ -28,16 +31,16 @@ function SignIn(props: any) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (props.UI.errors) {
-      setErrors(props.UI.errors);
+    if (user.errors) {
+      setErrors(user.errors);
     }
-    setLoading(props.UI.loading);
-  }, [props.UI]);
+    setLoading(user.loading);
+  }, [user.errors, user.loading]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log("submit: ", e);
-    props.signInUser(userData, props.history);
+    dispatch(signIn(userData, props.history));
   };
 
   const handleChange = (e: any) => {
@@ -94,12 +97,4 @@ function SignIn(props: any) {
   );
 }
 
-const mapStateToProps = (state: any) => ({
-  user: state.user,
-  UI: state.UI,
-});
-const mapDispatchToProps = {
-  signInUser,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default SignIn;

@@ -1,5 +1,3 @@
-import { SET_HEADER, SET_LINEAS, LOADING_ORDER } from "../types";
-
 const initialState: ReduxOrder = {
   header: {
     empresa_cliente_id: null,
@@ -20,9 +18,9 @@ export default function orderReducers(
   action: Actions
 ): ReduxOrder {
   switch (action.type) {
-    case SET_HEADER:
+    case "SET_HEADER":
       return { ...state, header: action.payload.header };
-    case SET_LINEAS:
+    case "SET_LINEAS":
       return { ...state, lineas: action.payload.lineas };
     default:
       return state;

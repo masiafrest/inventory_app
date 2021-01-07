@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/rootReducer";
 import SignIn from "../pages/SignIn";
 
 interface IAuthProps {
@@ -10,11 +11,12 @@ interface IAuthProps {
   [key: string]: any;
 }
 
-export const AuthRouth: React.FC<IAuthProps> = ({
+export const AuthRouth: React.FC<any> = ({
   Component,
   authenticated,
   ...rest
 }) => {
+  const user = useSelector((state: RootState) => state.user);
   // let redirectPath = "";
   // if (!authenticated) {
   //   redirectPath = "/signin";
@@ -26,17 +28,11 @@ export const AuthRouth: React.FC<IAuthProps> = ({
   //   return <Route {...rest} />;
   // }
 
-  return authenticated ? (
+  return user.authenticated ? (
     <Route {...rest} />
   ) : (
     <Redirect to={{ pathname: "/signin" }} />
   );
 };
 
-function mapStatetoProps(state: ReduxState) {
-  return {
-    authenticated: state.user.authenticated,
-  };
-}
-
-export default connect(mapStatetoProps)(AuthRouth);
+export default AuthRouth;

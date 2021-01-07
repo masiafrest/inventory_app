@@ -1,29 +1,13 @@
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk";
-import uiReducers from "./reducers/uiReducers";
-import userReducer from "./reducers/userReducers";
-const initialState = {};
+import { configureStore, Action } from "@reduxjs/toolkit";
+import { ThunkAction } from "redux-thunk";
 
-const middleware = [thunk];
+import rootReducer, { RootState } from "./rootReducer";
 
-const rootReducer = combineReducers({
-  user: userReducer,
-  UI: uiReducers,
+const store = configureStore({
+  reducer: rootReducer,
 });
 
-const store = createStore(
-  rootReducer,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-  // applyMiddleware(...middleware),
-  //quitar el codigo de abajo compose cuando va a deploy en firebase y agregar el codigo arriba applymiddelware
-  //si no va a salir pag en blanco porque los navegadores necesitan el redux dextool instalado
-  // compose(
-  //   applyMiddleware(...middleware),
-  //   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  // )
-);
+export type AppDispatch = typeof store.dispatch;
+export type AppThunk = ThunkAction<void, RootState, unknown, Action<String>>;
 
-export type RooState = ReturnType<typeof rootReducer>;
 export default store;

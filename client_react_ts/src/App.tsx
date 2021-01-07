@@ -7,8 +7,11 @@ import jwtDecode from "jwt-decode";
 //redux
 import store from "./redux/stores";
 import { Provider } from "react-redux";
-import { signOutUser } from "./redux/actions/userActions";
-import { SET_AUTHENTICATED } from "./redux/types";
+import {
+  setAuthenticated,
+  setUserCredential,
+  signOut,
+} from "./redux/features/user/userSlice";
 
 // Components
 import NavBar from "./components/NavBar";
@@ -23,15 +26,19 @@ import SignIn from "./pages/SignIn";
 
 axios.defaults.baseURL = "http://localhost:5050/api/v1";
 
-const token = localStorage.Token;
+const token = localStorage.token;
 if (token) {
   const decodedToken: any = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
-    store.dispatch(signOutUser as any);
+    store.dispatch(signOut);
     window.location.href = "/signin"; //en logOutUser esta esta linea borrar una de las 2?
   } else {
-    store.dispatch({ type: SET_AUTHENTICATED });
-    axios.defaults.headers.common["Authorization"] = token; //setting authorize token to header in axios
+    console.log("token: ", token);
+    console.log("decodedtoken: ", decodedToken);
+    store.dispatch(setAuthenticated());
+    store.dispatch(setUserCredential({ ...decodedToken }));
+    axios.defaults.headers.common["Authorization"] = token;
+    //setting authorize token to header in axios
     // store.dispatch(getUserData())
   }
 }
