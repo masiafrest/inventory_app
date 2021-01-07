@@ -50,7 +50,6 @@ function App() {
         <NavBar />
         <Switch>
           <AuthRouth exact path="/" component={Home} />
-          {/* <Route exact path="/" component={Home} /> */}
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/table" component={OrderTable} />
           <Route exact path="/card" component={ItemCard} />

@@ -21,6 +21,9 @@ interface UserInput {
 function SignIn(props: any) {
   const dispatch = useDispatch();
   const user: any = useSelector((state: RootState) => state.user);
+
+  //TODO: check is has userData and is authenticated, then redirect to /
+
   const initialValue: UserInput = { nombre: "", password: "" };
   const [userData, setUserData] = useState(initialValue);
   const [errors, setErrors] = useState({
