@@ -13,8 +13,6 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 
-import { fakeReduxStore, itemData, image } from "../fakeDataToTest";
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -27,15 +25,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ItemAccordion() {
+export default function DataAccordion(props) {
   const classes = useStyles();
+  const { data } = props;
 
-  function showKeyValueText(data: any, key: string) {
-    return <Typography>{`${key}: ${data[key]}`}</Typography>;
+  function showKeyValueText(obj: any, key: string) {
+    return <Typography>{`${key}: ${obj[key]}`}</Typography>;
   }
-  const renderInv = itemData.inventarios.map((inv: any) => {
+
+  const renderInv = data.inventarios.map((inv: any) => {
     return (
-      <Grid>
+      <Grid key={inv.id}>
         {showKeyValueText(inv, "sku")}
         {showKeyValueText(inv, "qty")}
         {showKeyValueText(inv, "color")}
@@ -65,26 +65,26 @@ export default function ItemAccordion() {
         >
           <Grid container direction="row">
             <Grid item xs={2}>
-              <Avatar src={image} />
+              <Avatar src={JSON.parse(data.image_url)[0]} />
             </Grid>
             <Grid item xs container direction="column">
               <Grid item direction="row" container>
                 <Grid item xs>
                   <Typography
                     className={classes.heading}
-                  >{`Marca: ${itemData.marca} `}</Typography>
+                  >{`Marca: ${data.marca} `}</Typography>
                 </Grid>
                 <Grid item xs>
                   <Typography
                     className={classes.heading}
-                  >{`Modelo: ${itemData.modelo}`}</Typography>
+                  >{`Modelo: ${data.modelo}`}</Typography>
                 </Grid>
               </Grid>
               <Divider />
               <Grid item>
                 <Typography
                   className={classes.heading}
-                >{`Descripcion: ${itemData.descripcion}`}</Typography>
+                >{`Descripcion: ${data.descripcion}`}</Typography>
               </Grid>
             </Grid>
           </Grid>

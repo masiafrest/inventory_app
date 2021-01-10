@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -15,8 +15,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
-
-import { fakeReduxStore, itemData, image } from "../fakeDataToTest";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,17 +38,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function ItemCard() {
+function DataCard({ data }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-
+  const image = JSON.parse(data.image_url)[0];
+  console.log("imageeeeeee, ", image);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const renderInv = itemData.inventarios.map((inv: any) => {
+  const renderInv = data.inventarios.map((inv: any) => {
     return (
-      <>
-        <CardActions>
+      <Fragment key={inv.id}>
+        <CardActions key={inv.id}>
           <CardContent>
             {showKeyValueText(inv, "sku")}
             {showKeyValueText(inv, "qty")}
@@ -69,7 +68,7 @@ function ItemCard() {
           </IconButton>
         </CardActions>
         <Divider />
-      </>
+      </Fragment>
     );
   });
   return (
@@ -80,15 +79,15 @@ function ItemCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title={`Marca: ${itemData.marca}`}
-        subheader={`Modelo: ${itemData.modelo}`}
+        title={`Marca: ${data.marca}`}
+        subheader={`Modelo: ${data.modelo}`}
       />
       <CardMedia className={classes.media} image={image} title="Paella dish" />
       <CardContent>
-        {showKeyValueText(itemData, "descripcion")}
-        {showKeyValueText(itemData, "barcode")}
-        {showKeyValueText(itemData, "categoria_id")}
-        {showKeyValueText(itemData, "categoria_2_id")}
+        {showKeyValueText(data, "descripcion")}
+        {showKeyValueText(data, "barcode")}
+        {showKeyValueText(data, "categoria_id")}
+        {showKeyValueText(data, "categoria_2_id")}
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
@@ -112,4 +111,4 @@ function ItemCard() {
 function showKeyValueText(data: any, key: string) {
   return <Typography>{`${key}: ${data[key]}`}</Typography>;
 }
-export default ItemCard;
+export default DataCard;

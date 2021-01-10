@@ -17,9 +17,7 @@ import {
 import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
 import OrderTable from "./components/OrderTable";
-import ItemCard from "./components/ItemCard";
-import ItemAccordion from "./components/ItemAccordion";
-
+import ShowData from "./components/ShowData";
 //pages
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
@@ -52,8 +50,7 @@ function App() {
           <AuthRouth exact path="/" component={Home} />
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/table" component={OrderTable} />
-          <Route exact path="/card" component={ItemCard} />
-          <Route exact path="/accordion" component={ItemAccordion} />
+          <Route path="/showData" component={ShowData} />
         </Switch>
       </Router>
     </Provider>

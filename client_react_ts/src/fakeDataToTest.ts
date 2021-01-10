@@ -6,7 +6,7 @@ export const itemData: any = {
   modelo: "world",
   barcode: null,
   image_url:
-    '["images-1609800290381-555.3852096919965.png","images-1609800290388-708.3983539599237.png"]',
+    '["https://compuusa.com.pe/4327-large_default/audifonos-iblue-live-hb351l.jpg"]',
   categoria_id: 1,
   categoria_2_id: null,
   categoria: {
