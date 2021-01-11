@@ -117,3 +117,6 @@ export const fakeReduxStore = {
 
 export const image =
   "https://compuusa.com.pe/4327-large_default/audifonos-iblue-live-hb351l.jpg";
+
+export const BearerToken =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoic29uaWEiLCJyb2wiOiJqZWZlIiwiaWF0IjoxNjA4NTA2NjU4fQ.X5QjjMuxbdLwwnagONmLlD6q9WL4l007yN2EUukx_8w";

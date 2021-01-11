@@ -8,10 +8,13 @@ import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import ViewHeadlineIcon from "@material-ui/icons/ViewHeadline";
 import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
 
+import SearchBar from "./SearchBar";
+
 import { fakeReduxStore, itemData, image } from "../fakeDataToTest";
 
 export default function ShowData() {
   const [toggleView, setToggleView] = useState("accordion");
+  const [resData, setResData] = useState({});
 
   const onChangeHandler = (
     event: React.MouseEvent<HTMLElement>,
@@ -19,6 +22,8 @@ export default function ShowData() {
   ) => {
     setToggleView(toggleView === "accordion" ? "card" : "accordion");
   };
+
+  const objHasProp = Object.keys(resData).length === 0 ? false : true;
 
   return (
     <>
@@ -35,11 +40,14 @@ export default function ShowData() {
           <ViewAgendaIcon fontSize="small" />
         </ToggleButton>
       </ToggleButtonGroup>
+      <SearchBar setResData={setResData} />
       {toggleView === "accordion" ? (
-        <DataAccordion data={itemData} />
-      ) : (
+        objHasProp ? (
+          <DataAccordion data={resData} />
+        ) : null
+      ) : objHasProp ? (
         <DataCard data={itemData} />
-      )}
+      ) : null}
     </>
   );
 }
