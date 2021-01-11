@@ -46,7 +46,7 @@ export default function ShowData() {
           <DataAccordion data={resData} />
         ) : null
       ) : objHasProp ? (
-        <DataCard data={itemData} />
+        <DataCard data={resData} />
       ) : null}
     </>
   );

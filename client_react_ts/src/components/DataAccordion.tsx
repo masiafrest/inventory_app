@@ -65,7 +65,11 @@ export default function DataAccordion(props) {
         >
           <Grid container direction="row">
             <Grid item xs={2}>
-              <Avatar src={JSON.parse(data.image_url)[0]} />
+              <Avatar
+                src={`http://localhost:5050/uploads/${
+                  JSON.parse(data.image_url)[0]
+                }`}
+              />
             </Grid>
             <Grid item xs container direction="column">
               <Grid item direction="row" container>

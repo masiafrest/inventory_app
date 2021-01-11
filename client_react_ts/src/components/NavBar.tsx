@@ -65,7 +65,7 @@ function NavBar(props: any) {
             <NavLink to="/showData">Search Item</NavLink>
             {user.authenticated ? renderLogOutButton : null}
           </Drawer>
-          {location.pathname === "/showData" ? <SearchBar /> : null}
+          {/* {location.pathname === "/showData" ? <SearchBar /> : null} */}
         </Toolbar>
       </AppBar>
     </div>

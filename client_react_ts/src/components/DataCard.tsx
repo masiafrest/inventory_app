@@ -82,7 +82,11 @@ function DataCard({ data }) {
         title={`Marca: ${data.marca}`}
         subheader={`Modelo: ${data.modelo}`}
       />
-      <CardMedia className={classes.media} image={image} title="Paella dish" />
+      <CardMedia
+        className={classes.media}
+        image={`http://localhost:5050/uploads/${JSON.parse(data.image_url)[0]}`}
+        title="Paella dish"
+      />
       <CardContent>
         {showKeyValueText(data, "descripcion")}
         {showKeyValueText(data, "barcode")}
