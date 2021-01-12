@@ -4,6 +4,7 @@ const { signUp } = require("../auth/auth.controllers");
 const { findByIdOrName } = require("../../lib/helpers");
 
 const Usuario = require("./usuarios.model");
+const Rol = require("./roles/roles.model");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -15,7 +16,13 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:x", async (req, res, next) => {
-  await findByIdOrName(Usuario, req.params.x, res, next);
+  const usuario = await findByIdOrName(Usuario, req.params.x, res, next);
+  let rol;
+  if (usuario) {
+    rol = await Rol.query().findById(usuario.rol_id);
+    usuario.rol = rol.tipo;
+  }
+  res.json(usuario);
 });
 
 // to post user, se usa auth desde rol jefa

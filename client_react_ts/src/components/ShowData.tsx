@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-import DataCard from "./DataCard";
-import DataAccordion from "./DataAccordion";
+import DataCard from "./items/ItemCard";
+import DataAccordion from "./items/ItemAccordion";
+import ShowAccordion from "./showFetchData/ShowAccordion";
 
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
@@ -20,7 +21,7 @@ export default function ShowData() {
 
   console.log(resData);
   const objHasProp = Object.keys(resData).length === 0 ? false : true;
-
+  //TODO: create a viewContainer to show DataAcordion or card style, making DataAcordion and CardStyle a presentational component
   return (
     <>
       <ToggleButtonGroup
@@ -39,7 +40,7 @@ export default function ShowData() {
       <SearchBar setResData={setResData} />
       {toggleView === "accordion" ? (
         objHasProp ? (
-          <DataAccordion data={resData} />
+          <ShowAccordion data={resData} />
         ) : null
       ) : objHasProp ? (
         <DataCard data={resData} />

@@ -44,7 +44,6 @@ function DataCard({ data }) {
   const image = data.image_url
     ? `http://localhost:5050/uploads/${JSON.parse(data.image_url)[0]}`
     : undefined;
-  console.log("imageeeeeee, ", image);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

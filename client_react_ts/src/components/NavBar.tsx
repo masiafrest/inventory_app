@@ -56,7 +56,8 @@ function NavBar(props: any) {
             onClose={toggleDrawer(false)}
           >
             <NavLink to="/">Home</NavLink>
-            <NavLink to="/showData">Search Item</NavLink>
+            <NavLink to="/items">Search Item</NavLink>
+            <NavLink to="/usuarios">Search Usuario</NavLink>
             <NavLink to="/table">orderTable</NavLink>
             {user.authenticated ? renderLogOutButton : null}
           </Drawer>

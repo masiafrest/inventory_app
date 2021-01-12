@@ -15,7 +15,13 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:x", async (req, res, next) => {
-  await findByIdOrName(Empresa_cliente, req.params.x, res, next);
+  const cliente = await findByIdOrName(
+    Empresa_cliente,
+    req.params.x,
+    res,
+    next
+  );
+  res.json(cliente);
 });
 
 router.post("/", async (req, res, next) => {

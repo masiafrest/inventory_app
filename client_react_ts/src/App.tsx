@@ -50,7 +50,8 @@ function App() {
           <AuthRouth exact path="/" component={Home} />
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/table" component={OrderTableContainer} />
-          <Route path="/showData" component={ShowData} />
+          <Route path="/items" component={ShowData} />
+          <Route path="/usuarios" component={ShowData} />
         </Switch>
       </Router>
     </Provider>

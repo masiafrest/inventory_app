@@ -30,7 +30,7 @@ const ShowRows = ({ rows, ccyFormat }) => {
   ));
 };
 
-function OrderTable({ item, ccyFormat, invoice, tax }) {
+function OrderTable({ item, ccyFormat, invoice, tax, onClickHandler }) {
   const classes = useStyles();
   const { Subtotal, Taxes, Total } = invoice;
 
@@ -58,7 +58,7 @@ function OrderTable({ item, ccyFormat, invoice, tax }) {
         <TableBody>
           {<ShowRows rows={item} ccyFormat={ccyFormat} />}
           <TableRow>
-            <IconButton onClick={() => {}}>
+            <IconButton onClick={onClickHandler}>
               <AddBoxIcon />
             </IconButton>
           </TableRow>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 //redux
 import { RootState } from "../../redux/rootReducer";
@@ -51,6 +52,8 @@ export default function OrderTableContainer() {
   const recibo: Recibo = useSelector((state: RootState) => state.recibo);
   const [item, setItem] = useState<ItemRow[]>([]);
   const { lineas } = recibo;
+  const history = useHistory();
+  const onClickHandler = () => history.push("/showData");
 
   useEffect(() => {
     if (lineas.length > 0) {
@@ -72,6 +75,7 @@ export default function OrderTableContainer() {
       ccyFormat={ccyFormat}
       invoice={invoice}
       tax={TAX_RATE}
+      onClickHandler={onClickHandler}
     />
   );
 }

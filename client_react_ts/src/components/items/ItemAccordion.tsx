@@ -14,7 +14,7 @@ import PostAddIcon from "@material-ui/icons/PostAdd";
 
 //redux
 import { useDispatch } from "react-redux";
-import { pushLinea } from "../redux/features/recibo/reciboSlice";
+import { pushLinea } from "../../redux/features/recibo/reciboSlice";
 
 interface Id {
   id: number;
@@ -74,8 +74,6 @@ export default function DataAccordion(props) {
   const { data } = props;
   const [qty, setQty] = useState(1);
 
-  console.log("image: type of ", typeof data.image_url);
-
   const onChangeHandler = (e: any) => {
     setQty(e.target.value);
   };
@@ -97,7 +95,6 @@ export default function DataAccordion(props) {
   function showKeyValueText(obj: any, key: string) {
     return <Typography>{`${key}: ${obj[key]}`}</Typography>;
   }
-
   const renderInv = data.inventarios.map((inv: Inv) => {
     return (
       <Grid key={inv.id}>
@@ -148,21 +145,15 @@ export default function DataAccordion(props) {
             <Grid item xs container direction="column">
               <Grid item direction="row" container>
                 <Grid item xs>
-                  <Typography
-                    className={classes.heading}
-                  >{`Marca: ${data.marca} `}</Typography>
+                  <Typography>{`Marca: ${data.marca} `}</Typography>
                 </Grid>
                 <Grid item xs>
-                  <Typography
-                    className={classes.heading}
-                  >{`Modelo: ${data.modelo}`}</Typography>
+                  <Typography>{`Modelo: ${data.modelo}`}</Typography>
                 </Grid>
               </Grid>
               <Divider />
               <Grid item>
-                <Typography
-                  className={classes.heading}
-                >{`Descripcion: ${data.descripcion}`}</Typography>
+                <Typography>{`Descripcion: ${data.descripcion}`}</Typography>
               </Grid>
             </Grid>
           </Grid>

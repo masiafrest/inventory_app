@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios, { AxiosResponse } from "axios";
+import { useLocation } from "react-router-dom";
 
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -13,22 +14,22 @@ import { BearerToken } from "../fakeDataToTest";
 export default function SearchBar(props: any) {
   const [values, setValues] = useState("");
   //TODO: use react router dom useLocation to determine the path and chage axio request get to the path, if items, users,
-
+  const { pathname } = useLocation();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues(event.target.value);
   };
+
   const submitHandler = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("submit");
     try {
-      const result: AxiosResponse = await axios.get(`items/${values}`, {
-        headers: { Authorization: BearerToken },
-      });
+      const result: AxiosResponse = await axios.get(`${pathname}/${values}`);
+      console.log(result);
       props.setResData(result.data);
     } catch (error) {
       console.log("error: ", error);
     }
   };
+
   return (
     <FormControl>
       <InputLabel htmlFor="input-with-icon-adornment">Buscar</InputLabel>

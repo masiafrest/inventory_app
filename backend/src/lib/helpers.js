@@ -35,7 +35,7 @@ async function findByIdOrName(Model, value, res, next) {
       }
       result = await Model.query().where(type, value).first();
     }
-    res.json(result);
+    return result;
   } catch (error) {
     next(error);
   }
