@@ -6,14 +6,14 @@ const items = [
     descripcion: "un equipo",
     modelo: "qwer",
     barcode: "0000000000",
-    image_url: "www.com",
+
   },
   {
     marca: "huawei",
     descripcion: "un audifono",
     modelo: "yuio",
     barcode: "00000001111",
-    image_url: "www.huaw.com",
+ ,
   },
 ];
 

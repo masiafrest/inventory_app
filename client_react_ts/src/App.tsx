@@ -18,6 +18,8 @@ import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
 import OrderTableContainer from "./components/orderTable/OrderTableContainer";
 import ShowData from "./components/ShowData";
+
+import ErrorHandler from "./components/ErrorHandler";
 //pages
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";

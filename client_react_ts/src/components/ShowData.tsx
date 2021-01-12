@@ -14,13 +14,11 @@ export default function ShowData() {
   const [toggleView, setToggleView] = useState("accordion");
   const [resData, setResData] = useState({});
 
-  const onChangeHandler = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
-  ) => {
+  const onChangeHandler = (event: React.MouseEvent<HTMLElement>) => {
     setToggleView(toggleView === "accordion" ? "card" : "accordion");
   };
 
+  console.log(resData);
   const objHasProp = Object.keys(resData).length === 0 ? false : true;
 
   return (

@@ -74,6 +74,8 @@ export default function DataAccordion(props) {
   const { data } = props;
   const [qty, setQty] = useState(1);
 
+  console.log("image: type of ", typeof data.image_url);
+
   const onChangeHandler = (e: any) => {
     setQty(e.target.value);
   };
@@ -92,7 +94,6 @@ export default function DataAccordion(props) {
     dispatch(pushLinea(linea));
     //TODO: add animacion de q se agrego
   };
-  console.log("qty: ", qty);
   function showKeyValueText(obj: any, key: string) {
     return <Typography>{`${key}: ${obj[key]}`}</Typography>;
   }
@@ -131,17 +132,17 @@ export default function DataAccordion(props) {
   return (
     <div className={classes.root}>
       <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Grid container direction="row">
             <Grid item xs={2}>
               <Avatar
-                src={`http://localhost:5050/uploads/${
-                  JSON.parse(data.image_url)[0]
-                }`}
+                src={
+                  data.image_url
+                    ? `http://localhost:5050/uploads/${
+                        JSON.parse(data.image_url)[0]
+                      }`
+                    : undefined
+                }
               />
             </Grid>
             <Grid item xs container direction="column">

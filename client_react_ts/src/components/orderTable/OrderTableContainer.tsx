@@ -51,6 +51,7 @@ export default function OrderTableContainer() {
   const recibo: Recibo = useSelector((state: RootState) => state.recibo);
   const [item, setItem] = useState<ItemRow[]>([]);
   const { lineas } = recibo;
+
   useEffect(() => {
     if (lineas.length > 0) {
       lineas.map((linea) => {

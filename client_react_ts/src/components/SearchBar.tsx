@@ -12,8 +12,6 @@ import { BearerToken } from "../fakeDataToTest";
 
 export default function SearchBar(props: any) {
   const [values, setValues] = useState("");
-  //TODO: use redux global state to set data coming from res
-  const [data, setData] = useState();
   //TODO: use react router dom useLocation to determine the path and chage axio request get to the path, if items, users,
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,13 +24,11 @@ export default function SearchBar(props: any) {
       const result: AxiosResponse = await axios.get(`items/${values}`, {
         headers: { Authorization: BearerToken },
       });
-      setData(result.data);
       props.setResData(result.data);
     } catch (error) {
       console.log("error: ", error);
     }
   };
-  console.log(values);
   return (
     <FormControl>
       <InputLabel htmlFor="input-with-icon-adornment">Buscar</InputLabel>

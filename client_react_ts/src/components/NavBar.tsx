@@ -21,7 +21,6 @@ function NavBar(props: any) {
   const user: any = useSelector((state: RootState) => state.user);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   let location = useLocation();
-  console.log("location; ", location);
 
   const handleSignOut = () => {
     dispath(signOut());

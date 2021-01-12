@@ -2,6 +2,7 @@ import React, { Component, ErrorInfo } from "react";
 
 interface IState {
   hasError: boolean;
+  error: any;
 }
 
 class ErrorHandler extends Component<any, IState> {
@@ -9,12 +10,13 @@ class ErrorHandler extends Component<any, IState> {
     super(props);
     this.state = {
       hasError: false,
+      error: "",
     };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
     // Handle fallback UI
-    this.setState({ hasError: true });
+    this.setState({ hasError: true, error });
     // Manage error logs
     // logErrorStack(error, info);
   }
@@ -29,7 +31,12 @@ class ErrorHandler extends Component<any, IState> {
             Brace yourself till we get the error fixed.
             <br />
             You may also refresh the page or try again later.
+            <br />
+            this is the error:
+            <br />
+            {this.state.error}
           </p>
+
           <button type="button" className="btn btn-secondary btn-sm mr-2">
             Go Back
           </button>
