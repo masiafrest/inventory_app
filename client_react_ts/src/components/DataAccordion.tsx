@@ -1,17 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
-import { Divider, Grid } from "@material-ui/core";
+import { Divider, Grid, TextField } from "@material-ui/core";
 
 import IconButton from "@material-ui/core/IconButton";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
+
+//redux
+import { useDispatch } from "react-redux";
+import { pushLinea } from "../redux/features/recibo/reciboSlice";
+
+interface Id {
+  id: number;
+}
+interface Lugares extends Id {
+  direccion: string;
+  tipo: string;
+}
+interface Precio extends Id {
+  costo: number;
+  precio: number;
+  precio_min: number;
+  proveedor_id: number;
+  oferta_precio: number | null;
+  oferta: boolean;
+}
+interface Inv extends Id {
+  basura: boolean;
+  color: string;
+  sku: string;
+  item_id: number;
+  lugar_id: number;
+  qty: number;
+  lugares: Lugares;
+  precio: Precio;
+  precio_id: number;
+}
+interface Items extends Id {
+  marca: string;
+  descripcion: string;
+  modelo: string;
+  barcode: number;
+  image_url: string | Array<string>;
+  categoria_id: number;
+  categoria_2_id: number;
+  cateroria: Array<Categoria>;
+}
+interface Categoria extends Id {
+  nombre: string;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,14 +69,35 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function DataAccordion(props) {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { data } = props;
+  const [qty, setQty] = useState(1);
 
+  const onChangeHandler = (e: any) => {
+    setQty(e.target.value);
+  };
+  const onClickHandler = (inv: Inv, item: Items) => {
+    const { sku } = inv;
+    const { precio, precio_min } = inv.precio;
+    const { marca, modelo } = item;
+    const linea = {
+      sku,
+      marca,
+      modelo,
+      qty,
+      precio,
+      precio_min,
+    };
+    dispatch(pushLinea(linea));
+    //TODO: add animacion de q se agrego
+  };
+  console.log("qty: ", qty);
   function showKeyValueText(obj: any, key: string) {
     return <Typography>{`${key}: ${obj[key]}`}</Typography>;
   }
 
-  const renderInv = data.inventarios.map((inv: any) => {
+  const renderInv = data.inventarios.map((inv: Inv) => {
     return (
       <Grid key={inv.id}>
         {showKeyValueText(inv, "sku")}
@@ -44,7 +108,16 @@ export default function DataAccordion(props) {
           ? showKeyValueText(inv.precio, "oferta_precio")
           : null}
         {showKeyValueText(inv.precio, "precio_min")}
-        <IconButton>
+        <TextField
+          id="inv.id"
+          label="cantidad"
+          variant="outlined"
+          defaultValue={1}
+          margin="dense"
+          onChange={onChangeHandler}
+          type="number"
+        ></TextField>
+        <IconButton onClick={() => onClickHandler(inv, data)}>
           <PostAddIcon />
         </IconButton>
         <IconButton>

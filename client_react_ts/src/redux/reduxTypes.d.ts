@@ -1,17 +1,5 @@
-//TODO: add almost all req.body data from server type and use ts Omit or Pick helpers
-interface ReduxState {
-  user?: ReduxUser;
-  UI?: ReduxUI;
-  order?: ReduxOrder;
-  itemData?: ReduxItemData;
-}
-//actions
-interface Actions {
-  type: string;
-  payload?: any | UserSignInErrors;
-}
-//user state
-interface ReduxUser {
+//user
+interface User {
   authenticated: boolean;
   credentials: RootUserCredentialsState;
   loading: boolean;
@@ -24,63 +12,23 @@ interface RootUserCredentialsState {
   id?: number;
 }
 
-// order
-
-interface ReduxOrder {
-  header: OrderHeader;
-  lineas: OrderLine;
-}
-interface OrderHeader {
-  usuario_id;
-  empresa_cliente_id: number | null;
-}
-interface OrderLine {
-  inventario_id;
-  qty;
-  precio: number | null;
-  sku;
-  marca;
-  modelo: string;
-}
-// itemData
-interface ReduxItemData {
-  id;
-  catetoria_id;
-  categoria_2_id;
-  barcode: number | null;
-  marca;
-  modelo;
-  descripcion;
-  barcode;
-  image_url: string;
-  inventarios: Inv[];
+//recibo
+interface Recibo {
+  usuario_id: number;
+  empresa_cliente_id?: number;
+  resuelto?: boolean;
+  lineas: Lineas[];
 }
 
-interface Inv {
-  item_id;
-  lugar_id;
-  qty;
-  basura;
-  precio_id;
-  id: number | null;
-  color;
-  sku: string;
-  precio: Precio;
-  lugares: Lugares;
-}
-
-interface Precio {
-  id;
-  precio;
-  precio_min;
-  costo;
-  oferta_precio;
-  proveedor_id: number;
-  oferta: boolean;
-}
-
-interface Lugares {
-  id: number;
-  tipo;
-  dirrecion: string;
+interface Lineas {
+  inventario_id?: number;
+  qty?: number;
+  precio?: number;
+  venta_id?: number;
+  descripcion?: string;
+  item_id?: number;
+  a_lugar_id?: number;
+  sku?: string;
+  marca?: string;
+  modelo?: string;
 }

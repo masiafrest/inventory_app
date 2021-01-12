@@ -11,7 +11,10 @@ import IconButton from "@material-ui/core/IconButton";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
-import { fakeReduxStore, itemData } from "../fakeDataToTest";
+//redux
+import { RootState } from "../redux/rootReducer";
+import { useSelector } from "react-redux";
+
 const TAX_RATE = 0.07;
 
 const useStyles = makeStyles({
@@ -21,51 +24,77 @@ const useStyles = makeStyles({
 });
 
 function ccyFormat(num: number) {
-  return `${num.toFixed(2)}`;
+  return num ? `${num.toFixed(2)}` : 0.0;
 }
 
 function priceRow(qty: number, price: number) {
   return qty * price;
 }
 
-function createRow(
-  sku: string,
-  marca: string,
-  modelo: string,
-  qty: number,
-  price: number
-) {
-  const total = priceRow(qty, price);
-  return { sku, marca, modelo, qty, price, total };
-}
-
-interface Row {
+interface ItemRow {
   sku: string;
   marca: string;
   modelo: string;
   qty: number;
   price: number;
+  total?: number;
+}
+function createRow(
+  sku: string | any,
+  marca: string | any,
+  modelo: string | any,
+  qty: number | any,
+  price: number | any
+): ItemRow {
+  const total = priceRow(qty, price);
+  return { sku, marca, modelo, qty, price, total };
 }
 
-function subtotal(items: Row[]) {
+const ShowRows = ({ rows }) => {
+  return rows.map((row) => (
+    <TableRow key={row.sku}>
+      <TableCell align="left">{row.sku}</TableCell>
+      <TableCell align="left">{row.marca}</TableCell>
+      <TableCell align="left">{row.modelo}</TableCell>
+      <TableCell align="left">{row.qty}</TableCell>
+      <TableCell align="left">{row.price}</TableCell>
+      <TableCell align="left">{ccyFormat(row.price)}</TableCell>
+    </TableRow>
+  ));
+};
+
+let rows: ItemRow[] = [];
+
+function subtotal(items: ItemRow[]) {
+  console.log("function subtotal: ", items);
   return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 
-const rows = [
-  createRow("pap-box", "Paperclips (Box)", "ab", 100, 1.15),
-  createRow("pap-cas", "Paper (Case)", "ab", 10, 45.99),
-  createRow("was-bas", "Waste Basket", "ec", 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+let invoiceSubtotal;
+let invoiceTaxes;
+let invoiceTotal;
 
 function OrderTable() {
+  const recibo: Recibo = useSelector((state: RootState) => state.recibo);
+  const [item, setItem] = useState<ItemRow[]>([]);
+  const { lineas } = recibo;
   const classes = useStyles();
-  const [itemList, setItemList] = useState([]);
 
-  useEffect(() => {}, [itemList]);
+  useEffect(() => {
+    if (lineas.length > 0) {
+      lineas.map((linea) => {
+        const { sku, marca, modelo, qty, precio } = linea;
+        const row = createRow(sku, marca, modelo, qty, precio);
+        rows.push(row);
+        setItem(rows);
+        invoiceSubtotal = subtotal(rows);
+        invoiceTaxes = TAX_RATE * invoiceSubtotal;
+        invoiceTotal = invoiceTaxes + invoiceSubtotal;
+        console.log("subtotal; ", invoiceSubtotal, invoiceTaxes, invoiceTotal);
+        console.log("set item: ", item);
+      });
+    }
+  }, [lineas]);
 
   return (
     <TableContainer component={Paper}>
@@ -89,16 +118,7 @@ function OrderTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.sku}>
-              <TableCell align="left">{row.sku}</TableCell>
-              <TableCell align="left">{row.marca}</TableCell>
-              <TableCell align="left">{row.modelo}</TableCell>
-              <TableCell align="left">{row.qty}</TableCell>
-              <TableCell align="left">{row.price}</TableCell>
-              <TableCell align="left">{ccyFormat(row.price)}</TableCell>
-            </TableRow>
-          ))}
+          {<ShowRows rows={item} />}
           <TableRow>
             <IconButton onClick={() => {}}>
               <AddBoxIcon />

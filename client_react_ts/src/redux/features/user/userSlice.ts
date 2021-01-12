@@ -8,13 +8,6 @@ interface SignIn {
   password: string;
 }
 
-const initialState: ReduxUser = {
-  authenticated: false,
-  credentials: {},
-  loading: false,
-  errors: null,
-};
-
 interface UserDataAndToken {
   usuario: UserCredential;
   token: string;
@@ -25,6 +18,13 @@ interface UserCredential {
   rol?: string;
   id?: number;
 }
+
+const initialState: User = {
+  authenticated: false,
+  credentials: {},
+  loading: false,
+  errors: null,
+};
 
 const userSlice = createSlice({
   name: "users",

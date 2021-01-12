@@ -15,6 +15,7 @@ export default function SearchBar(props: any) {
   //TODO: use redux global state to set data coming from res
   const [data, setData] = useState();
   //TODO: use react router dom useLocation to determine the path and chage axio request get to the path, if items, users,
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues(event.target.value);
   };
@@ -42,7 +43,10 @@ export default function SearchBar(props: any) {
         onChange={handleChange}
         endAdornment={
           <InputAdornment position="end">
-            <IconButton onClick={submitHandler}>
+            <IconButton
+              onClick={submitHandler}
+              disabled={values ? false : true}
+            >
               <SearchIcon />
             </IconButton>
           </InputAdornment>

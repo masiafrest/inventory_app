@@ -7,7 +7,6 @@ import { signOut } from "../redux/features/user/userSlice";
 import { RootState } from "../redux/rootReducer";
 
 //MUI
-
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -19,6 +18,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 
 //component
 import SearchBar from "./SearchBar";
+import OrderTable from "./OrderTable";
 
 function NavBar(props: any) {
   const dispath = useDispatch();
@@ -63,6 +63,7 @@ function NavBar(props: any) {
           >
             <NavLink to="/">Home</NavLink>
             <NavLink to="/showData">Search Item</NavLink>
+            <NavLink to="/table">orderTable</NavLink>
             {user.authenticated ? renderLogOutButton : null}
           </Drawer>
           {/* {location.pathname === "/showData" ? <SearchBar /> : null} */}
