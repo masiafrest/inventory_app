@@ -41,7 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
 function DataCard({ data }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-  const image = JSON.parse(data.image_url)[0];
+  const image = data.image_url
+    ? `http://localhost:5050/uploads/${JSON.parse(data.image_url)[0]}`
+    : undefined;
   console.log("imageeeeeee, ", image);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -82,11 +84,7 @@ function DataCard({ data }) {
         title={`Marca: ${data.marca}`}
         subheader={`Modelo: ${data.modelo}`}
       />
-      <CardMedia
-        className={classes.media}
-        image={`http://localhost:5050/uploads/${JSON.parse(data.image_url)[0]}`}
-        title="Paella dish"
-      />
+      <CardMedia className={classes.media} image={image} title="Paella dish" />
       <CardContent>
         {showKeyValueText(data, "descripcion")}
         {showKeyValueText(data, "barcode")}
