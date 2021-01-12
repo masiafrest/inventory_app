@@ -23,11 +23,9 @@ export default function SearchBar(props: any) {
     e.preventDefault();
     console.log("submit");
     try {
-      console.log("value: ", values);
       const result: AxiosResponse = await axios.get(`items/${values}`, {
         headers: { Authorization: BearerToken },
       });
-      console.log("result:, ", result);
       setData(result.data);
       props.setResData(result.data);
     } catch (error) {

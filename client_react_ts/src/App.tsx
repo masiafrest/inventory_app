@@ -16,7 +16,7 @@ import {
 // Components
 import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
-import OrderTable from "./components/OrderTable";
+import OrderTableContainer from "./components/orderTable/OrderTableContainer";
 import ShowData from "./components/ShowData";
 //pages
 import Home from "./pages/Home";
@@ -31,8 +31,6 @@ if (token) {
     store.dispatch(signOut);
     window.location.href = "/signin"; //en logOutUser esta esta linea borrar una de las 2?
   } else {
-    console.log("token: ", token);
-    console.log("decodedtoken: ", decodedToken);
     store.dispatch(setAuthenticated());
     store.dispatch(setUserCredential({ ...decodedToken }));
     axios.defaults.headers.common["Authorization"] = token;
@@ -49,7 +47,7 @@ function App() {
         <Switch>
           <AuthRouth exact path="/" component={Home} />
           <Route exact path="/signin" component={SignIn} />
-          <Route exact path="/table" component={OrderTable} />
+          <Route exact path="/table" component={OrderTableContainer} />
           <Route path="/showData" component={ShowData} />
         </Switch>
       </Router>

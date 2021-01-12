@@ -10,8 +10,6 @@ import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
 
 import SearchBar from "./SearchBar";
 
-import { fakeReduxStore, itemData, image } from "../fakeDataToTest";
-
 export default function ShowData() {
   const [toggleView, setToggleView] = useState("accordion");
   const [resData, setResData] = useState({});

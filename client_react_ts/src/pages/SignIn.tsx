@@ -42,7 +42,6 @@ function SignIn(props: any) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log("submit: ", e);
     dispatch(signIn(userData, props.history));
   };
 
@@ -92,9 +91,6 @@ function SignIn(props: any) {
           {loading && <CircularProgress size={30} />}
         </Button>
         <br></br>
-        {/* <span>
-            no tienes cuenta? registrate <Link to="/signup">aqui</Link>
-          </span> */}
       </form>
     </Container>
   );

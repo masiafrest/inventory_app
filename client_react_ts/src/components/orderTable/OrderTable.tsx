@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,46 +11,14 @@ import IconButton from "@material-ui/core/IconButton";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
-//redux
-import { RootState } from "../redux/rootReducer";
-import { useSelector } from "react-redux";
-
-const TAX_RATE = 0.07;
-
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
 });
 
-function ccyFormat(num: number) {
-  return num ? `${num.toFixed(2)}` : 0.0;
-}
-
-function priceRow(qty: number, price: number) {
-  return qty * price;
-}
-
-interface ItemRow {
-  sku: string;
-  marca: string;
-  modelo: string;
-  qty: number;
-  price: number;
-  total?: number;
-}
-function createRow(
-  sku: string | any,
-  marca: string | any,
-  modelo: string | any,
-  qty: number | any,
-  price: number | any
-): ItemRow {
-  const total = priceRow(qty, price);
-  return { sku, marca, modelo, qty, price, total };
-}
-
-const ShowRows = ({ rows }) => {
+const ShowRows = ({ rows, format }) => {
+  const { ccyFormat } = format;
   return rows.map((row) => (
     <TableRow key={row.sku}>
       <TableCell align="left">{row.sku}</TableCell>
@@ -63,39 +31,10 @@ const ShowRows = ({ rows }) => {
   ));
 };
 
-let rows: ItemRow[] = [];
-
-function subtotal(items: ItemRow[]) {
-  console.log("function subtotal: ", items);
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-let invoiceSubtotal;
-let invoiceTaxes;
-let invoiceTotal;
-
-function OrderTable() {
-  const recibo: Recibo = useSelector((state: RootState) => state.recibo);
-  const [item, setItem] = useState<ItemRow[]>([]);
-  const { lineas } = recibo;
+function OrderTable({ item, format, invoice, tax }) {
   const classes = useStyles();
-
-  useEffect(() => {
-    if (lineas.length > 0) {
-      lineas.map((linea) => {
-        const { sku, marca, modelo, qty, precio } = linea;
-        const row = createRow(sku, marca, modelo, qty, precio);
-        rows.push(row);
-        setItem(rows);
-        invoiceSubtotal = subtotal(rows);
-        invoiceTaxes = TAX_RATE * invoiceSubtotal;
-        invoiceTotal = invoiceTaxes + invoiceSubtotal;
-        console.log("subtotal; ", invoiceSubtotal, invoiceTaxes, invoiceTotal);
-        console.log("set item: ", item);
-      });
-    }
-  }, [lineas]);
-
+  const { ccyFormat } = format;
+  const { invoiceSubtotal, invoiceTaxes, invoiceTotal } = invoice;
   return (
     <TableContainer component={Paper}>
       <Table aria-label="spanning table" padding="none" size="small">
@@ -118,7 +57,7 @@ function OrderTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {<ShowRows rows={item} />}
+          {<ShowRows rows={item} format={format} />}
           <TableRow>
             <IconButton onClick={() => {}}>
               <AddBoxIcon />

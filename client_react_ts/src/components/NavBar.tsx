@@ -16,10 +16,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
 
-//component
-import SearchBar from "./SearchBar";
-import OrderTable from "./OrderTable";
-
 function NavBar(props: any) {
   const dispath = useDispatch();
   const user: any = useSelector((state: RootState) => state.user);
@@ -28,7 +24,6 @@ function NavBar(props: any) {
   console.log("location; ", location);
 
   const handleSignOut = () => {
-    console.log("handle sign out lcick");
     dispath(signOut());
   };
 
