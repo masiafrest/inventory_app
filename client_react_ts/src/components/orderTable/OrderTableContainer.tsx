@@ -42,16 +42,15 @@ function subtotal(items: ItemRow[]) {
 
 const TAX_RATE = 0.07;
 const invoice = {
-  invoiceSubtotal: 0,
-  invoiceTaxes: 0,
-  invoiceTotal: 0,
+  Subtotal: 0,
+  Taxes: 0,
+  Total: 0,
 };
 
 export default function OrderTableContainer() {
   const recibo: Recibo = useSelector((state: RootState) => state.recibo);
   const [item, setItem] = useState<ItemRow[]>([]);
   const { lineas } = recibo;
-  let { invoiceSubtotal, invoiceTaxes, invoiceTotal } = invoice;
   useEffect(() => {
     if (lineas.length > 0) {
       lineas.map((linea) => {
@@ -59,9 +58,9 @@ export default function OrderTableContainer() {
         const row = createRow(sku, marca, modelo, qty, precio);
         rows.push(row);
         setItem(rows);
-        invoiceSubtotal = subtotal(rows);
-        invoiceTaxes = TAX_RATE * invoiceSubtotal;
-        invoiceTotal = invoiceTaxes + invoiceSubtotal;
+        invoice.Subtotal = subtotal(rows);
+        invoice.Taxes = TAX_RATE * invoice.Subtotal;
+        invoice.Total = invoice.Taxes + invoice.Subtotal;
       });
     }
   }, [lineas]);
@@ -69,7 +68,7 @@ export default function OrderTableContainer() {
   return (
     <OrderTable
       item={item}
-      format={ccyFormat}
+      ccyFormat={ccyFormat}
       invoice={invoice}
       tax={TAX_RATE}
     />

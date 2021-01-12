@@ -17,8 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ShowRows = ({ rows, format }) => {
-  const { ccyFormat } = format;
+const ShowRows = ({ rows, ccyFormat }) => {
   return rows.map((row) => (
     <TableRow key={row.sku}>
       <TableCell align="left">{row.sku}</TableCell>
@@ -31,10 +30,10 @@ const ShowRows = ({ rows, format }) => {
   ));
 };
 
-function OrderTable({ item, format, invoice, tax }) {
+function OrderTable({ item, ccyFormat, invoice, tax }) {
   const classes = useStyles();
-  const { ccyFormat } = format;
-  const { invoiceSubtotal, invoiceTaxes, invoiceTotal } = invoice;
+  const { Subtotal, Taxes, Total } = invoice;
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="spanning table" padding="none" size="small">
@@ -57,7 +56,7 @@ function OrderTable({ item, format, invoice, tax }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {<ShowRows rows={item} format={format} />}
+          {<ShowRows rows={item} ccyFormat={ccyFormat} />}
           <TableRow>
             <IconButton onClick={() => {}}>
               <AddBoxIcon />
@@ -66,18 +65,16 @@ function OrderTable({ item, format, invoice, tax }) {
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={3}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            <TableCell align="right">{ccyFormat(Subtotal)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Tax</TableCell>
-            <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-              0
-            )} %`}</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+            <TableCell align="right">{`${(tax * 100).toFixed(0)} %`}</TableCell>
+            <TableCell align="right">{ccyFormat(Taxes)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+            <TableCell align="right">{ccyFormat(Total)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
