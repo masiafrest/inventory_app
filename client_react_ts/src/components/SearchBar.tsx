@@ -11,7 +11,7 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import { BearerToken } from "../fakeDataToTest";
 
-export default function SearchBar(props: any) {
+export default function SearchBar({ setResData }) {
   const [values, setValues] = useState("");
   //TODO: use react router dom useLocation to determine the path and chage axio request get to the path, if items, users,
   const { pathname } = useLocation();
@@ -24,7 +24,7 @@ export default function SearchBar(props: any) {
     try {
       const result: AxiosResponse = await axios.get(`${pathname}/${values}`);
       console.log(result);
-      props.setResData(result.data);
+      setResData(result.data);
     } catch (error) {
       console.log("error: ", error);
     }

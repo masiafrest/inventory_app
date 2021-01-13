@@ -17,12 +17,16 @@ import {
 import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
 import OrderTableContainer from "./components/orderTable/OrderTableContainer";
-import ShowData from "./components/ShowData";
-
+import CategoriaContainer from "./components/showFetchData/categorias/CategoriaContainer";
 import ErrorHandler from "./components/ErrorHandler";
+import ProveedorContainer from "./components/showFetchData/proveedores/ProveedoresContainer";
+import AddCategorias from "./components/showFetchData/categorias/AddCategorias";
+
 //pages
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
+
+import { Container } from "@material-ui/core";
 
 axios.defaults.baseURL = "http://localhost:5050/api/v1";
 
@@ -47,11 +51,14 @@ function App() {
       <Router>
         <NavBar />
         <Switch>
-          <AuthRouth exact path="/" component={Home} />
-          <Route exact path="/signin" component={SignIn} />
-          <Route exact path="/table" component={OrderTableContainer} />
-          <Route path="/items" component={ShowData} />
-          <Route path="/usuarios" component={ShowData} />
+          <Container>
+            <AuthRouth exact path="/" component={Home} />
+            <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/table" component={OrderTableContainer} />
+            <Route path="/categorias" component={CategoriaContainer} />
+            <Route path="/proveedores" component={ProveedorContainer} />
+            <Route path="/add/categorias" component={AddCategorias} />
+          </Container>
         </Switch>
       </Router>
     </Provider>
