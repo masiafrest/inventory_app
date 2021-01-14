@@ -8,7 +8,9 @@ const Rol = require("./roles/roles.model");
 
 router.get("/", async (req, res, next) => {
   try {
-    const usuarios = await Usuario.query().where("deleted_at", null);
+    const usuarios = await Usuario.query()
+      .join("rol", "usuario.rol_id", "=", "rol.id")
+      .select("usuario.*", "rol.tipo as rol");
     res.json(usuarios);
   } catch (err) {
     next(err);
@@ -16,12 +18,19 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:x", async (req, res, next) => {
-  const usuario = await findByIdOrName(Usuario, req.params.x, res, next);
-  let rol;
-  if (usuario) {
-    rol = await Rol.query().findById(usuario.rol_id);
-    usuario.rol = rol.tipo;
-  }
+  const { x } = req.params;
+  const paramType = isNaN(x);
+  let usuario;
+  usuario = paramType
+    ? await Usuario.query()
+        .where("nombre", x)
+        .first()
+        .join("rol", "usuario.rol_id", "=", "rol.id")
+        .select("usuario.*", "rol.tipo as rol")
+    : await Usuario.query()
+        .findByIds(req.params.x)
+        .join("rol", "usuario.rol_id", "=", "rol.id")
+        .select("usuario.*", "rol.tipo as rol");
   res.json(usuario);
 });
 

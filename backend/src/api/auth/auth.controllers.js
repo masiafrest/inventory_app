@@ -26,6 +26,9 @@ exports.signUp = async (req, res, next) => {
   try {
     const createUser = {
       ...req.body,
+      rol: {
+        id: rol_id,
+      },
     };
     await yupSchema
       .validate(createUser, {

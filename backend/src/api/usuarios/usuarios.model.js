@@ -1,6 +1,7 @@
 const BaseModel = require("../BaseModel");
 const { tableNames } = require("../../constants/string");
 const Venta = require("../recibos/ventas/ventas.model");
+const Rol = require("./roles/roles.model");
 
 class Usuario extends BaseModel {
   static get tableName() {
@@ -24,6 +25,14 @@ class Usuario extends BaseModel {
         join: {
           from: `${tableNames.usuario}.id`,
           to: `${tableNames.venta}.${tableNames.usuario}_id`,
+        },
+      },
+      rol: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Rol,
+        join: {
+          from: `${tableNames.usuario}.rol_id`,
+          to: `${tableNames.rol}.id`,
         },
       },
     };
