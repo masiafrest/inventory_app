@@ -9,8 +9,8 @@ const Rol = require("./roles/roles.model");
 router.get("/", async (req, res, next) => {
   try {
     const usuarios = await Usuario.query()
-      .join("rol", "usuario.rol_id", "=", "rol.id")
-      .select("usuario.*", "rol.tipo as rol");
+      .select("usuario.*", "rol.tipo as rol")
+      .join("rol", "usuario.rol_id", "=", "rol.id");
     res.json(usuarios);
   } catch (err) {
     next(err);
