@@ -13,6 +13,11 @@ import {
   signOut,
 } from "./redux/features/user/userSlice";
 
+//pages
+import Home from "./pages/Home";
+import SignIn from "./pages/SignIn";
+
+import { Container } from "@material-ui/core";
 // Components
 import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
@@ -21,12 +26,8 @@ import CategoriaContainer from "./components/showFetchData/categorias/CategoriaC
 import ErrorHandler from "./components/ErrorHandler";
 import ProveedorContainer from "./components/showFetchData/proveedores/ProveedoresContainer";
 import AddCategorias from "./components/showFetchData/categorias/AddCategorias";
-
-//pages
-import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
-
-import { Container } from "@material-ui/core";
+import UsuariosContainer from "./components/showFetchData/usuarios/UsuariosContainer";
+import ItemsContainer from "./components/showFetchData/items/ItemsContainer";
 
 axios.defaults.baseURL = "http://localhost:5050/api/v1";
 
@@ -51,12 +52,14 @@ function App() {
       <Router>
         <NavBar />
         <Switch>
-          <Container>
+          <Container maxWidth="sm">
             <AuthRouth exact path="/" component={Home} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/table" component={OrderTableContainer} />
             <Route path="/categorias" component={CategoriaContainer} />
             <Route path="/proveedores" component={ProveedorContainer} />
+            <Route path="/usuarios" component={UsuariosContainer} />
+            <Route path="/items" component={ItemsContainer} />
             <Route path="/add/categorias" component={AddCategorias} />
           </Container>
         </Switch>
