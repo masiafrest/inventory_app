@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 
-import { CleanParamsToString } from "../../utils/helper";
+import { CleanParamsToString } from "../../../utils/helper";
 
 import { Typography, TextField, Button, Grid } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
@@ -27,29 +27,33 @@ const dataNeededPost = {
   ],
 };
 
-function GridInput({ control, name }) {
-  const label: string = name[0].toUpperCase() + name.slice(1);
-  return (
-    <Grid item>
-      <Controller
-        name={name}
-        control={control}
-        defaultValue=""
-        render={({ onChange, value }) => (
-          <TextField label={label} onChange={onChange} value={value} />
-        )}
-      />
-    </Grid>
-  );
-}
-
-export default function PostData({ handleSubmit, control, onSubmit }) {
+export default function PostData({ handleSubmit, control, onSubmit, error }) {
   const location = useLocation();
   const { pathname } = location;
 
   const path = CleanParamsToString(pathname);
-  console.log(path);
 
+  function GridInput({ control, name }) {
+    const label: string = name[0].toUpperCase() + name.slice(1);
+    return (
+      <Grid item>
+        <Controller
+          name={name}
+          control={control}
+          defaultValue=""
+          render={({ onChange, value }) => (
+            <TextField
+              label={label}
+              onChange={onChange}
+              value={value}
+              error={error ? true : false}
+              helperText={error}
+            />
+          )}
+        />
+      </Grid>
+    );
+  }
   const renderForm = dataNeededPost[path].map((e) => (
     <GridInput control={control} name={e} />
   ));
@@ -65,6 +69,7 @@ export default function PostData({ handleSubmit, control, onSubmit }) {
       >
         <Typography variant="h3">{path}</Typography>
         {renderForm}
+        {error && <Typography>{error}</Typography>}
         <Grid item>
           <Button
             variant="contained"

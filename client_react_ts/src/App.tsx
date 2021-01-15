@@ -22,9 +22,9 @@ import { Container } from "@material-ui/core";
 import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
 import OrderTableContainer from "./components/orderTable/OrderTableContainer";
-import FetchDataContainer from "./components/showFetchData/FetchDataContainer";
+import FetchDataContainer from "./components/FetchData/FetchDataContainer";
 import ErrorHandler from "./components/ErrorHandler";
-import AddCategorias from "./components/postData/AddCategorias";
+import AddCategorias from "./components/postData/viewComponent/AddCategorias";
 import PostDataContainer from "./components/postData/PostDataContainer";
 
 axios.defaults.baseURL = "http://localhost:5050/api/v1";
@@ -44,6 +44,21 @@ if (token) {
   }
 }
 
+const paths = [
+  "/items",
+  "/usuarios",
+  "/categorias",
+  "/lugares",
+  "/clientes",
+  "/proveedores",
+  "/roles",
+];
+
+const addPaths = paths.map((path) => "/add" + path);
+// TODO: add other fetch path
+// TODO: add other post path
+// TODO: add other put path
+// TODO: add recibo fetch and post
 function App() {
   return (
     <Provider store={store}>
@@ -52,15 +67,11 @@ function App() {
         <Switch>
           <Container maxWidth="sm">
             <ErrorHandler>
-              <AuthRouth exact path="/" component={Home} />
-              <Route exact path="/signin" component={PostDataContainer} />
+              <Route exact path="/signin" component={SignIn} />
               <Route exact path="/table" component={OrderTableContainer} />
-              <Route path="/categorias" component={FetchDataContainer} />
-              <Route path="/proveedores" component={FetchDataContainer} />
-              <Route path="/usuarios" component={FetchDataContainer} />
-              <Route path="/items" component={FetchDataContainer} />
-              <Route path="/add/categorias" component={PostDataContainer} />
-              <Route path="/add/clientes" component={PostDataContainer} />
+              <Route exact path={paths} component={FetchDataContainer} />
+              <Route path={addPaths} component={PostDataContainer} />
+              <AuthRouth exact path="/" component={Home} />
             </ErrorHandler>
           </Container>
         </Switch>

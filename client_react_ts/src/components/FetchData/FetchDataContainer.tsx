@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import useDataApi from "../customHooks/useDataApi";
+import useDataApi from "../../utils/useDataApi";
 
 import { CleanParamsToString } from "../../utils/helper";
 import SearchBar from "../SearchBar";
 
-import Categorias from "./Categorias";
-import Proveedores from "./Proveedores";
-import Usuarios from "./Usuarios";
-import Items from "./Items";
+import Categorias from "./viewComponent/Categorias";
+import Proveedores from "./viewComponent/Proveedores";
+import Usuarios from "./viewComponent/Usuarios";
+import Items from "./viewComponent/Items";
 
 const components = {
   Categorias,

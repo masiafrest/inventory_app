@@ -19,6 +19,7 @@ exports.up = async function (knex) {
     knex.schema.createTable(tableNames.categoria, (table) => {
       createTableIncrementsStringNotNullable(table, "nombre");
       addDefaultColumns(table);
+      table.unique("nombre");
     }),
     knex.schema.createTable(tableNames.cheque, (table) => {
       createTableIncrementsStringNotNullable(table, "nombre");

@@ -3,7 +3,7 @@ import React from "react";
 import { Grid, Paper, Typography, Fab } from "@material-ui/core";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
-export default function Categorias({ dataState }) {
+export default function Usuarios({ dataState }) {
   let { data } = dataState;
   if (!data) {
     data = dataState;

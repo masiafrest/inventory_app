@@ -1,18 +1,36 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
-import PostData from "./PostData";
+import PostData from "./viewComponent/PostData";
 
-export default function AddCategorias() {
-  const { register, handleSubmit, watch, errors, control } = useForm();
+export default function AddCategorias(props) {
+  const [error, setError] = React.useState<string>();
+  const { handleSubmit, control } = useForm();
+  const { pathname } = useLocation();
+  const path = pathname.replace("/add/", "");
+  console.log(path);
 
-  const onSubmit = (data) => console.log(data);
+  React.useEffect(() => {
+    console.log(error);
+  }, [error]);
 
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post(path, data);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err.response);
+      if (err.response.data.type === "UniqueViolation") setError("ya existe");
+    }
+  };
   return (
     <PostData
       control={control}
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
+      error={error}
     />
   );
 }
