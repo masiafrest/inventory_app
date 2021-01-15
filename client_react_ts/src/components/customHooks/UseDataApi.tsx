@@ -6,6 +6,7 @@ export default function useDataApi(url, method = "get") {
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState("");
   useEffect(() => {
+    console.log("fetch api");
     const fetchDataFromApi = async () => {
       try {
         setIsFetching(true);
@@ -23,5 +24,5 @@ export default function useDataApi(url, method = "get") {
     fetchDataFromApi();
   }, []);
 
-  return [dataState, isFetching, error];
+  return [dataState, setDataState, isFetching, error];
 }

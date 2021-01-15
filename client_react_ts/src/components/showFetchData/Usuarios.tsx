@@ -4,8 +4,10 @@ import { Grid, Paper, Typography, Fab } from "@material-ui/core";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
 export default function Categorias({ dataState }) {
-  const { data } = dataState;
-
+  let { data } = dataState;
+  if (!data) {
+    data = dataState;
+  }
   const paperStyle = { margin: 20, padding: 20, paddingLeft: 50 };
 
   const elements = data.map((e) => {

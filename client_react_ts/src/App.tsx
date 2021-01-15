@@ -22,12 +22,10 @@ import { Container } from "@material-ui/core";
 import NavBar from "./components/NavBar";
 import AuthRouth from "./utils/AuthRouth";
 import OrderTableContainer from "./components/orderTable/OrderTableContainer";
-import CategoriaContainer from "./components/showFetchData/categorias/CategoriaContainer";
+import FetchDataContainer from "./components/showFetchData/FetchDataContainer";
 import ErrorHandler from "./components/ErrorHandler";
-import ProveedorContainer from "./components/showFetchData/proveedores/ProveedoresContainer";
-import AddCategorias from "./components/showFetchData/categorias/AddCategorias";
-import UsuariosContainer from "./components/showFetchData/usuarios/UsuariosContainer";
-import ItemsContainer from "./components/showFetchData/items/ItemsContainer";
+import AddCategorias from "./components/postData/AddCategorias";
+import PostDataContainer from "./components/postData/PostDataContainer";
 
 axios.defaults.baseURL = "http://localhost:5050/api/v1";
 
@@ -53,14 +51,17 @@ function App() {
         <NavBar />
         <Switch>
           <Container maxWidth="sm">
-            <AuthRouth exact path="/" component={Home} />
-            <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/table" component={OrderTableContainer} />
-            <Route path="/categorias" component={CategoriaContainer} />
-            <Route path="/proveedores" component={ProveedorContainer} />
-            <Route path="/usuarios" component={UsuariosContainer} />
-            <Route path="/items" component={ItemsContainer} />
-            <Route path="/add/categorias" component={AddCategorias} />
+            <ErrorHandler>
+              <AuthRouth exact path="/" component={Home} />
+              <Route exact path="/signin" component={PostDataContainer} />
+              <Route exact path="/table" component={OrderTableContainer} />
+              <Route path="/categorias" component={FetchDataContainer} />
+              <Route path="/proveedores" component={FetchDataContainer} />
+              <Route path="/usuarios" component={FetchDataContainer} />
+              <Route path="/items" component={FetchDataContainer} />
+              <Route path="/add/categorias" component={PostDataContainer} />
+              <Route path="/add/clientes" component={PostDataContainer} />
+            </ErrorHandler>
           </Container>
         </Switch>
       </Router>

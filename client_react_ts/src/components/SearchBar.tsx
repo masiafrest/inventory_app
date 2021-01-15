@@ -24,7 +24,7 @@ export default function SearchBar({ setResData }) {
     try {
       const result: AxiosResponse = await axios.get(`${pathname}/${values}`);
       console.log(result);
-      setResData(result.data);
+      setResData([result.data]);
     } catch (error) {
       console.log("error: ", error);
     }

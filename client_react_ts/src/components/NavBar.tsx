@@ -45,7 +45,7 @@ function NavBar(props: any) {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton edge="start" color="inherit" onClick={toggleDrawer(true)}>
             <MenuIcon />
@@ -64,6 +64,7 @@ function NavBar(props: any) {
           {/* {location.pathname === "/showData" ? <SearchBar /> : null} */}
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </div>
   );
 }
