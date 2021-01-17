@@ -17,16 +17,15 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 
-export default function Items({ dataState }) {
+export default function AccordionView({ dataState, details }) {
   const history = useHistory();
-  const paperStyle = { margin: 20, padding: 20, paddingLeft: 50 };
 
   let { data } = dataState;
   if (!data) {
     data = dataState;
   }
 
-  const elements = data.map((e) => {
+  const accordionSumary = data.map((e) => {
     let image;
     if (e.image_url) {
       //algo pasa con el useDataApi, q hace varias request q regresa vacio dando problema al Json.parse(undefined) y al ultimo regresa con dato
@@ -35,13 +34,11 @@ export default function Items({ dataState }) {
 
     const onClickHandler = () => history.push("/items");
 
-    const inv = e.inventarios.map((inv: any) => {
+    const accordionDetails = e.inventarios.map((inv: any) => {
       return (
-        <Grid key={inv.sku} container spacing={1} direction="column">
+        <Grid key={inv.id} container spacing={1} direction="column">
           <Box border={2}>
-            <Typography>{`Qty: ${inv.qty}`}</Typography>
-            <Typography>{`Color: ${inv.color}`}</Typography>
-            <Typography>{`Sku: ${inv.sku}`}</Typography>
+            {details(inv)}
             <Typography>{`Precio: ${inv.precio.precio}`}</Typography>
             <Grid container direction="row">
               <IconButton onClick={onClickHandler}>
@@ -57,13 +54,11 @@ export default function Items({ dataState }) {
     });
 
     return (
-      <Accordion>
+      <Accordion key={e.id}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Grid container spacing={3} justify="center">
             <Grid item xs={12} sm={8}>
-              <Typography>{`Marca: ${e.marca}`}</Typography>
-              <Typography>{`Modelo: ${e.modelo}`}</Typography>
-              <Typography>{`Descripcion: ${e.descripcion}`}</Typography>
+              {details(e)}
             </Grid>
             <Grid item sm={4} container alignContent="center" justify="center">
               <img
@@ -73,7 +68,7 @@ export default function Items({ dataState }) {
             </Grid>
           </Grid>
         </AccordionSummary>
-        <AccordionDetails>{inv}</AccordionDetails>
+        <AccordionDetails>{accordionDetails}</AccordionDetails>
       </Accordion>
     );
   });
@@ -82,7 +77,7 @@ export default function Items({ dataState }) {
       <Typography variant="h3" style={{ margin: 20, textAlign: "center" }}>
         Items
       </Typography>
-      {elements}
+      {accordionSumary}
       <Fab
         style={{ right: 50, bottom: 30, position: "fixed" }}
         variant="extended"

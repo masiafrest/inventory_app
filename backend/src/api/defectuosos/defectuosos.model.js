@@ -1,6 +1,6 @@
-const BaseModel = require("../../../BaseModel");
-const { tableNames } = require("../../../../constants/string");
-const Inventario = require("../inventarios.model");
+const BaseModel = require("../BaseModel");
+const { tableNames } = require("../../constants/string");
+const Inventario = require("../items/inventarios/inventarios.model");
 
 class Defectuoso extends BaseModel {
   static get tableName() {
@@ -8,7 +8,7 @@ class Defectuoso extends BaseModel {
   }
 
   static get relationMappings() {
-    const Lugar = require("../../../lugares/lugares.model");
+    const Lugar = require("../lugares/lugares.model");
     return {
       inventarios: {
         relation: BaseModel.BelongsToOneRelation,

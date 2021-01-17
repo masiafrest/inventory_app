@@ -44,6 +44,13 @@
       "name": "Backend Launch Program",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}\\backend\\src\\index.js"
+    },
+    {
+      "type": "edge",
+      "request": "launch",
+      "name": "Launch Edge against localhost",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}\\client_react_ts\\src\\index.tsx"
     }
   ]
 }

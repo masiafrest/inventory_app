@@ -1,12 +1,21 @@
 const router = require("express").Router();
-const { InvLogFactory } = require("../../../recibos/recibo.helpers");
-const { addToDefectuoso } = require("../../../recibos/recibos.controllers");
-const Inventario_log = require("../logs/inventario_logs.model");
+const { InvLogFactory } = require("../recibos/recibo.helpers");
+const { addToDefectuoso } = require("../recibos/recibos.controllers");
+const Inventario_log = require("../items/inventarios/logs/inventario_logs.model");
 const Defectuoso = require("./defectuosos.model");
 
 router.get("/", async (req, res, next) => {
   try {
-    const defectuoso = await Defectuoso.query();
+    const defectuoso = await Defectuoso.query()
+      .join("inventario", "defectuoso.inventario_id", "=", "inventario.id")
+      .join("item", "inventario.item_id", "=", "item.id")
+      .select(
+        "defectuoso.descripcion",
+        "inventario.sku",
+        "inventario.color",
+        "item.marca",
+        "item.modelo"
+      );
     res.json(defectuoso);
   } catch (error) {
     next(error);

@@ -12,6 +12,7 @@ const item = require("./items/");
 const lugar = require("./lugares/lugares.route");
 const cheques = require("./cheques/cheques.routes");
 const clientes = require("./empresa_clientes/empresa_clientes.routes");
+const defectuosos = require("./defectuosos/defectuosos.routes");
 
 const { checkToken } = require("../lib/helpers");
 const router = express.Router();
@@ -32,4 +33,5 @@ router.use("/empresa_owner", empresa_owner);
 router.use("/usuarios", checkToken, usuarios);
 router.use("/proveedores", proveedores);
 router.use("/clientes", clientes);
+router.use("/defectuosos", defectuosos);
 module.exports = router;

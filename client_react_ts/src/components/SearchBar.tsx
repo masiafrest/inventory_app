@@ -13,7 +13,6 @@ import { BearerToken } from "../fakeDataToTest";
 
 export default function SearchBar({ setResData }) {
   const [values, setValues] = useState("");
-  //TODO: use react router dom useLocation to determine the path and chage axio request get to the path, if items, users,
   const { pathname } = useLocation();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues(event.target.value);

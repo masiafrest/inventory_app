@@ -1,2 +1,4 @@
-export const CleanParamsToString = (name: string): string =>
-  name.charAt(1).toUpperCase() + name.slice(2);
+export const capitalizeFirstChart = (name: string): string =>
+  name.charAt(0).toUpperCase() + name.slice(1);
+
+export const deleteSlashChart = (name: string): string => name.slice(1);

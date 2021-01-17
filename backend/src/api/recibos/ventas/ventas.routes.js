@@ -8,7 +8,18 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   console.log("ventas get/", req.body);
   try {
-    const ventas = await Venta.query();
+    const ventas = await Venta.query()
+      .withGraphFetched("[lineas]")
+      .join("usuario", { "venta.usuario_id": "usuario.id" })
+      .join("empresa_cliente", {
+        "venta.empresa_cliente_id": "empresa_cliente.id",
+      })
+      .select(
+        "venta.*",
+        "venta.created_at as fecha",
+        "usuario.nombre as usuario",
+        "empresa_cliente.nombre as cliente"
+      );
     res.json(ventas);
   } catch (err) {
     next(err);

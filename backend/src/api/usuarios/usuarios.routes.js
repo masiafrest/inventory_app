@@ -25,7 +25,7 @@ router.get("/:x", async (req, res, next) => {
     ? await Usuario.query()
         .where("nombre", x)
         .first()
-        .join("rol", "usuario.rol_id", "=", "rol.id")
+        .join("rol", { "usuario.rol_id": "rol.id" })
         .select("usuario.*", "rol.tipo as rol")
     : await Usuario.query()
         .findByIds(req.params.x)

@@ -31,7 +31,7 @@ async function addToDefectuoso(linea, trx) {
   delete cleanLinea.id;
   delete cleanLinea.qty;
   delete cleanLinea.salida_inventario_id;
-  const Defectuoso = require("../items/inventarios/defectuosos/defectuosos.model");
+  const Defectuoso = require("../defectuosos/defectuosos.model");
   return await Defectuoso.query(trx).insert(cleanLinea);
 }
 

@@ -4,7 +4,7 @@ const router = require("express").Router();
 
 router.get("/", async (req, res, next) => {
   const historial = await Item_inventario_log.query().withGraphFetched(
-    "[inventario, usuario(noPassword), proveedor]"
+    "[inventario(getItemData), usuario(noPassword), proveedor, cliente(getName)]"
   );
   res.json(historial);
 });

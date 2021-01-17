@@ -61,6 +61,16 @@ class Inventario extends BaseModel {
           "sku"
         );
       },
+      getItemData(builder) {
+        builder
+          .join("item", { "inventario.item_id": "item.id" })
+          .select(
+            "inventario.sku",
+            "inventario.color",
+            "item.marca",
+            "item.modelo"
+          );
+      },
     };
   }
   static beforeUpdate({ inputItems }) {

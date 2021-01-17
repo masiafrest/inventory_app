@@ -52,10 +52,13 @@ const paths = [
   "/clientes",
   "/proveedores",
   "/roles",
+  "/defectuosos",
 ];
 
 const addPaths = paths.map((path) => "/add" + path);
-// TODO: add other fetch path
+const invPaths = ["/logs"].map((e) => "/items/inventarios" + e);
+const reciboPaths = ["/venta", "/transferencia"].map((e) => "/recibos" + e);
+
 // TODO: add other post path
 // TODO: add other put path
 // TODO: add recibo fetch and post
@@ -70,6 +73,8 @@ function App() {
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/table" component={OrderTableContainer} />
               <Route exact path={paths} component={FetchDataContainer} />
+              <Route exact path={invPaths} component={FetchDataContainer} />
+              <Route exact path={reciboPaths} component={FetchDataContainer} />
               <Route path={addPaths} component={PostDataContainer} />
               <AuthRouth exact path="/" component={Home} />
             </ErrorHandler>

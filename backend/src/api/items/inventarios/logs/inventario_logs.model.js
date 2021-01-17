@@ -1,6 +1,5 @@
 const BaseModel = require("../../../BaseModel");
 const { tableNames } = require("../../../../constants/string");
-const Inventario = require("../inventarios.model");
 
 class Inventario_log extends BaseModel {
   static get tableName() {
@@ -10,8 +9,17 @@ class Inventario_log extends BaseModel {
   static get relationMappings() {
     const Inventario = require("../inventarios.model");
     const Usuario = require("../../../usuarios/usuarios.model");
+    const Empresa_cliente = require("../../../empresa_clientes/empresa_clientes.model");
     const Proveedor = require("../../../proveedors/proveedores.model");
     return {
+      cliente: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Empresa_cliente,
+        join: {
+          from: `${tableNames.inventario_log}.${tableNames.empresa_cliente}_id`,
+          to: `${tableNames.empresa_cliente}.id`,
+        },
+      },
       inventario: {
         relation: BaseModel.BelongsToOneRelation,
         modelClass: Inventario,

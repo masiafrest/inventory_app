@@ -1,6 +1,6 @@
 const supertest = require("supertest");
-const app = require("../../../../app");
-const { BearerToken } = require("../../../../constants/project");
+const app = require("../../app");
+const { BearerToken } = require("../../constants/project");
 describe("Defectuoso", () => {
   test("Get / , should get array", async () => {
     const res = await supertest(app)
