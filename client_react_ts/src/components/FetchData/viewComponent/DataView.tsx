@@ -4,13 +4,11 @@ import { capitalizeFirstChart } from "../../../utils/helper";
 import InvLogs from "./InvLogs";
 import AccordionView from "./AccordionView";
 import PaperView from "./PaperView";
-import Recibos from "./Recibos";
+import RecibosChooseView from "./Recibos/ReciboChooseView";
 
 import Typography from "@material-ui/core/Typography";
 
-export default function DataView({ dataState, path }) {
-  const { data } = dataState;
-
+export default function DataView({ path }) {
   const images = (e) => {
     return e.logo_url || e.images_url;
   };
@@ -19,7 +17,7 @@ export default function DataView({ dataState, path }) {
     "nombre",
     "direccion",
     "telefono",
-    "telefono 2",
+    "telefono_2",
     "website_url",
     "tipo",
     "descripcion",
@@ -39,27 +37,26 @@ export default function DataView({ dataState, path }) {
   ];
 
   const details = (obj, arrData: string[] = hasData) => {
-    console.log(arrData);
-    console.log(obj);
+    // console.log(arrData);
+    // console.log(obj);
     const detailsKeys = Object.keys(obj).filter((e) => arrData.includes(e));
     return detailsKeys.map((e) => {
+      // console.log(e);
       const title = capitalizeFirstChart(e);
-      return <Typography key={obj[e].id}>{`${title}: ${obj[e]}`}</Typography>;
+      return <Typography>{`${title}: ${obj[e]}`}</Typography>;
     });
   };
-
   console.log(path);
+  //TODO: maybe add a open close principle on this if statement
   let view;
   if (path.includes("log")) {
-    view = <InvLogs dataState={dataState} details={details} />;
+    view = <InvLogs details={details} />;
   } else if (path.includes("Items")) {
-    view = <AccordionView dataState={dataState} details={details} />;
+    view = <AccordionView details={details} />;
   } else if (path.includes("Recibos")) {
-    view = <Recibos dataState={dataState} details={details} />;
+    view = <RecibosChooseView />;
   } else {
-    view = (
-      <PaperView data={data} details={details} images={images} path={path} />
-    );
+    view = <PaperView details={details} images={images} path={path} />;
   }
 
   return view;

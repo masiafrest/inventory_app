@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const yupSchema = require("../../lib/yupSchema");
 const Proveedor = require("./proveedores.model");
+const { findByIdOrName } = require("../../lib/helpers");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -10,6 +11,12 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
+
+router.get("/:x", async (req, res, next) => {
+  const result = await findByIdOrName(Proveedor, req.params.x, res, next);
+  res.json([result]);
+});
+
 router.post("/", async (req, res, next) => {
   try {
     await yupSchema.validate(req.body, {

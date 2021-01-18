@@ -1,5 +1,7 @@
 const { tableNames } = require("../../../constants/string");
 const BaseModel = require("../../BaseModel");
+const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
+const Usuario = require("../../usuarios/usuarios.model");
 
 class Venta extends BaseModel {
   static get tableName() {
@@ -10,7 +12,26 @@ class Venta extends BaseModel {
     const Linea_venta = require("./linea_ventas.model");
     const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
     const Pago = require("../../noRoute/pagos.model");
+    const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
+    const Usuario = require("../../usuarios/usuarios.model");
     return {
+      cliente: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Empresa_cliente,
+        join: {
+          from: `${tableNames.venta}.empresa_cliente_id`,
+          to: `${tableNames.empresa_cliente}.id`,
+        },
+      },
+
+      usuario: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Usuario,
+        join: {
+          from: `${tableNames.venta}.usuario_id`,
+          to: `${tableNames.usuario}.id`,
+        },
+      },
       lineas: {
         relation: BaseModel.HasManyRelation,
         modelClass: Linea_venta,

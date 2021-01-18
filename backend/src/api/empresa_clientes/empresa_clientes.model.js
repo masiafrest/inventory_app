@@ -7,12 +7,8 @@ class Empresa_cliente extends BaseModel {
   }
   static get modifiers() {
     return {
-      getName(builder) {
-        builder
-          .join("inventario_log", {
-            "empresa_cliente.id": "inventario_log.empresa_cliente_id",
-          })
-          .select("empresa_cliente.nombre");
+      getNameAndId(builder) {
+        builder.select("id", "nombre");
       },
     };
   }

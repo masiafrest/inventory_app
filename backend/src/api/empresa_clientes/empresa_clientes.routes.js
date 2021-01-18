@@ -21,7 +21,7 @@ router.get("/:x", async (req, res, next) => {
     res,
     next
   );
-  res.json(cliente);
+  res.json([cliente]);
 });
 
 router.post("/", async (req, res, next) => {

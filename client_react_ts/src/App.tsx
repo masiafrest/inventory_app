@@ -57,7 +57,14 @@ const paths = [
 
 const addPaths = paths.map((path) => "/add" + path);
 const invPaths = ["/logs"].map((e) => "/items/inventarios" + e);
-const reciboPaths = ["/venta", "/transferencia"].map((e) => "/recibos" + e);
+const reciboPaths = [
+  "/venta",
+  "/transferencia",
+  "/devolucion",
+  "/garantia",
+  "/nota_credito",
+  "/cotizacion",
+].map((e) => "/recibos" + e);
 
 // TODO: add other post path
 // TODO: add other put path

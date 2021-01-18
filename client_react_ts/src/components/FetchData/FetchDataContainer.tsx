@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { useLocation } from "react-router-dom";
 import useDataApi from "../../utils/useDataApi";
 
@@ -18,23 +18,26 @@ const showSelectedData = {
 };
 
 const NoExiste = () => <h3>No existe</h3>;
-
+export let DataContext;
 export default function FetchDataContainer() {
   const { pathname } = useLocation();
-  const [dataState, setDataState, error] = useDataApi(pathname);
+  const [dataState, setDataState] = useDataApi(pathname);
+  DataContext = createContext({ dataState, setDataState });
 
   let path = deleteSlashChart(pathname);
   path = capitalizeFirstChart(path);
 
   console.log(dataState);
   return (
-    <>
-      <SearchBar setResData={setDataState} />
+    <DataContext.Provider value={{ dataState, setDataState }}>
+      {pathname.includes("log") ? null : (
+        <SearchBar setResData={setDataState} />
+      )}
       {dataState.toString().length > 0 ? (
-        <DataView dataState={dataState} path={path} />
+        <DataView path={path} />
       ) : (
         <NoExiste />
       )}
-    </>
+    </DataContext.Provider>
   );
 }

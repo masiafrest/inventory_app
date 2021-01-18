@@ -60,10 +60,6 @@ class Inventario_log extends BaseModel {
       },
     };
   }
-  static async beforeInsert({ items, inputItems, asFindQuery }) {
-    console.log("INVENTARIO LOG before insert 😛");
-    console.log("inputItems:", inputItems);
-  }
 }
 
 module.exports = Inventario_log;

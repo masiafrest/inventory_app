@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const cotizaciones = await Cotizacion.query().findById(req.params.id);
+    const cotizaciones = await Cotizacion.query().where("id", req.params.id);
     res.json(cotizaciones);
   } catch (error) {
     next(error);

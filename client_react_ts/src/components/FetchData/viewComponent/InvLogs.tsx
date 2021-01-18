@@ -1,5 +1,5 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext } from "react";
+import { DataContext } from "../FetchDataContainer";
 import { format } from "date-fns";
 
 import {
@@ -18,13 +18,10 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 
-export default function InvLogs({ dataState, details }) {
-  const history = useHistory();
-  let { data } = dataState;
+export default function InvLogs({ details }) {
+  const { dataState, setDataState } = useContext(DataContext);
+  const { data } = dataState;
   console.log("INV", data);
-  if (!data) {
-    data = dataState;
-  }
 
   const accordionSumary = data.map((e) => {
     const accordionDetails = (inv: any) => {
@@ -43,11 +40,14 @@ export default function InvLogs({ dataState, details }) {
           <Grid container spacing={3} justify="center">
             <Grid item xs={12} sm={8}>
               <Typography>{`Fecha: ${e.created_at}`}</Typography>
-              {details(e)}
               <Typography>{`Usuario: ${e.usuario.nombre}`}</Typography>
-              {e.cliente == null ? null : (
-                <Typography>{`Cliente: ${e.cliente?.nombre}`}</Typography>
-              )}
+              {e.cliente ? (
+                <Typography>{`Cliente: ${e.cliente.nombre}`}</Typography>
+              ) : null}
+              {e.proveedor ? (
+                <Typography>{`Proveedor: ${e.proveedor.nombre}`}</Typography>
+              ) : null}
+              {details(e, "evento ajuste")}
             </Grid>
           </Grid>
         </AccordionSummary>

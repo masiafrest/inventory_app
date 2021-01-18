@@ -12,9 +12,11 @@ router.get("/", async (req, res, next) => {
 });
 router.get("/:id", async (req, res, next) => {
   try {
-    const rol = await Rol.query().findById(req.params.id);
+    const rol = await Rol.query().where("id", req.params.id);
     res.json(rol);
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 });
 router.post("/", async (req, res, next) => {
   try {

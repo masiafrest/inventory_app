@@ -10,6 +10,7 @@ router.get("/", async (req, res, next) => {
       .join("inventario", "defectuoso.inventario_id", "=", "inventario.id")
       .join("item", "inventario.item_id", "=", "item.id")
       .select(
+        "defectuoso.created_at",
         "defectuoso.descripcion",
         "inventario.sku",
         "inventario.color",

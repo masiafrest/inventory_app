@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "../FetchDataContainer";
 import { useHistory } from "react-router-dom";
 
 import {
@@ -17,13 +18,10 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 
-export default function AccordionView({ dataState, details }) {
+export default function AccordionView({ details }) {
+  const { dataState, setDataState } = useContext(DataContext);
+  const { data } = dataState;
   const history = useHistory();
-
-  let { data } = dataState;
-  if (!data) {
-    data = dataState;
-  }
 
   const accordionSumary = data.map((e) => {
     let image;
@@ -33,13 +31,15 @@ export default function AccordionView({ dataState, details }) {
     }
 
     const onClickHandler = () => history.push("/items");
-
+    console.log(e);
     const accordionDetails = e.inventarios.map((inv: any) => {
       return (
-        <Grid key={inv.id} container spacing={1} direction="column">
+        <Grid container spacing={1} direction="column">
           <Box border={2}>
             {details(inv)}
             <Typography>{`Precio: ${inv.precio.precio}`}</Typography>
+            <Typography>{`Ubicacion: ${inv.lugares.tipo}, ${inv.lugares.direccion}`}</Typography>
+
             <Grid container direction="row">
               <IconButton onClick={onClickHandler}>
                 <PostAddIcon />

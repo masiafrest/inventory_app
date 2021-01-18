@@ -29,6 +29,9 @@ class Proveedor extends BaseModel {
   }
   static get modifiers() {
     return {
+      getNameAndId(builder) {
+        builder.select("id", "nombre");
+      },
       defaultSelects(builder) {
         builder.select(
           "id",

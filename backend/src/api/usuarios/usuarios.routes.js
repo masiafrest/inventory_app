@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { signUp } = require("../auth/auth.controllers");
-const { findByIdOrName } = require("../../lib/helpers");
 
 const Usuario = require("./usuarios.model");
 const Rol = require("./roles/roles.model");
@@ -24,7 +23,6 @@ router.get("/:x", async (req, res, next) => {
   usuario = paramType
     ? await Usuario.query()
         .where("nombre", x)
-        .first()
         .join("rol", { "usuario.rol_id": "rol.id" })
         .select("usuario.*", "rol.tipo as rol")
     : await Usuario.query()

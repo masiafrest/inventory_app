@@ -14,7 +14,9 @@ const Linea_devolucion = require("./linea_devoluciones.model");
 
 router.get("/", async (req, res, next) => {
   try {
-    const devoluciones = await Devolucion.query();
+    const devoluciones = await Devolucion.query().withGraphFetched(
+      "[lineas.[invEntrada(getItemData), invSalida(getItemData)], usuario(getNameAndId), cliente(getNameAndId)] "
+    );
     res.json(devoluciones);
   } catch (err) {
     next(err);

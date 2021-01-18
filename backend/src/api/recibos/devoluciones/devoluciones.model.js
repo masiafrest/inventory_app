@@ -7,8 +7,26 @@ class Devolucion extends BaseModel {
   }
 
   static get relationMappings() {
+    const Usuario = require("../../usuarios/usuarios.model");
+    const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
     const Linea_devolucion = require("./linea_devoluciones.model");
     return {
+      usuario: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Usuario,
+        join: {
+          from: `${tableNames.devolucion}.usuario_id`,
+          to: `${tableNames.usuario}.id`,
+        },
+      },
+      cliente: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Empresa_cliente,
+        join: {
+          from: `${tableNames.devolucion}.empresa_cliente_id`,
+          to: `${tableNames.empresa_cliente}.id`,
+        },
+      },
       lineas: {
         relation: BaseModel.HasManyRelation,
         modelClass: Linea_devolucion,

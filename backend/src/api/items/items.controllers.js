@@ -31,12 +31,12 @@ exports.getByParams = async (req, res, next) => {
     if (isNaN(x)) {
       item = await itemGraphFetch("marca", x);
     } else {
-      if (x.length < 4) {
-        item = await itemGraphFetch("id", x);
+      if (x.length > 5) {
+        item = await itemGraphFetch("barcode", x);
       }
-      item = await itemGraphFetch("barcode", x);
+      item = await itemGraphFetch("id", x);
     }
-    res.json(item);
+    res.json([item]);
   } catch (err) {
     next(err);
   }

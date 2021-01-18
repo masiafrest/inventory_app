@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "../FetchDataContainer";
 import { Paper, Typography, Fab, Grid } from "@material-ui/core";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
-export default function PaperView({ data, details, images, path }) {
+export default function PaperView({ details, images, path }) {
   const paperStyle: React.CSSProperties = {
     margin: 20,
     padding: 20,
     paddingLeft: 50,
   };
+  const { dataState, setDataState } = useContext(DataContext);
+  const { data } = dataState;
+  console.log(data);
   const accordionSumary = data.map((e) => {
     return (
-      <Paper style={paperStyle} variant="elevation" elevation={12}>
+      <Paper key={e.id} style={paperStyle} variant="elevation" elevation={12}>
         <Grid container spacing={3} justify="center">
           <Grid item xs={12} sm={8}>
             {details(e)}

@@ -2,24 +2,15 @@ const express = require("express");
 const Venta = require("./ventas.model");
 const { sumTotal, checkPrice, InvLogFactory } = require("../recibo.helpers");
 const { invModQty, getInvAndPrecioDB } = require("../recibos.controllers");
+const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
 
 const router = express.Router();
-
+const graphFetched =
+  "[lineas(getItemData), usuario(getNameAndId), cliente(getNameAndId)] ";
 router.get("/", async (req, res, next) => {
-  console.log("ventas get/", req.body);
   try {
-    const ventas = await Venta.query()
-      .withGraphFetched("[lineas]")
-      .join("usuario", { "venta.usuario_id": "usuario.id" })
-      .join("empresa_cliente", {
-        "venta.empresa_cliente_id": "empresa_cliente.id",
-      })
-      .select(
-        "venta.*",
-        "venta.created_at as fecha",
-        "usuario.nombre as usuario",
-        "empresa_cliente.nombre as cliente"
-      );
+    const ventas = await Venta.query().withGraphFetched(graphFetched);
+
     res.json(ventas);
   } catch (err) {
     next(err);
@@ -27,24 +18,36 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:id", async (req, res, next) => {
+  if (!isNaN(req.params.id)) {
+    findById(req.params.id, res, next);
+  } else {
+    findByName(req.params.id, res, next);
+  }
+});
+
+async function findById(id, res, next) {
   try {
     const ventas = await Venta.query()
-      .findById(req.params.id)
-      .withGraphFetched("lineas");
-    res.json(ventas ? ventas : "no existe ese recibo tipo ventas");
+      .findById(id)
+      .withGraphFetched(graphFetched);
+    res.json(ventas ? [ventas] : "no existe ese recibo tipo ventas");
   } catch (err) {
     next(err);
   }
-});
-router.get("/cliente/:empresa_cliente_id", async (req, res, next) => {
+}
+async function findByName(nombre, res, next) {
   try {
-    const { empresa_cliente_id } = req.params;
-    const ventas = await Venta.query().where({ empresa_cliente_id });
+    const cliente = await Empresa_cliente.query().where({ nombre });
+    const ventas = await Venta.query()
+      .where({
+        empresa_cliente_id: cliente[0].id,
+      })
+      .withGraphFetched(graphFetched);
     res.json(ventas);
   } catch (err) {
     next(err);
   }
-});
+}
 
 router.post("/", async (req, res, next) => {
   try {

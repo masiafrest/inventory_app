@@ -40,8 +40,8 @@ class Usuario extends BaseModel {
 
   static get modifiers() {
     return {
-      noPassword(builder) {
-        builder.select("id", "nombre");
+      getNameAndId(builder) {
+        builder.select("id", " nombre");
       },
     };
   }

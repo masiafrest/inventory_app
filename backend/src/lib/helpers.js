@@ -23,16 +23,15 @@ function skuGenerator(marca, modelo, color, opcional = "") {
 }
 
 async function findByIdOrName(Model, value, res, next) {
+  console.log(Model.name, value);
   try {
     const paramType = isNaN(value);
     let result;
     if (!paramType) {
+      console.log("is number");
       result = await Model.query().findById(value);
     } else {
-      let type = "marca";
-      if (Model.name === "Usuario") {
-        type = "nombre";
-      }
+      let type = "nombre";
       result = await Model.query().where(type, value).first();
     }
     return result;

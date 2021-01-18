@@ -18,34 +18,38 @@ export default function SearchBar({ setResData }) {
     setValues(event.target.value);
   };
 
-  const submitHandler = async (e: React.FormEvent<HTMLButtonElement>) => {
+  const submitHandler = async (
+    e: React.FormEvent<HTMLButtonElement | HTMLFormElement>
+  ) => {
     e.preventDefault();
     try {
       const result: AxiosResponse = await axios.get(`${pathname}/${values}`);
       console.log(result);
-      setResData([result.data]);
+      setResData({ data: result.data });
     } catch (error) {
       console.log("error: ", error);
     }
   };
 
   return (
-    <FormControl>
-      <InputLabel htmlFor="input-with-icon-adornment">Buscar</InputLabel>
-      <Input
-        id="input-with-icon-adornment"
-        onChange={handleChange}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              onClick={submitHandler}
-              disabled={values ? false : true}
-            >
-              <SearchIcon />
-            </IconButton>
-          </InputAdornment>
-        }
-      />
-    </FormControl>
+    <form onSubmit={submitHandler}>
+      <FormControl>
+        <InputLabel htmlFor="input-with-icon-adornment">Buscar</InputLabel>
+        <Input
+          id="input-with-icon-adornment"
+          onChange={handleChange}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                onClick={submitHandler}
+                disabled={values ? false : true}
+              >
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+    </form>
   );
 }
