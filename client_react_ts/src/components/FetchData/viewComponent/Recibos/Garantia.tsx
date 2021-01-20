@@ -36,10 +36,9 @@ export default function Garantia() {
         console.log(linea);
         return (
           <TableRow>
-            <TableCell align="left">{linea.invEntrada.sku}</TableCell>
-            <TableCell align="left">{linea.invEntrada.marca}</TableCell>
-            <TableCell align="left">{linea.invEntrada.modelo}</TableCell>
-            <TableCell align="left">{linea.invEntrada.color}</TableCell>
+            <TableCell align="left">{linea.inventario.sku}</TableCell>
+            <TableCell align="left">{linea.qty}</TableCell>
+            <TableCell align="left">{linea.descripcion}</TableCell>
           </TableRow>
         );
       });
@@ -55,7 +54,6 @@ export default function Garantia() {
               <Typography>{`Fecha: ${e.created_at}`}</Typography>
               <Typography>{`Vendedor: ${e.usuario.nombre}`}</Typography>
               <Typography>{`Cliente: ${e.cliente.nombre}`}</Typography>
-              <Typography>{`Total: ${e.total}`}</Typography>
             </Grid>
           </Grid>
         </AccordionSummary>
@@ -63,10 +61,9 @@ export default function Garantia() {
           <Table padding="none">
             <TableHead>
               <TableRow>
-                <TableCell align="left">item devuelto</TableCell>
-                <TableCell align="left">marca</TableCell>
-                <TableCell align="left">modelo</TableCell>
-                <TableCell align="left">color</TableCell>
+                <TableCell align="left">Sku</TableCell>
+                <TableCell align="left">Qty</TableCell>
+                <TableCell align="left">Descripcion</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>{accordionDetails(e.lineas)}</TableBody>

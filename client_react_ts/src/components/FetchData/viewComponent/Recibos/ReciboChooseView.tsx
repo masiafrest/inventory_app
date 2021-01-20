@@ -5,6 +5,7 @@ import Devolucion from "./Devolucion";
 import Garantia from "./Garantia";
 import NotaCredito from "./NotaCredito";
 import Transferencia from "./Transferencia";
+import Cotizacion from "./Cotizacion";
 
 export default function ReciboChooseView() {
   const { pathname } = useLocation();
@@ -14,11 +15,14 @@ export default function ReciboChooseView() {
     Venta,
     Devolucion,
     Garantia,
-    NotaCredito,
+    Nota_credito: NotaCredito,
     Transferencia,
+    Cotizacion,
   };
 
-  const View = pathname.split("/")[1].toUpperCase();
+  const reciboTipo = pathname.split("/")[2];
+  const View = reciboTipo[0].toUpperCase() + reciboTipo.slice(1);
+  const TagName = components[View];
   //TODO: check if work
-  return <View />;
+  return <TagName />;
 }

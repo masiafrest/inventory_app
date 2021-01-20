@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const transferencias = await Transferencia.query().withGraphFetched(
-      "[lineas.inventario(getItemData), usuario(getNameAndId)] "
+      "[lineas.[origen, destino, inventario(getItemData)], usuario(getNameAndId)] "
     );
     res.json(transferencias);
   } catch (err) {
@@ -26,7 +26,7 @@ router.post("/", async (req, res, next) => {
     await Transferencia.transaction(async (trx) => {
       await Promise.all(
         req.body.lineas.map(async (linea) => {
-          const { inventario_id, item_id, qty, a_lugar_id, sku } = linea;
+          const { inventario_id, item_id, qty, destino_lugar_id, sku } = linea;
           const invDeLugar = await Inventario.query(trx).findById(
             inventario_id
           );
@@ -35,7 +35,7 @@ router.post("/", async (req, res, next) => {
             .where({
               sku,
               item_id,
-              lugar_id: a_lugar_id,
+              lugar_id: destino_lugar_id,
             })
             .first();
 
@@ -51,7 +51,7 @@ router.post("/", async (req, res, next) => {
                 lugares: [
                   {
                     // se supone q ese lugar ya a sido creado
-                    id: linea.a_lugar_id,
+                    id: linea.destino_lugar_id,
                   },
                 ],
                 precio: {

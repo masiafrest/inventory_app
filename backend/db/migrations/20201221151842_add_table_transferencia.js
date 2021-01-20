@@ -19,7 +19,8 @@ exports.up = async function (knex) {
     createTableIncrementsStringNotNullable(table);
     references(table, tableNames.transferencia);
     references(table, tableNames.inventario);
-    references(table, tableNames.lugar, true, "a_lugar");
+    references(table, tableNames.lugar, true, "destino_lugar");
+    references(table, tableNames.lugar, true, "origen_lugar");
     table.integer("qty");
     addDefaultColumns(table);
   });

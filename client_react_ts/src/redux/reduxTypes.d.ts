@@ -27,7 +27,7 @@ interface Lineas {
   venta_id?: number;
   descripcion?: string;
   item_id?: number;
-  a_lugar_id?: number;
+  destino_lugar_id?: number;
   sku?: string;
   marca?: string;
   modelo?: string;

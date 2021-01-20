@@ -11,11 +11,6 @@ export default function AddCategorias(props) {
   const { pathname } = useLocation();
   const path = pathname.replace("/add/", "");
   console.log(path);
-
-  React.useEffect(() => {
-    console.log(error);
-  }, [error]);
-
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(path, data);

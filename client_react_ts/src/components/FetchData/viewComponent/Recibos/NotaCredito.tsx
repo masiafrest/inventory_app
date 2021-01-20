@@ -36,10 +36,10 @@ export default function NotaCredito() {
         console.log(linea);
         return (
           <TableRow>
-            <TableCell align="left">{linea.invEntrada.sku}</TableCell>
-            <TableCell align="left">{linea.invEntrada.marca}</TableCell>
-            <TableCell align="left">{linea.invEntrada.modelo}</TableCell>
-            <TableCell align="left">{linea.invEntrada.color}</TableCell>
+            <TableCell align="left">{linea.garantia_id}</TableCell>
+            <TableCell align="left">{linea.nota_credito_id}</TableCell>
+            <TableCell align="left">{linea.venta_id}</TableCell>
+            <TableCell align="left">{linea.descripcion}</TableCell>
           </TableRow>
         );
       });
@@ -63,10 +63,10 @@ export default function NotaCredito() {
           <Table padding="none">
             <TableHead>
               <TableRow>
-                <TableCell align="left">item devuelto</TableCell>
-                <TableCell align="left">marca</TableCell>
-                <TableCell align="left">modelo</TableCell>
-                <TableCell align="left">color</TableCell>
+                <TableCell align="left">garantia id </TableCell>
+                <TableCell align="left">nota credito id</TableCell>
+                <TableCell align="left">venta id</TableCell>
+                <TableCell align="left">Descripcion</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>{accordionDetails(e.lineas)}</TableBody>

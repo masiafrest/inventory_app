@@ -24,7 +24,7 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
-
+// TODO: mejorar la forma en como muestra la informacion
 export default function Devolucion() {
   const { dataState, setDataState } = useContext(DataContext);
   const { data } = dataState;
@@ -55,7 +55,6 @@ export default function Devolucion() {
               <Typography>{`Fecha: ${e.created_at}`}</Typography>
               <Typography>{`Vendedor: ${e.usuario.nombre}`}</Typography>
               <Typography>{`Cliente: ${e.cliente.nombre}`}</Typography>
-              <Typography>{`Total: ${e.total}`}</Typography>
             </Grid>
           </Grid>
         </AccordionSummary>

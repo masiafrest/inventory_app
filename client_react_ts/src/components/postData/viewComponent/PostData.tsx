@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 
-import { capitalizeFirstChart } from "../../../utils/helper";
+import { capitalizeFirstChart, deleteSlashChart } from "../../../utils/helper";
 
 import { Typography, TextField, Button, Grid } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
@@ -31,7 +31,7 @@ export default function PostData({ handleSubmit, control, onSubmit, error }) {
   const location = useLocation();
   const { pathname } = location;
 
-  const path = capitalizeFirstChart(pathname);
+  const path = capitalizeFirstChart(deleteSlashChart(pathname));
 
   function GridInput({ control, name }) {
     const label: string = name[0].toUpperCase() + name.slice(1);
@@ -76,9 +76,9 @@ export default function PostData({ handleSubmit, control, onSubmit, error }) {
             color="primary"
             size="large"
             type="submit"
-            startIcon={path === "Signin" ? null : <SaveIcon />}
+            startIcon={<SaveIcon />}
           >
-            {path === "Signin" ? "Entrar" : "Guardar"}
+            Guardar
           </Button>
         </Grid>
       </Grid>

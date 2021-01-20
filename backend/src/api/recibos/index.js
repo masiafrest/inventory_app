@@ -9,7 +9,7 @@ const transferencias = require("./transferencias/transferencias.routes");
 router.get("/", (req, res) => {
   res.send("recibos api");
 });
-router.use("/trasnferencia", transferencias);
+router.use("/transferencia", transferencias);
 router.use("/nota_credito", nota_creditos);
 router.use("/garantia", garantias);
 router.use("/devolucion", devoluciones);

@@ -29,7 +29,7 @@ class Inventario extends BaseModel {
           to: `${tableNames.item}.id`,
         },
       },
-      lugares: {
+      lugar: {
         relation: BaseModel.BelongsToOneRelation,
         modelClass: Lugar,
         join: {

@@ -3,7 +3,7 @@ const Inventario = require("./inventarios/inventarios.model");
 
 const getItemGraph = `[inventarios(defaultSelects).[
         precio(defaultSelects),
-          lugares(defaultSelects)
+          lugar(defaultSelects)
         ], categoria(defaultSelects)]`;
 
 exports.get = async (req, res, next) => {

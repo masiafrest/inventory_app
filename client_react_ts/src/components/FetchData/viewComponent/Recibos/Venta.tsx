@@ -36,9 +36,9 @@ export default function Venta() {
         console.log(linea);
         return (
           <TableRow>
-            <TableCell align="left">{linea.sku}</TableCell>
-            <TableCell align="left">{linea.marca}</TableCell>
-            <TableCell align="left">{linea.modelo}</TableCell>
+            <TableCell align="left">{linea.inventario.sku}</TableCell>
+            <TableCell align="left">{linea.inventario.marca}</TableCell>
+            <TableCell align="left">{linea.inventario.modelo}</TableCell>
             <TableCell align="left">{linea.qty}</TableCell>
             <TableCell align="left">{linea.precio}</TableCell>
             <TableCell align="left">{linea.qty * linea.precio}</TableCell>

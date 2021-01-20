@@ -25,10 +25,10 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 
-export default function Transferencia() {
+export default function Cotizacion() {
   const { dataState, setDataState } = useContext(DataContext);
   const { data } = dataState;
-  console.log("devolucion", data);
+  console.log("venta", data);
   const accordionSumary = data.map((e) => {
     console.log(e);
     const accordionDetails = (lineas: any) => {
@@ -37,9 +37,11 @@ export default function Transferencia() {
         return (
           <TableRow>
             <TableCell align="left">{linea.inventario.sku}</TableCell>
+            <TableCell align="left">{linea.inventario.marca}</TableCell>
+            <TableCell align="left">{linea.inventario.modelo}</TableCell>
             <TableCell align="left">{linea.qty}</TableCell>
-            <TableCell align="left">{linea.origen.tipo}</TableCell>
-            <TableCell align="left">{linea.destino.tipo}</TableCell>
+            <TableCell align="left">{linea.precio}</TableCell>
+            <TableCell align="left">{linea.qty * linea.precio}</TableCell>
           </TableRow>
         );
       });
@@ -54,6 +56,10 @@ export default function Transferencia() {
               <Typography>{`N. Recibo: ${e.id}`}</Typography>
               <Typography>{`Fecha: ${e.created_at}`}</Typography>
               <Typography>{`Vendedor: ${e.usuario.nombre}`}</Typography>
+              <Typography>{`Cliente: ${e.cliente.nombre}`}</Typography>
+              <Typography>{`Sub total: ${e.sub_total}`}</Typography>
+              <Typography>{`Tax: ${e.tax}`}</Typography>
+              <Typography>{`Total: ${e.total}`}</Typography>
             </Grid>
           </Grid>
         </AccordionSummary>
@@ -61,10 +67,12 @@ export default function Transferencia() {
           <Table padding="none">
             <TableHead>
               <TableRow>
-                <TableCell align="left">Sku </TableCell>
-                <TableCell align="left">Qty</TableCell>
-                <TableCell align="left">Origen</TableCell>
-                <TableCell align="left">Destino</TableCell>
+                <TableCell align="left">Sku</TableCell>
+                <TableCell align="left">Marca</TableCell>
+                <TableCell align="left">Modelo</TableCell>
+                <TableCell align="left">Qty.</TableCell>
+                <TableCell align="left">Price</TableCell>
+                <TableCell align="left">Sum</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>{accordionDetails(e.lineas)}</TableBody>
@@ -77,7 +85,7 @@ export default function Transferencia() {
   return (
     <>
       <Typography variant="h3" style={{ margin: 20, textAlign: "center" }}>
-        Recibos Transferencia
+        Recibos Cotizacion
       </Typography>
       {accordionSumary}
     </>
