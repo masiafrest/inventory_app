@@ -7,10 +7,20 @@ class Linea_nota_credito extends BaseModel {
   }
 
   static get relationMappings() {
+    const Inventario = require("../../items/inventarios/inventarios.model");
     const Garantia = require("../garantias/garantias.model");
     const Nota_credito = require("../nota_creditos/nota_creditos.model");
     const Venta = require("../ventas/ventas.model");
     return {
+      inventario: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Inventario,
+        join: {
+          from: `${tableNames.inventario}.id`,
+          to: `${tableNames.linea_nota_credito}.${tableNames.inventario}_id`,
+        },
+      },
+
       garantia: {
         relation: BaseModel.BelongsToOneRelation,
         modelClass: Garantia,

@@ -1,5 +1,5 @@
-const BaseModel = require("../../BaseModel");
 const { tableNames } = require("../../../constants/string");
+const BaseModel = require("../../BaseModel");
 
 class Linea_devolucion extends BaseModel {
   static get tableName() {
@@ -43,25 +43,6 @@ class Linea_devolucion extends BaseModel {
           from: `${tableNames.devolucion}.id`,
           to: `${tableNames.linea_devolucion}.${tableNames.devolucion}_id`,
         },
-      },
-    };
-  }
-  static get modifiers() {
-    return {
-      getItemData(builder) {
-        builder
-          .join("inventario", {
-            "linea_devolucion.inventario_id": "inventario.id",
-          })
-          .join("item", { "inventario.item_id": "item.id" })
-          .join("precio", { "inventario.precio_id": "precio.id" })
-          .select(
-            "linea_devolucion.*",
-            "inventario.sku",
-            "item.marca",
-            "item.modelo",
-            "precio.precio"
-          );
       },
     };
   }

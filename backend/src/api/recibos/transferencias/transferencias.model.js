@@ -1,13 +1,24 @@
 const { tableNames } = require("../../../constants/string");
 const BaseModel = require("../../BaseModel");
+
 class Transferencia extends BaseModel {
   static get tableName() {
     return tableNames.transferencia;
   }
 
   static get relationMappings() {
+    const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
+    const Usuario = require("../../usuarios/usuarios.model");
     const Linea_tranferencia = require("./linea_tranferencias.model");
     return {
+      usuario: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Usuario,
+        join: {
+          from: `${tableNames.transferencia}.usuario_id`,
+          to: `${tableNames.usuario}.id`,
+        },
+      },
       lineas: {
         relation: BaseModel.HasManyRelation,
         modelClass: Linea_tranferencia,

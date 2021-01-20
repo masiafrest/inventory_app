@@ -7,7 +7,9 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const transferencias = await Transferencia.query();
+    const transferencias = await Transferencia.query().withGraphFetched(
+      "[lineas.inventario(getItemData), usuario(getNameAndId)] "
+    );
     res.json(transferencias);
   } catch (err) {
     next(err);

@@ -7,7 +7,9 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const nota_creditos = await Nota_credito.query();
+    const nota_creditos = await Nota_credito.query().withGraphFetched(
+      "[lineas, usuario(getNameAndId), cliente(getNameAndId)] "
+    );
     res.json(nota_creditos);
   } catch (err) {
     next(err);

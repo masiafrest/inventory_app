@@ -7,9 +7,27 @@ class Nota_credito extends BaseModel {
   }
 
   static get relationMappings() {
+    const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
+    const Usuario = require("../../usuarios/usuarios.model");
     const Linea_nota_credito = require("./linea_nota_creditos.model");
     const Pago = require("../../noRoute/pagos.model");
     return {
+      cliente: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Empresa_cliente,
+        join: {
+          from: `${tableNames.nota_credito}.empresa_cliente_id`,
+          to: `${tableNames.empresa_cliente}.id`,
+        },
+      },
+      usuario: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Usuario,
+        join: {
+          from: `${tableNames.nota_credito}.usuario_id`,
+          to: `${tableNames.usuario}.id`,
+        },
+      },
       lineas: {
         relation: BaseModel.HasManyRelation,
         modelClass: Linea_nota_credito,

@@ -8,6 +8,7 @@ class Linea_garantia extends BaseModel {
 
   static get relationMappings() {
     const Garantia = require("../garantias/garantias.model");
+    const Inventario = require("../../items/inventarios/inventarios.model");
     const Item = require("../../items/items.model");
     const Venta = require("../ventas/ventas.model");
     return {
@@ -25,6 +26,14 @@ class Linea_garantia extends BaseModel {
         join: {
           from: `${tableNames.venta}.id`,
           to: `${tableNames.linea_garantia}.${tableNames.venta}_id`,
+        },
+      },
+      inventario: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Inventario,
+        join: {
+          from: `${tableNames.inventario}.id`,
+          to: `${tableNames.linea_garantia}.${tableNames.inventario}_id`,
         },
       },
       item: {

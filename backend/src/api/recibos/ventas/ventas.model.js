@@ -1,7 +1,5 @@
 const { tableNames } = require("../../../constants/string");
 const BaseModel = require("../../BaseModel");
-const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
-const Usuario = require("../../usuarios/usuarios.model");
 
 class Venta extends BaseModel {
   static get tableName() {

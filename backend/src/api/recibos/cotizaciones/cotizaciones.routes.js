@@ -5,9 +5,13 @@ const { sumTotal, checkPrice } = require("../recibo.helpers");
 const { getInvAndPrecioDB } = require("../recibos.controllers");
 const router = express.Router();
 
+const graphFetched =
+  "[lineas.inventario(getItemData), usuario(getNameAndId), cliente(getNameAndId)] ";
 router.get("/", async (req, res, next) => {
   try {
-    const cotizaciones = await Cotizacion.query();
+    const cotizaciones = await Cotizacion.query().withGraphFetched(
+      graphFetched
+    );
     res.json(cotizaciones);
   } catch (err) {
     next(err);

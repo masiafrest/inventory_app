@@ -8,7 +8,9 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const garantias = await Garantia.query();
+    const garantias = await Garantia.query().withGraphFetched(
+      "[lineas.inventario(getItemData), usuario(getNameAndId), cliente(getNameAndId)] "
+    );
     res.json(garantias);
   } catch (err) {
     next(err);

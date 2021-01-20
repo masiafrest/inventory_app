@@ -1,5 +1,6 @@
 const BaseModel = require("../../BaseModel");
 const { tableNames } = require("../../../constants/string");
+
 class Linea_tranferencia extends BaseModel {
   static get tableName() {
     return tableNames.linea_transferencia;
@@ -22,7 +23,7 @@ class Linea_tranferencia extends BaseModel {
         modelClass: Inventario,
         join: {
           from: `${tableNames.inventario}.id`,
-          to: `${tableNames.transferencia}.${tableNames.inventario}_id`,
+          to: `${tableNames.linea_transferencia}.${tableNames.inventario}_id`,
         },
       },
     };
