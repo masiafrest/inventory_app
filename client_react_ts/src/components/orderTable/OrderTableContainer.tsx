@@ -57,7 +57,7 @@ export default function OrderTableContainer() {
 
   useEffect(() => {
     if (lineas.length > 0) {
-      lineas.map((linea) => {
+      lineas.forEach((linea) => {
         const { sku, marca, modelo, qty, precio } = linea;
         const row = createRow(sku, marca, modelo, qty, precio);
         rows.push(row);

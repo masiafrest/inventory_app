@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 //MUI
-import withStyles from "@material-ui/core/styles/withStyles";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -11,7 +10,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 //Redux
 import { RootState } from "../redux/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
-import { signIn, signOut } from "../redux/features/user/userSlice";
+import { signIn } from "../redux/features/user/userSlice";
 
 interface UserInput {
   nombre: string;

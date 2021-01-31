@@ -16,6 +16,7 @@ import {
 //pages
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
+import AddItem from "./pages/AddItem";
 
 import { Container } from "@material-ui/core";
 // Components
@@ -24,8 +25,6 @@ import AuthRouth from "./utils/AuthRouth";
 import OrderTableContainer from "./components/orderTable/OrderTableContainer";
 import FetchDataContainer from "./components/FetchData/FetchDataContainer";
 import ErrorHandler from "./components/ErrorHandler";
-import AddCategorias from "./components/postData/viewComponent/AddCategorias";
-import PostDataContainer from "./components/postData/PostDataContainer";
 
 axios.defaults.baseURL = "http://localhost:5050/api/v1";
 
@@ -77,12 +76,12 @@ function App() {
         <Switch>
           <Container maxWidth="sm">
             <ErrorHandler>
+              <Route exact path="/addItem" component={AddItem} />
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/table" component={OrderTableContainer} />
               <Route exact path={paths} component={FetchDataContainer} />
               <Route exact path={invPaths} component={FetchDataContainer} />
               <Route exact path={reciboPaths} component={FetchDataContainer} />
-              <Route path={addPaths} component={PostDataContainer} />
               <AuthRouth exact path="/" component={Home} />
             </ErrorHandler>
           </Container>

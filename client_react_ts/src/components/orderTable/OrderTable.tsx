@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -10,12 +9,6 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-});
 
 const ShowRows = ({ rows, ccyFormat }) => {
   return rows.map((row) => (
@@ -31,7 +24,6 @@ const ShowRows = ({ rows, ccyFormat }) => {
 };
 
 function OrderTable({ item, ccyFormat, invoice, tax, onClickHandler }) {
-  const classes = useStyles();
   const { Subtotal, Taxes, Total } = invoice;
 
   return (

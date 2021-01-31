@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 
 import {
   Grid,
-  Paper,
   Box,
   Typography,
   Fab,
@@ -19,7 +18,7 @@ import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 
 export default function AccordionView({ details }) {
-  const { dataState, setDataState } = useContext(DataContext);
+  const { dataState } = useContext(DataContext);
   const { data } = dataState;
   const history = useHistory();
 
@@ -34,17 +33,21 @@ export default function AccordionView({ details }) {
     console.log(e);
     const accordionDetails = e.inventarios.map((inv: any) => {
       return (
-        <Grid container spacing={1} direction="column">
-          <Box border={2}>
+        <Grid key={inv.id} container spacing={1} direction="column">
+          <Box key={inv.id} border={2}>
             {details(inv)}
-            <Typography>{`Precio: ${inv.precio.precio}`}</Typography>
-            <Typography>{`Ubicacion: ${inv.lugares.tipo}, ${inv.lugares.direccion}`}</Typography>
+            <Typography
+              key={inv.id}
+            >{`Precio: ${inv.precio.precio}`}</Typography>
+            <Typography
+              key={inv.id + "ubicacion"}
+            >{`Ubicacion: ${inv.lugar.tipo}, ${inv.lugar.direccion}`}</Typography>
 
-            <Grid container direction="row">
-              <IconButton onClick={onClickHandler}>
+            <Grid key={inv.id + "grid"} container direction="row">
+              <IconButton key={inv.id + "postIcon"} onClick={onClickHandler}>
                 <PostAddIcon />
               </IconButton>
-              <IconButton>
+              <IconButton key={inv.id + "receiptIcon"}>
                 <ReceiptIcon />
               </IconButton>
             </Grid>
@@ -55,13 +58,14 @@ export default function AccordionView({ details }) {
 
     return (
       <Accordion key={e.id}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Grid container spacing={3} justify="center">
+        <AccordionSummary key={e.id} expandIcon={<ExpandMoreIcon />}>
+          <Grid key={e.id} container spacing={3} justify="center">
             <Grid item xs={12} sm={8}>
               {details(e)}
             </Grid>
             <Grid item sm={4} container alignContent="center" justify="center">
               <img
+                alt=""
                 style={{ height: 100, width: 100 }}
                 src={`http://localhost:5050/uploads/${image}`}
               />

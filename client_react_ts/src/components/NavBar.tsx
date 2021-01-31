@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -9,7 +9,6 @@ import { RootState } from "../redux/rootReducer";
 //MUI
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -20,7 +19,6 @@ function NavBar(props: any) {
   const dispath = useDispatch();
   const user: any = useSelector((state: RootState) => state.user);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  let location = useLocation();
 
   const handleSignOut = () => {
     dispath(signOut());

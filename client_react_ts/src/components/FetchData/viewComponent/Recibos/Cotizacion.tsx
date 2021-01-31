@@ -1,17 +1,12 @@
 import React, { useContext } from "react";
 import { DataContext } from "../../FetchDataContainer";
-import { format } from "date-fns";
 
 import {
   Grid,
-  Paper,
-  Box,
   Typography,
-  Fab,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  IconButton,
 } from "@material-ui/core";
 import {
   Table,
@@ -20,13 +15,10 @@ import {
   TableCell,
   TableHead,
 } from "@material-ui/core";
-import AddBoxIcon from "@material-ui/icons/AddBox";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ReceiptIcon from "@material-ui/icons/Receipt";
-import PostAddIcon from "@material-ui/icons/PostAdd";
 
 export default function Cotizacion() {
-  const { dataState, setDataState } = useContext(DataContext);
+  const { dataState } = useContext(DataContext);
   const { data } = dataState;
   console.log("venta", data);
   const accordionSumary = data.map((e) => {

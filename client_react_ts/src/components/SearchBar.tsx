@@ -9,8 +9,6 @@ import FormControl from "@material-ui/core/FormControl";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 
-import { BearerToken } from "../fakeDataToTest";
-
 export default function SearchBar({ setResData }) {
   const [values, setValues] = useState("");
   const { pathname } = useLocation();

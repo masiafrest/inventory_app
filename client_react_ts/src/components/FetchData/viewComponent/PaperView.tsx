@@ -9,19 +9,20 @@ export default function PaperView({ details, images, path }) {
     padding: 20,
     paddingLeft: 50,
   };
-  const { dataState, setDataState } = useContext(DataContext);
+  const { dataState } = useContext(DataContext);
   const { data } = dataState;
   console.log(data);
   const accordionSumary = data.map((e) => {
     return (
       <Paper key={e.id} style={paperStyle} variant="elevation" elevation={12}>
-        <Grid container spacing={3} justify="center">
-          <Grid item xs={12} sm={8}>
+        <Grid key={e.id} container spacing={3} justify="center">
+          <Grid key={e.id} item xs={12} sm={8}>
             {details(e)}
           </Grid>
           {images(e) && (
-            <Grid item sm={4} container alignContent="center">
+            <Grid key={e.id} item sm={4} container alignContent="center">
               <img
+                alt=""
                 style={{ height: 100, width: 100 }}
                 src={`http://localhost:5050/uploads/${images}`}
               />

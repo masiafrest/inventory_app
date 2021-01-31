@@ -43,7 +43,7 @@ exports.getByParams = async (req, res, next) => {
 };
 
 exports.post = async (req, res, next) => {
-  console.log("POST items: ", req.userData);
+  console.log("POST items: ", req);
   // const parseBody
   try {
     const {
@@ -70,7 +70,7 @@ exports.post = async (req, res, next) => {
       qty,
       color,
       sku,
-      lugares: [
+      lugar: [
         {
           id: lugar_id,
         },
