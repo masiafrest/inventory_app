@@ -2,15 +2,16 @@ import React from "react";
 import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
 
-export default function ImagesPreview({ item }) {
+export default function ImagesPreview({ previewImg }) {
   // const multipleFile = (item.images && []).map((image) => (
   //   <CardMedia src={image} />
   // ));
-  console.log("item", item);
+  console.log("preview: ", previewImg);
 
-  return item?.images ? (
+  return previewImg ? (
+    // <img src={previewImg} style={{maxWidth: '200'}} />
     <Card>
-      <CardMedia src={item.images} />
+      <CardMedia component={() => <img alt="test" src={previewImg} />} />
     </Card>
   ) : (
     <div>no hay imagen</div>

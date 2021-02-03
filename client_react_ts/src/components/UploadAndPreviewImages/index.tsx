@@ -1,10 +1,10 @@
 import ImagesPreview from "./ImagesPreview";
 import ImagesUpload from "./ImagesUpload";
 
-export default function ImagesUploadAndPreview({ item, onChange }) {
+export default function ImagesUploadAndPreview({ onChange, previewImg }) {
   return (
     <>
-      <ImagesPreview item={item} />
+      <ImagesPreview previewImg={previewImg} />
       <ImagesUpload onChange={onChange} />
     </>
   );

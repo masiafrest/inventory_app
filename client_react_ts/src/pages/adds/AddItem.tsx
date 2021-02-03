@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import CategoriasSelect from "../components/CategoriasSelect";
-import ProveedoresSelect from "../components/ProveedoresSelect";
-import LugaresSelect from "../components/LugaresSelect";
-import UploadAndPreviewImages from "../components/UploadAndPreviewImages";
+import CategoriasSelect from "../../components/selectsOptions/CategoriasSelect";
+import ProveedoresSelect from "../../components/selectsOptions/ProveedoresSelect";
+import LugaresSelect from "../../components/selectsOptions/LugaresSelect";
+import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 
 //MUI
 import Container from "@material-ui/core/Container";
@@ -12,29 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-//Redux
-import { RootState } from "../redux/rootReducer";
-import { useSelector, useDispatch } from "react-redux";
-
-interface Item {
-  marca: string;
-  descripcion: string;
-  modelo: string;
-  sku: string;
-  color: string;
-  precio: number;
-  categoria_id: number;
-  qty: number;
-  lugar_id: number;
-  proveedor: number;
-  costo: number;
-  images?: string;
-}
-
 export default function AddItem(props: any) {
-  const dispatch = useDispatch();
-  const user: User = useSelector((state: RootState) => state.user);
-
   const [item, setItem] = useState<Item>({
     marca: "",
     descripcion: "",
@@ -48,6 +26,7 @@ export default function AddItem(props: any) {
     proveedor: 0,
     costo: 0,
   });
+  const [previewImg, setPreviewImg] = useState("");
   const [errors, setErrors] = useState<any>();
   const [loading, setLoading] = useState(false);
 
@@ -64,10 +43,11 @@ export default function AddItem(props: any) {
 
       //single file
       const file = URL.createObjectURL(e.target.files[0]);
-      setItem((value) => ({ ...value, [e.target.name]: file }));
-      console.log(e.target.files)
-      console.log(file)
-      console.log(item)
+      setItem((value) => ({ ...value, [e.target.name]: e.target.files[0] }));
+      setPreviewImg(file);
+      console.log(e.target.files);
+      console.log(file);
+      console.log(item);
     } else {
       setItem((value) => ({ ...value, [e.target.name]: e.target.value }));
     }
@@ -124,7 +104,10 @@ export default function AddItem(props: any) {
         <CategoriasSelect onChange={handleChange} />
         <LugaresSelect onChange={handleChange} />
         <ProveedoresSelect onChange={handleChange} />
-        <UploadAndPreviewImages item={item} onChange={handleChange} />
+        <UploadAndPreviewImages
+          previewImg={previewImg}
+          onChange={handleChange}
+        />
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}

@@ -16,7 +16,8 @@ import {
 //pages
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
-import AddItem from "./pages/AddItem";
+import AddItem from "./pages/adds/AddItem";
+import Adds from "./pages/adds";
 
 import { Container } from "@material-ui/core";
 // Components
@@ -44,13 +45,13 @@ if (token) {
 }
 
 const paths = [
-  "/items",
-  "/usuarios",
-  "/categorias",
-  "/lugares",
-  "/clientes",
-  "/proveedores",
-  "/roles",
+  "/item",
+  "/usuario",
+  "/categoria",
+  "/lugar",
+  "/cliente",
+  "/proveedor",
+  "/rol",
   "/defectuosos",
 ];
 
@@ -76,12 +77,12 @@ function App() {
         <Switch>
           <Container maxWidth="sm">
             <ErrorHandler>
-              <Route exact path="/addItem" component={AddItem} />
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/table" component={OrderTableContainer} />
               <Route exact path={paths} component={FetchDataContainer} />
               <Route exact path={invPaths} component={FetchDataContainer} />
               <Route exact path={reciboPaths} component={FetchDataContainer} />
+              <Route exact path={addPaths} component={Adds} />
               <AuthRouth exact path="/" component={Home} />
             </ErrorHandler>
           </Container>

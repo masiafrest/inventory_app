@@ -19,8 +19,67 @@ router.get("/:id", async (req, res, next) => {
   res.json([result]);
 });
 
-router.post("/", (req, res, next) => {
-  res.send("inventario");
+router.post("/", async (req, res, next) => {
+  try {
+    const {
+      qty,
+      color,
+      sku,
+      lugar_id,
+      precio,
+      precio_min,
+      costo,
+      item_id,
+      proveedor_id,
+    } = req.body;
+    await Inventario.transaction(async (trx) => {
+      const inventario = await Inventario.query(trx).insertGraph(
+        {
+          "#id": "inventario",
+          item_id,
+          qty,
+          color,
+          sku,
+          lugar: [
+            {
+              id: lugar_id,
+            },
+          ],
+          precio: [
+            {
+              precio,
+              precio_min,
+              costo,
+              proveedor: [
+                {
+                  id: proveedor_id,
+                },
+              ],
+              logs: [
+                {
+                  inventario_id: "#ref{inventario.id",
+                  usuario_id: req.userData.id,
+                  proveedor: [{ id: proveedor_id }],
+                },
+              ],
+            },
+          ],
+          logs: [
+            {
+              usuario_id: req.userData.id,
+              ajuste: qty,
+              evento: "crear",
+              proveedor: [{ id: proveedor_id }],
+            },
+          ],
+        },
+        { relate: true, allowRefs: true }
+      );
+      res.json(inventario);
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
