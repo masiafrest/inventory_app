@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Grid, Select, InputLabel, MenuItem } from "@material-ui/core";
 
@@ -33,7 +33,7 @@ export default function CategoriasSelect({ onChange }) {
         onChange={onChange}
         labelId="categoria_id"
         id="categoria_id"
-        name="categoria_id"
+        value=""
       >
         {categoriaMenuItem}
       </Select>

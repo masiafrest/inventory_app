@@ -12,8 +12,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 export default function InvLogs({ details }) {
-  const { dataState } = useContext(DataContext);
-  const { data } = dataState;
+  const { data } = useContext(DataContext);
   console.log("INV", data);
 
   const accordionSumary = data.map((e) => {

@@ -33,7 +33,7 @@ export default function ProveedoresSelect({ onChange }) {
         onChange={onChange}
         labelId="proveedor_id"
         id="proveedor_id"
-        name="proveedor_id"
+        value=""
       >
         {proveedorMenuItem}
       </Select>

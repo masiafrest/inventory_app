@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import useForm from "../../utils/hooks/useForm";
 
 //MUI
 import Container from "@material-ui/core/Container";
@@ -17,29 +17,18 @@ interface Proveedor {
 }
 
 export default function AddProveedor(props: any) {
-  const [proveedor, setProveedor] = useState<Proveedor>({
-    nombre: "",
-    direccion: "",
-    telefono: "",
-  });
+  const { data, handleChange, handleSubmit } = useForm<Proveedor>(
+    {
+      nombre: "",
+      direccion: "",
+      telefono: "",
+    },
+
+    "/proveedores"
+  );
   //   const [previewImg, setPreviewImg] = useState("");
   const [errors, setErrors] = useState<any>();
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    setProveedor((value) => ({ ...value, [e.target.name]: e.target.value }));
-    console.log(proveedor);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(proveedor);
-    try {
-      const res = await axios.post("/proveedores", proveedor);
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const proveedorDetails = ["nombre", "direccion", "telefono"];
 
@@ -49,7 +38,7 @@ export default function AddProveedor(props: any) {
       id={detail}
       name={detail}
       label={detail}
-      value={proveedor[detail]}
+      value={data[detail]}
       onChange={handleChange}
       fullWidth
       // helperText={errors[detail]}

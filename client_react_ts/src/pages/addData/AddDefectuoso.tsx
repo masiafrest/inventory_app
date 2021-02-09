@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import SelectsOptions from "../../components/SelectsOptions";
+import useForm from "../../utils/hooks/useForm";
 
 //MUI
 import Container from "@material-ui/core/Container";
@@ -8,42 +9,32 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-interface Rol {
-  tipo: string;
+//Redux
+
+interface Defectuoso {
+  descripcion: string;
 }
 
-export default function AddRol(props: any) {
-  const [rol, setRol] = useState<Rol>({
-    tipo: "",
-  });
+export default function AddDefectuoso(props: any) {
+  const { data, handleSubmit, handleChange } = useForm<Defectuoso>(
+    {
+      descripcion: "",
+    },
+    "/defectuoso"
+  );
   //   const [previewImg, setPreviewImg] = useState("");
   const [errors, setErrors] = useState<any>();
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setRol((value) => ({ ...value, [e.target.name]: e.target.value }));
-    console.log(rol);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(rol);
-    try {
-      const res = await axios.post("/usuarios/roles", rol);
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const defectuosoDetails = ["descripcion"];
 
-  const rolDetails = ["tipo"];
-
-  const renderTextField = rolDetails.map((detail) => (
+  const renderTextField = defectuosoDetails.map((detail) => (
     <TextField
       key={detail}
       id={detail}
       name={detail}
       label={detail}
-      value={rol[detail]}
+      value={data[detail]}
       onChange={handleChange}
       fullWidth
       // helperText={errors[detail]}
@@ -53,9 +44,14 @@ export default function AddRol(props: any) {
 
   return (
     <Container maxWidth="sm" fixed>
-      <Typography variant="h2">Agregar Rol</Typography>
+      <Typography variant="h2">Agregar Defectuoso</Typography>
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
+        <SelectsOptions
+          onChange={handleChange}
+          name="inventarios"
+          url="items/inventarios"
+        />
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}

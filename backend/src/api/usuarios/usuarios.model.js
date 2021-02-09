@@ -10,7 +10,16 @@ class Usuario extends BaseModel {
 
   static get relationMappings() {
     const Empresa_owner = require("../empresa_owner/empresa_owner.model");
+    const Image = require("../images.model");
     return {
+      images: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: Image,
+        join: {
+          from: `${tableNames.usuario}.id`,
+          to: `${tableNames.images}.${tableNames.usuario}_id`,
+        },
+      },
       empresa: {
         relation: BaseModel.BelongsToOneRelation,
         modelClass: Empresa_owner,

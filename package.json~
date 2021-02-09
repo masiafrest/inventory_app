@@ -1,0 +1,11 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+	  "client": "cd ./inventory_app/client_react_ts && npm run start"
+  },
+  "author": "",
+  "license": "ISC"
+}

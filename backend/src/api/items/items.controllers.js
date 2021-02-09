@@ -1,10 +1,11 @@
 const Item = require("./items.model");
 const Inventario = require("./inventarios/inventarios.model");
+const Image = require("../images.model");
 
 const getItemGraph = `[inventarios(defaultSelects).[
         precio(defaultSelects),
           lugar(defaultSelects)
-        ], categoria(defaultSelects)]`;
+        ], categoria(defaultSelects), images]`;
 
 exports.get = async (req, res, next) => {
   try {
@@ -64,7 +65,7 @@ exports.post = async (req, res, next) => {
     let image_url = req.files.map((file) => {
       return file.filename;
     });
-    image_url = JSON.stringify(image_url);
+    // image_url = JSON.stringify(image_url);
     const itemInventarioObj = {
       "#id": "inventory",
       qty,
@@ -130,7 +131,6 @@ exports.post = async (req, res, next) => {
       insertedItem = await Item.query(trx)
         .insertGraph(
           {
-            image_url,
             marca,
             descripcion,
             barcode,
@@ -148,6 +148,15 @@ exports.post = async (req, res, next) => {
           }
         )
         .returning("*");
+      const item_id = insertedItem.id;
+      await Promise.all(
+        image_url.map(async (e) => {
+          await insertedItem.$relatedQuery("images", trx).insert({
+            url_path: e,
+            item_id,
+          });
+        })
+      );
       res.json(insertedItem);
     });
   } catch (err) {

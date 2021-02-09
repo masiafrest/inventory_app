@@ -18,8 +18,7 @@ import ReceiptIcon from "@material-ui/icons/Receipt";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 
 export default function AccordionView({ details }) {
-  const { dataState } = useContext(DataContext);
-  const { data } = dataState;
+  const { data } = useContext(DataContext);
   const history = useHistory();
 
   const accordionSumary = data.map((e) => {

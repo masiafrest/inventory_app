@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid, Select, InputLabel, MenuItem } from "@material-ui/core";
+import {
+  FormControl,
+  Grid,
+  Select,
+  InputLabel,
+  MenuItem,
+} from "@material-ui/core";
 
 interface Lugares {
   id: number;
@@ -22,21 +28,18 @@ export default function LugaresSelect({ onChange }) {
 
   const lugarMenuItem = lugares.map((lugar) => (
     <MenuItem key={lugar.id} value={lugar.id}>
-      {lugar.nombre}
+      {lugar.direccion}, {lugar.tipo}
     </MenuItem>
   ));
 
   return (
     <Grid item key="lugar-select">
-      <InputLabel id="lugar_id">Lugares</InputLabel>
-      <Select
-        onChange={onChange}
-        labelId="lugar_id"
-        id="lugar_id"
-        name="lugar_id"
-      >
-        {lugarMenuItem}
-      </Select>
+      <FormControl fullWidth>
+        <InputLabel id="lugar_id">Lugares</InputLabel>
+        <Select onChange={onChange} labelId="lugar_id" id="lugar_id" value="">
+          {lugarMenuItem}
+        </Select>
+      </FormControl>
     </Grid>
   );
 }

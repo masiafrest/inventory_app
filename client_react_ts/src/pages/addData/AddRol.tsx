@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import useForm from "../../utils/hooks/useForm";
 
 //MUI
 import Container from "@material-ui/core/Container";
@@ -8,44 +8,28 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-//Redux
-
-interface Categorias {
-  nombre: string;
+interface Rol {
+  tipo: string;
 }
 
-export default function AddCategorias(props: any) {
-  const [categoria, setCategoria] = useState<Categorias>({
-    nombre: "",
-  });
+export default function AddRol(props: any) {
+  const { data, handleChange, handleSubmit } = useForm<Rol>(
+    { tipo: "" },
+    "/usuarios/roles"
+  );
   //   const [previewImg, setPreviewImg] = useState("");
   const [errors, setErrors] = useState<any>();
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setCategoria((value) => ({ ...value, [e.target.name]: e.target.value }));
-    console.log(categoria);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(categoria);
-    try {
-      const res = await axios.post("/categorias", categoria);
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const rolDetails = ["tipo"];
 
-  const categoriaDetails = ["nombre"];
-
-  const renderTextField = categoriaDetails.map((detail) => (
+  const renderTextField = rolDetails.map((detail) => (
     <TextField
       key={detail}
       id={detail}
       name={detail}
       label={detail}
-      value={categoria[detail]}
+      value={data[detail]}
       onChange={handleChange}
       fullWidth
       // helperText={errors[detail]}
@@ -55,7 +39,7 @@ export default function AddCategorias(props: any) {
 
   return (
     <Container maxWidth="sm" fixed>
-      <Typography variant="h2">Agregar Categoria</Typography>
+      <Typography variant="h2">Agregar Rol</Typography>
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
         {/* {errors.general && (

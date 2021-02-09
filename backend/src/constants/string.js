@@ -27,6 +27,8 @@ const tableNames = {
   inventario_log: "inventario_log", //dpnd on item.id, proveedor.id, empleado.id
   precio_log: "precio_log", //dpnd on precio.id, empleado.id,
   defectuoso: "defectuoso",
+  images: "images",
+  logos: "logos",
 };
 const tipo_pago = {
   yappi: "yappi",

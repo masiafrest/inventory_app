@@ -9,7 +9,16 @@ class Item extends BaseModel {
   static get relationMappings() {
     const Inventario = require("./inventarios/inventarios.model");
     const Categoria = require("../categorias/categorias.model");
+    const Image = require("../images.model");
     return {
+      images: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: Image,
+        join: {
+          from: `${tableNames.item}.id`,
+          to: `${tableNames.images}.${tableNames.item}_id`,
+        },
+      },
       inventarios: {
         relation: BaseModel.HasManyRelation,
         modelClass: Inventario,
@@ -46,7 +55,6 @@ class Item extends BaseModel {
           "descripcion",
           "modelo",
           "barcode",
-          "image_url",
           "categoria_id",
           "categoria_2_id"
         );

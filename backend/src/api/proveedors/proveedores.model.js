@@ -6,9 +6,18 @@ class Proveedor extends BaseModel {
     return tableNames.proveedor;
   }
   static get relationMappings() {
+    const Logo = require("../logos.model");
     const Inventario_log = require("../items/inventarios/logs/inventario_logs.model");
     const Precio = require("../precio/precios.model");
     return {
+      logo: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Logo,
+        join: {
+          from: `${tableNames.proveedor}.logo_id`,
+          to: `${tableNames.logos}.${tableNames.proveedor}.id`,
+        },
+      },
       item_logs: {
         relation: BaseModel.HasManyRelation,
         modelClass: Inventario_log,

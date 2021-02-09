@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Grid, Select, InputLabel, MenuItem } from "@material-ui/core";
-
+interface Rol {
+  id: number;
+  tipo: string;
+}
 export default function RolesSelect({ onChange }) {
-  const [roles, setRoles] = useState<Item[]>([]);
+  const [roles, setRoles] = useState<Rol[]>([]);
   useEffect(() => {
     axios
       .get("/usuarios/roles")
@@ -17,14 +20,14 @@ export default function RolesSelect({ onChange }) {
 
   const rolMenuItem = roles.map((rol) => (
     <MenuItem key={rol.id} value={rol.id}>
-      {`${rol.marca}, ${rol.modelo}`}
+      {`${rol.tipo}`}
     </MenuItem>
   ));
 
   return (
     <Grid item key="rol-select">
       <InputLabel id="rol_id">Roles</InputLabel>
-      <Select onChange={onChange} labelId="rol_id" id="rol_id" name="rol_id">
+      <Select onChange={onChange} labelId="rol_id" id="rol_id" value="">
         {rolMenuItem}
       </Select>
     </Grid>

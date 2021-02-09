@@ -6,25 +6,24 @@ import AddUser from "./AddUser";
 import AddRol from "./AddRol";
 import AddCliente from "./AddCliente";
 import AddDefectuoso from "./AddDefectuoso";
-import { useRouteMatch } from "react-router-dom";
+import AddInventario from "./AddInventario";
+import useDynamicComponent from "../../utils/hooks/useDynamicComponent";
 
-export default function Adds() {
-  const { path, url } = useRouteMatch();
-
+export default function AddData() {
   const components = {
     item: AddItem,
+    inventario: AddInventario,
     categoria: AddCategoria,
-    lugare: AddLugar,
-    proveedore: AddProveedor,
+    lugar: AddLugar,
+    proveedor: AddProveedor,
     usuario: AddUser,
     rol: AddRol,
     cliente: AddCliente,
     defectuoso: AddDefectuoso,
   };
 
-  const strSplited = path.split("/");
-  const componentName = strSplited[2];
-  console.log(path, strSplited, componentName);
-  const DynamicComponent = components[componentName];
+  const DynamicComponent: (props: any) => JSX.Element = useDynamicComponent(
+    components
+  );
   return <DynamicComponent />;
 }

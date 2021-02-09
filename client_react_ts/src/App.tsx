@@ -16,13 +16,13 @@ import {
 //pages
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
-import AddItem from "./pages/adds/AddItem";
-import Adds from "./pages/adds";
+import AddData from "./pages/addData";
+import ShowData from "./pages/showData";
 
 import { Container } from "@material-ui/core";
 // Components
 import NavBar from "./components/NavBar";
-import AuthRouth from "./utils/AuthRouth";
+import AuthRouth from "./components/AuthRouth";
 import OrderTableContainer from "./components/orderTable/OrderTableContainer";
 import FetchDataContainer from "./components/FetchData/FetchDataContainer";
 import ErrorHandler from "./components/ErrorHandler";
@@ -46,16 +46,29 @@ if (token) {
 
 const paths = [
   "/item",
+  "/inventario",
   "/usuario",
   "/categoria",
   "/lugar",
   "/cliente",
   "/proveedor",
   "/rol",
+  "/defectuoso",
+];
+const pluralPaths = [
+  "/items",
+  "/inventarios",
+  "/usuarios",
+  "/categorias",
+  "/lugares",
+  "/clientes",
+  "/proveedores",
+  "/roles",
   "/defectuosos",
 ];
 
 const addPaths = paths.map((path) => "/add" + path);
+const showPaths = pluralPaths.map((path) => "/show" + path);
 const invPaths = ["/logs"].map((e) => "/items/inventarios" + e);
 const reciboPaths = [
   "/venta",
@@ -79,10 +92,11 @@ function App() {
             <ErrorHandler>
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/table" component={OrderTableContainer} />
-              <Route exact path={paths} component={FetchDataContainer} />
+              {/* <Route exact path={pluralPaths} component={FetchDataContainer} /> */}
               <Route exact path={invPaths} component={FetchDataContainer} />
               <Route exact path={reciboPaths} component={FetchDataContainer} />
-              <Route exact path={addPaths} component={Adds} />
+              <Route exact path={addPaths} component={AddData} />
+              <Route exact path={showPaths} component={ShowData} />
               <AuthRouth exact path="/" component={Home} />
             </ErrorHandler>
           </Container>

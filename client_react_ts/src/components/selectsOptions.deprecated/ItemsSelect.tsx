@@ -24,7 +24,7 @@ export default function ItemsSelect({ onChange }) {
   return (
     <Grid item key="item-select">
       <InputLabel id="item_id">Items</InputLabel>
-      <Select onChange={onChange} labelId="item_id" id="item_id" name="item_id">
+      <Select onChange={onChange} labelId="item_id" id="item_id" value="">
         {itemMenuItem}
       </Select>
     </Grid>

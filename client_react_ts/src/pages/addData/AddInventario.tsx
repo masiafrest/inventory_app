@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
-import InvSelect from "../../components/selectsOptions/InventariosSelect";
+import useForm from "../../utils/hooks/useForm";
+import SelectsOptions from "../../components/SelectsOptions";
 
 //MUI
 import Container from "@material-ui/core/Container";
@@ -9,44 +9,52 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-//Redux
-
-interface Defectuoso {
-  descripcion: string;
+interface Inventario {
+  sku: string;
+  color: string;
+  qty: number;
+  precio: number;
+  precio_min: number;
+  costo: number;
+  item_id: number;
+  lugar_id: number;
+  proveedor_id: number;
 }
 
-export default function AddDefectuoso(props: any) {
-  const [defectuoso, setDefectuoso] = useState<Defectuoso>({
-    descripcion: "",
-  });
-  //   const [previewImg, setPreviewImg] = useState("");
+export default function AddInventario(props: any) {
+  const { data, handleChange, handleSubmit } = useForm<Inventario>(
+    {
+      sku: "",
+      color: "",
+      qty: 0,
+      precio: 0,
+      precio_min: 0,
+      costo: 0,
+      item_id: 0,
+      lugar_id: 0,
+      proveedor_id: 0,
+    },
+    "/items/inventarios"
+  );
   const [errors, setErrors] = useState<any>();
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setDefectuoso((value) => ({ ...value, [e.target.name]: e.target.value }));
-    console.log(defectuoso);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(defectuoso);
-    try {
-      const res = await axios.post("/defectuoso", defectuoso);
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const inventarioDetails = [
+    "sku",
+    "color",
+    "precio",
+    "precio_min",
+    "qty",
+    "costo",
+  ];
 
-  const defectuosoDetails = ["descripcion"];
-
-  const renderTextField = defectuosoDetails.map((detail) => (
+  const renderTextField = inventarioDetails.map((detail) => (
     <TextField
       key={detail}
       id={detail}
       name={detail}
       label={detail}
-      value={defectuoso[detail]}
+      value={data[detail]}
       onChange={handleChange}
       fullWidth
       // helperText={errors[detail]}
@@ -56,10 +64,12 @@ export default function AddDefectuoso(props: any) {
 
   return (
     <Container maxWidth="sm" fixed>
-      <Typography variant="h2">Agregar Defectuoso</Typography>
+      <Typography variant="h2">Agregar Inventario</Typography>
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
-        <InvSelect onChange={handleChange} />
+        <SelectsOptions onChange={handleChange} name="lugares" />
+        <SelectsOptions onChange={handleChange} name="proveedores" />
+        <SelectsOptions onChange={handleChange} name="items" />
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}

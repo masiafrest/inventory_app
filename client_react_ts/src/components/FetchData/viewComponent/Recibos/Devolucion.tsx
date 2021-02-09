@@ -18,8 +18,8 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // TODO: mejorar la forma en como muestra la informacion
 export default function Devolucion() {
-  const { dataState } = useContext(DataContext);
-  const { data } = dataState;
+  const { data } = useContext(DataContext);
+
   console.log("devolucion", data);
   const accordionSumary = data.map((e) => {
     console.log(e);

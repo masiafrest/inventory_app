@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
-import RolesSelect from "../../components/selectsOptions/RolesSelect";
+import SelectsOptions from "../../components/SelectsOptions";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
+import useFormImage from "../../utils/hooks/useFormImage";
 
 //MUI
 import Container from "@material-ui/core/Container";
@@ -19,57 +19,26 @@ interface Cliente {
   telefono_2: string;
 }
 export default function AddCliente(props: any) {
-  const [cliente, setCliente] = useState<Cliente>({
-    nombre: "",
-    telefono: "",
-    direccion: "",
-    email: "",
-    logo_url: "",
-    website_url: "",
-    telefono_2: "",
-  });
+  const {
+    data,
+    previewImg,
+    handleChange,
+    handleSubmit,
+  } = useFormImage<Cliente>(
+    {
+      nombre: "",
+      telefono: "",
+      direccion: "",
+      email: "",
+      logo_url: "",
+      website_url: "",
+      telefono_2: "",
+    },
+    "/clientes/addUser"
+  );
 
-  const [previewImg, setPreviewImg] = useState("");
   const [errors, setErrors] = useState<any>();
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    if (e.target.name === "images") {
-      //multiple files
-      // let fileObj: any = [];
-      // let fileArray: any = [];
-      // fileObj.push(e.target.files);
-      // for (let i = 0; i < fileObj[0].length; i++) {
-      //   fileArray.push(URL.createObjectURL(fileObj[0][i]));
-      // }
-      // setCliente((value) => ({ ...value, images: fileArray }));
-
-      //single file
-      const file = URL.createObjectURL(e.target.files[0]);
-      setCliente((value) => ({ ...value, [e.target.name]: e.target.files[0] }));
-      setPreviewImg(file);
-      console.log(e.target.files);
-      console.log(file);
-      console.log(cliente);
-    } else {
-      setCliente((value) => ({ ...value, [e.target.name]: e.target.value }));
-    }
-    console.log(cliente);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(cliente);
-    try {
-      let formData = new FormData();
-      Object.keys(cliente).forEach((key) => {
-        formData.append(key, cliente[key]);
-      });
-      const res = await axios.post("/clientes/addUser", formData);
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const clienteDetails = [
     "nombre",
@@ -86,7 +55,7 @@ export default function AddCliente(props: any) {
       id={detail}
       name={detail}
       label={detail}
-      value={cliente[detail]}
+      value={data[detail]}
       onChange={handleChange}
       fullWidth
       // helperText={errors[detail]}
@@ -99,7 +68,7 @@ export default function AddCliente(props: any) {
       <Typography variant="h2">Agregar Cliente</Typography>
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
-        <RolesSelect onChange={handleChange} />
+        <SelectsOptions onChange={handleChange} name="roles" />
         <UploadAndPreviewImages
           previewImg={previewImg}
           onChange={handleChange}

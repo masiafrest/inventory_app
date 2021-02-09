@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-
+import useForm from "../../utils/hooks/useForm";
 //MUI
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
@@ -10,44 +9,28 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 //Redux
 
-interface Lugar {
-  tipo: string;
-  direccion: string;
+interface Categorias {
+  nombre: string;
 }
 
-export default function AddLugar(props: any) {
-  const [lugar, setLugar] = useState<Lugar>({
-    direccion: "",
-    tipo: "",
-  });
-  //   const [previewImg, setPreviewImg] = useState("");
+export default function AddCategorias(props: any) {
+  const { data, handleChange, handleSubmit } = useForm<Categorias>(
+    { nombre: "" },
+    "/categorias"
+  );
+
   const [errors, setErrors] = useState<any>();
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setLugar((value) => ({ ...value, [e.target.name]: e.target.value }));
-    console.log(lugar);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(lugar);
-    try {
-      const res = await axios.post("/lugares", lugar);
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const categoriaDetails = ["nombre"];
 
-  const lugarDetails = ["tipo", "direccion"];
-
-  const renderTextField = lugarDetails.map((detail) => (
+  const renderTextField = categoriaDetails.map((detail) => (
     <TextField
       key={detail}
       id={detail}
       name={detail}
       label={detail}
-      value={lugar[detail]}
+      value={data[detail]}
       onChange={handleChange}
       fullWidth
       // helperText={errors[detail]}
@@ -57,7 +40,7 @@ export default function AddLugar(props: any) {
 
   return (
     <Container maxWidth="sm" fixed>
-      <Typography variant="h2">Agregar Lugar</Typography>
+      <Typography variant="h2">Agregar Categoria</Typography>
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
         {/* {errors.general && (

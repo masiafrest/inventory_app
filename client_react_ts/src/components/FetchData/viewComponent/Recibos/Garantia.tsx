@@ -18,8 +18,8 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 export default function Garantia() {
-  const { dataState } = useContext(DataContext);
-  const { data } = dataState;
+  const { data } = useContext(DataContext);
+
   console.log("devolucion", data);
   const accordionSumary = data.map((e) => {
     console.log(e);
