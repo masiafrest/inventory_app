@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const logs = require("./logs/inventario_logs.routes");
-
 const Inventario = require("../inventarios/inventarios.model");
+const { patchById, hardDeleteById } = require("../../../lib/helpers");
 
 router.use("/logs", logs);
 
@@ -9,14 +9,14 @@ router.get("/", (req, res, next) => {
   res.send("inventarios");
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:item_id", async (req, res, next) => {
   const result = await Inventario.query()
-    .findById(req.params.id)
-    .join("item", { "inventario.item_id": "item.id" })
-    .join("precio", { "inventario.precio_id": "precio.id" })
-    .select("inventario.sku", "item.marca", "item.modelo", "precio.precio");
-  // const item = await result.$relatedQuery("item").findById(result.item_id);
-  res.json([result]);
+    .where({ item_id: req.params.item_id })
+    .withGraphFetched({
+      precio: true,
+      lugar: true,
+    });
+  res.json(result);
 });
 
 router.post("/", async (req, res, next) => {
@@ -57,7 +57,7 @@ router.post("/", async (req, res, next) => {
               ],
               logs: [
                 {
-                  inventario_id: "#ref{inventario.id",
+                  inventario_id: "#ref{inventario.id}",
                   usuario_id: req.userData.id,
                   proveedor: [{ id: proveedor_id }],
                 },
@@ -80,6 +80,14 @@ router.post("/", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+router.patch("/", async (req, res, next) => {
+  patchById(req, res, next, Inventario);
+});
+
+router.delete("/:id", (req, res, next) => {
+  hardDeleteById(req, res, next, Inventario);
 });
 
 module.exports = router;

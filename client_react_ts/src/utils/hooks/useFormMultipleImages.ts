@@ -1,20 +1,39 @@
 import axios from "axios";
 import { useState } from "react";
+import Resizer from "react-image-file-resizer";
 
 export default function useForm<T>(initialState: T, url: string) {
   const [data, setData] = useState(initialState);
   const [previewImg, setPreviewImg] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
+    const resizeFile = (file) =>
+      new Promise((resolve) => {
+        Resizer.imageFileResizer(
+          file,
+          300,
+          300,
+          "JPEG",
+          100,
+          0,
+          (uri) => {
+            resolve(uri);
+          },
+          "base64"
+        );
+      });
     if (e.target.name === "images") {
       //multiple files
       let fileObj: any = [];
       let fileArray: any = [];
       fileObj.push(e.target.files);
       for (let i = 0; i < fileObj[0].length; i++) {
-        fileArray.push(URL.createObjectURL(fileObj[0][i]));
+        const image = await resizeFile(fileObj[0][i]);
+        fileArray.push(image);
+        // fileArray.push(URL.createObjectURL(fileObj[0][i]));
       }
       setData((value) => ({ ...value, images: fileArray }));
+      setPreviewImg(fileArray);
     } else {
       setData((value) => ({ ...value, [e.target.name]: e.target.value }));
     }

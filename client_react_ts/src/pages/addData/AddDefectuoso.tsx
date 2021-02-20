@@ -48,6 +48,7 @@ export default function AddDefectuoso(props: any) {
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
         <SelectsOptions
+          form={data}
           onChange={handleChange}
           name="inventarios"
           url="items/inventarios"

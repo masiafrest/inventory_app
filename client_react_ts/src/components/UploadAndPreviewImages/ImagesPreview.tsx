@@ -7,13 +7,15 @@ export default function ImagesPreview({ previewImg }) {
   //   <CardMedia src={image} />
   // ));
   console.log("preview: ", previewImg);
-
-  return previewImg ? (
-    // <img src={previewImg} style={{maxWidth: '200'}} />
-    <Card>
-      <CardMedia component={() => <img alt="test" src={previewImg} />} />
-    </Card>
+  const imgs = previewImg ? (
+    previewImg.map((img) => (
+      <Card>
+        <CardMedia component={() => <img alt="test" src={img} />} />
+      </Card>
+    ))
   ) : (
     <div>no hay imagen</div>
   );
+
+  return imgs;
 }

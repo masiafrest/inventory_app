@@ -50,16 +50,7 @@ class Inventario extends BaseModel {
   static get modifiers() {
     return {
       defaultSelects(builder) {
-        builder.select(
-          "id",
-          "item_id",
-          "qty",
-          "lugar_id",
-          "basura",
-          "color",
-          "precio_id",
-          "sku"
-        );
+        builder.select("id", "item_id", "qty", "basura", "color", "sku");
       },
       getItemData(builder) {
         builder
@@ -72,10 +63,6 @@ class Inventario extends BaseModel {
           );
       },
     };
-  }
-  static beforeUpdate({ inputItems }) {
-    console.log("Inventario before Update 😎, add new date to update_at");
-    inputItems[0].updated_at = new Date().toISOString();
   }
 }
 

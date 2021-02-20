@@ -26,13 +26,13 @@ export default function AddInventario(props: any) {
     {
       sku: "",
       color: "",
-      qty: 0,
-      precio: 0,
-      precio_min: 0,
-      costo: 0,
-      item_id: 0,
-      lugar_id: 0,
-      proveedor_id: 0,
+      qty: null,
+      precio: null,
+      precio_min: null,
+      costo: null,
+      item_id: null,
+      lugar_id: null,
+      proveedor_id: null,
     },
     "/items/inventarios"
   );
@@ -67,9 +67,24 @@ export default function AddInventario(props: any) {
       <Typography variant="h2">Agregar Inventario</Typography>
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
-        <SelectsOptions onChange={handleChange} name="lugares" />
-        <SelectsOptions onChange={handleChange} name="proveedores" />
-        <SelectsOptions onChange={handleChange} name="items" />
+        <SelectsOptions
+          onChange={handleChange}
+          form={data}
+          url="lugares"
+          name="lugar"
+        />
+        <SelectsOptions
+          form={data}
+          onChange={handleChange}
+          url="proveedores"
+          name="proveedor"
+        />
+        <SelectsOptions
+          onChange={handleChange}
+          form={data}
+          url="items"
+          name="item"
+        />
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}

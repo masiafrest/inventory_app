@@ -57,6 +57,7 @@ export default function AddUsuario(props: any) {
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
         <SelectsOptions
+          form={data}
           onChange={handleChange}
           name="roles"
           url="usuarios/roles"

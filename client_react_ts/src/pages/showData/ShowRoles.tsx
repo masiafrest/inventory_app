@@ -1,3 +1,4 @@
+import EditFormDialog from "../../components/EditableField/EditFormDialog";
 import useFetchData from "../../utils/hooks/useFetchData";
 import { Paper, Typography, Grid } from "@material-ui/core";
 import Fab from "../../components/FloatBtnAdd";
@@ -8,7 +9,8 @@ export default function ShowRoles() {
     padding: 20,
     paddingLeft: 50,
   };
-  const { data } = useFetchData("/usuarios/roles");
+  const url = "/usuarios/roles";
+  const { data } = useFetchData(url);
 
   const paperView = data.map((data) => (
     <Paper
@@ -19,7 +21,7 @@ export default function ShowRoles() {
     >
       <Grid key={data.tipo} container spacing={3} justify="center">
         <Grid key={data.tipo} item xs={12} sm={8}>
-          {data.tipo}
+          {data.tipo} <EditFormDialog data={data} url={url} name={data.tipo} />
         </Grid>
       </Grid>
     </Paper>

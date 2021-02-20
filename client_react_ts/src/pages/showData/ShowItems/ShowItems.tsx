@@ -1,6 +1,17 @@
 import { useState } from "react";
-import useFetchData from "../../utils/hooks/useFetchData";
-import Fab from "../../components/FloatBtnAdd";
+import useFetchData from "../../../utils/hooks/useFetchData";
+import Fab from "../../../components/FloatBtnAdd";
+import EditFormDialog from "../../../components/EditableField/EditFormDialog";
+import { useHistory } from "react-router-dom";
+import DeleteBtn from "../../../components/DeleteBtn";
+
+//Redux
+import { RootState } from "../../../redux/rootReducer";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  pushLinea,
+  addRecibo,
+} from "../../../redux/features/recibo/reciboSlice";
 
 import {
   Paper,
@@ -15,8 +26,13 @@ import {
 } from "@material-ui/core/";
 
 export default function ShowItems() {
-  const { data } = useFetchData("/items");
+  const dispatch = useDispatch();
+  const recibo = useSelector((state: RootState) => state.recibo);
+  const url = "/items";
+  const { data } = useFetchData(url);
   const [activeStep, setActiveStep] = useState(0);
+  const history = useHistory();
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -25,9 +41,24 @@ export default function ShowItems() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handleCardClick = (obj) => {
+    history.push({
+      pathname: "/show/inventarios",
+      state: {
+        item_id: obj.id,
+      },
+    });
+    // setisInvSelected(true);
+    // setInvData(obj.inventarios);
+  };
+
+  const handleAddItem = () => {
+    // add to recibo
+  };
+
   const cardView = data.map((obj) => {
     const src = "http://localhost:5050/uploads/";
-    const imgPlaceholder = "https://via.placeholder.com/150";
+    const imgPlaceholder = "https://via.placeholder.com/300";
     const activeImg =
       obj.images.lenght > 0
         ? src + obj.images[activeStep].url_path
@@ -49,6 +80,7 @@ export default function ShowItems() {
             activeStep={activeStep}
             nextButton={
               <Button
+                id="mobileSteperNextBtn"
                 size="small"
                 onClick={handleNext}
                 disabled={activeStep === maxSteps - 1}
@@ -58,8 +90,9 @@ export default function ShowItems() {
             }
             backButton={
               <Button
+                id="mobileSteperBackBtn"
                 size="small"
-                onClick={handleBack}
+                // onClick={handleBack}
                 disabled={activeStep === 0}
               >
                 Back
@@ -69,18 +102,22 @@ export default function ShowItems() {
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
               {"barcode: " + obj.barcode}
+              <EditFormDialog name={"barcode"} data={obj} url={url} />
             </Typography>
             <Typography gutterBottom variant="h5" component="h2">
               {"descripcion: " + obj.descripcion}
+              <EditFormDialog name={"descripcion"} data={obj} url={url} />
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary">
-              Share
+            <Button
+              size="small"
+              color="primary"
+              onClick={() => handleCardClick(obj)}
+            >
+              Ver Inventario
             </Button>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
+            <DeleteBtn url={url} id={obj.id} />
           </CardActions>
         </Card>
       </>

@@ -68,7 +68,12 @@ export default function AddCliente(props: any) {
       <Typography variant="h2">Agregar Cliente</Typography>
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
-        <SelectsOptions onChange={handleChange} name="roles" />
+        <SelectsOptions
+          onChange={handleChange}
+          form={data}
+          url="roles"
+          name="rol"
+        />
         <UploadAndPreviewImages
           previewImg={previewImg}
           onChange={handleChange}

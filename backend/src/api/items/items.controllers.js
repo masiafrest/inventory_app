@@ -1,6 +1,6 @@
 const Item = require("./items.model");
 const Inventario = require("./inventarios/inventarios.model");
-const Image = require("../images.model");
+const { hardDeleteById, patchById } = require("../../lib/helpers");
 
 const getItemGraph = `[inventarios(defaultSelects).[
         precio(defaultSelects),
@@ -164,35 +164,10 @@ exports.post = async (req, res, next) => {
   }
 };
 
-exports.patch = async (req, res, next) => {
-  console.log("patch 😀 req.body: ", req.body.inventarios);
-  for (let inventario of req.body.inventarios) {
-    const { id, qty, basura, lugar_id, precio } = inventario;
-    const defaultData = {
-      inventario_id: id,
-      usuario_id: req.userData.id,
-      proveedor_id: precio.proveedor_id,
-    };
-    if ("precio" in inventario) {
-      inventario.precio.logs = [{ ...defaultData }];
-    }
-    if ("qty" in inventario) {
-      inventario.logs = [
-        {
-          ...defaultData,
-          ajuste: qty,
-          evento: "modificar",
-        },
-      ];
-    }
-  }
-  await Item.transaction(async (trx) => {
-    const itemUpdated = await Item.query(trx).upsertGraph(
-      { ...req.body },
-      {
-        noDelete: true,
-      }
-    );
-    res.send(itemUpdated);
-  });
+exports.patch = (req, res, next) => {
+  patchById(req, res, next, Item);
+};
+
+exports.delete = (req, res, next) => {
+  hardDeleteById(req, res, next, Item);
 };

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Grid, Select, InputLabel, MenuItem } from "@material-ui/core";
 
-export default function SelectsOptions({ onChange, name, url = name }) {
+export default function SelectsOptions({ onChange, name, url, form }) {
   const [data, setData] = useState([]);
   useEffect(() => {
     console.log("url ", url);
@@ -17,7 +17,7 @@ export default function SelectsOptions({ onChange, name, url = name }) {
   }, []);
 
   let menuItemToShow = [];
-  switch (name) {
+  switch (url) {
     case "categorias":
     case "proveedores":
       menuItemToShow.push("nombre");
@@ -47,14 +47,17 @@ export default function SelectsOptions({ onChange, name, url = name }) {
     </MenuItem>
   ));
 
+  const name_id = `${name}_id`;
+
   return (
     <Grid item key={`${name}-select`}>
-      <InputLabel id={`${name}_id`}>{name}</InputLabel>
+      <InputLabel id={name_id}>{name}</InputLabel>
       <Select
         onChange={onChange}
-        labelId={`${name}_id`}
-        id={`${name}_id`}
-        value=""
+        labelId={name_id}
+        id={name_id}
+        name={name_id}
+        value={form[name_id]}
         fullWidth
       >
         {dataMenuItem}

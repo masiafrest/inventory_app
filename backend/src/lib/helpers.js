@@ -39,4 +39,41 @@ async function findByIdOrName(Model, value, res, next) {
     next(error);
   }
 }
-module.exports = { checkToken, skuGenerator, findByIdOrName };
+
+async function hardDeleteById(req, res, next, Model) {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    await Model.transaction(async (trx) => {
+      const model = await Model.query(trx).deleteById(id);
+      console.log(model);
+      res.json(model);
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function patchById(req, res, next, Model) {
+  try {
+    await Model.transaction(async (trx) => {
+      const modelUpdated = await Model.query(trx).upsertGraph(
+        { ...req.body },
+        {
+          noDelete: true,
+        }
+      );
+      res.send(modelUpdated);
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = {
+  checkToken,
+  skuGenerator,
+  findByIdOrName,
+  hardDeleteById,
+  patchById,
+};

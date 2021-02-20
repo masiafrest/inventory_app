@@ -1,12 +1,14 @@
 import useFetchData from "../../utils/hooks/useFetchData";
+import EditFormDialog from "../../components/EditableField/EditFormDialog";
 // import useFetch from "../../utils/hooks/useFetch";
 import Fab from "../../components/FloatBtnAdd";
 
 import { Paper, Typography, Grid } from "@material-ui/core";
 
 export default function ShowCategorias() {
+  const url = "/categorias";
   // const { data } = useFetch("/categorias", []);
-  const { data } = useFetchData("/categorias");
+  const { data } = useFetchData(url);
   console.log("categorias");
   const paperStyle: React.CSSProperties = {
     margin: 20,
@@ -23,7 +25,8 @@ export default function ShowCategorias() {
     >
       <Grid key={data.nombre} container spacing={3} justify="center">
         <Grid key={data.nombre} item xs={12} sm={8}>
-          {data.nombre}
+          {data.nombre}{" "}
+          <EditFormDialog data={data} url={url} name={data.nombre} />
         </Grid>
       </Grid>
     </Paper>
