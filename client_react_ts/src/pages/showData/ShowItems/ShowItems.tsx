@@ -26,12 +26,13 @@ import {
 } from "@material-ui/core/";
 
 export default function ShowItems() {
-  const dispatch = useDispatch();
-  const recibo = useSelector((state: RootState) => state.recibo);
   const url = "/items";
   const { data } = useFetchData(url);
   const [activeStep, setActiveStep] = useState(0);
   const history = useHistory();
+
+  const dispatch = useDispatch();
+  const recibo = useSelector((state: RootState) => state.recibo);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

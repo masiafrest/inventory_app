@@ -5,13 +5,14 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 //redux
-import store from "./redux/stores";
+import store, { persistor } from "./redux/stores";
 import { Provider } from "react-redux";
 import {
   setAuthenticated,
   setUserCredential,
   signOut,
 } from "./redux/features/user/userSlice";
+import { PersistGate } from "redux-persist/integration/react";
 
 //pages
 import Home from "./pages/Home";
@@ -85,23 +86,29 @@ const reciboPaths = [
 function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <NavBar />
-        <Switch>
-          <Container maxWidth="sm">
-            <ErrorHandler>
-              <Route exact path="/signin" component={SignIn} />
-              <Route exact path="/table" component={OrderTableContainer} />
-              {/* <Route exact path={pluralPaths} component={FetchDataContainer} /> */}
-              <Route exact path={invPaths} component={FetchDataContainer} />
-              <Route exact path={reciboPaths} component={FetchDataContainer} />
-              <Route exact path={addPaths} component={AddData} />
-              <Route exact path={showPaths} component={ShowData} />
-              <AuthRouth exact path="/" component={Home} />
-            </ErrorHandler>
-          </Container>
-        </Switch>
-      </Router>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <NavBar />
+          <Switch>
+            <Container maxWidth="sm">
+              <ErrorHandler>
+                <Route exact path="/signin" component={SignIn} />
+                <Route exact path="/table" component={OrderTableContainer} />
+                {/* <Route exact path={pluralPaths} component={FetchDataContainer} /> */}
+                <Route exact path={invPaths} component={FetchDataContainer} />
+                <Route
+                  exact
+                  path={reciboPaths}
+                  component={FetchDataContainer}
+                />
+                <Route exact path={addPaths} component={AddData} />
+                <Route exact path={showPaths} component={ShowData} />
+                <AuthRouth exact path="/" component={Home} />
+              </ErrorHandler>
+            </Container>
+          </Switch>
+        </Router>
+      </PersistGate>
     </Provider>
   );
 }

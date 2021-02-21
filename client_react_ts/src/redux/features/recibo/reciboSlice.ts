@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../rootReducer";
 
 const initialState: Recibo = {
   usuario_id: 0,

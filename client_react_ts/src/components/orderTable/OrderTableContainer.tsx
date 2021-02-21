@@ -52,15 +52,23 @@ export default function OrderTableContainer() {
   const recibo: Recibo = useSelector((state: RootState) => state.recibo);
   const [item, setItem] = useState<ItemRow[]>([]);
   const { lineas } = recibo;
+  console.log(lineas);
   const history = useHistory();
-  const onClickHandler = () => history.push("/showData");
+  const onClickHandler = () => history.push("/show/items");
 
   useEffect(() => {
     if (lineas.length > 0) {
       lineas.forEach((linea) => {
-        const { sku, marca, modelo, qty, precio } = linea;
+        const {
+          sku,
+          marca,
+          modelo,
+          qty,
+          precio: { precio },
+        } = linea;
         const row = createRow(sku, marca, modelo, qty, precio);
         rows.push(row);
+        console.log(rows);
         setItem(rows);
         invoice.Subtotal = subtotal(rows);
         invoice.Taxes = TAX_RATE * invoice.Subtotal;

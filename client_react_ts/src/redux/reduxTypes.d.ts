@@ -23,7 +23,7 @@ interface Recibo {
 interface Lineas {
   inventario_id?: number;
   qty?: number;
-  precio?: number;
+  precio?: Precio;
   venta_id?: number;
   descripcion?: string;
   item_id?: number;
@@ -31,4 +31,8 @@ interface Lineas {
   sku?: string;
   marca?: string;
   modelo?: string;
+}
+
+interface Precio {
+  precio: number;
 }
