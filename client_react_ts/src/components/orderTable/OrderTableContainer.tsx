@@ -37,7 +37,6 @@ function createRow(
 let rows: ItemRow[] = [];
 
 function subtotal(items: ItemRow[]) {
-  console.log("function subtotal: ", items);
   return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 
@@ -50,9 +49,8 @@ const invoice = {
 
 export default function OrderTableContainer() {
   const recibo: Recibo = useSelector((state: RootState) => state.recibo);
-  const [item, setItem] = useState<ItemRow[]>([]);
+  const [items, setItems] = useState<ItemRow[]>([]);
   const { lineas } = recibo;
-  console.log(lineas);
   const history = useHistory();
   const onClickHandler = () => history.push("/show/items");
 
@@ -67,19 +65,31 @@ export default function OrderTableContainer() {
           precio: { precio },
         } = linea;
         const row = createRow(sku, marca, modelo, qty, precio);
-        rows.push(row);
-        console.log(rows);
-        setItem(rows);
-        invoice.Subtotal = subtotal(rows);
+
+        console.log("items.lenght", items.length);
+        if (items.length === 0) {
+          setItems((value) => value.concat(row));
+          console.log("items.some === 0", items);
+        } else {
+          console.log("items.some > 0", items);
+          items.some((item) => {
+            if (item.sku !== row.sku) {
+              setItems((value) => value.concat(row));
+              console.log("items.sku !== row.sku: ", items);
+            }
+          });
+        }
+        invoice.Subtotal = subtotal(items);
         invoice.Taxes = TAX_RATE * invoice.Subtotal;
         invoice.Total = invoice.Taxes + invoice.Subtotal;
       });
     }
-  }, [lineas]);
+  }, []);
 
+  console.log("items,", items);
   return (
     <OrderTable
-      item={item}
+      items={items}
       ccyFormat={ccyFormat}
       invoice={invoice}
       tax={TAX_RATE}

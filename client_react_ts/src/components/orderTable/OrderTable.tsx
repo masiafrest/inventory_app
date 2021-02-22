@@ -23,9 +23,9 @@ const ShowRows = ({ rows, ccyFormat }) => {
   ));
 };
 
-function OrderTable({ item, ccyFormat, invoice, tax, onClickHandler }) {
+function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
   const { Subtotal, Taxes, Total } = invoice;
-
+  console.log(items);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="spanning table" padding="none" size="small">
@@ -48,7 +48,7 @@ function OrderTable({ item, ccyFormat, invoice, tax, onClickHandler }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {<ShowRows rows={item} ccyFormat={ccyFormat} />}
+          {<ShowRows rows={items} ccyFormat={ccyFormat} />}
           <TableRow>
             <IconButton onClick={onClickHandler}>
               <AddBoxIcon />
