@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -10,15 +10,18 @@ import IconButton from "@material-ui/core/IconButton";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
+//types
+import { ItemRow } from "./OrderTableContainer";
+
 const ShowRows = ({ rows, ccyFormat }) => {
   return rows.map((row) => (
-    <TableRow key={row.sku}>
+    <TableRow key={row.inventario_id}>
       <TableCell align="left">{row.sku}</TableCell>
       <TableCell align="left">{row.marca}</TableCell>
       <TableCell align="left">{row.modelo}</TableCell>
       <TableCell align="left">{row.qty}</TableCell>
-      <TableCell align="left">{row.price}</TableCell>
-      <TableCell align="left">{ccyFormat(row.price)}</TableCell>
+      <TableCell align="left">{row.precio}</TableCell>
+      <TableCell align="left">{ccyFormat(row.precio)}</TableCell>
     </TableRow>
   ));
 };

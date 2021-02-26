@@ -15,7 +15,7 @@ interface RootUserCredentialsState {
 //recibo
 interface Recibo {
   usuario_id: number;
-  empresa_cliente_id?: number;
+  empresa_cliente_id: number;
   resuelto?: boolean;
   lineas: Lineas[];
 }

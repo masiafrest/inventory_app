@@ -34,7 +34,9 @@ export default function SelectsOptions({ onChange, name, url, form }) {
       menuItemToShow.push("direccion");
       menuItemToShow.push("tipo");
       break;
-    default:
+    case "clientes":
+      menuItemToShow.push("nombre");
+      menuItemToShow.push("direccion");
       break;
   }
 

@@ -1,43 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
+import OrderTable from "./OrderTable";
+import { Button } from "@material-ui/core";
 
 //redux
 import { RootState } from "../../redux/rootReducer";
-import { useSelector } from "react-redux";
-
-import OrderTable from "./OrderTable";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addUser,
+  addRecibo,
+  addCliente,
+} from "../../redux/features/recibo/reciboSlice";
 
 function ccyFormat(num: number) {
   return num ? `${num.toFixed(2)}` : 0.0;
 }
 
-function priceRow(qty: number, price: number) {
-  return qty * price;
+function priceRow(qty: number, precio: number): number {
+  return qty * precio;
 }
 
-interface ItemRow {
+export interface ItemRow {
+  inventario_id: number;
   sku: string;
   marca: string;
   modelo: string;
   qty: number;
-  price: number;
+  precio: number;
   total?: number;
 }
-function createRow(
-  sku: string | any,
-  marca: string | any,
-  modelo: string | any,
-  qty: number | any,
-  price: number | any
-): ItemRow {
-  const total = priceRow(qty, price);
-  return { sku, marca, modelo, qty, price, total };
+function createRow(linea: Lineas): ItemRow {
+  const {
+    qty,
+    precio: { precio },
+    inventario_id,
+    sku,
+    marca,
+    modelo,
+  } = linea;
+  const total = priceRow(qty, precio);
+  return { inventario_id, sku, marca, modelo, qty, precio, total };
 }
 
 let rows: ItemRow[] = [];
 
 function subtotal(items: ItemRow[]) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+  return items.map(({ precio }) => precio).reduce((sum, i) => sum + i, 0);
 }
 
 const TAX_RATE = 0.07;
@@ -48,23 +57,27 @@ const invoice = {
 };
 
 export default function OrderTableContainer() {
+  const dispatch = useDispatch();
   const recibo: Recibo = useSelector((state: RootState) => state.recibo);
+  const usuario_id = useSelector(
+    (state: RootState) => state.user.credentials.id
+  );
+  dispatch(addUser(usuario_id));
   const [items, setItems] = useState<ItemRow[]>([]);
   const { lineas } = recibo;
   const history = useHistory();
+
   const onClickHandler = () => history.push("/show/items");
+
+  const postReciboHandler = async () => {
+    const res = await axios.post("/recibos/venta", recibo);
+    console.log(res);
+  };
 
   useEffect(() => {
     if (lineas.length > 0) {
       lineas.forEach((linea) => {
-        const {
-          sku,
-          marca,
-          modelo,
-          qty,
-          precio: { precio },
-        } = linea;
-        const row = createRow(sku, marca, modelo, qty, precio);
+        const row = createRow(linea);
 
         console.log("items.lenght", items.length);
         if (items.length === 0) {
@@ -88,12 +101,15 @@ export default function OrderTableContainer() {
 
   console.log("items,", items);
   return (
-    <OrderTable
-      items={items}
-      ccyFormat={ccyFormat}
-      invoice={invoice}
-      tax={TAX_RATE}
-      onClickHandler={onClickHandler}
-    />
+    <>
+      <OrderTable
+        items={items}
+        ccyFormat={ccyFormat}
+        invoice={invoice}
+        tax={TAX_RATE}
+        onClickHandler={onClickHandler}
+      />
+      <Button onClick={postReciboHandler}>agregar</Button>
+    </>
   );
 }

@@ -42,6 +42,8 @@ export default function ShowInventory() {
   const recibo = useSelector((state: RootState) => state.recibo);
 
   const addToCartHandler = (inv) => {
+    const { lineas } = recibo;
+    console.log(inv, lineas);
     dispatch(pushLinea(inv));
   };
 
@@ -52,7 +54,7 @@ export default function ShowInventory() {
   };
 
   const invView = data.map((inv) => (
-    <WithPaperView dataArr={inv} key={inv.id}>
+    <WithPaperView dataArr={inv} key={inv.id + "_" + inv.sku}>
       {invDetailRowFiller(inv, "sku", "color", "qty", url)}
       {invDetailRowFiller(inv.precio, "precio", "precio_min", "", url)}
       {invDetailRowFiller(inv.lugar, "tipo", "direccion", "", url)}
