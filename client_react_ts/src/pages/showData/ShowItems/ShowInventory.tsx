@@ -2,17 +2,11 @@ import { useLocation, useHistory } from "react-router-dom";
 import InvDetailRow from "./InvDetailRow";
 import useFetchData from "../../../utils/hooks/useFetchData";
 import WithPaperView from "../../../components/paperView/WithPaperView";
+import ChooseQtyFormBtn from "../../../components/ChooseQtyFormBtn";
 //MUi
 import FabAdd from "../../../components/FloatBtnAdd";
 import DeleteBtn from "../../../components/DeleteBtn";
-import { Button, Typography } from "@material-ui/core";
-//Redux
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/rootReducer";
-import {
-  pushLinea,
-  addRecibo,
-} from "../../../redux/features/recibo/reciboSlice";
+import { Typography } from "@material-ui/core";
 
 const invDetailRowFiller = (data, col1, col2, col3, url) => (
   <InvDetailRow
@@ -38,15 +32,6 @@ export default function ShowInventory() {
   const url = "/items/inventarios";
   const { data } = useFetchData(url + "/" + item_id);
 
-  const dispatch = useDispatch();
-  const recibo = useSelector((state: RootState) => state.recibo);
-
-  const addToCartHandler = (inv) => {
-    const { lineas } = recibo;
-    console.log(inv, lineas);
-    dispatch(pushLinea(inv));
-  };
-
   const paperStyle: React.CSSProperties = {
     margin: 20,
     padding: 20,
@@ -59,7 +44,7 @@ export default function ShowInventory() {
       {invDetailRowFiller(inv.precio, "precio", "precio_min", "", url)}
       {invDetailRowFiller(inv.lugar, "tipo", "direccion", "", url)}
       <DeleteBtn url={url} id={inv.id} key={inv.id} />
-      <Button onClick={() => addToCartHandler(inv)}>agregar al recibo</Button>
+      <ChooseQtyFormBtn inv={inv} />
     </WithPaperView>
   ));
   return (

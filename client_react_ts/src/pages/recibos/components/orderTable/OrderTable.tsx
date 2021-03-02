@@ -7,13 +7,32 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import DeleteIcon from "@material-ui/icons/Delete";
 
+import { useDispatch } from "react-redux";
+import { deleteLinea } from "../../redux/features/recibo/reciboSlice";
 //types
 import { ItemRow } from "./OrderTableContainer";
 
+const DelRow = ({ inv_id }) => {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    console.log(inv_id);
+    dispatch(deleteLinea(inv_id));
+    window.location.reload();
+  };
+  return (
+    <IconButton onClick={handleClick}>
+      <DeleteIcon />
+    </IconButton>
+  );
+};
+
 const ShowRows = ({ rows, ccyFormat }) => {
+  console.log(rows);
   return rows.map((row) => (
     <TableRow key={row.inventario_id}>
       <TableCell align="left">{row.sku}</TableCell>
@@ -22,6 +41,7 @@ const ShowRows = ({ rows, ccyFormat }) => {
       <TableCell align="left">{row.qty}</TableCell>
       <TableCell align="left">{row.precio}</TableCell>
       <TableCell align="left">{ccyFormat(row.precio)}</TableCell>
+      <DelRow inv_id={row.inventario_id} />
     </TableRow>
   ));
 };

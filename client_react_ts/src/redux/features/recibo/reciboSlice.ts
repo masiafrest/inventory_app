@@ -19,14 +19,30 @@ const reciboSlice = createSlice({
     },
     pushLinea: (state, action: PayloadAction<Lineas>) => {
       //TODO: revisar si existe o no el item pusheado, si qty del payload es mayor actualizar la qty
-
-      state.lineas.push(action.payload);
+      action.payload.inventario_id = action.payload.id;
+      const hasId = state.lineas.some(
+        (linea, idx) => linea.id === action.payload.id
+      );
+      if (hasId) {
+        state.lineas.filter((linea, idx) => {
+          if (linea.id === action.payload.id) {
+            state.lineas[idx] = action.payload;
+          }
+        });
+        console.log("hasId");
+      } else {
+        state.lineas.push(action.payload);
+      }
     },
     addRecibo: (state, action: PayloadAction<Recibo>) => {
       state = action.payload;
     },
     deleteLinea: (state, action: PayloadAction<number>) => {
-      state.lineas.map((linea) => linea.inventario_id !== action.payload);
+      console.log(action.payload);
+      const newArr = state.lineas.filter(
+        (linea) => linea.id !== action.payload
+      );
+      state.lineas = newArr;
     },
   },
 });

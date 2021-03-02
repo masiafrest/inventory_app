@@ -21,6 +21,7 @@ interface Recibo {
 }
 
 interface Lineas {
+  id?: number;
   inventario_id?: number;
   qty?: number;
   precio?: Precio;
