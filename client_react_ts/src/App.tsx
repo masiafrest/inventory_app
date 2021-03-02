@@ -24,7 +24,7 @@ import { Container } from "@material-ui/core";
 // Components
 import NavBar from "./components/NavBar";
 import AuthRouth from "./components/AuthRouth";
-import OrderTableContainer from "./components/orderTable/OrderTableContainer";
+import OrderTableContainer from "./pages/recibos/components/orderTable/OrderTableContainer";
 import FetchDataContainer from "./components/FetchData/FetchDataContainer";
 import ErrorHandler from "./components/ErrorHandler";
 

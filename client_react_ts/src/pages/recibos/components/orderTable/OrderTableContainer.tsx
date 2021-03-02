@@ -5,13 +5,13 @@ import OrderTable from "./OrderTable";
 import { Button } from "@material-ui/core";
 
 //redux
-import { RootState } from "../../redux/rootReducer";
+import { RootState } from "../../../../redux/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addUser,
   addRecibo,
   addCliente,
-} from "../../redux/features/recibo/reciboSlice";
+} from "../../../../redux/features/recibo/reciboSlice";
 
 function ccyFormat(num: number) {
   return num ? `${num.toFixed(2)}` : 0.0;
