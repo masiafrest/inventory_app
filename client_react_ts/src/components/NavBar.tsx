@@ -57,6 +57,8 @@ function NavBar(props: any) {
             <NavLink to="/show/items">Search Item</NavLink>
             <NavLink to="/usuarios">Search Usuario</NavLink>
             <NavLink to="/table">orderTable</NavLink>
+            <NavLink to="/recibo">recibos</NavLink>
+
             {user.authenticated ? renderLogOutButton : null}
           </Drawer>
           {/* {location.pathname === "/showData" ? <SearchBar /> : null} */}

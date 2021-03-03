@@ -8,9 +8,8 @@ import { Button } from "@material-ui/core";
 import { RootState } from "../../../../redux/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  addUser,
   addRecibo,
-  addCliente,
+  addClienteId,
 } from "../../../../redux/features/recibo/reciboSlice";
 
 function ccyFormat(num: number) {
@@ -59,10 +58,7 @@ const invoice = {
 export default function OrderTableContainer() {
   const dispatch = useDispatch();
   const recibo: Recibo = useSelector((state: RootState) => state.recibo);
-  const usuario_id = useSelector(
-    (state: RootState) => state.user.credentials.id
-  );
-  dispatch(addUser(usuario_id));
+
   const [items, setItems] = useState<ItemRow[]>([]);
   const { lineas } = recibo;
   const history = useHistory();

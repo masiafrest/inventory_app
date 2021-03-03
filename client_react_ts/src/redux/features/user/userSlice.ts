@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
+import { addUserId, delUserId } from "../recibo/reciboSlice";
 import { History } from "history";
 
 interface SignIn {
@@ -89,12 +90,14 @@ export const signIn = (userData: SignIn, history: History) => async (
     return;
   }
   dispatch(signinSucess(res.data));
+  dispatch(addUserId(res.data.usuario.id));
   dispatch(doneLoading());
   history.push("/");
 };
 
 export const signOut = () => (dispatch: any) => {
   dispatch(signoutSucess());
+  dispatch(delUserId());
   window.location.href = "/signin";
 };
 

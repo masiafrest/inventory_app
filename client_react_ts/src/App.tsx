@@ -19,6 +19,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import AddData from "./pages/addData";
 import ShowData from "./pages/showData";
+import Recibo from "./pages/recibos/ReciboContainer";
 
 import { Container } from "@material-ui/core";
 // Components
@@ -94,6 +95,7 @@ function App() {
               <ErrorHandler>
                 <Route exact path="/signin" component={SignIn} />
                 <Route exact path="/table" component={OrderTableContainer} />
+                <Route exact path="/recibo" component={Recibo} />
                 {/* <Route exact path={pluralPaths} component={FetchDataContainer} /> */}
                 <Route exact path={invPaths} component={FetchDataContainer} />
                 <Route

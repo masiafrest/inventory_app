@@ -11,10 +11,13 @@ const reciboSlice = createSlice({
   name: "recibos",
   initialState,
   reducers: {
-    addUser: (state, action) => {
+    addUserId: (state, action) => {
       state.usuario_id = action.payload;
     },
-    addCliente: (state, action) => {
+    delUserId: (state) => {
+      state.usuario_id = null;
+    },
+    addClienteId: (state, action) => {
       state.empresa_cliente_id = action.payload;
     },
     pushLinea: (state, action: PayloadAction<Lineas>) => {
@@ -48,8 +51,9 @@ const reciboSlice = createSlice({
 });
 
 export const {
-  addUser,
-  addCliente,
+  addUserId,
+  delUserId,
+  addClienteId,
   pushLinea,
   addRecibo,
   deleteLinea,
