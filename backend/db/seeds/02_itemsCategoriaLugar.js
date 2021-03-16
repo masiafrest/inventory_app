@@ -13,8 +13,7 @@ const items = [
     descripcion: "un audifono",
     modelo: "yuio",
     barcode: "00000001111",
- ,
-  },
+  }
 ];
 
 /**

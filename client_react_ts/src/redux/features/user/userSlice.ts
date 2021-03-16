@@ -86,6 +86,7 @@ export const signIn = (userData: SignIn, history: History) => async (
     res = await axios.post("auth/signin", userData);
   } catch (err) {
     console.log(err);
+    dispatch(doneLoading());
     dispatch(setErrors(err.response.data));
     return;
   }

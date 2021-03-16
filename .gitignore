@@ -3,3 +3,4 @@ docker_data
 db_data
 jsconfig.json
 uploads
+.env

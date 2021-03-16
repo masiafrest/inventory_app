@@ -87,7 +87,7 @@ const reciboPaths = [
 function App() {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
         <Router>
           <NavBar />
           <Switch>
@@ -110,7 +110,7 @@ function App() {
             </Container>
           </Switch>
         </Router>
-      </PersistGate>
+      {/* </PersistGate> */}
     </Provider>
   );
 }
