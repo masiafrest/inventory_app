@@ -18,7 +18,7 @@ exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.linea_transferencia, (table) => {
     createTableIncrementsStringNotNullable(table);
     references(table, tableNames.transferencia);
-    references(table, tableNames.inventario);
+    references(table, tableNames.item);
     references(table, tableNames.lugar, true, "destino_lugar");
     references(table, tableNames.lugar, true, "origen_lugar");
     table.integer("qty");
