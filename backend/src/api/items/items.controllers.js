@@ -1,11 +1,10 @@
 const Item = require("./items.model");
-const Inventario = require("./inventarios/inventarios.model");
 const { hardDeleteById, patchById } = require("../../lib/helpers");
 
-const getItemGraph = `[inventarios(defaultSelects).[
+const getItemGraph = `[
         precio(defaultSelects),
           lugar(defaultSelects)
-        ], categoria(defaultSelects), images]`;
+        , categoria(defaultSelects), images]`;
 
 exports.get = async (req, res, next) => {
   try {
@@ -66,53 +65,11 @@ exports.post = async (req, res, next) => {
       return file.filename;
     });
     // image_url = JSON.stringify(image_url);
-    const itemInventarioObj = {
-      "#id": "inventory",
-      qty,
-      color,
-      sku,
-      lugar: [
-        {
-          id: lugar_id,
-        },
-      ],
-      precio: [
-        {
-          precio,
-          precio_min,
-          costo,
-          proveedor: [
-            {
-              id: proveedor_id,
-            },
-          ],
-          logs: [
-            {
-              inventario_id: "#ref{inventory.id}",
-              usuario_id: req.userData.id,
-              proveedor: [{ id: proveedor_id }],
-            },
-          ],
-        },
-      ],
-      logs: [
-        {
-          usuario_id: req.userData.id,
-          ajuste: qty,
-          evento: "crear",
-          proveedor: [
-            {
-              id: proveedor_id,
-            },
-          ],
-        },
-      ],
-    };
     console.log("no existe item");
     await Item.transaction(async (trx) => {
       const existingItem = await Item.query().where({ marca }).first();
       let insertedItem;
-      //check if item exist then incoming data is item inventory of diferent color
+      //check if item exist then incoming data is item of diferent color
       if (existingItem) {
         //if item exist, check if have image or not
         return res.send("existe item");

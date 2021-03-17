@@ -49,17 +49,12 @@ describe("Items", () => {
       .send({
         id: 3,
         descripcion: "new descripcion2",
-        inventarios: [
-          {
-            id: 3,
-            lugar_id: 1,
-            precio: {
-              id: 2,
-              oferta_precio: null,
-              proveedor_id: 1,
-            },
-          },
-        ],
+        lugar_id: 1,
+        precio: {
+          id: 2,
+          oferta_precio: null,
+          proveedor_id: 1,
+        },
       })
       .set("authorization", BearerToken)
       .expect("Content-Type", /json/)

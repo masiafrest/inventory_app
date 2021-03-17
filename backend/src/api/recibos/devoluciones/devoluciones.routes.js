@@ -1,21 +1,20 @@
 const router = require("express").Router();
 const { InvLogFactory } = require("../recibo.helpers");
 const {
-  invModQty,
+  itemModQty,
   addToDefectuoso,
-  getInvDB,
+  getItemDB,
   getById,
 } = require("../recibos.controllers");
 
 const { cloneDeep } = require("lodash");
 const Devolucion = require("./devoluciones.model");
-const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
-const Linea_devolucion = require("./linea_devoluciones.model");
+const Item_log = require("../../items/logs/item_logs.model");
 
 router.get("/", async (req, res, next) => {
   try {
     const devoluciones = await Devolucion.query().withGraphFetched(
-      "[lineas.[invEntrada(getItemData), invSalida(getItemData)], usuario(getNameAndId), cliente(getNameAndId)] "
+      "[lineas.[itemEntrada(getItemData), itemSalida(getItemData)], usuario(getNameAndId), cliente(getNameAndId)] "
     );
     res.json(devoluciones);
   } catch (err) {
@@ -38,37 +37,37 @@ router.post("/", async (req, res, next) => {
           const {
             a_efectivo,
             qty,
-            inventario_id,
-            salida_inventario_id,
+            item_id,
+            salida_item_id,
             descripcion,
           } = linea;
           if (a_efectivo) {
             delete linea.a_efectivo;
           }
-          if (salida_inventario_id) {
+          if (salida_item_id) {
             //descontar el item dado al cliente, este caso otro_inv_id
-            const invNuevo = await getInvDB(salida_inventario_id);
-            await invModQty(invNuevo, qty, trx);
+            const invNuevo = await getItemDB(salida_item_id);
+            await itemModQty(invNuevo, qty, trx);
           }
-          if (!a_efectivo && !salida_inventario_id) {
+          if (!a_efectivo && !salida_item_id) {
             // cambiar por el mismo item, si otro_inv_id y efectivo es undefini
-            const invDB = await getInvDB(inventario_id);
-            await invModQty(invDB, qty, trx);
+            const invDB = await getItemDB(item_id);
+            await itemModQty(invDB, qty, trx);
             await devolucion
               .$relatedQuery("lineas", trx)
-              .patch({ salida_inventario_id: inventario_id });
+              .patch({ salida_item_id: item_id });
           }
           //agregar a item defectuoso a tabla defectuoso
           await addToDefectuoso(linea, trx);
           //hacer el log
-          const invLog = InvLogFactory(
+          const itemLog = InvLogFactory(
             req.body,
             linea,
             "devolucion",
             devolucion.id
           );
           //insertar invLog
-          const a = await Inventario_log.query(trx).insert(invLog);
+          const a = await Item_log.query(trx).insert(itemLog);
         })
       );
       res.json(devolucion);

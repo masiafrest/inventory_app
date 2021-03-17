@@ -7,18 +7,19 @@ class Lugar extends BaseModel {
   }
 
   static get relationMappings() {
-    const Inventario = require("../items/inventarios/inventarios.model");
+    const Item = require("../items/items.model");
     return {
-      inventarios: {
+      items: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: Inventario,
+        modelClass: Item,
         join: {
-          from: `${tableNames.inventario}.${tableNames.lugar}_id`,
+          from: `${tableNames.item}.${tableNames.lugar}_id`,
           to: `${tableNames.lugar}.id`,
         },
       },
     };
   }
+
   static get modifiers() {
     return {
       defaultSelects(builder) {

@@ -10,7 +10,7 @@ class Inventario extends BaseModel {
     const Item = require("../items.model");
     const Lugar = require("../../lugares/lugares.model");
     const Precio = require("../../precio/precios.model");
-    const Inventario_log = require("./logs/inventario_logs.model");
+    const Inventario_log = require("./logs.deprecated/inventario_logs.model");
     //const Precio_log = require("../../precio/precio_logs.model");
     return {
       logs: {

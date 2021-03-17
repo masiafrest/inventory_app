@@ -8,7 +8,7 @@ class Venta extends BaseModel {
 
   static get relationMappings() {
     const Linea_venta = require("./linea_ventas.model");
-    const Inventario_log = require("../../items/inventarios/logs/inventario_logs.model");
+    const Item_log = require("../../items/logs/item_logs.model");
     const Pago = require("../../noRoute/pagos.model");
     const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
     const Usuario = require("../../usuarios/usuarios.model");
@@ -48,10 +48,10 @@ class Venta extends BaseModel {
       },
       inv_logs: {
         relation: BaseModel.HasManyRelation,
-        modelClass: Inventario_log,
+        modelClass: Item_log,
         join: {
           from: `${tableNames.venta}.id`,
-          to: `${tableNames.inventario_log}.recibo_evento_id`,
+          to: `${tableNames.item_log}.recibo_evento_id`,
         },
       },
     };

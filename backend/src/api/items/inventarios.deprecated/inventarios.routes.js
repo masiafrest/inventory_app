@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const logs = require("./logs/inventario_logs.routes");
-const Inventario = require("../inventarios/inventarios.model");
+const logs = require("./logs.deprecated/inventario_logs.routes");
+const Inventario = require("./inventarios.model");
 const { patchById, hardDeleteById } = require("../../../lib/helpers");
 
 router.use("/logs", logs);

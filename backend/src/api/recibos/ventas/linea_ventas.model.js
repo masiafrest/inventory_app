@@ -8,14 +8,14 @@ class Linea_venta extends BaseModel {
 
   static get relationMappings() {
     const Venta = require("./ventas.model");
-    const Inventario = require("../../items/inventarios/inventarios.model");
+    const Item = require("../../items/items.model");
     return {
-      inventario: {
+      item: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: Inventario,
+        modelClass: Item,
         join: {
-          from: `${tableNames.inventario}.id`,
-          to: `${tableNames.linea_venta}.${tableNames.inventario}_id`,
+          from: `${tableNames.item}.id`,
+          to: `${tableNames.linea_venta}.${tableNames.item}_id`,
         },
       },
       venta: {

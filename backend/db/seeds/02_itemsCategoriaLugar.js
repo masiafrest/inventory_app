@@ -6,14 +6,13 @@ const items = [
     descripcion: "un equipo",
     modelo: "qwer",
     barcode: "0000000000",
-
   },
   {
     marca: "huawei",
     descripcion: "un audifono",
     modelo: "yuio",
     barcode: "00000001111",
-  }
+  },
 ];
 
 /**
@@ -24,7 +23,6 @@ exports.seed = async (knex) => {
   await knex(tableNames.lugar).del();
   await knex(tableNames.categoria).del();
   await knex(tableNames.item).del();
-  await knex(tableNames.inventario).del();
   await knex(tableNames.precio).del();
 
   const lugar_ids = await knex(tableNames.lugar).insert(
@@ -60,9 +58,8 @@ exports.seed = async (knex) => {
     },
     "id"
   );
-  await knex(tableNames.inventario).insert([
+  await knex(tableNames.item).insert([
     {
-      item_id: item_ids[0],
       qty: 25,
       lugar_id: lugar_ids[0],
       color: "negro",
@@ -70,7 +67,6 @@ exports.seed = async (knex) => {
       sku: "so-qwe",
     },
     {
-      item_id: item_ids[1],
       qty: 45,
       lugar_id: lugar_ids[1],
       color: "rojo",

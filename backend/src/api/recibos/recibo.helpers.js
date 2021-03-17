@@ -14,22 +14,22 @@ function checkPrice(linea, precioDB, res) {
   if (linea.precio < precioDB.oferta_precio) {
     res.status(406);
     error = new Error(
-      `precio: ${linea.precio}, de inventario ${linea.inventario_id} debajo a la oferta: ${precioDB.oferta_precio}`
+      `precio: ${linea.precio}, de item ${linea.item_id} debajo a la oferta: ${precioDB.oferta_precio}`
     );
     throw error;
   }
   if (linea.precio < precioDB.precio_min && precioDB.oferta_precio == null) {
     res.status(406);
     error = new Error(
-      `precio: ${linea.precio}, de inventario ${linea.inventario_id} debajo al precio minimo: ${precioDB.precio_min}`
+      `precio: ${linea.precio}, de item ${linea.item_id} debajo al precio minimo: ${precioDB.precio_min}`
     );
     throw error;
   }
 }
 
-function InvLogFactory(headers, linea, evento, id, inv_b_id) {
+function ItemLogFactory(headers, linea, evento, id, inv_b_id) {
   return {
-    inventario_id: inv_b_id || linea.inventario_id,
+    item_id: inv_b_id || linea.item_id,
     usuario_id: headers.usuario_id || headers.id,
     empresa_cliente_id: headers.empresa_cliente_id,
     evento,
@@ -38,7 +38,7 @@ function InvLogFactory(headers, linea, evento, id, inv_b_id) {
   };
 }
 module.exports = {
-  InvLogFactory,
+  ItemLogFactory,
   checkPrice,
   sumTotal,
 };

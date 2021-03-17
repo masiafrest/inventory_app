@@ -7,24 +7,24 @@ class Linea_devolucion extends BaseModel {
   }
 
   static get relationMappings() {
-    const Inventario = require("../../items/inventarios/inventarios.model");
+    const Item = require("../../items/items.model");
     const Garantia = require("../garantias/garantias.model");
     const Devolucion = require("./devoluciones.model");
     return {
-      invSalida: {
+      itemSalida: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: Inventario,
+        modelClass: Item,
         join: {
-          from: `${tableNames.inventario}.id`,
-          to: `${tableNames.linea_devolucion}.salida_${tableNames.inventario}_id`,
+          from: `${tableNames.item}.id`,
+          to: `${tableNames.linea_devolucion}.salida_${tableNames.item}_id`,
         },
       },
-      invEntrada: {
+      itemEntrada: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: Inventario,
+        modelClass: Item,
         join: {
-          from: `${tableNames.inventario}.id`,
-          to: `${tableNames.linea_devolucion}.${tableNames.inventario}_id`,
+          from: `${tableNames.item}.id`,
+          to: `${tableNames.linea_devolucion}.${tableNames.item}_id`,
         },
       },
 

@@ -8,8 +8,8 @@ class Linea_tranferencia extends BaseModel {
 
   static get relationMappings() {
     const Transferencia = require("./transferencias.model");
-    const Inventario = require("../../items/inventarios/inventarios.model");
     const Lugar = require("../../lugares/lugares.model");
+    const Item = require("../../items/items.model");
     return {
       cotizacion: {
         relation: BaseModel.BelongsToOneRelation,
@@ -19,12 +19,12 @@ class Linea_tranferencia extends BaseModel {
           to: `${tableNames.linea_transferencia}.${tableNames.transferencia}_id`,
         },
       },
-      inventario: {
+      item: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: Inventario,
+        modelClass: Item,
         join: {
-          from: `${tableNames.inventario}.id`,
-          to: `${tableNames.linea_transferencia}.${tableNames.inventario}_id`,
+          from: `${tableNames.item}.id`,
+          to: `${tableNames.linea_transferencia}.${tableNames.item}_id`,
         },
       },
       origen: {

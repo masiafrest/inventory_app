@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const garantias = await Garantia.query().withGraphFetched(
-      "[lineas.inventario(getItemData), usuario(getNameAndId), cliente(getNameAndId)] "
+      "[lineas.item(getItemData), usuario(getNameAndId), cliente(getNameAndId)] "
     );
     res.json(garantias);
   } catch (err) {
@@ -27,7 +27,7 @@ router.post("/", async (req, res, next) => {
       const { empresa_cliente_id } = req.body;
       await Promise.all(
         req.body.lineas.map(async (linea) => {
-          const { inventario_id, venta_id } = linea;
+          const { item_id, venta_id } = linea;
           if (venta_id) {
             //check is the client is in the venta recibo
             const venta = await Venta.query().findById(venta_id);
@@ -41,17 +41,17 @@ router.post("/", async (req, res, next) => {
             //check is item exist on linea venta, (meaning is been sold to that client)
             const lineasVentas = await Linea_venta.query().where({
               venta_id,
-              inventario_id,
+              item_id,
             }); //this will return array
             if (lineasVentas.length === 0) {
               res.status(406);
               const error = new Error(
-                `este recibo de venta no tiene este item id: ${inventario_id} ,listado`
+                `este recibo de venta no tiene este item id: ${item_id} ,listado`
               );
               throw error;
             }
             for (const line of lineasVentas) {
-              if (line.inventario_id !== inventario_id) {
+              if (line.item_id !== item_id) {
                 res.status(406);
                 const error = new Error(
                   "este recibo de venta no tiene este item listado"

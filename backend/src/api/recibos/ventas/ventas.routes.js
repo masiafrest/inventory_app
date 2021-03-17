@@ -1,12 +1,12 @@
 const express = require("express");
 const Venta = require("./ventas.model");
-const { sumTotal, checkPrice, InvLogFactory } = require("../recibo.helpers");
-const { invModQty, getInvAndPrecioDB } = require("../recibos.controllers");
+const { sumTotal, checkPrice, ItemLogFactory } = require("../recibo.helpers");
+const { itemModQty, getItemAndPrecioDB } = require("../recibos.controllers");
 const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
 
 const router = express.Router();
 const graphFetched =
-  "[lineas.inventario(getItemData), usuario(getNameAndId), cliente(getNameAndId)] ";
+  "[lineas.item(getItemData), usuario(getNameAndId), cliente(getNameAndId)] ";
 router.get("/", async (req, res, next) => {
   try {
     const ventas = await Venta.query().withGraphFetched(graphFetched);
@@ -59,25 +59,25 @@ router.post("/", async (req, res, next) => {
     };
     //insertar la venta
     await Venta.transaction(async (trx) => {
-      let invLogs = [];
+      let itemLogs = [];
       let encabezado = { ...req.body };
       delete encabezado.lineas;
       delete encabezado.pago;
       const venta = await Venta.query(trx).insert(encabezado);
       if (req.body.hasOwnProperty("lineas")) {
-        // descontar la qty de inventario y agregar historial al inv_log y agregar venta.id a las lineas
+        // descontar la qty de item y agregar historial al item_log y agregar venta.id a las lineas
         await Promise.all(
           // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
           req.body.lineas.map(async (linea) => {
-            const { invDB, precioDB } = await getInvAndPrecioDB(linea);
+            const { itemDB, precioDB } = await getItemAndPrecioDB(linea);
             //check is precio is above precio_min
             checkPrice(linea, precioDB, res);
             ventaTotal = sumTotal(linea, ventaTotal);
-            // descontar y hacer historial del inventario
-            //descontar inventario
-            await invModQty(invDB, linea.qty, trx);
-            // hacer el inventario log
-            invLogs.push(InvLogFactory(req.body, linea, "venta", venta.id));
+            // descontar y hacer historial del item
+            //descontar item
+            await itemModQty(itemDB, linea.qty, trx);
+            // hacer el item log
+            itemLogs.push(ItemLogFactory(req.body, linea, "venta", venta.id));
           })
         );
       }
@@ -98,7 +98,7 @@ router.post("/", async (req, res, next) => {
       await venta.$query(trx).patch(encabezado);
       await venta.$relatedQuery("lineas", trx).insert(req.body.lineas);
       await venta.$relatedQuery("pago", trx).insert(req.body.pago);
-      await venta.$relatedQuery("inv_logs", trx).insert(invLogs);
+      await venta.$relatedQuery("item_logs", trx).insert(itemLogs);
       res.json(venta);
     });
   } catch (err) {

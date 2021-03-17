@@ -8,7 +8,7 @@ class Linea_cotizacion extends BaseModel {
 
   static get relationMappings() {
     const Cotizacion = require("./cotizaciones.model");
-    const Inventario = require("../../items/inventarios/inventarios.model");
+    const Item = require("../../items/items.model");
     return {
       cotizacion: {
         relation: BaseModel.BelongsToOneRelation,
@@ -18,12 +18,12 @@ class Linea_cotizacion extends BaseModel {
           to: `${tableNames.linea_cotizacion}.${tableNames.cotizacion}_id`,
         },
       },
-      inventario: {
+      item: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: Inventario,
+        modelClass: Item,
         join: {
-          from: `${tableNames.inventario}.id`,
-          to: `${tableNames.linea_cotizacion}.${tableNames.inventario}_id`,
+          from: `${tableNames.item_log}.id`,
+          to: `${tableNames.linea_cotizacion}.${tableNames.item}_id`,
         },
       },
     };
