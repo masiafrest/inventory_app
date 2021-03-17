@@ -79,26 +79,18 @@ exports.up = async function (knex) {
 
   await knex.schema.createTable(tableNames.item, (table) => {
     createTableIncrementsStringNotNullable(table, "marca");
-    table.string("descripcion");
     table.string("modelo");
+    table.string("caracteristica");
+    table.string("color");
+    table.integer("qty").notNullable().unsigned();
+    table.string("descripcion");
     table.string("barcode");
+    table.string("sku", 12);
     addUrl(table, "image_url");
+    references(table, tableNames.precio);
     references(table, tableNames.categoria, true);
     references(table, tableNames.categoria, false, `${tableNames.categoria}_2`);
-    addDefaultColumns(table);
-  });
-
-  await knex.schema.createTable(tableNames.inventario, (table) => {
-    createTableIncrementsStringNotNullable(table);
-    references(table, tableNames.item, true, "", true);
-    table.integer("qty").notNullable().unsigned();
     references(table, tableNames.lugar);
-    table.string("basura").unsigned();
-    table.string("color");
-    references(table, tableNames.precio);
-    table.string("sku", 12);
-    //sku is unique, theres is a skugenerator in lib helper to use in the front end
-    table.unique(["sku", "item_id", "color", "lugar_id"]);
     addDefaultColumns(table);
   });
 
@@ -116,7 +108,6 @@ exports.up = async function (knex) {
 
 exports.down = async function (knex) {
   await knex.schema.dropTableIfExists(tableNames.usuario);
-  await knex.schema.dropTableIfExists(tableNames.inventario);
   await knex.schema.dropTableIfExists(tableNames.item);
   await knex.schema.dropTableIfExists(tableNames.precio);
   await knex.schema.dropTableIfExists(tableNames.empresa_cliente);

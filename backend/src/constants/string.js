@@ -8,7 +8,7 @@ const tableNames = {
   empresa_cliente: "empresa_cliente",
   precio: "precio", //dpnd on proveedor.id
   item: "item", //dpnd on precio.id
-  inventario: "inventario", //dpnd on item.id, lugar.id
+  // inventario: "inventario", //dpnd on item.id, lugar.id
   usuario: "usuario", //dpnd on empresa.id
   //
   cotizacion: "cotizacion",
@@ -24,7 +24,8 @@ const tableNames = {
   linea_garantia: "linea_garantia", //dpnd on item.id, garantia.id, venta.id
   linea_nota_credito: "linea_nota_credito", //dpnd on nota_credito.id, garantia.id, venta.id
   linea_devolucion: "linea_devolucion", //dpnd on garantia.id, item.id as salida y entrada, devolution.id
-  inventario_log: "inventario_log", //dpnd on item.id, proveedor.id, empleado.id
+  item_log: "item_log",
+  // inventario_log: "inventario_log", //dpnd on item.id, proveedor.id, empleado.id
   precio_log: "precio_log", //dpnd on precio.id, empleado.id,
   defectuoso: "defectuoso",
   images: "images",

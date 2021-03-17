@@ -66,7 +66,7 @@ exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.linea_cotizacion, (table) => {
     table.increments().unsigned();
     references(table, tableNames.cotizacion, false);
-    references(table, tableNames.inventario, true);
+    references(table, tableNames.item, true);
     table.integer("qty").unsigned();
     table.float("precio").unsigned();
     table.float("tax");
@@ -76,7 +76,7 @@ exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.linea_venta, (table) => {
     table.increments().unsigned();
     references(table, tableNames.venta, false);
-    references(table, tableNames.inventario, true);
+    references(table, tableNames.item, true);
     table.integer("qty").unsigned();
     table.float("precio").unsigned();
     table.float("tax");
@@ -86,7 +86,7 @@ exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.linea_garantia, (table) => {
     table.increments().unsigned();
     references(table, tableNames.garantia);
-    references(table, tableNames.inventario);
+    references(table, tableNames.item);
     references(table, tableNames.venta, false);
     table.integer("qty");
     table.string("descripcion", 500);
@@ -104,17 +104,17 @@ exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.linea_devolucion, (table) => {
     table.increments().unsigned();
     references(table, tableNames.garantia, false);
-    references(table, tableNames.inventario);
-    references(table, tableNames.inventario, false, "salida_inventario");
+    references(table, tableNames.item);
+    references(table, tableNames.item, false, "salida_item");
     references(table, tableNames.devolucion);
     table.float("a_efectivo").unsigned().nullable();
     table.integer("qty");
     table.string("descripcion", 500);
     addDefaultColumns(table);
   });
-  await knex.schema.createTable(tableNames.inventario_log, (table) => {
+  await knex.schema.createTable(tableNames.item_log, (table) => {
     table.increments().notNullable();
-    references(table, tableNames.inventario, true, "", true);
+    references(table, tableNames.item, true, "", true);
     references(table, tableNames.proveedor, false);
     references(table, tableNames.usuario);
     table
@@ -136,7 +136,7 @@ exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.precio_log, (table) => {
     table.increments().notNullable();
     references(table, tableNames.precio);
-    references(table, tableNames.inventario);
+    references(table, tableNames.item);
     references(table, tableNames.usuario);
     references(table, tableNames.proveedor, false);
     table.float("precio_viejo");
@@ -150,7 +150,7 @@ exports.down = async function (knex) {
   await Promise.all(
     [
       tableNames.precio_log,
-      tableNames.inventario_log,
+      tableNames.item_log,
       tableNames.linea_devolucion,
       tableNames.linea_nota_credito,
       tableNames.linea_garantia,
