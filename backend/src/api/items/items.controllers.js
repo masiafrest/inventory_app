@@ -115,20 +115,8 @@ exports.post = async (req, res, next) => {
       //check if item exist then incoming data is item inventory of diferent color
       if (existingItem) {
         //if item exist, check if have image or not
-        if (image_url === "undefined" || image_url !== "[]") {
-          await existingItem.$query(trx).patch({ image_url });
-        }
-
-        itemInventarioObj.item_id = existingItem.id;
-        await Inventario.query(trx).insertGraph(itemInventarioObj, {
-          relate: true,
-          allowRefs: true,
-        });
-
-        console.log(existingItem);
-        return res.json(existingItem);
+        return res.send("existe item");
       }
-
       insertedItem = await Item.query(trx)
         .insertGraph(
           {
