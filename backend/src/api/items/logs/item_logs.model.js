@@ -22,7 +22,7 @@ class Item_log extends BaseModel {
       },
       item: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: Inventario,
+        modelClass: Item,
         join: {
           from: `${tableNames.item_log}.${tableNames.item}_id`,
           to: `${tableNames.item}.id`,

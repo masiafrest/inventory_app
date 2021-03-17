@@ -59,6 +59,9 @@ class Item extends BaseModel {
           "categoria_2_id"
         );
       },
+      getItemData(builder) {
+        builder.select("item.sku", "item.color", "item.marca", "item.modelo");
+      },
     };
   }
 }
