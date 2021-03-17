@@ -114,6 +114,7 @@ exports.post = async (req, res, next) => {
       let insertedItem;
       //check if item exist then incoming data is item inventory of diferent color
       if (existingItem) {
+        //if item exist, check if have image or not
         if (image_url === "undefined" || image_url !== "[]") {
           await existingItem.$query(trx).patch({ image_url });
         }
@@ -131,16 +132,46 @@ exports.post = async (req, res, next) => {
       insertedItem = await Item.query(trx)
         .insertGraph(
           {
+            "#id": "item",
             marca,
             descripcion,
             barcode,
             modelo,
+            color,
+            sku,
+            qty,
             categoria: [
               {
                 id: categoria_id,
               },
             ],
-            inventarios: [itemInventarioObj],
+            precio: [
+              {
+                precio,
+                precio_min,
+                costo,
+                proveedor_id: [{ id: proveedor_id }],
+                logs: [
+                  {
+                    item_id: "#ref{item.id",
+                    usuario_id: req.userData.id,
+                    proveedor_id: [{ id: proveedor_id }],
+                  },
+                ],
+              },
+            ],
+            logs: [
+              {
+                usuario_id: req.userData.id,
+                ajuste: qty,
+                evento: "crear",
+                proveedor: [
+                  {
+                    id: proveedor_id,
+                  },
+                ],
+              },
+            ],
           },
           {
             relate: true,

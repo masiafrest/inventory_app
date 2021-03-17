@@ -1,5 +1,6 @@
 const BaseModel = require("../BaseModel");
 const { tableNames } = require("../../constants/string");
+const Item_log = require("./logs/item_logs.model");
 
 class Item extends BaseModel {
   static get tableName() {
@@ -7,9 +8,9 @@ class Item extends BaseModel {
   }
 
   static get relationMappings() {
-    const Inventario = require("./inventarios/inventarios.model");
     const Categoria = require("../categorias/categorias.model");
     const Image = require("../images.model");
+    const Precio = require("../precio/precios.model");
     return {
       images: {
         relation: BaseModel.HasManyRelation,
@@ -19,12 +20,20 @@ class Item extends BaseModel {
           to: `${tableNames.images}.${tableNames.item}_id`,
         },
       },
-      inventarios: {
+      precio: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Precio,
+        join: {
+          from: `${tableNames.item}.${tableNames.precio}_id`,
+          to: `${tableNames.precio}_id`,
+        },
+      },
+      logs: {
         relation: BaseModel.HasManyRelation,
-        modelClass: Inventario,
+        modelClass: Item_log,
         join: {
           from: `${tableNames.item}.id`,
-          to: `${tableNames.inventario}.${tableNames.item}_id`,
+          to: `${tableNames.item_log}.${tableNames.item}_id`,
         },
       },
       categoria: {
@@ -56,7 +65,9 @@ class Item extends BaseModel {
           "modelo",
           "barcode",
           "categoria_id",
-          "categoria_2_id"
+          "categoria_2_id",
+          "color",
+          "sku"
         );
       },
       getItemData(builder) {
