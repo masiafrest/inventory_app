@@ -69,11 +69,13 @@ exports.post = async (req, res, next) => {
     await Item.transaction(async (trx) => {
       const existingItem = await Item.query().where({ marca }).first();
       let insertedItem;
+      console.log(existingItem);
       //check if item exist then incoming data is item of diferent color
       if (existingItem) {
         //if item exist, check if have image or not
         return res.send("existe item");
       }
+      console.log("inserting item");
       insertedItem = await Item.query(trx)
         .insertGraph(
           {
@@ -85,26 +87,13 @@ exports.post = async (req, res, next) => {
             color,
             sku,
             qty,
+            lugar_id,
             categoria: [
               {
                 id: categoria_id,
               },
             ],
-            precio: [
-              {
-                precio,
-                precio_min,
-                costo,
-                proveedor_id: [{ id: proveedor_id }],
-                logs: [
-                  {
-                    item_id: "#ref{item.id",
-                    usuario_id: req.userData.id,
-                    proveedor_id: [{ id: proveedor_id }],
-                  },
-                ],
-              },
-            ],
+            precio_id: 1,
             logs: [
               {
                 usuario_id: req.userData.id,
@@ -125,6 +114,7 @@ exports.post = async (req, res, next) => {
         )
         .returning("*");
       const item_id = insertedItem.id;
+      console.log("done insert item");
       await Promise.all(
         image_url.map(async (e) => {
           await insertedItem.$relatedQuery("images", trx).insert({
