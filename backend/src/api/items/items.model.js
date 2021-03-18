@@ -9,9 +9,18 @@ class Item extends BaseModel {
 
   static get relationMappings() {
     const Categoria = require("../categorias/categorias.model");
+    const Lugar = require("../lugares/lugares.model");
     const Image = require("../images.model");
     const Precio = require("../precio/precios.model");
     return {
+      lugar: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Lugar,
+        join: {
+          from: `${tableNames.item}.${tableNames.lugar}_id`,
+          to: `${tableNames.lugar}.id`,
+        },
+      },
       images: {
         relation: BaseModel.HasManyRelation,
         modelClass: Image,
@@ -25,7 +34,7 @@ class Item extends BaseModel {
         modelClass: Precio,
         join: {
           from: `${tableNames.item}.${tableNames.precio}_id`,
-          to: `${tableNames.precio}_id`,
+          to: `${tableNames.precio}.id`,
         },
       },
       logs: {
@@ -67,7 +76,8 @@ class Item extends BaseModel {
           "categoria_id",
           "categoria_2_id",
           "color",
-          "sku"
+          "sku",
+          "caracteristica"
         );
       },
       getItemData(builder) {
