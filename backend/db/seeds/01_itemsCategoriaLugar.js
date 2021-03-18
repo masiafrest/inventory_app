@@ -1,20 +1,5 @@
 const { tableNames } = require("../../src/constants/string");
 
-const items = [
-  {
-    marca: "sony",
-    descripcion: "un equipo",
-    modelo: "qwer",
-    barcode: "0000000000",
-  },
-  {
-    marca: "huawei",
-    descripcion: "un audifono",
-    modelo: "yuio",
-    barcode: "00000001111",
-  },
-];
-
 /**
  * @param {import('knex')} knex
  */
@@ -43,11 +28,7 @@ exports.seed = async (knex) => {
     [{ nombre: "audifono" }, { nombre: "bocina" }],
     "id"
   );
-  const itemCategory = items.map(
-    (item) => (item = { ...item, categoria_id: categoria_ids[0] })
-  );
 
-  const item_ids = await knex(tableNames.item).insert(itemCategory, "id");
   let [precio_id] = await knex(tableNames.precio).insert(
     {
       precio: 10.99,
@@ -58,20 +39,34 @@ exports.seed = async (knex) => {
     },
     "id"
   );
-  await knex(tableNames.item).insert([
+
+  const items = [
     {
+      marca: "sony",
+      descripcion: "un equipo",
+      modelo: "qwer",
+      barcode: "0000000000",
       qty: 25,
       lugar_id: lugar_ids[0],
       color: "negro",
       precio_id: precio_id,
       sku: "so-qwe",
+      categoria_id: categoria_ids[0],
+      caracteristica: "solo se q es sony",
     },
     {
+      marca: "huawei",
+      descripcion: "un audifono",
+      modelo: "yuio",
+      barcode: "00000001111",
       qty: 45,
       lugar_id: lugar_ids[1],
       color: "rojo",
       precio_id: precio_id,
       sku: "hua-yui",
+      categoria_id: categoria_ids[1],
+      caracteristica: "solo se q es huawei",
     },
-  ]);
+  ];
+  await knex(tableNames.item).insert(items);
 };

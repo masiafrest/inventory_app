@@ -26,7 +26,7 @@ router.post("/", async (req, res, next) => {
     await Transferencia.transaction(async (trx) => {
       await Promise.all(
         req.body.lineas.map(async (linea) => {
-          const { item_id, item_id, qty, destino_lugar_id, sku } = linea;
+          const { item_id, qty, destino_lugar_id, sku } = linea;
           const itemDeLugar = await IteItemm.query(trx).findById(item_id);
 
           let itemALugar = await Item.query(trx)

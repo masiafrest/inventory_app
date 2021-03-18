@@ -1,6 +1,18 @@
 const { tableNames } = require("../../src/constants/string");
 const bcrypt = require("bcrypt");
 
+const usuarios = [
+  {
+    nombre: "sonia",
+    password: "aA1@123",
+    rol_id: "1",
+  },
+  {
+    nombre: "hello",
+    password: "aA1@123",
+    rol_id: "2",
+  },
+];
 /**
  * @param {import('knex')} knex
  */
@@ -20,15 +32,3 @@ exports.seed = async (knex) => {
   jefa.empresa_owner_id = empresa_owner.id;
   await knex(tableNames.usuario).insert(jefa);
 };
-const usuarios = [
-  {
-    nombre: "sonia",
-    password: "aA1@123",
-    rol_id: "1",
-  },
-  {
-    nombre: "hello",
-    password: "aA1@123",
-    rol_id: "2",
-  },
-];
