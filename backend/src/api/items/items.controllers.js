@@ -98,12 +98,12 @@ exports.post = async (req, res, next) => {
                 precio,
                 precio_min,
                 costo,
-                proveedor_id: [{ id: proveedor_id }],
+                proveedor: [{ id: proveedor_id }],
                 logs: [
                   {
                     item_id: "#ref{item.id}",
                     usuario_id: req.userData.id,
-                    proveedor_id: [{ id: proveedor_id }],
+                    proveedor: [{ id: proveedor_id }],
                   },
                 ],
               },
