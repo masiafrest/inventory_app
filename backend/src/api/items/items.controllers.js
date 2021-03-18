@@ -73,7 +73,7 @@ exports.post = async (req, res, next) => {
       //check if item exist then incoming data is item of diferent color
       if (existingItem) {
         //if item exist, check if have image or not
-        return res.send("existe item");
+        return res.send("existe item, id: " + existingItem.id);
       }
       console.log("inserting item");
       insertedItem = await Item.query(trx)
@@ -93,7 +93,21 @@ exports.post = async (req, res, next) => {
                 id: categoria_id,
               },
             ],
-            precio_id: 1,
+            precio: [
+              {
+                precio,
+                precio_min,
+                costo,
+                proveedor_id: [{ id: proveedor_id }],
+                logs: [
+                  {
+                    item_id: "#ref{item.id}",
+                    usuario_id: req.userData.id,
+                    proveedor_id: [{ id: proveedor_id }],
+                  },
+                ],
+              },
+            ],
             logs: [
               {
                 usuario_id: req.userData.id,
