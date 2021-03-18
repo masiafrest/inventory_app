@@ -4,7 +4,7 @@ const { hardDeleteById, patchById } = require("../../lib/helpers");
 const getItemGraph = `[
         precio(defaultSelects),
           lugar(defaultSelects)
-        , categoria(defaultSelects), images]`;
+        , categoria(defaultSelects), images(defaultSelects)]`;
 
 exports.get = async (req, res, next) => {
   try {
