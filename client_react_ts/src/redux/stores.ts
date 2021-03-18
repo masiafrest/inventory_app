@@ -17,6 +17,7 @@ const store = configureStore({
   // reducer: rootReducer,
 });
 export let persistor = persistStore(store);
+persistor.purge()
 
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk = ThunkAction<void, RootState, unknown, Action<String>>;

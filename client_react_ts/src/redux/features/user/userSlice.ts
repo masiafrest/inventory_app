@@ -49,8 +49,7 @@ const userSlice = createSlice({
       setAuthorizationHeader(action.payload.token);
     },
     signoutSucess: (state) => {
-      state.authenticated = false;
-      state.credentials = {};
+      state = initialState;
       localStorage.removeItem("token");
       delete axios.defaults.headers.common["Authorization"];
     },
@@ -99,7 +98,7 @@ export const signIn = (userData: SignIn, history: History) => async (
 export const signOut = () => (dispatch: any) => {
   dispatch(signoutSucess());
   dispatch(delUserId());
-  window.location.href = "/signin";
+  window.location.href = "/";
 };
 
 const setAuthorizationHeader = (token: string) => {
