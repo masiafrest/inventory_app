@@ -104,7 +104,7 @@ function App() {
                   component={FetchDataContainer}
                 />
                 <Route exact path={addPaths} component={AddData} />
-                <Route exact path={showPaths} component={ShowData} />
+                <AuthRouth exact path={showPaths} component={ShowData} />
                 <AuthRouth exact path="/" component={Home} />
               </ErrorHandler>
             </Container>
