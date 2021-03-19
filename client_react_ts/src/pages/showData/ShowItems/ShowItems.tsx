@@ -24,6 +24,7 @@ import {
   CardActions,
   Card,
   CardActionArea,
+  Grid,
 } from "@material-ui/core/";
 
 export default function ShowItems() {
@@ -49,14 +50,16 @@ export default function ShowItems() {
 
   const cardView = data.map((obj) => {
     const src = "http://localhost:5050/uploads/";
-    const imgPlaceholder = "https://via.placeholder.com/300";
+    const imgPlaceholder = "https://via.placeholder.com/200";
     const activeImg =
       obj.images.lenght > 0
         ? src + obj.images[activeStep].url_path
         : imgPlaceholder;
     const maxSteps = 1;
     return (
-        <Card key={obj.id}>
+      <Grid item key={obj.id}>
+        <Card style={{
+          maxWidth: 500}}>
           <Paper square elevation={0}>
             <Typography>
               {obj.marca}, {obj.modelo}
@@ -99,12 +102,15 @@ export default function ShowItems() {
             <DeleteBtn url={url} id={obj.id} />
           </CardActions>
         </Card>
+        </Grid>
     );
   });
   return (
     <>
       <Typography variant="h3">Items</Typography>
-      {cardView}
+      <Grid container spacing={2}>
+       {cardView}
+      </Grid>
       <Fab />
     </>
   );
