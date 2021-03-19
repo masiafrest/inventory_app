@@ -14,8 +14,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 export default function AddItem(props: any) {
   const initialItem = {
     marca: "",
-    descripcion: "",
     modelo: "",
+    caracteritica: '',
+    descripcion: "",
     sku: "",
     color: "",
     precio: 0,
@@ -40,8 +41,9 @@ export default function AddItem(props: any) {
 
   const itemDetails = [
     "marca",
-    "descripcion",
     "modelo",
+    'caracteristica',
+    "descripcion",
     "sku",
     "color",
     "precio",
