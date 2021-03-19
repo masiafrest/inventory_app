@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 // redux
@@ -41,6 +41,8 @@ function NavBar(props: any) {
     setIsDrawerOpen(isOpen);
   };
 
+  const NavLinkOnClick = ({to, children}) => <NavLink to={to} onClick= {toggleDrawer(false)}>{children}</NavLink>;
+
   return (
     <div>
       <AppBar position="fixed">
@@ -53,13 +55,12 @@ function NavBar(props: any) {
             open={isDrawerOpen}
             onClose={toggleDrawer(false)}
           >
-            <Link to='/'> Home 2</Link>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/show/items">Search Item</NavLink>
-            <NavLink to="/usuarios">Search Usuario</NavLink>
-            <NavLink to="/table">orderTable</NavLink>
-            <NavLink to="/recibo">recibos</NavLink>
-
+            <NavLinkOnClick to="/">Home</NavLinkOnClick>
+            <NavLinkOnClick to='/show/items' >Item</NavLinkOnClick>
+            <NavLinkOnClick to="/show/items">Search Item</NavLinkOnClick>
+            <NavLinkOnClick to="/usuarios">Search Usuario</NavLinkOnClick>
+            <NavLinkOnClick to="/table">orderTable</NavLinkOnClick>
+            <NavLinkOnClick to="/recibo">recibos</NavLinkOnClick>
             {user.authenticated ? renderLogOutButton : null}
           </Drawer>
           {/* {location.pathname === "/showData" ? <SearchBar /> : null} */}
