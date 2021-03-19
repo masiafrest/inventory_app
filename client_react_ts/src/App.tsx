@@ -94,16 +94,16 @@ function App() {
             <Container maxWidth="sm">
               <ErrorHandler>
                 <Route exact path="/signin" component={SignIn} />
-                <Route exact path="/table" component={OrderTableContainer} />
-                <Route exact path="/recibo" component={Recibo} />
+                <AuthRouth exact path="/table" component={OrderTableContainer} />
+                <AuthRouth exact path="/recibo" component={Recibo} />
                 {/* <Route exact path={pluralPaths} component={FetchDataContainer} /> */}
-                <Route exact path={invPaths} component={FetchDataContainer} />
-                <Route
+                <AuthRouth exact path={invPaths} component={FetchDataContainer} />
+                <AuthRouth
                   exact
                   path={reciboPaths}
                   component={FetchDataContainer}
                 />
-                <Route exact path={addPaths} component={AddData} />
+                <AuthRouth exact path={addPaths} component={AddData} />
                 <AuthRouth exact path={showPaths} component={ShowData} />
                 <AuthRouth exact path="/" component={Home} />
               </ErrorHandler>
