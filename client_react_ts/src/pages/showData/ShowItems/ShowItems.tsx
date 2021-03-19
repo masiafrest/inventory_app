@@ -4,6 +4,7 @@ import Fab from "../../../components/FloatBtnAdd";
 import EditFormDialog from "../../../components/EditableField/EditFormDialog";
 import { useHistory } from "react-router-dom";
 import DeleteBtn from "../../../components/DeleteBtn";
+import ChooseQtyFormBtn from '../../../components/ChooseQtyFormBtn'
 
 //Redux
 import { RootState } from "../../../redux/rootReducer";
@@ -42,17 +43,6 @@ export default function ShowItems() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleCardClick = (obj) => {
-    history.push({
-      pathname: "/show/inventarios",
-      state: {
-        item_id: obj.id,
-      },
-    });
-    // setisInvSelected(true);
-    // setInvData(obj.inventarios);
-  };
-
   const handleAddItem = () => {
     // add to recibo
   };
@@ -66,8 +56,7 @@ export default function ShowItems() {
         : imgPlaceholder;
     const maxSteps = 1;
     return (
-      <>
-        <Card>
+        <Card key={obj.id}>
           <Paper square elevation={0}>
             <Typography>
               {obj.marca}, {obj.modelo}
@@ -101,27 +90,15 @@ export default function ShowItems() {
             }
           />
           <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {"barcode: " + obj.barcode}
-              <EditFormDialog name={"barcode"} data={obj} url={url} />
-            </Typography>
             <Typography gutterBottom variant="h5" component="h2">
-              {"descripcion: " + obj.descripcion}
+              {  `${obj.marca} ${obj.modelo} ${obj.color} ${obj.caracteristica}`}
               <EditFormDialog name={"descripcion"} data={obj} url={url} />
             </Typography>
           </CardContent>
           <CardActions>
-            <Button
-              size="small"
-              color="primary"
-              onClick={() => handleCardClick(obj)}
-            >
-              Ver Inventario
-            </Button>
             <DeleteBtn url={url} id={obj.id} />
           </CardActions>
         </Card>
-      </>
     );
   });
   return (
