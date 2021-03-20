@@ -43,7 +43,7 @@ exports.getByParams = async (req, res, next) => {
 };
 
 exports.post = async (req, res, next) => {
-  console.log("POST items: ", req);
+  console.log("POST items: ", req.body);
   // const parseBody
   try {
     const {

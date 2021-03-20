@@ -8,7 +8,7 @@ interface Item {
   categoria_id: number;
   qty: number;
   lugar_id: number;
-  proveedor: number;
+  proveedor_id: number;
   costo: number;
   images?: string;
   id?: number;

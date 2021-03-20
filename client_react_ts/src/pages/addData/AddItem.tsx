@@ -20,10 +20,10 @@ export default function AddItem(props: any) {
     sku: "",
     color: "",
     precio: 0,
-    categoria_id: 0,
+    categoria_id: 1,
     qty: 0,
-    lugar_id: 0,
-    proveedor: 0,
+    lugar_id: 1,
+    proveedor_id: 1,
     costo: 0,
   };
   // const { data, previewImg, handleChange, handleSubmit } = useFormImage<Item>(
@@ -47,10 +47,7 @@ export default function AddItem(props: any) {
     "sku",
     "color",
     "precio",
-    "categoria_id",
     "qty",
-    "lugar_id",
-    "proveedor",
     "costo",
   ];
 
@@ -67,6 +64,7 @@ export default function AddItem(props: any) {
       // error={errors[detail] ? true : false}
     />
   ));
+  console.log(data)
 
   return (
     <Container maxWidth="sm" fixed>
@@ -74,19 +72,19 @@ export default function AddItem(props: any) {
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
         <SelectsOptions
-          onChange={onchange}
+          onChange={handleChange}
           name="categoria"
           form={data}
           url="categorias"
         />
         <SelectsOptions
           form={data}
-          onChange={onchange}
+          onChange={handleChange}
           name="proveedor"
           url="proveedores"
         />
         <SelectsOptions
-          onChange={onchange}
+          onChange={handleChange}
           name="lugar"
           form={data}
           url="lugares"

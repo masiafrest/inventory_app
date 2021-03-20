@@ -37,17 +37,20 @@ export default function useForm<T>(initialState: T, url: string) {
     } else {
       setData((value) => ({ ...value, [e.target.name]: e.target.value }));
     }
-    console.log(data);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(data);
     try {
       let formData = new FormData();
+      //TODO: fix this doesn append
       Object.keys(data).forEach((key) => {
+        console.log(key)
         formData.append(key, data[key]);
+        console.log(data[key])
       });
-      const res = await axios.post(url, data);
+      console.log(Object.keys(data))
+      const res = await axios.post(url, formData);
       console.log(res.data);
     } catch (err) {
       console.log(err);
