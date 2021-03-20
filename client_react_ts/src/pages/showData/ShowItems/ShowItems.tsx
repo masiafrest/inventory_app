@@ -29,7 +29,7 @@ import {
 
 export default function ShowItems() {
   const url = "/items";
-  const { data } = useFetchData(url);
+  const { data, setData } = useFetchData(url);
   const [activeStep, setActiveStep] = useState(0);
   const history = useHistory();
 
@@ -100,7 +100,7 @@ export default function ShowItems() {
             </Typography>
           </CardContent>
           <CardActions>
-            <DeleteBtn url={url} id={obj.id} />
+            <DeleteBtn url={url} id={obj.id} data={data} setData={setData}/>
           </CardActions>
         </Card>
       </Grid>

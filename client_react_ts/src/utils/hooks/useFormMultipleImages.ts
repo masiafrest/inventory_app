@@ -49,9 +49,9 @@ export default function useForm<T>(initialState: T, url: string) {
         formData.append(key, data[key]);
         console.log(data[key])
       });
-      console.log(Object.keys(data))
-      const res = await axios.post(url, formData);
-      console.log(res.data);
+      console.log(formData)
+      // const res = await axios.post(url, formData);
+      // console.log(res.data);
     } catch (err) {
       console.log(err);
     }
