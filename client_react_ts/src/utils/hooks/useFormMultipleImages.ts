@@ -32,7 +32,8 @@ export default function useForm<T>(initialState: T, url: string) {
         fileArray.push(image);
         // fileArray.push(URL.createObjectURL(fileObj[0][i]));
       }
-      setData((value) => ({ ...value, images: fileArray }));
+      console.log(e.target.files)
+      setData((value) => ({ ...value, images: e.target.files}));
       setPreviewImg(fileArray);
     } else {
       setData((value) => ({ ...value, [e.target.name]: e.target.value }));
@@ -49,9 +50,8 @@ export default function useForm<T>(initialState: T, url: string) {
         formData.append(key, data[key]);
         console.log(data[key])
       });
-      console.log(formData)
-      // const res = await axios.post(url, formData);
-      // console.log(res.data);
+      const res = await axios.post(url, formData);
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
