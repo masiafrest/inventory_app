@@ -4,7 +4,7 @@ import Fab from "../../../components/FloatBtnAdd";
 import EditFormDialog from "../../../components/EditableField/EditFormDialog";
 import { useHistory } from "react-router-dom";
 import DeleteBtn from "../../../components/DeleteBtn";
-import ChooseQtyFormBtn from '../../../components/ChooseQtyFormBtn'
+import ChooseQtyFormBtn from "../../../components/ChooseQtyFormBtn";
 
 //Redux
 import { RootState } from "../../../redux/rootReducer";
@@ -36,14 +36,6 @@ export default function ShowItems() {
   const dispatch = useDispatch();
   const recibo = useSelector((state: RootState) => state.recibo);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
   const handleAddItem = () => {
     // add to recibo
   };
@@ -51,22 +43,27 @@ export default function ShowItems() {
   const cardView = data.map((obj) => {
     const src = "http://localhost:5050/uploads/";
     const imgPlaceholder = "https://via.placeholder.com/200";
+    console.log(obj.images.length);
     const activeImg =
-      obj.images.lenght > 0
+      obj.images.length > 0
         ? src + obj.images[activeStep].url_path
         : imgPlaceholder;
-    const maxSteps = 1;
+    const maxSteps = obj.images.length;
     return (
       <Grid item key={obj.id}>
-        <Card style={{
-          maxWidth: 500}}>
+        <Card
+          style={{
+            maxWidth: 425,
+          }}
+        >
           <Paper square elevation={0}>
             <Typography>
               {obj.marca}, {obj.modelo}
             </Typography>
           </Paper>
-          <img src={activeImg} alt={obj.marca + "-" + obj.modelo} />
+          <img key="img" src={activeImg} alt={obj.marca + "-" + obj.modelo} />
           <MobileStepper
+            key="mobileStepper"
             steps={maxSteps}
             position="static"
             variant="text"
@@ -75,7 +72,9 @@ export default function ShowItems() {
               <Button
                 id="mobileSteperNextBtn"
                 size="small"
-                onClick={handleNext}
+                onClick={() =>
+                  setActiveStep((prevActiveStep) => prevActiveStep + 1)
+                }
                 disabled={activeStep === maxSteps - 1}
               >
                 Next
@@ -85,7 +84,9 @@ export default function ShowItems() {
               <Button
                 id="mobileSteperBackBtn"
                 size="small"
-                // onClick={handleBack}
+                onClick={() =>
+                  setActiveStep((prevActiveStep) => prevActiveStep - 1)
+                }
                 disabled={activeStep === 0}
               >
                 Back
@@ -94,7 +95,7 @@ export default function ShowItems() {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {  `${obj.marca} ${obj.modelo} ${obj.color} ${obj.caracteristica}`}
+              {`${obj.marca} ${obj.modelo} ${obj.color} ${obj.caracteristica}`}
               <EditFormDialog name={"descripcion"} data={obj} url={url} />
             </Typography>
           </CardContent>
@@ -102,14 +103,14 @@ export default function ShowItems() {
             <DeleteBtn url={url} id={obj.id} />
           </CardActions>
         </Card>
-        </Grid>
+      </Grid>
     );
   });
   return (
     <>
       <Typography variant="h3">Items</Typography>
       <Grid container spacing={2}>
-       {cardView}
+        {cardView}
       </Grid>
       <Fab />
     </>
