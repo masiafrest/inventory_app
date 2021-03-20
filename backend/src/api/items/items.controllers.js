@@ -1,5 +1,6 @@
 const Item = require("./items.model");
-const { hardDeleteById, patchById } = require("../../lib/helpers");
+const { hardDeleteById, patchById, delImg } = require("../../lib/helpers");
+const Image = require("../images.model");
 
 const getItemGraph = `[
         precio(defaultSelects),
@@ -148,6 +149,8 @@ exports.patch = (req, res, next) => {
   patchById(req, res, next, Item);
 };
 
-exports.delete = (req, res, next) => {
+exports.delete = async (req, res, next) => {
+  const imgs = await Image.query().where("item_id", req.params.id);
+  delImg(imgs);
   hardDeleteById(req, res, next, Item);
 };

@@ -1,5 +1,8 @@
+const fs = require("fs");
 const jwt = require("jsonwebtoken");
+
 const Usuario = require("../api/usuarios/usuarios.model");
+
 const checkToken = (req, res, next) => {
   const header = req.headers["authorization"];
   if (typeof header !== "undefined") {
@@ -46,12 +49,51 @@ async function hardDeleteById(req, res, next, Model) {
     console.log(id);
     await Model.transaction(async (trx) => {
       const model = await Model.query(trx).deleteById(id);
-      console.log(model);
+      console.log("hard Delete", model);
       res.json(model);
     });
   } catch (error) {
     next(error);
   }
+}
+
+async function delImg(paths) {
+  const path = require("path");
+  let imgPath;
+
+  paths.map((element) => {
+    imgPath = path.resolve("public", "uploads", element.url_path);
+    console.log("imgs:, ", imgPath);
+    try {
+      if (fs.existsSync(imgPath)) {
+        console.log("The file exists.");
+        try {
+          fs.unlinkSync(imgPath);
+          //file removed
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        console.log("The file does not exist.");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    // fs.existsSync(imgPath, (err) => {
+    //   if (err) {
+    //     console.log("The file does not exist.");
+    //   } else {
+    //     console.log("The file exists.");
+    //     fs.unlinkSync(imgPath, (err) => {
+    //       if (err) {
+    //         console.log("no se borro");
+    //       }
+    //       console.log("existoso");
+    //     });
+    //   }
+    // });
+  });
+  console.log("delImg");
 }
 
 async function patchById(req, res, next, Model) {
@@ -75,5 +117,6 @@ module.exports = {
   skuGenerator,
   findByIdOrName,
   hardDeleteById,
+  delImg,
   patchById,
 };
