@@ -49,6 +49,7 @@ export default function useForm<T>(initialState: T, url: string) {
       Object.keys(data).forEach((key) => {
         console.log(key);
         if (key === "images") {
+          //TODO: hacer que pueda subir mas archivo
           formData.append(key, data[key][0]); //hay q hacer un loop para ver el length del arry y agregarlo
         } else {
           formData.append(key, data[key]);
