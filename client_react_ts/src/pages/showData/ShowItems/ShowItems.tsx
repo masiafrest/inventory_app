@@ -50,10 +50,10 @@ export default function ShowItems() {
         : imgPlaceholder;
     const maxSteps = obj.images.length;
     return (
-      <Grid item key={obj.id}>
+      <Grid item xs={12} sm={6} md={4} lg={3} key={obj.id}>
         <Card
           style={{
-            maxWidth: 425,
+            maxWidth: 300,
           }}
         >
           <Paper square elevation={0}>
@@ -100,7 +100,7 @@ export default function ShowItems() {
             </Typography>
           </CardContent>
           <CardActions>
-            <DeleteBtn url={url} id={obj.id} data={data} setData={setData}/>
+            <DeleteBtn url={url} id={obj.id} data={data} setData={setData} />
           </CardActions>
         </Card>
       </Grid>

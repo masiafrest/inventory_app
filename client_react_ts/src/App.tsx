@@ -91,13 +91,21 @@ function App() {
         <Router>
           <NavBar />
           <Switch>
-            <Container maxWidth="sm">
+            <Container>
               <ErrorHandler>
                 <Route exact path="/signin" component={SignIn} />
-                <AuthRouth exact path="/table" component={OrderTableContainer} />
+                <AuthRouth
+                  exact
+                  path="/table"
+                  component={OrderTableContainer}
+                />
                 <AuthRouth exact path="/recibo" component={Recibo} />
                 {/* <Route exact path={pluralPaths} component={FetchDataContainer} /> */}
-                <AuthRouth exact path={invPaths} component={FetchDataContainer} />
+                <AuthRouth
+                  exact
+                  path={invPaths}
+                  component={FetchDataContainer}
+                />
                 <AuthRouth
                   exact
                   path={reciboPaths}

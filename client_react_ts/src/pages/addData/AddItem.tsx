@@ -67,7 +67,7 @@ export default function AddItem(props: any) {
   console.log(data);
 
   return (
-    <Container maxWidth="sm" fixed>
+    <Container maxWidth="md" fixed>
       <Typography variant="h2">Agregar Item</Typography>
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
