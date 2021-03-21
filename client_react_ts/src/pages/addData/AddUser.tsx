@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useFormImage from "../../utils/hooks/useFormImage";
 import SelectsOptions from "../../components/SelectsOptions";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
