@@ -80,7 +80,6 @@ exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.item, (table) => {
     createTableIncrementsStringNotNullable(table, "marca");
     table.string("modelo");
-    table.string("caracteristica");
     table.string("color");
     table.integer("qty").notNullable().unsigned();
     table.string("descripcion");

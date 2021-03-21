@@ -42,7 +42,6 @@ export default function AddItem(props: any) {
   const itemDetails = [
     "marca",
     "modelo",
-    "caracteristica",
     "descripcion",
     "sku",
     "color",

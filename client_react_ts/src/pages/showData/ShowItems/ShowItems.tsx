@@ -94,10 +94,10 @@ export default function ShowItems() {
             }
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {`${obj.marca} ${obj.modelo} ${obj.color} ${obj.caracteristica}`}
-              <EditFormDialog name={"descripcion"} data={obj} url={url} />
+            <Typography variant="h5" component="h2">
+              {`${obj.marca} ${obj.modelo} ${obj.color} ${obj.descripcion}`}
             </Typography>
+            <EditFormDialog name={"descripcion"} data={obj} url={url} />
           </CardContent>
           <CardActions>
             <DeleteBtn url={url} id={obj.id} data={data} setData={setData} />

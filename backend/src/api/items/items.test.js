@@ -27,7 +27,6 @@ describe("Items", () => {
       .field("precio_min", 7.99)
       .field("costo", 5.0)
       .field("proveedor_id", 1)
-      .field("caracteristica", 'hello world')
       // .attach("images", __dirname + "./testimg.png")
       .set("authorization", BearerToken)
       .expect("Content-Type", /json/)

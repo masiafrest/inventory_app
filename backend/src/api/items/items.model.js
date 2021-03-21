@@ -76,8 +76,7 @@ class Item extends BaseModel {
           "categoria_id",
           "categoria_2_id",
           "color",
-          "sku",
-          "caracteristica"
+          "sku"
         );
       },
       getItemData(builder) {

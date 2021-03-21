@@ -52,7 +52,6 @@ exports.seed = async (knex) => {
       precio_id: precio_id,
       sku: "so-qwe",
       categoria_id: categoria_ids[0],
-      caracteristica: "solo se q es sony",
     },
     {
       marca: "huawei",
@@ -65,7 +64,6 @@ exports.seed = async (knex) => {
       precio_id: precio_id,
       sku: "hua-yui",
       categoria_id: categoria_ids[1],
-      caracteristica: "solo se q es huawei",
     },
   ];
   await knex(tableNames.item).insert(items);
