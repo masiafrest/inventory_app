@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Grid, Select, InputLabel, MenuItem } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 export default function SelectsOptions({ onChange, name, url, form }) {
+  const history = useHistory();
   const [data, setData] = useState([]);
   useEffect(() => {
     console.log("url ", url);
@@ -63,6 +65,12 @@ export default function SelectsOptions({ onChange, name, url, form }) {
         fullWidth
       >
         {dataMenuItem}
+        <MenuItem
+          key={`add_${name}`}
+          onClick={() => history.push(`/add/${name}`)}
+        >
+          agregar otra {name}
+        </MenuItem>
       </Select>
     </Grid>
   );
