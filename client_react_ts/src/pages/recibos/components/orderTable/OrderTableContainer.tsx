@@ -61,6 +61,7 @@ export default function OrderTableContainer() {
 
   const [items, setItems] = useState<ItemRow[]>([]);
   const { lineas } = recibo;
+  console.log(recibo);
   const history = useHistory();
 
   const onClickHandler = () => history.push("/show/items");
@@ -69,7 +70,6 @@ export default function OrderTableContainer() {
     const res = await axios.post("/recibos/venta", recibo);
     console.log(res);
   };
-
   useEffect(() => {
     if (lineas.length > 0) {
       lineas.forEach((linea) => {
@@ -95,7 +95,6 @@ export default function OrderTableContainer() {
     }
   }, []);
 
-  console.log("items,", items);
   return (
     <>
       <OrderTable

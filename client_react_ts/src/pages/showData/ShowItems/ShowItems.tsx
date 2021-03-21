@@ -101,6 +101,7 @@ export default function ShowItems() {
           </CardContent>
           <CardActions>
             <DeleteBtn url={url} id={obj.id} data={data} setData={setData} />
+            <ChooseQtyFormBtn inv={obj} />
           </CardActions>
         </Card>
       </Grid>
