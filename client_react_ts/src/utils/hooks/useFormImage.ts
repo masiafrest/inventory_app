@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function useForm<T>(initialState: T, url: string) {
   const [data, setData] = useState(initialState);
-  const [previewImg, setPreviewImg] = useState("");
+  const [previewImg, setPreviewImg] = useState([]);
 
   const handleChange = (e) => {
     if (e.target.name === "images") {
@@ -18,8 +18,8 @@ export default function useForm<T>(initialState: T, url: string) {
 
       //single file
       const file = URL.createObjectURL(e.target.files[0]);
-      setData((value) => ({ ...value, [e.target.name]: e.target.files[0] }));
-      setPreviewImg(file);
+      setData((value) => ({ ...value, [e.target.name]: e.target.files }));
+      setPreviewImg([file]);
       console.log(e.target.files);
       console.log(file);
       console.log(data);

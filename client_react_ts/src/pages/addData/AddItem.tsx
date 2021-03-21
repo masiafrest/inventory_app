@@ -15,7 +15,7 @@ export default function AddItem(props: any) {
   const initialItem = {
     marca: "",
     modelo: "",
-    caracteritica: '',
+    caracteritica: "",
     descripcion: "",
     sku: "",
     color: "",
@@ -42,7 +42,7 @@ export default function AddItem(props: any) {
   const itemDetails = [
     "marca",
     "modelo",
-    'caracteristica',
+    "caracteristica",
     "descripcion",
     "sku",
     "color",
@@ -64,7 +64,7 @@ export default function AddItem(props: any) {
       // error={errors[detail] ? true : false}
     />
   ));
-  console.log(data)
+  console.log(data);
 
   return (
     <Container maxWidth="sm" fixed>

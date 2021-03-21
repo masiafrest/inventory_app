@@ -32,8 +32,9 @@ export default function useForm<T>(initialState: T, url: string) {
         fileArray.push(image);
         // fileArray.push(URL.createObjectURL(fileObj[0][i]));
       }
-      console.log(e.target.files)
-      setData((value) => ({ ...value, images: e.target.files}));
+      console.log(e.target.files[0]);
+      console.log(fileArray);
+      setData((value) => ({ ...value, [e.target.name]: e.target.files }));
       setPreviewImg(fileArray);
     } else {
       setData((value) => ({ ...value, [e.target.name]: e.target.value }));
@@ -46,11 +47,19 @@ export default function useForm<T>(initialState: T, url: string) {
       let formData = new FormData();
       //TODO: fix this doesn append
       Object.keys(data).forEach((key) => {
-        console.log(key)
-        formData.append(key, data[key]);
-        console.log(data[key])
+        console.log(key);
+        if (key === "images") {
+          formData.append(key, data[key][0]); //hay q hacer un loop para ver el length del arry y agregarlo
+        } else {
+          formData.append(key, data[key]);
+        }
+        console.log(data[key]);
       });
-      const res = await axios.post(url, formData);
+      const res = await axios.post(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       console.log(res.data);
     } catch (err) {
       console.log(err);

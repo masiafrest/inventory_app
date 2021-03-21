@@ -16,6 +16,9 @@ let storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
+  console.log("....upload headers: ", req.rawHeaders);
+  console.log("....upload files: ", req.files);
+  console.log("....upload body: ", req.body);
   if (
     file.mimetype === "image/png" ||
     file.mimeType === "image/jpeg" ||
