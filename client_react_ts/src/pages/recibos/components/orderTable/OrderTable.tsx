@@ -35,10 +35,8 @@ const ShowRows = ({ rows, ccyFormat }) => {
   console.log(rows);
   return rows.map((row) => (
     <TableRow key={row.inventario_id}>
-      <TableCell align="left">{row.sku}</TableCell>
-      <TableCell align="left">{row.marca}</TableCell>
-      <TableCell align="left">{row.modelo}</TableCell>
       <TableCell align="left">{row.qty}</TableCell>
+      <TableCell align="left">{`${row.marca}${row.modelo}${row.color}${row.descripcion} `}</TableCell>
       <TableCell align="left">{row.precio}</TableCell>
       <TableCell align="left">{ccyFormat(row.precio)}</TableCell>
       <DelRow inv_id={row.inventario_id} />
@@ -62,10 +60,8 @@ function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="left">Sku</TableCell>
-            <TableCell align="left">Marca</TableCell>
-            <TableCell align="left">Modelo</TableCell>
-            <TableCell align="left">Qty.</TableCell>
+            <TableCell align="left">Qty</TableCell>
+            <TableCell align="left">Descripcion</TableCell>
             <TableCell align="left">Price</TableCell>
             <TableCell align="left">Sum</TableCell>
           </TableRow>
