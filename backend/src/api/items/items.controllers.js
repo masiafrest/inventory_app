@@ -67,7 +67,7 @@ exports.post = async (req, res, next) => {
     // image_url = JSON.stringify(image_url);
     console.log("no existe item");
     await Item.transaction(async (trx) => {
-      const existingItem = await Item.query().where({ marca, lugar_id }).first();
+      const existingItem = await Item.query().where({ marca, modelo, lugar_id }).first();
       let insertedItem;
       console.log(existingItem);
       //check if item exist then incoming data is item of diferent color
