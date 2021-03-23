@@ -41,6 +41,7 @@ export default function ShowItems() {
   };
 
   const cardView = data.map((obj) => {
+    console.log(obj)
     const src = "http://localhost:5050/uploads/";
     const imgPlaceholder = "https://via.placeholder.com/200";
     console.log(obj.images.length);
@@ -98,6 +99,9 @@ export default function ShowItems() {
               {`${obj.marca} ${obj.modelo} ${obj.color} ${obj.descripcion}`}
             </Typography>
             <EditFormDialog name={"descripcion"} data={obj} url={url} />
+            <Typography>
+              {`Ubicacion: ${obj.lugar.direccion}, ${obj.lugar.tipo}. | Qty: ${obj.qty}`}
+            </Typography>
           </CardContent>
           <CardActions>
             <DeleteBtn url={url} id={obj.id} data={data} setData={setData} />

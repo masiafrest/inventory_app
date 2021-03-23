@@ -20,6 +20,7 @@ export default function AddItem(props: any) {
     sku: "",
     color: "",
     precio: 0,
+    precio_min: 0,
     categoria_id: 1,
     qty: 0,
     lugar_id: 1,
@@ -46,19 +47,21 @@ export default function AddItem(props: any) {
     "sku",
     "color",
     "precio",
+    'precio_min',
     "qty",
     "costo",
   ];
 
   const renderTextField = itemDetails.map((detail) => (
     <TextField
+    style={{width:'25em'}}
       key={detail}
       id={detail}
       name={detail}
       label={detail}
       value={data[detail]}
       onChange={handleChange}
-      fullWidth
+      // fullWidth
       // helperText={errors[detail]}
       // error={errors[detail] ? true : false}
     />
@@ -68,7 +71,9 @@ export default function AddItem(props: any) {
   return (
     <Container maxWidth="md" fixed>
       <Typography variant="h2">Agregar Item</Typography>
-      <form noValidate onSubmit={handleSubmit}>
+      <form noValidate onSubmit={handleSubmit} style={{
+        width:'25ch'
+      }}>
         {renderTextField}
         <SelectsOptions
           onChange={handleChange}
