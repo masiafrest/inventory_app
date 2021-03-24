@@ -28,7 +28,7 @@ export default function Transferencia() {
         console.log(linea);
         return (
           <TableRow>
-            <TableCell align="left">{linea.inventario.sku}</TableCell>
+            <TableCell align="left">{linea.sku}</TableCell>
             <TableCell align="left">{linea.qty}</TableCell>
             <TableCell align="left">{linea.origen.tipo}</TableCell>
             <TableCell align="left">{linea.destino.tipo}</TableCell>

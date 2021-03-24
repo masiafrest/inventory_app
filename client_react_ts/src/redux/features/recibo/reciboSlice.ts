@@ -22,7 +22,7 @@ const reciboSlice = createSlice({
     },
     pushLinea: (state, action: PayloadAction<Lineas>) => {
       //TODO: revisar si existe o no el item pusheado, si qty del payload es mayor actualizar la qty
-      action.payload.inventario_id = action.payload.id;
+      action.payload.id = action.payload.id;
       const hasId = state.lineas.some(
         (linea, idx) => linea.id === action.payload.id
       );

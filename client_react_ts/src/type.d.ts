@@ -20,11 +20,6 @@ interface _id {
   item_id: number;
   proveedor_id: number;
 }
-interface Inventario extends Id, TimeStamp {
-  color: string;
-  sku: string;
-  qty: number;
-}
 interface Precio extends Id, Pick<_id, "proveedor_id"> {
   precio: number;
   oferta: bool | null;
@@ -46,10 +41,3 @@ interface Venta
   cliente: string;
   lineas: LineaVenta[];
 }
-interface LineaVenta
-  extends Id,
-    Pick<Total, "total" | "tax">,
-    TimeStamp,
-    Pick<Inventario, "qty">,
-    Pick<Precio, "precio">,
-    Pick<_id, "inventario_id" | "venta_id"> {}

@@ -6,13 +6,11 @@ import AddUser from "./AddUser";
 import AddRol from "./AddRol";
 import AddCliente from "./AddCliente";
 import AddDefectuoso from "./AddDefectuoso";
-import AddInventario from "./AddInventario";
 import useDynamicComponent from "../../utils/hooks/useDynamicComponent";
 
 export default function AddData() {
   const components = {
     item: AddItem,
-    inventario: AddInventario,
     categoria: AddCategoria,
     lugar: AddLugar,
     proveedor: AddProveedor,

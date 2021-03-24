@@ -25,7 +25,6 @@ export default function SelectsOptions({ onChange, name, url, form }) {
       menuItemToShow.push("nombre");
       break;
     case "items":
-    case "inventarios":
       menuItemToShow.push("marca");
       menuItemToShow.push("modelo");
       break;

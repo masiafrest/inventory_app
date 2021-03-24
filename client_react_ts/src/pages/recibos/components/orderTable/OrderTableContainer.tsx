@@ -21,7 +21,9 @@ function priceRow(qty: number, precio: number): number {
 }
 
 export interface ItemRow {
-  inventario_id: number;
+  descripcion: string;
+  color: string;
+  id: number;
   sku: string;
   marca: string;
   modelo: string;
@@ -29,17 +31,20 @@ export interface ItemRow {
   precio: number;
   total?: number;
 }
+
 function createRow(linea: Lineas): ItemRow {
   const {
+    color,
+    descripcion,
     qty,
     precio: { precio },
-    inventario_id,
+    id,
     sku,
     marca,
     modelo,
   } = linea;
   const total = priceRow(qty, precio);
-  return { inventario_id, sku, marca, modelo, qty, precio, total };
+  return {color, id, descripcion, sku, marca, modelo, qty, precio, total };
 }
 
 let rows: ItemRow[] = [];

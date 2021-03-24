@@ -50,8 +50,8 @@ export default function AddDefectuoso(props: any) {
         <SelectsOptions
           form={data}
           onChange={handleChange}
-          name="inventarios"
-          url="items/inventarios"
+          name="items"
+          url="items"
         />
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>

@@ -22,10 +22,10 @@ interface Recibo {
 
 interface Lineas {
   id?: number;
-  inventario_id?: number;
   qty?: number;
   precio?: Precio;
   venta_id?: number;
+  color: string;
   descripcion?: string;
   item_id?: number;
   destino_lugar_id?: number;

@@ -28,7 +28,7 @@ export default function Garantia() {
         console.log(linea);
         return (
           <TableRow>
-            <TableCell align="left">{linea.inventario.sku}</TableCell>
+            <TableCell align="left">{linea.sku}</TableCell>
             <TableCell align="left">{linea.qty}</TableCell>
             <TableCell align="left">{linea.descripcion}</TableCell>
           </TableRow>

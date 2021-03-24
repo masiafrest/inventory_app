@@ -25,7 +25,7 @@ const DelRow = ({ inv_id }) => {
     window.location.reload();
   };
   return (
-    <IconButton onClick={handleClick}>
+    <IconButton size='small' onClick={handleClick} >
       <DeleteIcon />
     </IconButton>
   );
@@ -34,57 +34,49 @@ const DelRow = ({ inv_id }) => {
 const ShowRows = ({ rows, ccyFormat }) => {
   console.log(rows);
   return rows.map((row) => (
-    <TableRow key={row.inventario_id}>
-      <TableCell align="left">{row.qty}</TableCell>
-      <TableCell align="left">{`${row.marca}${row.modelo}${row.color}${row.descripcion} `}</TableCell>
-      <TableCell align="left">{row.precio}</TableCell>
-      <TableCell align="left">{ccyFormat(row.precio)}</TableCell>
-      <DelRow inv_id={row.inventario_id} />
+    <TableRow key={row.id}>
+      <TableCell  align="left">
+      <DelRow inv_id={row.id} />
+        {row.qty}</TableCell>
+      <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} `}</TableCell>
+      <TableCell align="center">{row.precio}</TableCell>
+      <TableCell align="center">{ccyFormat(row.precio)}</TableCell>
     </TableRow>
   ));
 };
 
 function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
   const { Subtotal, Taxes, Total } = invoice;
-  console.log(items);
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="spanning table" padding="none" size="small">
+      <Table style={{minWidth:425}} padding="default" size="small">
         <TableHead>
           <TableRow>
-            <TableCell align="center" colSpan={3}>
-              Details
-            </TableCell>
-            <TableCell align="right" colSpan={2}>
-              Price
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell align="left">Qty</TableCell>
-            <TableCell align="left">Descripcion</TableCell>
-            <TableCell align="left">Price</TableCell>
-            <TableCell align="left">Sum</TableCell>
+            <TableCell align="center">Qty</TableCell>
+            <TableCell align="center">Descripcion</TableCell>
+            <TableCell align="center">Price</TableCell>
+            <TableCell align="center">Sum</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {<ShowRows rows={items} ccyFormat={ccyFormat} />}
           <TableRow>
-            <IconButton onClick={onClickHandler}>
+            <IconButton size='small'  onClick={onClickHandler}>
               <AddBoxIcon />
             </IconButton>
           </TableRow>
           <TableRow>
             <TableCell rowSpan={3} />
-            <TableCell colSpan={3}>Subtotal</TableCell>
+            <TableCell colSpan={2}>Subtotal</TableCell>
             <TableCell align="right">{ccyFormat(Subtotal)}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={2}>Tax</TableCell>
+            <TableCell colSpan={1}>Tax</TableCell>
             <TableCell align="right">{`${(tax * 100).toFixed(0)} %`}</TableCell>
             <TableCell align="right">{ccyFormat(Taxes)}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell colSpan={2}>Total</TableCell>
             <TableCell align="right">{ccyFormat(Total)}</TableCell>
           </TableRow>
         </TableBody>
