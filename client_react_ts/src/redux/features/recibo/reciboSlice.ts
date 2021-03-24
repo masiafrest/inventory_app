@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../rootReducer";
 
+//TODO: agregar recibo venta transferencia 
 const initialState: Recibo = {
   empresa_cliente_id: null,
   usuario_id: null,
