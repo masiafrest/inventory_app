@@ -1,10 +1,10 @@
 import { useState } from "react";
-import SelectsOptions from "../../../../components/SelectsOptions";
+import SelectsOptions from "../../../../../components/SelectsOptions";
 import { Typography, Paper } from "@material-ui/core";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../../redux/rootReducer";
-import { addClienteId } from "../../../../redux/features/recibo/reciboSlice";
+import { RootState } from "../../../../../redux/rootReducer";
+import { addClienteId } from "../../../../../redux/features/recibo/reciboSlice";
 
 export default function HeaderTable() {
   const dispatch = useDispatch();

@@ -19,13 +19,13 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import AddData from "./pages/addData";
 import ShowData from "./pages/showData";
-import Recibo from "./pages/recibos/ReciboContainer";
+import Recibo from './pages/recibos'
 
 import { Container } from "@material-ui/core";
 // Components
 import NavBar from "./components/NavBar";
 import AuthRouth from "./components/AuthRouth";
-import OrderTableContainer from "./pages/recibos/components/orderTable/OrderTableContainer";
+import OrderTableContainer from "./pages/recibos/venta/components/orderTable/OrderTableContainer";
 import FetchDataContainer from "./components/FetchData/FetchDataContainer";
 import ErrorHandler from "./components/ErrorHandler";
 
@@ -71,7 +71,6 @@ const pluralPaths = [
 
 const addPaths = paths.map((path) => "/add" + path);
 const showPaths = pluralPaths.map((path) => "/show" + path);
-const invPaths = ["/logs"].map((e) => "/items/inventarios" + e);
 const reciboPaths = [
   "/venta",
   "/transferencia",
@@ -79,7 +78,7 @@ const reciboPaths = [
   "/garantia",
   "/nota_credito",
   "/cotizacion",
-].map((e) => "/recibos" + e);
+].map((e) => "/recibo" + e);
 
 // TODO: add other post path
 // TODO: add other put path
@@ -94,23 +93,7 @@ function App() {
             <Container>
               <ErrorHandler>
                 <Route exact path="/signin" component={SignIn} />
-                <AuthRouth
-                  exact
-                  path="/table"
-                  component={OrderTableContainer}
-                />
-                <AuthRouth exact path="/recibo" component={Recibo} />
-                {/* <Route exact path={pluralPaths} component={FetchDataContainer} /> */}
-                <AuthRouth
-                  exact
-                  path={invPaths}
-                  component={FetchDataContainer}
-                />
-                <AuthRouth
-                  exact
-                  path={reciboPaths}
-                  component={FetchDataContainer}
-                />
+                <AuthRouth exact path={reciboPaths} component={Recibo} />
                 <AuthRouth exact path={addPaths} component={AddData} />
                 <AuthRouth exact path={showPaths} component={ShowData} />
                 <AuthRouth exact path="/" component={Home} />
