@@ -44,7 +44,7 @@ function createRow(linea: Lineas): ItemRow {
     modelo,
   } = linea;
   const total = priceRow(qty, precio);
-  return {color, id, descripcion, sku, marca, modelo, qty, precio, total };
+  return { color, id, descripcion, sku, marca, modelo, qty, precio, total };
 }
 
 let rows: ItemRow[] = [];
@@ -109,7 +109,7 @@ export default function OrderTableContainer() {
         tax={TAX_RATE}
         onClickHandler={onClickHandler}
       />
-      <Button onClick={postReciboHandler}>agregar</Button>
+      <Button onClick={postReciboHandler}>agregar recibo</Button>
     </>
   );
 }
