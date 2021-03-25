@@ -32,6 +32,7 @@ const DelRow = ({ item_id }) => {
   );
 };
 
+//TODO: ver por q row no tiene lugar
 const ShowRows = ({ rows, ccyFormat }) => {
   console.log(rows);
   return rows.map((row) => (
@@ -56,8 +57,8 @@ function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
           <TableRow>
             <TableCell align="center">Qty</TableCell>
             <TableCell align="center">Descripcion</TableCell>
-            <TableCell align="center">Price</TableCell>
-            <TableCell align="center">Sum</TableCell>
+            <TableCell align="center">Origen</TableCell>
+            <TableCell align="center">Destino</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
