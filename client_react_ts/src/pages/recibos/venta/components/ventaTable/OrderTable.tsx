@@ -14,8 +14,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 import { useDispatch } from "react-redux";
 import { deleteLinea } from "../../../../../redux/features/recibo/reciboSlice";
-//types
-import { ItemRow } from "./OrderTableContainer";
 
 const DelRow = ({ item_id }) => {
   const dispatch = useDispatch();
@@ -32,7 +30,7 @@ const DelRow = ({ item_id }) => {
   );
 };
 
-const ShowRows = ({ rows, ccyFormat }) => {
+const ShowRows = ({ rows }) => {
   console.log(rows);
   return rows.map((row) => (
     <TableRow key={row.id}>
@@ -41,13 +39,14 @@ const ShowRows = ({ rows, ccyFormat }) => {
         {row.qty}
       </TableCell>
       <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} `}</TableCell>
-      <TableCell align="center">{row.precio}</TableCell>
-      <TableCell align="center">{ccyFormat(row.precio)}</TableCell>
+      <TableCell align="center">{row.precio.precio}</TableCell>
+      <TableCell align="center">{row.precio.precio * row.qty}</TableCell>
     </TableRow>
   ));
 };
 
-function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
+function OrderTable({ items, invoice, tax, onClickHandler }) {
+  console.log(invoice)
   const { Subtotal, Taxes, Total } = invoice;
   return (
     <TableContainer component={Paper}>
@@ -61,7 +60,7 @@ function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {<ShowRows rows={items} ccyFormat={ccyFormat} />}
+          {<ShowRows rows={items} />}
           <TableRow>
             <IconButton size="small" onClick={onClickHandler}>
               <AddBoxIcon />
@@ -70,16 +69,16 @@ function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(Subtotal)}</TableCell>
+            <TableCell align="right">{Subtotal}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={1}>Tax</TableCell>
             <TableCell align="right">{`${(tax * 100).toFixed(0)} %`}</TableCell>
-            <TableCell align="right">{ccyFormat(Taxes)}</TableCell>
+            <TableCell align="right">{Taxes}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(Total)}</TableCell>
+            <TableCell align="right">{Total}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
