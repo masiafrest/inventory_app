@@ -27,17 +27,3 @@ interface Precio extends Id, Pick<_id, "proveedor_id"> {
   costo: number | null;
   precio_min: number;
 }
-
-interface Venta
-  extends Id,
-    Pick<Total, "total" | "tax">,
-    TimeStamp,
-    Pick<_id, "usuario_id", "pago_id", "empresa_cliente_id"> {
-  credito: boolean;
-  pagado: boolean;
-  entregado: boolean;
-  fecha: string;
-  usuario: string;
-  cliente: string;
-  lineas: LineaVenta[];
-}

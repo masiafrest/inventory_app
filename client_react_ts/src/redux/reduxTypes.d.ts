@@ -13,25 +13,34 @@ interface RootUserCredentialsState {
 }
 
 //recibo
-interface Recibo {
+interface Recibos {
+  venta: Venta;
+  transferencia: Transferencia;
+}
+
+interface Venta {
   usuario_id: number;
   empresa_cliente_id: number;
-  resuelto?: boolean;
+  lineas: Lineas[];
+}
+interface Transferencia {
+  usuario_id: number;
   lineas: Lineas[];
 }
 
 interface Lineas {
+  venta_id?: number;
   id?: number;
   qty?: number;
   precio?: Precio;
-  venta_id?: number;
-  color: string;
-  descripcion?: string;
-  item_id?: number;
-  destino_lugar_id?: number;
   sku?: string;
   marca?: string;
   modelo?: string;
+  color: string;
+  descripcion?: string;
+  //transferencia
+  item_id?: number;
+  destino_lugar_id?: number;
 }
 
 interface Precio {

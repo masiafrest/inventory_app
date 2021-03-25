@@ -1,52 +1,69 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../rootReducer";
 
-//TODO: agregar recibo venta transferencia 
-const initialState: Recibo = {
-  empresa_cliente_id: null,
-  usuario_id: null,
-  lineas: [],
+//TODO: agregar recibo venta transferencia
+const initialState: Recibos = {
+  venta: {
+    empresa_cliente_id: null,
+    usuario_id: null,
+    //estado??
+    lineas: [],
+  },
+  transferencia: {
+    usuario_id: null,
+    lineas: [],
+  },
 };
+
+interface Tipo {
+  tipo: string;
+}
 
 const reciboSlice = createSlice({
   name: "recibos",
   initialState,
   reducers: {
     addUserId: (state, action) => {
-      state.usuario_id = action.payload;
+      const tipoRecibo = action.payload.tipo;
+      state[tipoRecibo].usuario_id = action.payload.usuario_id;
     },
-    delUserId: (state) => {
-      state.usuario_id = null;
+    delUserId: (state, action) => {
+      const tipoRecibo = action.payload.tipo;
+      state[tipoRecibo].usuario_id = null;
     },
     addClienteId: (state, action) => {
-      state.empresa_cliente_id = action.payload;
+      const tipoRecibo = action.payload.tipo;
+      state[tipoRecibo].empresa_cliente_id = action.payload.cliente_id;
     },
-    pushLinea: (state, action: PayloadAction<Lineas>) => {
+    pushLinea: (state, action: PayloadAction<Lineas & Tipo>) => {
       //TODO: revisar si existe o no el item pusheado, si qty del payload es mayor actualizar la qty
+      const tipoRecibo = action.payload.tipo;
       action.payload.id = action.payload.id;
-      const hasId = state.lineas.some(
+      const hasId = state[tipoRecibo].lineas.some(
         (linea, idx) => linea.id === action.payload.id
       );
       if (hasId) {
-        state.lineas.filter((linea, idx) => {
+        state[tipoRecibo].lineas.filter((linea, idx) => {
           if (linea.id === action.payload.id) {
-            state.lineas[idx] = action.payload;
+            state[tipoRecibo].lineas[idx] = action.payload;
           }
         });
         console.log("hasId");
       } else {
-        state.lineas.push(action.payload);
+        state[tipoRecibo].lineas.push(action.payload);
       }
     },
-    addRecibo: (state, action: PayloadAction<Recibo>) => {
-      state = action.payload;
+    addRecibo: (state, action: PayloadAction<Recibos & Tipo>) => {
+      const tipoRecibo = action.payload.tipo;
+      state[tipoRecibo] = action.payload;
     },
-    deleteLinea: (state, action: PayloadAction<number>) => {
+    deleteLinea: (state, action: PayloadAction<number & Tipo>) => {
+      const tipoRecibo = action.payload.tipo;
       console.log(action.payload);
-      const newArr = state.lineas.filter(
+      const newArr = state[tipoRecibo].lineas.filter(
         (linea) => linea.id !== action.payload
       );
-      state.lineas = newArr;
+      state[tipoRecibo].lineas = newArr;
     },
   },
 });
