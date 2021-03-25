@@ -1,5 +1,5 @@
 import TransferenciaTable from './components/TransferenciaTable'
-import Table from './components/orderTable/OrderTableContainer'
+import Table from './components/transferenciaTable/TableContainer'
 
 export default function TransferenciaRecibo() {
   return (
