@@ -20,7 +20,7 @@ describe("Items", () => {
       .field("modelo", "cblack")
       .field("sku", "uno")
       .field("categoria_id", 2)
-      .field("qty", 500)
+      .field("stock", 500)
       .field("lugar_id", 1)
       .field("color", "yel")
       .field("precio", 9.99)

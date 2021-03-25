@@ -81,7 +81,7 @@ exports.up = async function (knex) {
     createTableIncrementsStringNotNullable(table, "marca");
     table.string("modelo");
     table.string("color");
-    table.integer("qty").notNullable().unsigned();
+    table.integer("stock").notNullable().unsigned();
     table.string("descripcion");
     table.string("barcode");
     table.string("sku", 12);

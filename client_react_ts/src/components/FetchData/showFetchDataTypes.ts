@@ -13,17 +13,7 @@ interface Precio extends Id {
   oferta_precio: number | null;
   oferta: boolean;
 }
-export interface Inv extends Id {
-  basura: boolean;
-  color: string;
-  sku: string;
-  item_id: number;
-  lugar_id: number;
-  qty: number;
-  lugares: Lugares;
-  precio: Precio;
-  precio_id: number;
-}
+
 export interface Items extends Id {
   marca: string;
   descripcion: string;

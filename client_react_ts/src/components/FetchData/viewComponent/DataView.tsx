@@ -23,7 +23,7 @@ export default function DataView({ path }) {
     "descripcion",
     "marca",
     "modelo",
-    "qty",
+    "stock",
     "color",
     "sku",
     "ajuste",

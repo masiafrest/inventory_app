@@ -6,7 +6,7 @@ interface Item {
   color: string;
   precio: number;
   categoria_id: number;
-  qty: number;
+  stock: number;
   lugar_id: number;
   proveedor_id: number;
   costo: number;

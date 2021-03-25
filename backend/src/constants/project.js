@@ -8,12 +8,12 @@ recibo.cotizacion = {
   linea: [
     {
       item_id: 1,
-      qty: 30,
+      stock: 30,
       color: "negro",
     },
     {
       item_id: 2,
-      qty: 20,
+      stock: 20,
       color: "rojo",
     },
   ],

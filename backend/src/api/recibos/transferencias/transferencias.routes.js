@@ -43,7 +43,7 @@ router.post("/", async (req, res, next) => {
             itemALugar = await Item.query(trx).insertGraph(
               {
                 item_id,
-                qty: 0,
+                stock: 0,
                 color,
                 sku,
                 lugares: [

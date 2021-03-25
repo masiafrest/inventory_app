@@ -77,7 +77,7 @@ class Item extends BaseModel {
           "categoria_2_id",
           "color",
           "sku",
-          'qty'
+          "stock"
         );
       },
       getItemData(builder) {

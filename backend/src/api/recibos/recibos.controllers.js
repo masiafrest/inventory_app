@@ -39,8 +39,8 @@ async function addToDefectuoso(linea, trx) {
 // MAYBE: should change itemModQty to a reducer funcion: invReducer(itemInstance: Model, action: {type: string, qty:number, trx: knex.transaction}) => {if actio.type === x increment, else decrement, else return invInstance}
 async function itemModQty(itemInstance, qty, trx) {
   //descontar item
-  const result = itemInstance.qty - qty;
-  return await itemInstance.$query(trx).patch({ qty: result });
+  const result = itemInstance.stock - qty;
+  return await itemInstance.$query(trx).patch({ stock: result });
 }
 module.exports = {
   itemModQty,

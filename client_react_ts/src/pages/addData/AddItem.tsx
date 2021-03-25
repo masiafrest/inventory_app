@@ -11,7 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-export default function AddItem(props: any) {
+export default function AddItem() {
   const initialItem = {
     marca: "",
     modelo: "",
@@ -22,7 +22,7 @@ export default function AddItem(props: any) {
     precio: 0,
     precio_min: 0,
     categoria_id: 1,
-    qty: 0,
+    stock: 0,
     lugar_id: 1,
     proveedor_id: 1,
     costo: 0,
@@ -47,14 +47,14 @@ export default function AddItem(props: any) {
     "sku",
     "color",
     "precio",
-    'precio_min',
-    "qty",
+    "precio_min",
+    "stock",
     "costo",
   ];
 
   const renderTextField = itemDetails.map((detail) => (
     <TextField
-    style={{width:'25em'}}
+      style={{ width: "25em" }}
       key={detail}
       id={detail}
       name={detail}
@@ -71,9 +71,13 @@ export default function AddItem(props: any) {
   return (
     <Container maxWidth="md" fixed>
       <Typography variant="h2">Agregar Item</Typography>
-      <form noValidate onSubmit={handleSubmit} style={{
-        width:'25ch'
-      }}>
+      <form
+        noValidate
+        onSubmit={handleSubmit}
+        style={{
+          width: "25ch",
+        }}
+      >
         {renderTextField}
         <SelectsOptions
           onChange={handleChange}

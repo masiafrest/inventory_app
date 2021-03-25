@@ -53,7 +53,7 @@ exports.post = async (req, res, next) => {
       barcode,
       sku,
       categoria_id,
-      qty,
+      stock,
       lugar_id,
       color,
       precio,
@@ -67,7 +67,9 @@ exports.post = async (req, res, next) => {
     // image_url = JSON.stringify(image_url);
     console.log("no existe item");
     await Item.transaction(async (trx) => {
-      const existingItem = await Item.query().where({ marca, modelo, lugar_id }).first();
+      const existingItem = await Item.query()
+        .where({ marca, modelo, lugar_id })
+        .first();
       let insertedItem;
       console.log(existingItem);
       //check if item exist then incoming data is item of diferent color
@@ -86,7 +88,7 @@ exports.post = async (req, res, next) => {
             modelo,
             color,
             sku,
-            qty,
+            stock,
             lugar_id,
             categoria: [
               {
@@ -111,7 +113,7 @@ exports.post = async (req, res, next) => {
             logs: [
               {
                 usuario_id: req.userData.id,
-                ajuste: qty,
+                ajuste: stock,
                 evento: "crear",
                 proveedor: [
                   {

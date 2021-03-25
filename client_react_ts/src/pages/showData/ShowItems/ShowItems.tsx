@@ -100,7 +100,7 @@ export default function ShowItems() {
             </Typography>
             <EditFormDialog name={"descripcion"} data={obj} url={url} />
             <Typography>
-              {`Ubicacion: ${obj.lugar.direccion}, ${obj.lugar.tipo}. | Qty: ${obj.qty}`}
+              {`Ubicacion: ${obj.lugar.direccion}, ${obj.lugar.tipo}. | Stock: ${obj.stock}`}
             </Typography>
           </CardContent>
           <CardActions>
