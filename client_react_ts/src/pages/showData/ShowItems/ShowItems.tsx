@@ -106,6 +106,16 @@ export default function ShowItems() {
           <CardActions>
             <DeleteBtn url={url} id={obj.id} data={data} setData={setData} />
             <ChooseQtyFormBtn item={obj} />
+            <Button
+              onClick={() => {
+                const { lineas } = recibo.transferencia;
+                const newLinea = { ...obj };
+                newLinea.tipo = "transferencia";
+                dispatch(pushLinea(newLinea));
+              }}
+            >
+              transferir
+            </Button>
           </CardActions>
         </Card>
       </Grid>
