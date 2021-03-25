@@ -32,7 +32,7 @@ const DelRow = ({ item_id }) => {
 };
 
 //TODO: ver por q row no tiene lugar
-const ShowRows = ({ rows, ccyFormat }) => {
+const ShowRows = ({ rows}) => {
   console.log(rows);
   return rows.map((row) => (
     <TableRow key={row.id}>
@@ -41,14 +41,12 @@ const ShowRows = ({ rows, ccyFormat }) => {
         {row.qty}
       </TableCell>
       <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} `}</TableCell>
-      <TableCell align="center">{row.precio}</TableCell>
-      <TableCell align="center">{ccyFormat(row.precio)}</TableCell>
+      <TableCell align="center">{row.lugar.direccion}, {row.lugar.tipo}</TableCell>
     </TableRow>
   ));
 };
 
-function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
-  const { Subtotal, Taxes, Total } = invoice;
+function OrderTable({ items, onClickHandler }) {
   return (
     <TableContainer component={Paper}>
       <Table style={{ minWidth: 425 }} padding="default" size="small">
@@ -61,25 +59,11 @@ function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {<ShowRows rows={items} ccyFormat={ccyFormat} />}
+          {<ShowRows rows={items}/>}
           <TableRow>
             <IconButton size="small" onClick={onClickHandler}>
               <AddBoxIcon />
             </IconButton>
-          </TableRow>
-          <TableRow>
-            <TableCell rowSpan={3} />
-            <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(Subtotal)}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={1}>Tax</TableCell>
-            <TableCell align="right">{`${(tax * 100).toFixed(0)} %`}</TableCell>
-            <TableCell align="right">{ccyFormat(Taxes)}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(Total)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

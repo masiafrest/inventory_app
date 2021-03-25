@@ -41,6 +41,7 @@ interface Lineas {
   //transferencia
   item_id?: number;
   destino_lugar_id?: number;
+  lugar: {id: number; tipo:string; direccion: string}
 }
 
 interface Precio {
