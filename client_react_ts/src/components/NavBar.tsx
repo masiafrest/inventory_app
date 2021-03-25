@@ -41,7 +41,11 @@ function NavBar(props: any) {
     setIsDrawerOpen(isOpen);
   };
 
-  const NavLinkOnClick = ({to, children}) => <NavLink to={to} onClick= {toggleDrawer(false)}>{children}</NavLink>;
+  const NavLinkOnClick = ({ to, children }) => (
+    <NavLink to={to} onClick={toggleDrawer(false)}>
+      {children}
+    </NavLink>
+  );
 
   return (
     <div>
@@ -56,11 +60,11 @@ function NavBar(props: any) {
             onClose={toggleDrawer(false)}
           >
             <NavLinkOnClick to="/">Home</NavLinkOnClick>
-            <NavLinkOnClick to='/show/items' >Item</NavLinkOnClick>
-            <NavLinkOnClick to="/show/items">Search Item</NavLinkOnClick>
-            <NavLinkOnClick to="/usuarios">Search Usuario</NavLinkOnClick>
-            <NavLinkOnClick to="/table">orderTable</NavLinkOnClick>
-            <NavLinkOnClick to="/recibo">recibos</NavLinkOnClick>
+            <NavLinkOnClick to="/show/items">Items</NavLinkOnClick>
+            <NavLinkOnClick to="/recibo/venta">venta</NavLinkOnClick>
+            <NavLinkOnClick to="/recibo/transferencia">
+              transferencia
+            </NavLinkOnClick>
             {user.authenticated ? renderLogOutButton : null}
           </Drawer>
           {/* {location.pathname === "/showData" ? <SearchBar /> : null} */}
