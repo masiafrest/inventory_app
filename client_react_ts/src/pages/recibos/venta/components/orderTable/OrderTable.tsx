@@ -17,15 +17,16 @@ import { deleteLinea } from "../../../../../redux/features/recibo/reciboSlice";
 //types
 import { ItemRow } from "./OrderTableContainer";
 
-const DelRow = ({ inv_id }) => {
+const DelRow = ({ item_id }) => {
   const dispatch = useDispatch();
   const handleClick = () => {
-    console.log(inv_id);
-    dispatch(deleteLinea(inv_id));
+    console.log(item_id);
+    const tipoAndId = { tipo: "venta", item_id };
+    dispatch(deleteLinea(tipoAndId));
     window.location.reload();
   };
   return (
-    <IconButton size='small' onClick={handleClick} >
+    <IconButton size="small" onClick={handleClick}>
       <DeleteIcon />
     </IconButton>
   );
@@ -35,9 +36,10 @@ const ShowRows = ({ rows, ccyFormat }) => {
   console.log(rows);
   return rows.map((row) => (
     <TableRow key={row.id}>
-      <TableCell  align="left">
-      <DelRow inv_id={row.id} />
-        {row.qty}</TableCell>
+      <TableCell align="left">
+        <DelRow item_id={row.id} />
+        {row.qty}
+      </TableCell>
       <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} `}</TableCell>
       <TableCell align="center">{row.precio}</TableCell>
       <TableCell align="center">{ccyFormat(row.precio)}</TableCell>
@@ -49,7 +51,7 @@ function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
   const { Subtotal, Taxes, Total } = invoice;
   return (
     <TableContainer component={Paper}>
-      <Table style={{minWidth:425}} padding="default" size="small">
+      <Table style={{ minWidth: 425 }} padding="default" size="small">
         <TableHead>
           <TableRow>
             <TableCell align="center">Qty</TableCell>
@@ -61,7 +63,7 @@ function OrderTable({ items, ccyFormat, invoice, tax, onClickHandler }) {
         <TableBody>
           {<ShowRows rows={items} ccyFormat={ccyFormat} />}
           <TableRow>
-            <IconButton size='small'  onClick={onClickHandler}>
+            <IconButton size="small" onClick={onClickHandler}>
               <AddBoxIcon />
             </IconButton>
           </TableRow>

@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/rootReducer";
 import { pushLinea, addRecibo } from "../redux/features/recibo/reciboSlice";
 
-export default function ChooseQtyFormBtn({ inv }) {
-  console.log("choosebtnform, ", inv);
+export default function ChooseQtyFormBtn({ item }) {
+  console.log("choosebtnform, ", item);
   const recibo = useSelector((state: RootState) => state.recibo);
   const dispatch = useDispatch();
   const [qty, setQty] = useState(0);
@@ -15,18 +15,19 @@ export default function ChooseQtyFormBtn({ inv }) {
     setQty(e.target.value);
   };
 
-  const addToCartHandler = (inv) => {
-    const { lineas } = recibo;
+  const addToCartHandler = (item) => {
+    const { lineas } = recibo.venta;
     console.log(qty);
     console.log("lineas ", lineas);
-    const newLinea = { ...inv };
+    const newLinea = { ...item };
+    newLinea.tipo = "venta";
     newLinea.qty = qty;
     dispatch(pushLinea(newLinea));
   };
   return (
     <>
       <TextField label="qty" onChange={handleChange} />
-      <Button onClick={() => addToCartHandler(inv)}>agregar al recibo</Button>
+      <Button onClick={() => addToCartHandler(item)}>agregar al recibo</Button>
     </>
   );
 }

@@ -9,17 +9,21 @@ import { addClienteId } from "../../../../../redux/features/recibo/reciboSlice";
 export default function HeaderTable() {
   const dispatch = useDispatch();
   const recibo = useSelector((state: RootState) => state.recibo);
-  const [selectForm, setSelectForm] = useState();
+  const [cliente, setCliente] = useState([]);
 
   const onChangeHandler = (e) => {
     console.log(e.target.value);
-    dispatch(addClienteId(e.target.value));
-    setSelectForm(e.target.value);
+    const clienteReciboTipo = {
+      tipo: "venta",
+      empresa_cliente_id: e.target.value,
+    };
+    dispatch(addClienteId(clienteReciboTipo));
+    setCliente(e.target.value);
   };
   return (
     <Paper>
       <SelectsOptions
-        form={setSelectForm}
+        form={cliente}
         onChange={onChangeHandler}
         name="cliente"
         url={"clientes"}

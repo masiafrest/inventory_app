@@ -41,7 +41,7 @@ export default function ShowItems() {
   };
 
   const cardView = data.map((obj) => {
-    console.log(obj)
+    console.log(obj);
     const src = "http://localhost:5050/uploads/";
     const imgPlaceholder = "https://via.placeholder.com/200";
     console.log(obj.images.length);
@@ -105,7 +105,7 @@ export default function ShowItems() {
           </CardContent>
           <CardActions>
             <DeleteBtn url={url} id={obj.id} data={data} setData={setData} />
-            <ChooseQtyFormBtn inv={obj} />
+            <ChooseQtyFormBtn item={obj} />
           </CardActions>
         </Card>
       </Grid>

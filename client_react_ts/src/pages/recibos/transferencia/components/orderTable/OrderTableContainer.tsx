@@ -62,11 +62,10 @@ const invoice = {
 
 export default function OrderTableContainer() {
   const dispatch = useDispatch();
-  const recibo: Recibo = useSelector((state: RootState) => state.recibo);
+  const recibo: Recibos = useSelector((state: RootState) => state.recibo);
 
   const [items, setItems] = useState<ItemRow[]>([]);
-  const { lineas } = recibo;
-  console.log(recibo);
+  const { lineas } = recibo.transferencia;
   const history = useHistory();
 
   const onClickHandler = () => history.push("/show/items");

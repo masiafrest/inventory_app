@@ -24,16 +24,16 @@ const reciboSlice = createSlice({
   initialState,
   reducers: {
     addUserId: (state, action) => {
-      const tipoRecibo = action.payload.tipo;
-      state[tipoRecibo].usuario_id = action.payload.usuario_id;
+      state.venta.usuario_id = action.payload.usuario_id;
+      state.transferencia.usuario_id = action.payload.usuario_id;
     },
-    delUserId: (state, action) => {
-      const tipoRecibo = action.payload.tipo;
-      state[tipoRecibo].usuario_id = null;
+    delUserId: (state) => {
+      state.venta.usuario_id = null;
+      state.transferencia.usuario_id = null;
     },
     addClienteId: (state, action) => {
       const tipoRecibo = action.payload.tipo;
-      state[tipoRecibo].empresa_cliente_id = action.payload.cliente_id;
+      state[tipoRecibo].empresa_cliente_id = action.payload.empresa_cliente_id;
     },
     pushLinea: (state, action: PayloadAction<Lineas & Tipo>) => {
       //TODO: revisar si existe o no el item pusheado, si qty del payload es mayor actualizar la qty
@@ -57,11 +57,11 @@ const reciboSlice = createSlice({
       const tipoRecibo = action.payload.tipo;
       state[tipoRecibo] = action.payload;
     },
-    deleteLinea: (state, action: PayloadAction<number & Tipo>) => {
+    deleteLinea: (state, action: PayloadAction<Tipo & { item_id: number }>) => {
       const tipoRecibo = action.payload.tipo;
       console.log(action.payload);
       const newArr = state[tipoRecibo].lineas.filter(
-        (linea) => linea.id !== action.payload
+        (linea) => linea.id !== action.payload.item_id
       );
       state[tipoRecibo].lineas = newArr;
     },
