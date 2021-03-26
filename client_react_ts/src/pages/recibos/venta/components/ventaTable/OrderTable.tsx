@@ -35,7 +35,7 @@ const ShowRows = ({ rows }) => {
   return rows.map((row) => (
     <TableRow key={row.id}>
       <TableCell align="left">
-        <DelRow item_id={row.id} />
+      <DelRow item_id={row.id} />
         {row.qty}
       </TableCell>
       <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} `}</TableCell>
@@ -47,10 +47,10 @@ const ShowRows = ({ rows }) => {
 
 function OrderTable({ items, invoice, tax, onClickHandler }) {
   console.log(invoice)
-  const [ Subtotal, Taxes, Total ] = invoice;
+  const [Subtotal, Taxes, Total] = invoice;
   return (
     <TableContainer component={Paper}>
-      <Table style={{ minWidth: 300 }} padding="default" size="small">
+      <Table style={{ minWidth:300 }} padding="default" size="small">
         <TableHead>
           <TableRow>
             <TableCell align="center">Qty</TableCell>
