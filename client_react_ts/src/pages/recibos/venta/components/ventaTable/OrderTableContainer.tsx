@@ -42,9 +42,10 @@ export default function OrderTableContainer() {
   const onClickHandler = () => history.push("/show/items");
 
   const postReciboHandler = async () => {
+    console.log(recibo)
     //TODO: create factory function to create data to send recibo
-    const res = await axios.post("/recibos/venta", recibo);
-    console.log(res);
+    // const res = await axios.post("/recibos/venta", recibo);
+    // console.log(res);
   };
   useEffect(() => {
     setItems(lineas)

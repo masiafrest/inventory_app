@@ -14,17 +14,16 @@ interface RootUserCredentialsState {
 
 //recibo
 interface Recibos {
+  usuario_id: number;
+  empresa_cliente_id: number;
   venta: Venta;
   transferencia: Transferencia;
 }
 
 interface Venta {
-  usuario_id: number;
-  empresa_cliente_id: number;
   lineas: Lineas[];
 }
 interface Transferencia {
-  usuario_id: number;
   lineas: Lineas[];
 }
 

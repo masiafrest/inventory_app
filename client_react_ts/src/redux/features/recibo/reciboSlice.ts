@@ -3,14 +3,12 @@ import { RootState } from "../../rootReducer";
 
 //TODO: agregar recibo venta transferencia
 const initialState: Recibos = {
+  empresa_cliente_id: null,
+  usuario_id: null,
   venta: {
-    empresa_cliente_id: null,
-    usuario_id: null,
-    //estado??
     lineas: [],
   },
   transferencia: {
-    usuario_id: null,
     lineas: [],
   },
 };
@@ -24,16 +22,13 @@ const reciboSlice = createSlice({
   initialState,
   reducers: {
     addUserId: (state, action) => {
-      state.venta.usuario_id = action.payload.usuario_id;
-      state.transferencia.usuario_id = action.payload.usuario_id;
+      state.usuario_id = action.payload;
     },
     delUserId: (state) => {
-      state.venta.usuario_id = null;
-      state.transferencia.usuario_id = null;
+      state.usuario_id = null;
     },
     addClienteId: (state, action) => {
-      const tipoRecibo = action.payload.tipo;
-      state[tipoRecibo].empresa_cliente_id = action.payload.empresa_cliente_id;
+      state.empresa_cliente_id = action.payload.empresa_cliente_id;
     },
     pushLinea: (state, action: PayloadAction<Lineas & Tipo>) => {
       //TODO: revisar si existe o no el item pusheado, si qty del payload es mayor actualizar la qty
