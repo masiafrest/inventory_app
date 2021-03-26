@@ -18,24 +18,24 @@ function priceRow(qty: number, precio: number): number {
 }
 
 
-function subtotal(items: Lineas[]) {
+function calcSubTotal(items: Lineas[]) {
   const sub = items.map(({ precio, qty }) => precio.precio * qty).reduce((sum, i) => sum + i, 0);
   console.log(sub)
   return sub
 }
 
 const TAX_RATE = 0.07;
-const invoice = {
-  Subtotal: 0,
-  Taxes: 0,
-  Total: 0,
-};
 
 export default function OrderTableContainer() {
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
-
   const [items, setItems] = useState<typeof lineas>(lineas);
+  const [subTotal, setSubTotal] = useState(0)
+  const [taxes, setTaxes] = useState(0)
+  const [total, setTotal] = useState(0)
+
+  const invoice = [subTotal, taxes, total] 
+
   console.log(recibo);
   const history = useHistory();
 
@@ -48,9 +48,11 @@ export default function OrderTableContainer() {
   };
   useEffect(() => {
     setItems(lineas)
-    invoice.Subtotal = subtotal(items);
-    invoice.Taxes = TAX_RATE * invoice.Subtotal;
-    invoice.Total = invoice.Taxes + invoice.Subtotal;
+    setSubTotal(calcSubTotal(items))
+    setTaxes(TAX_RATE * subTotal)
+    setTotal(taxes + subTotal)
+     
+    console.log('useefect container: ', items, invoice)
     // if (lineas.length > 0) {
     //   lineas.forEach((linea) => {
     //     const row = createRow(linea);
@@ -73,7 +75,7 @@ export default function OrderTableContainer() {
     //     invoice.Total = invoice.Taxes + invoice.Subtotal;
     //   });
     // }
-  }, [lineas]);
+  }, [items, invoice]);
 
   return (
     <>

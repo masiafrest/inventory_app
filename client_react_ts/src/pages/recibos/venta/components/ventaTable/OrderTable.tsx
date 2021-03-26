@@ -47,7 +47,7 @@ const ShowRows = ({ rows }) => {
 
 function OrderTable({ items, invoice, tax, onClickHandler }) {
   console.log(invoice)
-  const { Subtotal, Taxes, Total } = invoice;
+  const [ Subtotal, Taxes, Total ] = invoice;
   return (
     <TableContainer component={Paper}>
       <Table style={{ minWidth: 425 }} padding="default" size="small">
