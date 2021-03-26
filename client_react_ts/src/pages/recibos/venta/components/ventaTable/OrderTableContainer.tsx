@@ -18,9 +18,14 @@ function priceRow(qty: number, precio: number): number {
 }
 
 
+function roundNum(num) {
+  return Math.round((num + Number.EPSILON) * 100) / 100
+}
+
 function calcSubTotal(items: Lineas[]) {
   const sub = items.map(({ precio, qty }) => precio.precio * qty).reduce((sum, i) => sum + i, 0);
   console.log(sub)
+  console.log(roundNum(sub))
   return sub
 }
 
@@ -31,10 +36,10 @@ export default function OrderTableContainer() {
   const { lineas } = recibo.venta;
   const [items, setItems] = useState<typeof lineas>(lineas);
   const [subTotal, setSubTotal] = useState(0)
-  const [taxes, setTaxes] = useState(0)
+  const [tax, setTax] = useState(0)
   const [total, setTotal] = useState(0)
 
-  const invoice = [subTotal, taxes, total] 
+  const invoice = [subTotal, tax, total]
 
   console.log(recibo);
   const history = useHistory();
@@ -42,17 +47,26 @@ export default function OrderTableContainer() {
   const onClickHandler = () => history.push("/show/items");
 
   const postReciboHandler = async () => {
-    console.log(recibo)
+    const { usuario_id, empresa_cliente_id } = recibo
+    const ventaObj = {
+      usuario_id, empresa_cliente_id,
+      sub_total: subTotal,
+      tax, total,
+      lineas
+    }
+    console.log(ventaObj)
     //TODO: create factory function to create data to send recibo
     // const res = await axios.post("/recibos/venta", recibo);
     // console.log(res);
   };
+
   useEffect(() => {
     setItems(lineas)
-    setSubTotal(calcSubTotal(items))
-    setTaxes(TAX_RATE * subTotal)
-    setTotal(taxes + subTotal)
-     
+    setSubTotal(roundNum(calcSubTotal(items)))
+    setTax(roundNum(TAX_RATE * subTotal)
+    )
+    setTotal(roundNum(tax + subTotal))
+
     console.log('useefect container: ', items, invoice)
     // if (lineas.length > 0) {
     //   lineas.forEach((linea) => {

@@ -69,16 +69,16 @@ function OrderTable({ items, invoice, tax, onClickHandler }) {
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{Subtotal.toFixed(2)}</TableCell>
+            <TableCell align="right">{Subtotal}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={1}>Tax</TableCell>
             <TableCell align="right">{`${(tax * 100).toFixed(0)} %`}</TableCell>
-            <TableCell align="right">{Taxes.toFixed(2)}</TableCell>
+            <TableCell align="right">{Taxes}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{Total.toFixed(2)}</TableCell>
+            <TableCell align="right">{Total}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
