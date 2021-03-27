@@ -1,7 +1,7 @@
 function sumTotal(linea, ventaTotal) {
   let { sub_total, tax } = ventaTotal;
   //sum precio * qty and add to req.body.sub_total
-  const lineaTotal = linea.precio * linea.qty;
+  const lineaTotal = linea.precio.precio * linea.qty;
   sub_total += lineaTotal;
   //sum tax to req.body.tax
   const notRoundedTax = (lineaTotal / 100) * 7;

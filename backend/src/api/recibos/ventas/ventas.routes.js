@@ -59,47 +59,38 @@ router.post("/", async (req, res, next) => {
     };
     //insertar la venta
     await Venta.transaction(async (trx) => {
+      const { empresa_cliente_id, usuario_id, venta: { lineas }, total, sub_total, tax } = req.body
       let itemLogs = [];
-      let encabezado = { ...req.body };
-      delete encabezado.lineas;
-      delete encabezado.pago;
-      const venta = await Venta.query(trx).insert(encabezado);
-      if (req.body.hasOwnProperty("lineas")) {
-        // descontar la qty de item y agregar historial al item_log y agregar venta.id a las lineas
-        await Promise.all(
-          // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
-          req.body.lineas.map(async (linea) => {
-            const { itemDB, precioDB } = await getItemAndPrecioDB(linea);
-            //check is precio is above precio_min
-            checkPrice(linea, precioDB, res);
-            ventaTotal = sumTotal(linea, ventaTotal);
-            // descontar y hacer historial del item
-            //descontar item
-            await itemModQty(itemDB, linea.qty, trx);
-            // hacer el item log
-            itemLogs.push(ItemLogFactory(req.body, linea, "venta", venta.id));
-          })
-        );
+      const ventaInstance = await Venta.query(trx).insert({ usuario_id, empresa_cliente_id });
+      // descontar la qty de item y agregar historial al item_log y agregar venta.id a las lineas
+      const venta = await Venta.query(trx).insertGraph({
+        '#id':'venta.id',
+        usuario_id, empresa_cliente_id, sub_total, tax, total,
+        lineas:[],
+        item_logs:[],
+         
+      },{
+        allowRefs: true
       }
-      // add tax and sub_total to req.body.total
-      ventaTotal.total = ventaTotal.tax + ventaTotal.sub_total;
-      //check if total is less than pago
-      const pagoTotal = Object.values(req.body.pago)
-        .reduce((acc, curVal) => {
-          return acc + curVal;
-        })
-        .toFixed(2);
-      console.log("pago total: ", pagoTotal, "venta total: ", ventaTotal.total);
-      if (ventaTotal.total > pagoTotal) {
-        const error = new Error("pago no es suficiente");
-        throw error;
-      }
-      encabezado = { ...encabezado, ...ventaTotal };
-      await venta.$query(trx).patch(encabezado);
-      await venta.$relatedQuery("lineas", trx).insert(req.body.lineas);
-      await venta.$relatedQuery("pago", trx).insert(req.body.pago);
-      await venta.$relatedQuery("item_logs", trx).insert(itemLogs);
-      res.json(venta);
+      )
+      // await Promise.all(
+      //   // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
+      //   lineas.map(async (linea) => {
+      //     const { itemDB } = await getItemAndPrecioDB(linea);
+      //     ventaTotal = sumTotal(linea, ventaTotal);
+      //     // descontar y hacer historial del item
+      //     //descontar item
+      //     await itemModQty(itemDB, linea.qty, trx);
+      //     // hacer el item log
+      //     itemLogs.push({
+      //       item_id: linea.id,
+      //       usuario_id, empresa_cliente_id, evento: 'venta',
+      //       ajuste: -linea.qty,
+      //       recibo_evento_id: ventaInstance.id
+      //     });
+      //   })
+      // );
+      res.json();
     });
   } catch (err) {
     next(err);

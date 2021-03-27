@@ -46,7 +46,7 @@ class Venta extends BaseModel {
           to: `${tableNames.pago}.id`,
         },
       },
-      inv_logs: {
+      item_logs: {
         relation: BaseModel.HasManyRelation,
         modelClass: Item_log,
         join: {
