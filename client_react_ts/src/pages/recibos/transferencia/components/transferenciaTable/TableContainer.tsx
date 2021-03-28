@@ -12,21 +12,6 @@ import {
   addClienteId,
 } from "../../../../../redux/features/recibo/reciboSlice";
 
-export interface ItemRow {
-  descripcion: string;
-  color: string;
-  id: number;
-  sku: string;
-  marca: string;
-  modelo: string;
-  qty: number;
-  precio: number;
-  lugar: {id: number; tipo:string; direccion: string}
-  total?: number;
-}
-
-let rows: ItemRow[] = [];
-
 export default function OrderTableContainer() {
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.transferencia;
@@ -38,20 +23,33 @@ export default function OrderTableContainer() {
   const onClickHandler = () => history.push("/show/items");
 
   const postReciboHandler = async () => {
-    const res = await axios.post("/recibos/transferencia", recibo.transferencia);
-    console.log(res);
+    const { usuario_id } = recibo;
+    const cleanLines = lineas.map((item) => {
+      const newLines = {
+        item_id: item.id,
+        qty: item.qty,
+        destino_lugar_id: "",
+      };
+      return newLines;
+    });
+    const transferObj = {
+      usuario_id,
+      lineas: cleanLines,
+    };
+    console.log(transferObj);
+    // const res = await axios.post("/recibos/transferencia", recibo.transferencia);
+    // console.log(res);
   };
   useEffect(() => {
-    setItems(lineas)
+    setItems(lineas);
   }, []);
 
   return (
     <>
-      <Table
-        items={items}
-        onClickHandler={onClickHandler}
-      />
-      <Button onClick={postReciboHandler} variant='contained'>agregar recibo</Button>
+      <Table items={items} onClickHandler={onClickHandler} />
+      <Button onClick={postReciboHandler} variant="contained">
+        agregar recibo
+      </Button>
     </>
   );
 }

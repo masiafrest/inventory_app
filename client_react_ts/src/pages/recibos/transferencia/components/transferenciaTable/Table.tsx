@@ -13,8 +13,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 import { useDispatch } from "react-redux";
 import { deleteLinea } from "../../../../../redux/features/recibo/reciboSlice";
-//types
-import { ItemRow } from "./TableContainer";
 
 const DelRow = ({ item_id }) => {
   const dispatch = useDispatch();
@@ -32,7 +30,7 @@ const DelRow = ({ item_id }) => {
 };
 
 //TODO: ver por q row no tiene lugar
-const ShowRows = ({ rows}) => {
+const ShowRows = ({ rows }) => {
   console.log(rows);
   return rows.map((row) => (
     <TableRow key={row.id}>
@@ -41,7 +39,9 @@ const ShowRows = ({ rows}) => {
         {row.qty}
       </TableCell>
       <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} `}</TableCell>
-      <TableCell align="center">{row.lugar.direccion}, {row.lugar.tipo}</TableCell>
+      <TableCell align="center">
+        {row.lugar.direccion}, {row.lugar.tipo}
+      </TableCell>
     </TableRow>
   ));
 };
@@ -59,7 +59,7 @@ function OrderTable({ items, onClickHandler }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {<ShowRows rows={items}/>}
+          {<ShowRows rows={items} />}
           <TableRow>
             <IconButton size="small" onClick={onClickHandler}>
               <AddBoxIcon />
