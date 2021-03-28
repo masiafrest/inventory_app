@@ -83,7 +83,7 @@ router.post("/", async (req, res, next) => {
           //descontar item
           await itemModQty(itemDB, linea.qty, trx);
           // hacer el item log
-          const itemLogs = {
+          const itemLog = {
             item_id: linea.item_id,
             usuario_id,
             empresa_cliente_id,
@@ -91,7 +91,7 @@ router.post("/", async (req, res, next) => {
             ajuste: -linea.qty,
             recibo_evento_id: venta.id,
           };
-          await venta.$relatedQuery("item_logs", trx).insert(itemLogs);
+          await venta.$relatedQuery("item_logs", trx).insert(itemLog);
         })
       );
       res.json(venta);

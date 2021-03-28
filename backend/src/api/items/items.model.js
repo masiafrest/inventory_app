@@ -85,12 +85,6 @@ class Item extends BaseModel {
       },
     };
   }
-  static afterInsert({ items, inputItems, relation }) {
-    console.log("Item..........................");
-    console.log("items:     ", items);
-    console.log("inputItems:", inputItems);
-    console.log("relation:  ", relation ? relation.name : "none");
-  }
 }
 
 module.exports = Item;

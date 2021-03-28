@@ -28,32 +28,6 @@ class Linea_venta extends BaseModel {
       },
     };
   }
-
-  static afterInsert({ items, inputItems, relation }) {
-    const Item = require("../../items/items.model");
-    console.log("LineasVentas..........................");
-    console.log("items:     ", items);
-    console.log("inputItems:", inputItems);
-    // inputItems: [
-    //   Linea_venta {
-    //     item_id: 4,
-    //     qty: '1',
-    //     precio: 12,
-    //     venta_id: 18,
-    //     created_at: '2021-03-28T19:37:51.954Z',
-    //     id: 6
-    //   },
-    //   Linea_venta {
-    //     item_id: 1,
-    //     qty: '1',
-    //     precio: 10.99,
-    //     venta_id: 18,
-    //     created_at: '2021-03-28T19:37:51.954Z',
-    //     id: 7
-    //   }
-    // ]
-    console.log("relation:  ", relation ? relation.name : "none");
-  }
 }
 
 module.exports = Linea_venta;
