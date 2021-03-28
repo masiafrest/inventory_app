@@ -10,10 +10,8 @@ async function getById(Model, id, res, next) {
   }
 }
 
-async function getItemAndPrecioDB(linea) {
-  let obj = {};
-  obj.itemDB = await Item.query().findById(linea.item_id);
-  obj.precioDB = await Precio.query().findById(obj.itemDB.precio_id);
+async function getItemDB(item_id) {
+  const obj = await Item.query().findById(item_id);
   return obj;
 }
 
@@ -45,7 +43,7 @@ async function itemModQty(itemInstance, qty, trx) {
 module.exports = {
   itemModQty,
   addToDefectuoso,
-  getItemAndPrecioDB,
+  getItemDB,
   getItemDB,
   getPrecioDB,
   getById,

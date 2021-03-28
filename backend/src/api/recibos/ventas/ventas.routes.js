@@ -1,7 +1,7 @@
 const express = require("express");
 const Venta = require("./ventas.model");
-const { sumTotal, checkPrice, ItemLogFactory } = require("../recibo.helpers");
-const { itemModQty, getItemAndPrecioDB } = require("../recibos.controllers");
+const { checkPrice } = require("../recibo.helpers");
+const { itemModQty, getItemDB } = require("../recibos.controllers");
 const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model");
 
 const router = express.Router();
@@ -78,7 +78,7 @@ router.post("/", async (req, res, next) => {
       await Promise.all(
         // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
         lineas.map(async (linea) => {
-          const { itemDB } = await getItemAndPrecioDB(linea);
+          const itemDB = await getItemDB(linea.item_id);
           // descontar y hacer historial del item
           //descontar item
           await itemModQty(itemDB, linea.qty, trx);
