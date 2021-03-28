@@ -10,9 +10,9 @@ async function getById(Model, id, res, next) {
   }
 }
 
-async function getItemAndPrecioDB(item) {
+async function getItemAndPrecioDB(linea) {
   let obj = {};
-  obj.itemDB = await Item.query().findById(item.item.id);
+  obj.itemDB = await Item.query().findById(linea.item_id);
   obj.precioDB = await Precio.query().findById(obj.itemDB.precio_id);
   return obj;
 }

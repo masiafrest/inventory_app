@@ -51,12 +51,6 @@ async function findByName(nombre, res, next) {
 
 router.post("/", async (req, res, next) => {
   try {
-    //resetear total, subtotal y tax a 0 para calcualr en el server
-    let ventaTotal = {
-      sub_total: 0,
-      tax: 0,
-      total: 0,
-    };
     //insertar la venta
     await Venta.transaction(async (trx) => {
       const {
@@ -67,44 +61,39 @@ router.post("/", async (req, res, next) => {
         sub_total,
         tax,
       } = req.body;
-      let itemLogs = [];
-      const ventaInstance = await Venta.query(trx).insert({
-        usuario_id,
-        empresa_cliente_id,
-      });
       // descontar la qty de item y agregar historial al item_log y agregar venta.id a las lineas
       const venta = await Venta.query(trx).insertGraph(
         {
-          "#id": "venta.id",
           usuario_id,
           empresa_cliente_id,
           sub_total,
           tax,
           total,
           lineas,
-          item_logs: [],
         },
         {
           allowRefs: true,
         }
       );
-      // await Promise.all(
-      //   // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
-      //   lineas.map(async (linea) => {
-      //     const { itemDB } = await getItemAndPrecioDB(linea);
-      //     ventaTotal = sumTotal(linea, ventaTotal);
-      //     // descontar y hacer historial del item
-      //     //descontar item
-      //     await itemModQty(itemDB, linea.qty, trx);
-      //     // hacer el item log
-      //     itemLogs.push({
-      //       item_id: linea.id,
-      //       usuario_id, empresa_cliente_id, evento: 'venta',
-      //       ajuste: -linea.qty,
-      //       recibo_evento_id: ventaInstance.id
-      //     });
-      //   })
-      // );
+      await Promise.all(
+        // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
+        lineas.map(async (linea) => {
+          const { itemDB } = await getItemAndPrecioDB(linea);
+          // descontar y hacer historial del item
+          //descontar item
+          await itemModQty(itemDB, linea.qty, trx);
+          // hacer el item log
+          const itemLogs = {
+            item_id: linea.item_id,
+            usuario_id,
+            empresa_cliente_id,
+            evento: "venta",
+            ajuste: -linea.qty,
+            recibo_evento_id: venta.id,
+          };
+          await venta.$relatedQuery("item_logs", trx).insert(itemLogs);
+        })
+      );
       res.json(venta);
     });
   } catch (err) {
