@@ -59,20 +59,35 @@ router.post("/", async (req, res, next) => {
     };
     //insertar la venta
     await Venta.transaction(async (trx) => {
-      const { empresa_cliente_id, usuario_id, venta: { lineas }, total, sub_total, tax } = req.body
+      const {
+        empresa_cliente_id,
+        usuario_id,
+        lineas,
+        total,
+        sub_total,
+        tax,
+      } = req.body;
       let itemLogs = [];
-      const ventaInstance = await Venta.query(trx).insert({ usuario_id, empresa_cliente_id });
+      const ventaInstance = await Venta.query(trx).insert({
+        usuario_id,
+        empresa_cliente_id,
+      });
       // descontar la qty de item y agregar historial al item_log y agregar venta.id a las lineas
-      const venta = await Venta.query(trx).insertGraph({
-        '#id':'venta.id',
-        usuario_id, empresa_cliente_id, sub_total, tax, total,
-        lineas:[],
-        item_logs:[],
-         
-      },{
-        allowRefs: true
-      }
-      )
+      const venta = await Venta.query(trx).insertGraph(
+        {
+          "#id": "venta.id",
+          usuario_id,
+          empresa_cliente_id,
+          sub_total,
+          tax,
+          total,
+          lineas,
+          item_logs: [],
+        },
+        {
+          allowRefs: true,
+        }
+      );
       // await Promise.all(
       //   // usamos Promise porq map a un array y en los callback hacer await hace q map regrese un array con objeto de promesa pendiente y no agregara sub_total, tax y total a req.body por q esta pendiente la promesa
       //   lineas.map(async (linea) => {
@@ -90,7 +105,7 @@ router.post("/", async (req, res, next) => {
       //     });
       //   })
       // );
-      res.json();
+      res.json(venta);
     });
   } catch (err) {
     next(err);

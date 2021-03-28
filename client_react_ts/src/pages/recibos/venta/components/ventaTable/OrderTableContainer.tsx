@@ -12,21 +12,21 @@ import {
   addClienteId,
 } from "../../../../../redux/features/recibo/reciboSlice";
 
-
 function priceRow(qty: number, precio: number): number {
   return qty * precio;
 }
 
-
 function roundNum(num) {
-  return Math.round((num + Number.EPSILON) * 100) / 100
+  return Math.round((num + Number.EPSILON) * 100) / 100;
 }
 
 function calcSubTotal(items: Lineas[]) {
-  const sub = items.map(({ precio, qty }) => precio.precio * qty).reduce((sum, i) => sum + i, 0);
-  console.log(sub)
-  console.log(roundNum(sub))
-  return sub
+  const sub = items
+    .map(({ precio, qty }) => precio.precio * qty)
+    .reduce((sum, i) => sum + i, 0);
+  console.log(sub);
+  console.log(roundNum(sub));
+  return sub;
 }
 
 const TAX_RATE = 0.07;
@@ -35,11 +35,11 @@ export default function OrderTableContainer() {
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
   const [items, setItems] = useState<typeof lineas>(lineas);
-  const [subTotal, setSubTotal] = useState(0)
-  const [tax, setTax] = useState(0)
-  const [total, setTotal] = useState(0)
+  const [subTotal, setSubTotal] = useState(0);
+  const [tax, setTax] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  const invoice = [subTotal, tax, total]
+  const invoice = [subTotal, tax, total];
 
   console.log(recibo);
   const history = useHistory();
@@ -47,27 +47,36 @@ export default function OrderTableContainer() {
   const onClickHandler = () => history.push("/show/items");
 
   const postReciboHandler = async () => {
-    const { usuario_id, empresa_cliente_id } = recibo
+    const { usuario_id, empresa_cliente_id } = recibo;
+    const cleanLines = lineas.map((item) => {
+      const newLines = {
+        item_id: item.id,
+        qty: item.qty,
+        precio: item.precio.precio,
+      };
+      return newLines;
+    });
     const ventaObj = {
-      usuario_id, empresa_cliente_id,
+      usuario_id,
+      empresa_cliente_id,
       sub_total: subTotal,
-      tax, total,
-      lineas
-    }
-    console.log(ventaObj)
+      tax,
+      total,
+      lineas: cleanLines,
+    };
+    console.log(ventaObj);
     //TODO: create factory function to create data to send recibo
     // const res = await axios.post("/recibos/venta", recibo);
     // console.log(res);
   };
 
   useEffect(() => {
-    setItems(lineas)
-    setSubTotal(roundNum(calcSubTotal(items)))
-    setTax(roundNum(TAX_RATE * subTotal)
-    )
-    setTotal(roundNum(tax + subTotal))
+    setItems(lineas);
+    setSubTotal(roundNum(calcSubTotal(items)));
+    setTax(roundNum(TAX_RATE * subTotal));
+    setTotal(roundNum(tax + subTotal));
 
-    console.log('useefect container: ', items, invoice)
+    console.log("useefect container: ", items, invoice);
     // if (lineas.length > 0) {
     //   lineas.forEach((linea) => {
     //     const row = createRow(linea);
