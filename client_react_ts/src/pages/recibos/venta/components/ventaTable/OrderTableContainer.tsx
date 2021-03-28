@@ -64,10 +64,8 @@ export default function OrderTableContainer() {
       total,
       lineas: cleanLines,
     };
-    console.log(ventaObj);
-    //TODO: create factory function to create data to send recibo
-    // const res = await axios.post("/recibos/venta", recibo);
-    // console.log(res);
+    const res = await axios.post("/recibos/venta", ventaObj);
+    console.log(res);
   };
 
   useEffect(() => {
