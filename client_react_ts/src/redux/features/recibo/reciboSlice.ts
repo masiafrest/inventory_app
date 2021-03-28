@@ -28,7 +28,8 @@ const reciboSlice = createSlice({
       state.usuario_id = null;
     },
     addClienteId: (state, action) => {
-      state.empresa_cliente_id = action.payload.empresa_cliente_id;
+      console.log(action.payload);
+      state.empresa_cliente_id = action.payload;
     },
     pushLinea: (state, action: PayloadAction<Lineas & Tipo>) => {
       //TODO: revisar si existe o no el item pusheado, si qty del payload es mayor actualizar la qty

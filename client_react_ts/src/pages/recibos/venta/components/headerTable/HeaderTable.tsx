@@ -13,11 +13,7 @@ export default function HeaderTable() {
 
   const onChangeHandler = (e) => {
     console.log(e.target.value);
-    const clienteReciboTipo = {
-      tipo: "venta",
-      empresa_cliente_id: e.target.value,
-    };
-    dispatch(addClienteId(clienteReciboTipo));
+    dispatch(addClienteId(e.target.value));
     setCliente(e.target.value);
   };
   return (
