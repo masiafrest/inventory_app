@@ -73,30 +73,6 @@ export default function OrderTableContainer() {
     setSubTotal(roundNum(calcSubTotal(items)));
     setTax(roundNum(TAX_RATE * subTotal));
     setTotal(roundNum(tax + subTotal));
-
-    console.log("useefect container: ", items, invoice);
-    // if (lineas.length > 0) {
-    //   lineas.forEach((linea) => {
-    //     const row = createRow(linea);
-
-    //     console.log("items.lenght", items.length);
-    //     if (items.length === 0) {
-    //       setItems((value) => value.concat(row));
-    //       console.log("items.some === 0", items);
-    //     } else {
-    //       console.log("items.some > 0", items);
-    //       items.some((item) => {
-    //         if (item.sku !== row.sku) {
-    //           setItems((value) => value.concat(row));
-    //           console.log("items.sku !== row.sku: ", items);
-    //         }
-    //       });
-    //     }
-    //     invoice.Subtotal = subtotal(items);
-    //     invoice.Taxes = TAX_RATE * invoice.Subtotal;
-    //     invoice.Total = invoice.Taxes + invoice.Subtotal;
-    //   });
-    // }
   }, [items, invoice]);
 
   return (
