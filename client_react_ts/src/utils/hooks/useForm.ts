@@ -17,6 +17,7 @@ export default function useForm<T extends Object>(
     try {
       const res = await axios.post(url, data);
       console.log(res.data);
+      setData(initialState)
     } catch (err) {
       console.log(err);
     }

@@ -82,6 +82,8 @@ export default function useForm<T>(initialState: T, url: string) {
           "Content-Type": "multipart/form-data",
         },
       });
+      setData(initialState)
+      setPreviewImg('')
       console.log(res.data);
     } catch (err) {
       console.log(err);
