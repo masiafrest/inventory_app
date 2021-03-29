@@ -20,6 +20,7 @@ const reciboSlice = createSlice({
   name: "recibos",
   initialState,
   reducers: {
+    //TODO: add change qty reducer
     addUserId: (state, action) => {
       state.usuario_id = action.payload;
     },
