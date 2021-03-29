@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { DataContext } from "../FetchDataContainer";
 import { Paper, Typography, Fab, Grid } from "@material-ui/core";
 import AddBoxIcon from "@material-ui/icons/AddBox";
+const localIp = require('../../../localIp')
 
 export default function PaperView({ details, images, path }) {
   const paperStyle: React.CSSProperties = {
@@ -23,7 +24,7 @@ export default function PaperView({ details, images, path }) {
               <img
                 alt=""
                 style={{ height: 100, width: 100 }}
-                src={`http://localhost:5050/uploads/${images}`}
+                src={`http://${localIp}:5050/uploads/${images}`}
               />
             </Grid>
           )}

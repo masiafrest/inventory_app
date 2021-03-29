@@ -1,3 +1,4 @@
+import {localIp} from '../../../localIp'
 import { useState } from "react";
 import useFetchData from "../../../utils/hooks/useFetchData";
 import Fab from "../../../components/FloatBtnAdd";
@@ -30,8 +31,7 @@ export default function ShowItems() {
   const recibo = useSelector((state: RootState) => state.recibo);
 
   const cardView = data.map((obj) => {
-    console.log(obj);
-    const src = "http://localhost:5050/uploads/";
+    const src = "http://"+ localIp +"/uploads/";
     const imgPlaceholder = "https://via.placeholder.com/200";
     console.log(obj.images.length);
     const activeImg =
@@ -116,7 +116,7 @@ export default function ShowItems() {
       <Grid container spacing={2}>
         {cardView}
       </Grid>
-      <Fab />
+      <Fab url='/add/item'/>
     </>
   );
 }

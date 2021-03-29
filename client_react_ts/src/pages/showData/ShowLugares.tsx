@@ -29,7 +29,7 @@ export default function ShowLugares() {
     <>
       <Typography variant="h3"> Lugares</Typography>
       {paperView}
-      <Fab />
+      <Fab url='/add/lugar' />
     </>
   );
 }

@@ -30,7 +30,7 @@ export default function ShowRoles() {
     <>
       <Typography variant="h3"> Roles</Typography>
       {paperView}
-      <Fab />
+      <Fab url='/add/rol'/>
     </>
   );
 }

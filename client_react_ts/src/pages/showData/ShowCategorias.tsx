@@ -34,7 +34,7 @@ export default function ShowCategorias() {
     <>
       <Typography variant="h3"> Categorias</Typography>
       {paperView}
-      <Fab />
+      <Fab url='/add/categoria' />
     </>
   );
 }

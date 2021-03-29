@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import axios from "axios";
+import axios from "axios"
+import {localIp} from "./localIp";
 import jwtDecode from "jwt-decode";
 
 //redux
@@ -27,7 +28,8 @@ import NavBar from "./components/NavBar";
 import AuthRouth from "./components/AuthRouth";
 import ErrorHandler from "./components/ErrorHandler";
 
-axios.defaults.baseURL = "http://localhost:5050/api/v1";
+console.log("http://"+localIp+":5050/api/v1")
+axios.defaults.baseURL = "http://"+localIp+":5050/api/v1";
 
 const token = localStorage.token;
 if (token) {

@@ -40,7 +40,7 @@ export default function ShowProveedores() {
     <>
       <Typography variant="h3">Proveedores</Typography>
       {paperView}
-      <Fab />
+      <Fab url='/add/proveedor' />
     </>
   );
 }

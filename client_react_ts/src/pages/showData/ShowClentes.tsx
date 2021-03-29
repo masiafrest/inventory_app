@@ -41,7 +41,7 @@ export default function ShowClientes() {
     <>
       <Typography variant="h3"> Clientes</Typography>
       {paperView}
-      <Fab />
+      <Fab url='/add/cliente' />
     </>
   );
 }
