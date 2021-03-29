@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../rootReducer";
 
 //TODO: agregar recibo venta transferencia
 const initialState: Recibos = {
@@ -34,7 +33,6 @@ const reciboSlice = createSlice({
     pushLinea: (state, action: PayloadAction<Lineas & Tipo>) => {
       //TODO: revisar si existe o no el item pusheado, si qty del payload es mayor actualizar la qty
       const tipoRecibo = action.payload.tipo;
-      action.payload.id = action.payload.id;
       const hasId = state[tipoRecibo].lineas.some(
         (linea, idx) => linea.id === action.payload.id
       );
@@ -44,7 +42,6 @@ const reciboSlice = createSlice({
             state[tipoRecibo].lineas[idx] = action.payload;
           }
         });
-        console.log("hasId");
       } else {
         state[tipoRecibo].lineas.push(action.payload);
       }

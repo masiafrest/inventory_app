@@ -2,28 +2,22 @@ import { useState } from "react";
 import useFetchData from "../../../utils/hooks/useFetchData";
 import Fab from "../../../components/FloatBtnAdd";
 import EditFormDialog from "../../../components/EditableField/EditFormDialog";
-import { useHistory } from "react-router-dom";
 import DeleteBtn from "../../../components/DeleteBtn";
 import ChooseQtyFormBtn from "../../../components/ChooseQtyFormBtn";
 
 //Redux
 import { RootState } from "../../../redux/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  pushLinea,
-  addRecibo,
-} from "../../../redux/features/recibo/reciboSlice";
+import { pushLinea } from "../../../redux/features/recibo/reciboSlice";
 
 import {
   Paper,
   MobileStepper,
   Typography,
   Button,
-  CardMedia,
   CardContent,
   CardActions,
   Card,
-  CardActionArea,
   Grid,
 } from "@material-ui/core/";
 
@@ -31,14 +25,9 @@ export default function ShowItems() {
   const url = "/items";
   const { data, setData } = useFetchData(url);
   const [activeStep, setActiveStep] = useState(0);
-  const history = useHistory();
 
   const dispatch = useDispatch();
   const recibo = useSelector((state: RootState) => state.recibo);
-
-  const handleAddItem = () => {
-    // add to recibo
-  };
 
   const cardView = data.map((obj) => {
     console.log(obj);

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useFormImage from "../../utils/hooks/useFormImage";
 import SelectsOptions from "../../components/SelectsOptions";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
@@ -8,7 +7,6 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function AddUsuario(props: any) {
   const {
@@ -25,9 +23,6 @@ export default function AddUsuario(props: any) {
     },
     "/usuarios/addUser"
   );
-
-  const [errors, setErrors] = useState<any>();
-  const [loading, setLoading] = useState(false);
 
   const usuarioDetails = [
     "nombre",
@@ -69,14 +64,8 @@ export default function AddUsuario(props: any) {
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={loading}
-        >
+        <Button type="submit" variant="contained" color="primary">
           Agregar
-          {loading && <CircularProgress size={30} />}
         </Button>
         <br></br>
       </form>

@@ -1,4 +1,3 @@
-import React, { ReactElement } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -7,7 +6,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -35,22 +33,24 @@ const ShowRows = ({ rows }) => {
   return rows.map((row) => (
     <TableRow key={row.id}>
       <TableCell align="left">
-      <DelRow item_id={row.id} />
+        <DelRow item_id={row.id} />
         {row.qty}
       </TableCell>
       <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} `}</TableCell>
       <TableCell align="right">{row.precio.precio.toFixed(2)}</TableCell>
-      <TableCell align="right">{(row.precio.precio * row.qty).toFixed(2)}</TableCell>
+      <TableCell align="right">
+        {(row.precio.precio * row.qty).toFixed(2)}
+      </TableCell>
     </TableRow>
   ));
 };
 
 function OrderTable({ items, invoice, tax, onClickHandler }) {
-  console.log(invoice)
+  console.log(invoice);
   const [Subtotal, Taxes, Total] = invoice;
   return (
     <TableContainer component={Paper}>
-      <Table style={{ minWidth:300 }} padding="default" size="small">
+      <Table style={{ minWidth: 300 }} padding="default" size="small">
         <TableHead>
           <TableRow>
             <TableCell align="center">Qty</TableCell>

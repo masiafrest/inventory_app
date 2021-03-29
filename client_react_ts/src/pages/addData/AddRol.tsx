@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useForm from "../../utils/hooks/useForm";
 
 //MUI
@@ -6,7 +5,6 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 interface Rol {
   tipo: string;
@@ -18,8 +16,6 @@ export default function AddRol(props: any) {
     "/usuarios/roles"
   );
   //   const [previewImg, setPreviewImg] = useState("");
-  const [errors, setErrors] = useState<any>();
-  const [loading, setLoading] = useState(false);
 
   const rolDetails = ["tipo"];
 
@@ -45,14 +41,8 @@ export default function AddRol(props: any) {
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={loading}
-        >
+        <Button type="submit" variant="contained" color="primary">
           Agregar
-          {loading && <CircularProgress size={30} />}
         </Button>
         <br></br>
       </form>

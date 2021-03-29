@@ -4,17 +4,12 @@ import useFetchData from "../../utils/hooks/useFetchData";
 // import useFetch from "../../utils/hooks/useFetch";
 import Fab from "../../components/FloatBtnAdd";
 
-import { Paper, Typography, Grid } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 export default function ShowProveedores() {
   // const { data } = useFetch("/categorias", []);
   const url = "/proveedores";
   const { data } = useFetchData(url);
-  const paperStyle: React.CSSProperties = {
-    margin: 20,
-    padding: 20,
-    paddingLeft: 50,
-  };
   console.log(data);
   const paperView = data.map((data) => (
     <WithPaperView dataArr={data}>

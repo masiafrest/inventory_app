@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SelectsOptions from "../../components/SelectsOptions";
 import useForm from "../../utils/hooks/useForm";
 
@@ -7,7 +6,6 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 //Redux
 
@@ -23,8 +21,6 @@ export default function AddDefectuoso(props: any) {
     "/defectuoso"
   );
   //   const [previewImg, setPreviewImg] = useState("");
-  const [errors, setErrors] = useState<any>();
-  const [loading, setLoading] = useState(false);
 
   const defectuosoDetails = ["descripcion"];
 
@@ -56,14 +52,8 @@ export default function AddDefectuoso(props: any) {
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={loading}
-        >
+        <Button type="submit" variant="contained" color="primary">
           Agregar
-          {loading && <CircularProgress size={30} />}
         </Button>
         <br></br>
       </form>

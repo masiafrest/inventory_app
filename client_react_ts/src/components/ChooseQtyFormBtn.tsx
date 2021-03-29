@@ -1,9 +1,9 @@
-import { Button, TextField, Typography } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/rootReducer";
-import { pushLinea, addRecibo } from "../redux/features/recibo/reciboSlice";
+import { pushLinea } from "../redux/features/recibo/reciboSlice";
 
 export default function ChooseQtyFormBtn({ item }) {
   console.log("choosebtnform, ", item);

@@ -6,8 +6,8 @@ import { useHistory } from "react-router-dom";
 export default function SelectsOptions({ onChange, name, url, form }) {
   const history = useHistory();
   const [data, setData] = useState([]);
+
   useEffect(() => {
-    console.log("url ", url);
     axios
       .get("/" + url)
       .then((res) => {
@@ -51,6 +51,7 @@ export default function SelectsOptions({ onChange, name, url, form }) {
   ));
 
   const name_id = `${name}_id`;
+  console.log("select options ", form);
 
   return (
     <Grid item key={`${name}-select`}>

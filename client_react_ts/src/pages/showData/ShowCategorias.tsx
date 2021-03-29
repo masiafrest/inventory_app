@@ -7,7 +7,6 @@ import { Paper, Typography, Grid } from "@material-ui/core";
 
 export default function ShowCategorias() {
   const url = "/categorias";
-  // const { data } = useFetch("/categorias", []);
   const { data } = useFetchData(url);
   console.log("categorias");
   const paperStyle: React.CSSProperties = {

@@ -6,8 +6,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
-
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -30,9 +28,9 @@ const DelRow = ({ item_id }) => {
 };
 
 //TODO: ver por q row no tiene lugar
-const ShowRows = ({ rows }) => {
-  console.log(rows);
-  return rows.map((row) => (
+
+function OrderTable({ items, onClickHandler, SelectComp }) {
+  const showRows = items.map((row) => (
     <TableRow key={row.id}>
       <TableCell align="left">
         <DelRow item_id={row.id} />
@@ -42,11 +40,10 @@ const ShowRows = ({ rows }) => {
       <TableCell align="center">
         {row.lugar.direccion}, {row.lugar.tipo}
       </TableCell>
+      <TableCell align="center"></TableCell>
     </TableRow>
   ));
-};
 
-function OrderTable({ items, onClickHandler }) {
   return (
     <TableContainer component={Paper}>
       <Table style={{ minWidth: 425 }} padding="default" size="small">
@@ -59,7 +56,7 @@ function OrderTable({ items, onClickHandler }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {<ShowRows rows={items} />}
+          {showRows}
           <TableRow>
             <IconButton size="small" onClick={onClickHandler}>
               <AddBoxIcon />

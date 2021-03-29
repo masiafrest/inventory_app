@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import OrderTable from "./OrderTable";
@@ -6,15 +6,7 @@ import { Button } from "@material-ui/core";
 
 //redux
 import { RootState } from "../../../../../redux/rootReducer";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  addRecibo,
-  addClienteId,
-} from "../../../../../redux/features/recibo/reciboSlice";
-
-function priceRow(qty: number, precio: number): number {
-  return qty * precio;
-}
+import { useSelector } from "react-redux";
 
 function roundNum(num) {
   return Math.round((num + Number.EPSILON) * 100) / 100;

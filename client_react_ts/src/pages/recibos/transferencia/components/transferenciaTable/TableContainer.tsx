@@ -1,26 +1,27 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import Table from "./Table";
 import { Button } from "@material-ui/core";
 
+import SelectLugar from "../SelectLugar";
+
 //redux
 import { RootState } from "../../../../../redux/rootReducer";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  addRecibo,
-  addClienteId,
-} from "../../../../../redux/features/recibo/reciboSlice";
+import { useSelector } from "react-redux";
 
 export default function OrderTableContainer() {
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.transferencia;
-  const dispatch = useDispatch();
 
   const [items, setItems] = useState<typeof lineas>([]);
+  const [destinoId, setDestinoId] = useState(0);
   const history = useHistory();
 
   const onClickHandler = () => history.push("/show/items");
+
+  const onSelectHandler = (e) => {
+    setDestinoId(e.target.value);
+  };
 
   const postReciboHandler = async () => {
     const { usuario_id } = recibo;
@@ -28,7 +29,7 @@ export default function OrderTableContainer() {
       const newLines = {
         item_id: item.id,
         qty: item.qty,
-        destino_lugar_id: "",
+        destino_lugar_id: destinoId,
       };
       return newLines;
     });
@@ -46,7 +47,17 @@ export default function OrderTableContainer() {
 
   return (
     <>
-      <Table items={items} onClickHandler={onClickHandler} />
+      <Table
+        items={items}
+        onClickHandler={onClickHandler}
+        SelectComp={
+          <SelectLugar
+            destinoId={destinoId}
+            onChange={onSelectHandler}
+            name="lugar"
+          />
+        }
+      />
       <Button onClick={postReciboHandler} variant="contained">
         agregar recibo
       </Button>

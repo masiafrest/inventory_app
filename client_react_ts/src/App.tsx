@@ -19,14 +19,12 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import AddData from "./pages/addData";
 import ShowData from "./pages/showData";
-import Recibo from './pages/recibos'
+import Recibo from "./pages/recibos";
 
 import { Container } from "@material-ui/core";
 // Components
 import NavBar from "./components/NavBar";
 import AuthRouth from "./components/AuthRouth";
-import OrderTableContainer from "./pages/recibos/venta/components/ventaTable/OrderTableContainer";
-import FetchDataContainer from "./components/FetchData/FetchDataContainer";
 import ErrorHandler from "./components/ErrorHandler";
 
 axios.defaults.baseURL = "http://localhost:5050/api/v1";
