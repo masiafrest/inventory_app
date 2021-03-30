@@ -1,1 +1,2 @@
-export  const localIp= '192.168.1.106'
+export const localIp = "localhost";
+// 192.168.1.106

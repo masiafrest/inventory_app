@@ -31,11 +31,17 @@ const reciboSlice = createSlice({
       console.log(action.payload);
       state.empresa_cliente_id = action.payload;
     },
+    modQty: (state, action) => {
+      console.log(action.payload);
+      const tipoRecibo = action.payload.tipo;
+      const { idx, qty } = action.payload;
+      state[tipoRecibo].lineas[idx].qty = qty;
+    },
     pushLinea: (state, action: PayloadAction<Lineas & Tipo>) => {
       //TODO: revisar si existe o no el item pusheado, si qty del payload es mayor actualizar la qty
       const tipoRecibo = action.payload.tipo;
       const hasId = state[tipoRecibo].lineas.some(
-        (linea, idx) => linea.id === action.payload.id
+        (linea) => linea.id === action.payload.id
       );
       if (hasId) {
         state[tipoRecibo].lineas.filter((linea, idx) => {
@@ -67,6 +73,7 @@ export const {
   delUserId,
   addClienteId,
   pushLinea,
+  modQty,
   addRecibo,
   deleteLinea,
 } = reciboSlice.actions;

@@ -1,15 +1,10 @@
-import {localIp} from '../../../localIp'
+import { localIp } from "../../../localIp";
 import { useState } from "react";
 import useFetchData from "../../../utils/hooks/useFetchData";
 import Fab from "../../../components/FloatBtnAdd";
 import EditFormDialog from "../../../components/EditableField/EditFormDialog";
 import DeleteBtn from "../../../components/DeleteBtn";
-import ChooseQtyFormBtn from "../../../components/ChooseQtyFormBtn";
-
-//Redux
-import { RootState } from "../../../redux/rootReducer";
-import { useSelector, useDispatch } from "react-redux";
-import { pushLinea } from "../../../redux/features/recibo/reciboSlice";
+import AddBtn from "./components/AddBtn";
 
 import {
   Paper,
@@ -27,11 +22,8 @@ export default function ShowItems() {
   const { data, setData } = useFetchData(url);
   const [activeStep, setActiveStep] = useState(0);
 
-  const dispatch = useDispatch();
-  const recibo = useSelector((state: RootState) => state.recibo);
-
   const cardView = data.map((obj) => {
-    const src = "http://"+ localIp +"/uploads/";
+    const src = "http://" + localIp + ":5050/uploads/";
     const imgPlaceholder = "https://via.placeholder.com/200";
     console.log(obj.images.length);
     const activeImg =
@@ -94,17 +86,12 @@ export default function ShowItems() {
           </CardContent>
           <CardActions>
             <DeleteBtn url={url} id={obj.id} data={data} setData={setData} />
-            <ChooseQtyFormBtn item={obj} />
-            <Button
-              onClick={() => {
-                const { lineas } = recibo.transferencia;
-                const newLinea = { ...obj };
-                newLinea.tipo = "transferencia";
-                dispatch(pushLinea(newLinea));
-              }}
-            >
+            <AddBtn obj={obj} reciboTipo="venta">
+              agregar a venta
+            </AddBtn>
+            <AddBtn obj={obj} reciboTipo="transferencia">
               transferir
-            </Button>
+            </AddBtn>
           </CardActions>
         </Card>
       </Grid>
@@ -116,7 +103,7 @@ export default function ShowItems() {
       <Grid container spacing={2}>
         {cardView}
       </Grid>
-      <Fab url='/add/item'/>
+      <Fab url="/add/item" />
     </>
   );
 }

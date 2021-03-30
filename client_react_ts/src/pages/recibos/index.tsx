@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/rootReducer";
 import { addUserId } from "../../redux/features/recibo/reciboSlice";
 
-export default function AddData() {
+export default function Recibos() {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   dispatch(addUserId(user.credentials.id));

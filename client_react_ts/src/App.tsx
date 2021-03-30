@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.css";
-import axios from "axios"
+import axios from "axios";
 import { localIp } from "./localIp";
 import jwtDecode from "jwt-decode";
-import { reciboPaths, addPaths, showPaths } from './paths'
+import { reciboPaths, addPaths, showPaths } from "./paths";
 
 //redux
 import store, { persistor } from "./redux/stores";
@@ -20,7 +19,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import AddData from "./pages/addData";
 import ShowData from "./pages/showData";
-import Recibo from "./pages/recibos";
+import Recibos from "./pages/recibos";
 
 import { Container } from "@material-ui/core";
 // Components
@@ -28,7 +27,7 @@ import NavBar from "./components/NavBar";
 import AuthRouth from "./components/AuthRouth";
 import ErrorHandler from "./components/ErrorHandler";
 
-console.log("http://" + localIp + ":5050/api/v1")
+console.log("http://" + localIp + ":5050/api/v1");
 axios.defaults.baseURL = "http://" + localIp + ":5050/api/v1";
 
 const token = localStorage.token;
@@ -56,7 +55,7 @@ function App() {
             <Container>
               <ErrorHandler>
                 <Route exact path="/signin" component={SignIn} />
-                <AuthRouth exact path={reciboPaths} component={Recibo} />
+                <AuthRouth exact path={reciboPaths} component={Recibos} />
                 <AuthRouth exact path={addPaths} component={AddData} />
                 <AuthRouth exact path={showPaths} component={ShowData} />
                 <AuthRouth exact path="/" component={Home} />

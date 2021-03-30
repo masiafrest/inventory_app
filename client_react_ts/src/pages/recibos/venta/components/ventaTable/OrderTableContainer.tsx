@@ -56,8 +56,9 @@ export default function OrderTableContainer() {
       total,
       lineas: cleanLines,
     };
-    const res = await axios.post("/recibos/venta", ventaObj);
-    console.log(res);
+    console.log(ventaObj);
+    // const res = await axios.post("/recibos/venta/", ventaObj);
+    // console.log(res);
   };
 
   useEffect(() => {
@@ -75,7 +76,9 @@ export default function OrderTableContainer() {
         tax={TAX_RATE}
         onClickHandler={onClickHandler}
       />
-      <Button onClick={postReciboHandler}>agregar recibo</Button>
+      <Button variant="contained" onClick={postReciboHandler}>
+        agregar recibo
+      </Button>
     </>
   );
 }
