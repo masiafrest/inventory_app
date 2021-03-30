@@ -30,7 +30,6 @@ const ShowRows = ({ rows }) => {
 };
 
 function OrderTable({ items, invoice, tax, onClickHandler }) {
-  console.log(invoice);
   const [Subtotal, Taxes, Total] = invoice;
   return (
     <TableContainer component={Paper}>

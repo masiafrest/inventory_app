@@ -16,8 +16,6 @@ function calcSubTotal(items: Lineas[]) {
   const sub = items
     .map(({ precio, qty }) => precio.precio * qty)
     .reduce((sum, i) => sum + i, 0);
-  console.log(sub);
-  console.log(roundNum(sub));
   return sub;
 }
 
@@ -26,14 +24,12 @@ const TAX_RATE = 0.07;
 export default function OrderTableContainer() {
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
-  const [items, setItems] = useState<typeof lineas>(lineas);
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
 
   const invoice = [subTotal, tax, total];
 
-  console.log(recibo);
   const history = useHistory();
 
   const onClickHandler = () => history.push("/show/items");
@@ -62,16 +58,16 @@ export default function OrderTableContainer() {
   };
 
   useEffect(() => {
-    setItems(lineas);
-    setSubTotal(roundNum(calcSubTotal(items)));
+    //FIX: check why it render 3 time on modQty click
+    setSubTotal(roundNum(calcSubTotal(lineas)));
     setTax(roundNum(TAX_RATE * subTotal));
     setTotal(roundNum(tax + subTotal));
-  }, [items, invoice]);
+  }, [lineas, invoice]);
 
   return (
     <>
       <OrderTable
-        items={items}
+        items={lineas}
         invoice={invoice}
         tax={TAX_RATE}
         onClickHandler={onClickHandler}
