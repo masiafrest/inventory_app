@@ -1,9 +1,9 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import axios from "axios"
-import {localIp} from "./localIp";
+import { localIp } from "./localIp";
 import jwtDecode from "jwt-decode";
+import { reciboPaths, addPaths, showPaths } from './paths'
 
 //redux
 import store, { persistor } from "./redux/stores";
@@ -28,8 +28,8 @@ import NavBar from "./components/NavBar";
 import AuthRouth from "./components/AuthRouth";
 import ErrorHandler from "./components/ErrorHandler";
 
-console.log("http://"+localIp+":5050/api/v1")
-axios.defaults.baseURL = "http://"+localIp+":5050/api/v1";
+console.log("http://" + localIp + ":5050/api/v1")
+axios.defaults.baseURL = "http://" + localIp + ":5050/api/v1";
 
 const token = localStorage.token;
 if (token) {
@@ -46,43 +46,6 @@ if (token) {
   }
 }
 
-const paths = [
-  "/item",
-  "/inventario",
-  "/usuario",
-  "/categoria",
-  "/lugar",
-  "/cliente",
-  "/proveedor",
-  "/rol",
-  "/defectuoso",
-];
-const pluralPaths = [
-  "/items",
-  "/inventarios",
-  "/usuarios",
-  "/categorias",
-  "/lugares",
-  "/clientes",
-  "/proveedores",
-  "/roles",
-  "/defectuosos",
-];
-
-const addPaths = paths.map((path) => "/add" + path);
-const showPaths = pluralPaths.map((path) => "/show" + path);
-const reciboPaths = [
-  "/venta",
-  "/transferencia",
-  "/devolucion",
-  "/garantia",
-  "/nota_credito",
-  "/cotizacion",
-].map((e) => "/recibo" + e);
-
-// TODO: add other post path
-// TODO: add other put path
-// TODO: add recibo fetch and post
 function App() {
   return (
     <Provider store={store}>

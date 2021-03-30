@@ -40,7 +40,6 @@ export default function AddUsuario(props: any) {
       label={detail}
       value={data[detail]}
       onChange={handleChange}
-      fullWidth
       // helperText={errors[detail]}
       // error={errors[detail] ? true : false}
     />
