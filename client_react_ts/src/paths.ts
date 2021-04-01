@@ -9,6 +9,12 @@ export const paths = [
   "/proveedor",
   "/rol",
   "/defectuoso",
+  "/venta",
+  "/transferencia",
+  "/devolucion",
+  "/garantia",
+  "/nota_credito",
+  "/cotizacion",
 ];
 export const pluralPaths = [
   "/items",

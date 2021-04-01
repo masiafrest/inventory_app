@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 import { localIp } from "./localIp";
 import jwtDecode from "jwt-decode";
-import { reciboPaths, addPaths, showPaths } from "./paths";
+import { reciboPaths, addPaths, showPaths, paths } from "./paths";
 
 //redux
 import store, { persistor } from "./redux/stores";
@@ -17,6 +17,7 @@ import { PersistGate } from "redux-persist/integration/react";
 //pages
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
+import Categoria from './pages/categoria'
 import AddData from "./pages/addData";
 import ShowData from "./pages/showData";
 import Recibos from "./pages/recibos";
@@ -55,9 +56,10 @@ function App() {
             <Container>
               <ErrorHandler>
                 <Route exact path="/signin" component={SignIn} />
-                <AuthRouth exact path={reciboPaths} component={Recibos} />
+                <AuthRouth exact path={paths} component={Categoria} />
+                {/* <AuthRouth exact path={reciboPaths} component={Recibos} />
                 <AuthRouth exact path={addPaths} component={AddData} />
-                <AuthRouth exact path={showPaths} component={ShowData} />
+                <AuthRouth exact path={showPaths} component={ShowData} /> */}
                 <AuthRouth exact path="/" component={Home} />
               </ErrorHandler>
             </Container>
