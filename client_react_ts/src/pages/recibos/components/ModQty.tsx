@@ -32,13 +32,24 @@ export default function ModQty({ row, reciboTipo, idx }) {
       tipo: reciboTipo,
       qty: row.qty + num,
     };
+    if (payload.qty < 1)  payload.qty = 1  
     dispatch(modQty(payload));
   };
+
+  const onChangeHandle = e => {
+    const payload = {
+      idx,
+      tipo: reciboTipo,
+      qty: e.target.value,
+    };
+    dispatch(modQty(payload));
+
+  }
 
   return (
     <>
       <DelRow />
-      <TextField style={{ width: 30 }} value={row.qty} />
+      <TextField style={{ width: 30 }} value={row.qty} onChange={onChangeHandle} />
       <IconButton size="small" onClick={() => handleArrowClick(1)}>
         <KeyboardArrowUpIcon />
       </IconButton>

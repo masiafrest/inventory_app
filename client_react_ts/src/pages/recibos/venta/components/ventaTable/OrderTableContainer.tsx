@@ -53,8 +53,8 @@ export default function OrderTableContainer() {
       lineas: cleanLines,
     };
     console.log(ventaObj);
-    // const res = await axios.post("/recibos/venta/", ventaObj);
-    // console.log(res);
+    const res = await axios.post("/recibos/venta/", ventaObj);
+    console.log(res);
   };
 
   useEffect(() => {

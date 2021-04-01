@@ -34,7 +34,8 @@ const reciboSlice = createSlice({
     modQty: (state, action) => {
       console.log(action.payload);
       const tipoRecibo = action.payload.tipo;
-      const { idx, qty } = action.payload;
+      let { idx, qty } = action.payload;
+      if (qty < 0) qty = 0
       state[tipoRecibo].lineas[idx].qty = qty;
     },
     pushLinea: (state, action: PayloadAction<Lineas & Tipo>) => {
