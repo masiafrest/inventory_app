@@ -22,6 +22,8 @@ export const pluralPaths = [
   "/proveedores",
   "/roles",
   "/defectuosos",
+  '/ventas',
+  '/transferencias'
 ];
 
 export const addPaths = paths.map((path) => "/add" + path);

@@ -19,7 +19,6 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import AddData from "./pages/addData";
 import ShowData from "./pages/showData";
-import Recibos from "./pages/addData/recibos";
 
 import { Container } from "@material-ui/core";
 // Components
