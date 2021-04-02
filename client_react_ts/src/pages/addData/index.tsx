@@ -6,6 +6,8 @@ import AddUser from "./AddUser";
 import AddRol from "./AddRol";
 import AddCliente from "./AddCliente";
 import AddDefectuoso from "./AddDefectuoso";
+import Venta from './recibos/venta'
+import Transferencia from './recibos/transferencia'
 import useDynamicComponent from "../../utils/hooks/useDynamicComponent";
 
 export default function AddData() {
@@ -18,6 +20,8 @@ export default function AddData() {
     rol: AddRol,
     cliente: AddCliente,
     defectuoso: AddDefectuoso,
+    venta:Venta,
+    transferencia: Transferencia,
   };
 
   const DynamicComponent: (props: any) => JSX.Element = useDynamicComponent(

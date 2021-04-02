@@ -1,13 +1,12 @@
 import Venta from "./venta";
 import Transferencia from "./transferencia";
 
-import useDynamicComponent from "../../utils/hooks/useDynamicComponent";
+import useDynamicComponent from "../../../utils/hooks/useDynamicComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/rootReducer";
-import { addUserId } from "../../redux/features/recibo/reciboSlice";
+import { RootState } from "../../../redux/rootReducer";
+import { addUserId } from "../../../redux/features/recibo/reciboSlice";
 
 export default function Recibos() {
-  console.log("111");
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   dispatch(addUserId(user.credentials.id));

@@ -19,7 +19,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import AddData from "./pages/addData";
 import ShowData from "./pages/showData";
-import Recibos from "./pages/recibos";
+import Recibos from "./pages/addData/recibos";
 
 import { Container } from "@material-ui/core";
 // Components
@@ -55,7 +55,6 @@ function App() {
             <Container>
               <ErrorHandler>
                 <Route exact path="/signin" component={SignIn} />
-                <AuthRouth exact path={reciboPaths} component={Recibos} />
                 <AuthRouth exact path={addPaths} component={AddData} />
                 <AuthRouth exact path={showPaths} component={ShowData} />
                 <AuthRouth exact path="/" component={Home} />

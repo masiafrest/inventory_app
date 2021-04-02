@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { useHistory } from "react-router";
-import useFetchData from "../../../../utils/hooks/useFetchData";
+import useFetchData from "../../../../../utils/hooks/useFetchData";
 
 export default function SelectLugar({ destinoId, name, onChange }) {
   const history = useHistory();

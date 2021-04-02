@@ -3,12 +3,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-import { RootState } from "../../../redux/rootReducer";
+import { RootState } from "../../../../redux/rootReducer";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteLinea,
   modQty,
-} from "../../../redux/features/recibo/reciboSlice";
+} from "../../../../redux/features/recibo/reciboSlice";
 
 export default function ModQty({ row, reciboTipo, idx }) {
   const dispatch = useDispatch();

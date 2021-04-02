@@ -6,7 +6,7 @@ import { Button } from "@material-ui/core";
 import SelectLugar from "../SelectLugar";
 
 //redux
-import { RootState } from "../../../../../redux/rootReducer";
+import { RootState } from "../../../../../../redux/rootReducer";
 import { useSelector } from "react-redux";
 
 export default function OrderTableContainer() {

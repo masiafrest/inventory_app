@@ -10,7 +10,7 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import { useDispatch } from "react-redux";
-import { deleteLinea } from "../../../../../redux/features/recibo/reciboSlice";
+import { deleteLinea } from "../../../../../../redux/features/recibo/reciboSlice";
 
 const DelRow = ({ item_id }) => {
   const dispatch = useDispatch();

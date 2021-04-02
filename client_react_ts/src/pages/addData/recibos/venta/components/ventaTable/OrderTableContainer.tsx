@@ -5,7 +5,7 @@ import OrderTable from "./OrderTable";
 import { Button } from "@material-ui/core";
 
 //redux
-import { RootState } from "../../../../../redux/rootReducer";
+import { RootState } from "../../../../../../redux/rootReducer";
 import { useSelector } from "react-redux";
 
 function roundNum(num) {

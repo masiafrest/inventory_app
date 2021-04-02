@@ -9,6 +9,8 @@ export const paths = [
   "/proveedor",
   "/rol",
   "/defectuoso",
+  '/venta',
+  '/transferencia'
 ];
 export const pluralPaths = [
   "/items",
