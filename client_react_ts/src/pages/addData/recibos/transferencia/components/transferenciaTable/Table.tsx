@@ -12,6 +12,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useDispatch } from "react-redux";
 import { deleteLinea } from "../../../../../../redux/features/recibo/reciboSlice";
 
+import SelectLugar from "../SelectLugar";
+
 const DelRow = ({ item_id }) => {
   const dispatch = useDispatch();
   const handleClick = () => {
@@ -29,7 +31,8 @@ const DelRow = ({ item_id }) => {
 
 //TODO: ver por q row no tiene lugar
 
-function OrderTable({ items, onClickHandler, SelectComp }) {
+function OrderTable({ items, onClickHandler, destinoId, onSelectHandler }) {
+
   const showRows = items.map((row) => (
     <TableRow key={row.id}>
       <TableCell align="left">
@@ -40,7 +43,14 @@ function OrderTable({ items, onClickHandler, SelectComp }) {
       <TableCell align="center">
         {row.lugar.direccion}, {row.lugar.tipo}
       </TableCell>
-      <TableCell align="center"></TableCell>
+      <TableCell align="center">
+
+        <SelectLugar
+          destinoId={destinoId}
+          onChange={onSelectHandler}
+          name="lugar"
+        />
+      </TableCell>
     </TableRow>
   ));
 

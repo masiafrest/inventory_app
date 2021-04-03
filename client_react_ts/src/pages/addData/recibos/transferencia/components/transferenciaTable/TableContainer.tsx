@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import Table from "./Table";
 import { Button } from "@material-ui/core";
 
-import SelectLugar from "../SelectLugar";
 
 //redux
 import { RootState } from "../../../../../../redux/rootReducer";
@@ -50,13 +49,8 @@ export default function OrderTableContainer() {
       <Table
         items={items}
         onClickHandler={onClickHandler}
-        SelectComp={
-          <SelectLugar
-            destinoId={destinoId}
-            onChange={onSelectHandler}
-            name="lugar"
-          />
-        }
+        destinoId={destinoId}
+        onSelectHandler={onSelectHandler}
       />
       <Button onClick={postReciboHandler} variant="contained">
         agregar recibo

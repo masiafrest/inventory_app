@@ -61,8 +61,8 @@ function NavBar(props: any) {
           >
             <NavLinkOnClick to="/">Home</NavLinkOnClick>
             <NavLinkOnClick to="/show/items">Items</NavLinkOnClick>
-            <NavLinkOnClick to="/recibo/venta">venta</NavLinkOnClick>
-            <NavLinkOnClick to="/recibo/transferencia">
+            <NavLinkOnClick to="/add/venta">venta</NavLinkOnClick>
+            <NavLinkOnClick to="/add/transferencia">
               transferencia
             </NavLinkOnClick>
             {user.authenticated ? renderLogOutButton : null}
