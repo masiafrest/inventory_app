@@ -24,12 +24,13 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { item_id, descripcion } = req.body;
+    const {item_id, qty} = req.body
+    console.log(req.body)
     await Defectuoso.transaction(async (trx) => {
-      const defectuoso = await addToDefectuoso(req.body, trx);
+      const defectuoso = await Defectuoso.query(trx).insert(req.body);
       linea = {
         item_id,
-        qty: 1,
+        qty,
       };
       const invLog = ItemLogFactory(req.userData, linea, "defecto");
       await Item_log.query(trx).insert(invLog);

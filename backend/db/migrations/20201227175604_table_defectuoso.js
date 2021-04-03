@@ -12,6 +12,7 @@ exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.defectuoso, (table) => {
     createTableIncrementsStringNotNullable(table);
     references(table, tableNames.item);
+    table.integer('qty');
     table.string("descripcion");
     addDefaultColumns(table);
   });

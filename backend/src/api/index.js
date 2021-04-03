@@ -33,5 +33,5 @@ router.use("/empresa_owner", empresa_owner);
 router.use("/usuarios", checkToken, usuarios);
 router.use("/proveedores", proveedores);
 router.use("/clientes", clientes);
-router.use("/defectuosos", defectuosos);
+router.use("/defectuosos", checkToken, defectuosos);
 module.exports = router;
