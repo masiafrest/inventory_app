@@ -6,7 +6,7 @@ const Empresa_cliente = require("../../empresa_clientes/empresa_clientes.model")
 
 const router = express.Router();
 const graphFetched =
-  "[lineas.item(getItemData), usuario(getNameAndId), cliente(getNameAndId)] ";
+  "[lineas.item, usuario(getNameAndId), cliente(getNameAndId)] ";
 router.get("/", async (req, res, next) => {
   try {
     const ventas = await Venta.query().withGraphFetched(graphFetched);
