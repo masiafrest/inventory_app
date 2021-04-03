@@ -24,7 +24,7 @@ export default function ShowVentas() {
 
   const url = '/recibos/venta'
   const { data, setData } = useFetchData(url)
-  console.log(data)
+
   const accordionView = data.map(obj =>
     <Accordion>
       <AccordionSummary
