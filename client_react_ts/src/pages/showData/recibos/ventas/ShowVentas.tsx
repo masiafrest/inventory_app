@@ -1,6 +1,7 @@
 import useFetchData from "../../../../utils/hooks/useFetchData";
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import dayjs from 'dayjs'
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -33,7 +34,7 @@ export default function ShowVentas() {
       >
         <Typography className={classes.heading}>Ciente: {obj.cliente.nombre}</Typography>
         <Typography className={classes.heading}>Vendedor: {obj.usuario.nombre}</Typography>
-        <Typography >Fecha: {obj.created_at}</Typography>
+        <Typography >Fecha: {dayjs(obj.created_at).format('DD-MMM-YYYY hh:mm a')}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <TableContainer component={Paper}>
