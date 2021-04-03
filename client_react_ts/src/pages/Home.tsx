@@ -26,15 +26,6 @@ const Home = () => {
     );
   });
 
-  const reciboPathsBtn = reciboPaths.map((path) => {
-    return (
-      <Grid item key={path}>
-        <Button variant="contained">
-          <Link to={path}>Ver {path.slice(8)}</Link>
-        </Button>
-      </Grid>
-    );
-  });
 
   return (
     <div>
@@ -46,9 +37,6 @@ const Home = () => {
         </Grid>
         <Grid item container spacing={1}>
           {showPathsBtn}
-        </Grid>
-        <Grid item container spacing={1}>
-          {reciboPathsBtn}
         </Grid>
       </Grid>
     </div>
