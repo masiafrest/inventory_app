@@ -53,9 +53,9 @@ export default function ShowVentas() {
                     {linea.qty}
                   </TableCell>
                   <TableCell align="left">{`${linea.marca} ${linea.modelo} ${linea.color} ${linea.descripcion} id: ${linea.id} `}</TableCell>
-                  <TableCell align="right">{linea.precio?.precio?.toFixed(2)}</TableCell>
+                  <TableCell align="right">{linea.precio.toFixed(2)}</TableCell>
                   <TableCell align="right">
-                    {/* {(linea.precio?.precio * linea.qty).toFixed(2)} */}total
+                    {(linea.precio * linea.qty).toFixed(2)}
                   </TableCell>
                 </TableRow>
               ))}
