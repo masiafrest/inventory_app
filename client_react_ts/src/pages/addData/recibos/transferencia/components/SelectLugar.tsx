@@ -8,12 +8,12 @@ export default function SelectLugar({ destinoId, name, onChange }) {
 
   const dataMenuItem = data.map((data) => (
     <MenuItem key={data.id} value={data.id}>
-      {`${data.dirrecion}, ${data.tipo}`}
+      {`${data.direccion}, ${data.tipo}`}
     </MenuItem>
   ));
 
   return (
-    <FormControl>
+    <form>
       <InputLabel>Destino</InputLabel>
       <Select value={destinoId} onChange={onChange}>
         {dataMenuItem}{" "}
@@ -24,6 +24,6 @@ export default function SelectLugar({ destinoId, name, onChange }) {
           agregar otro {name}
         </MenuItem>
       </Select>
-    </FormControl>
+    </form>
   );
 }

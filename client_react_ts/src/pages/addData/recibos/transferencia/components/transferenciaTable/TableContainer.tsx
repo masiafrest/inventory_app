@@ -13,7 +13,7 @@ export default function OrderTableContainer() {
   const { lineas } = recibo.transferencia;
 
   const [items, setItems] = useState<typeof lineas>([]);
-  const [destinoId, setDestinoId] = useState(0);
+  const [destinoId, setDestinoId] = useState();
   const history = useHistory();
 
   const onClickHandler = () => history.push("/show/items");
