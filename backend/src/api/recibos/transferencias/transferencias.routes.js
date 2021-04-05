@@ -26,35 +26,31 @@ router.post("/", async (req, res, next) => {
     await Transferencia.transaction(async (trx) => {
       await Promise.all(
         req.body.lineas.map(async (linea) => {
-          const { item_id, qty, destino_lugar_id, sku } = linea;
-          const itemDeLugar = await IteItemm.query(trx).findById(item_id);
+          const { item_id, qty, destino_lugar_id } = linea;
+          const itemOrigen = await Item.query(trx).findById(item_id);
 
-          let itemALugar = await Item.query(trx)
+          let itemDestino = await Item.query(trx)
             .where({
-              sku,
-              item_id,
+              sku: itemOrigen.sku,
               lugar_id: destino_lugar_id,
             })
             .first();
 
           //si no existe el lugar donde va se crea un item con ese lugar qty en 0
-          if (!itemALugar) {
-            const { color, sku, precio_id, item_id } = itemDeLugar;
-            itemALugar = await Item.query(trx).insertGraph(
+          if (!itemDestino) {
+            const newItem = { ...itemOrigen }
+            delete newItem.id
+            delete newItem.lugar_id
+            newItem.stock = 0;
+            itemDestino = await Item.query(trx).insertGraph(
               {
-                item_id,
-                stock: 0,
-                color,
-                sku,
-                lugares: [
+                ...newItem,
+                lugar: [
                   {
                     // se supone q ese lugar ya a sido creado
                     id: linea.destino_lugar_id,
                   },
                 ],
-                precio: {
-                  id: precio_id,
-                },
                 logs: [
                   {
                     usuario_id: req.userData.id,
@@ -70,8 +66,8 @@ router.post("/", async (req, res, next) => {
           }
           // descontar y hacer historial del item
           //descontar item
-          await itemModQty(itemDeLugar, qty, trx);
-          await itemModQty(itemALugar, -qty, trx);
+          await itemModQty(itemOrigen, qty, trx);
+          await itemModQty(itemDestino, -qty, trx);
           // hacer el item log
           let itemLogA = [ItemLogFactory(req.body, linea, "transferencia")];
           let itemLogB = [
@@ -80,14 +76,11 @@ router.post("/", async (req, res, next) => {
               linea,
               "transferencia",
               null,
-              itemALugar.id
+              itemDestino.id
             ),
           ];
-          await itemDeLugar.$relatedQuery("logs", trx).insert(itemLogA);
-          await itemALugar.$relatedQuery("logs", trx).insert(itemLogB);
-          // borrar sku y item_id ya q no se necesita para insertar en recibo transferencia
-          delete linea.sku;
-          delete linea.item_id;
+          await itemOrigen.$relatedQuery("logs", trx).insert(itemLogA);
+          await itemDestino.$relatedQuery("logs", trx).insert(itemLogB);
         })
       );
       //insert recibo trasnferencia
