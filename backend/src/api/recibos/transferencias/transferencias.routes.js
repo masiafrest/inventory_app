@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const transferencias = await Transferencia.query().withGraphFetched(
-      "[lineas.[origen, destino, item(getItemData)], usuario(getNameAndId)] "
+      "[lineas.[ destino, item.[lugar]], usuario(getNameAndId)] "
     );
     res.json(transferencias);
   } catch (err) {

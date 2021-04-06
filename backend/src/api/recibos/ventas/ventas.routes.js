@@ -53,9 +53,9 @@ router.post("/", async (req, res, next) => {
   try {
     //insertar la venta
     await Venta.transaction(async (trx) => {
+      const usuario_id = req.userData.id
       const {
         empresa_cliente_id,
-        usuario_id,
         lineas,
         total,
         sub_total,
