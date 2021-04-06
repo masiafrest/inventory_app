@@ -32,6 +32,7 @@ export default function ShowTransferencias() {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
+                <Typography className={classes.heading}>N° Recibo: {obj.id}</Typography>
                 <Typography className={classes.heading}>Vendedor: {obj.usuario.nombre}</Typography>
                 <Typography >Fecha: {dayjs(obj.created_at).format('DD-MMM-YYYY hh:mm a')}</Typography>
             </AccordionSummary>
@@ -40,39 +41,25 @@ export default function ShowTransferencias() {
                     <Table style={{ minWidth: 300 }} padding="default" size="small">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">Qty</TableCell>
                                 <TableCell align="center">Descripcion</TableCell>
-                                <TableCell align="right">Precio</TableCell>
-                                <TableCell align="right">Total</TableCell>
+                                <TableCell align="center">Qty</TableCell>
+                                <TableCell align="right">Origen</TableCell>
+                                <TableCell align="right">Destino</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {obj.lineas.map(linea => (
                                 <TableRow key={linea.id}>
+                                    <TableCell align="left">{`${linea.marca} ${linea.modelo} ${linea.color} ${linea.descripcion} id: ${linea.id} `}</TableCell>
                                     <TableCell align="left">
                                         {linea.qty}
                                     </TableCell>
-                                    <TableCell align="left">{`${linea.marca} ${linea.modelo} ${linea.color} ${linea.descripcion} id: ${linea.id} `}</TableCell>
-                                    <TableCell align="right">{linea.precio.toFixed(2)}</TableCell>
+                                    <TableCell align="right">{`${linea.item.lugar.direccion}, ${linea.item.lugar.tipo}`}</TableCell>
                                     <TableCell align="right">
-                                        {(linea.precio * linea.qty).toFixed(2)}
+                                        {`${linea.destino.direccion}, ${linea.destino.tipo}`}
                                     </TableCell>
                                 </TableRow>
                             ))}
-                            <TableRow>
-                                <TableCell rowSpan={3} />
-                                <TableCell colSpan={2}>Subtotal</TableCell>
-                                <TableCell align="right">{obj.sub_total}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell colSpan={1}>Tax</TableCell>
-                                <TableCell align="right">{`${(obj.tax * 100).toFixed(0)} %`}</TableCell>
-                                <TableCell align="right">{obj.tax}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell colSpan={2}>Total</TableCell>
-                                <TableCell align="right">{obj.total}</TableCell>
-                            </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
