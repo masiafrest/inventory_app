@@ -27,7 +27,8 @@ export default function OrderTableContainer() {
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
-
+  const [isTax, setIsTax] = useState(true)
+  const taxState = [isTax, setIsTax]
   const invoice = [subTotal, tax, total];
 
   const history = useHistory();
@@ -61,7 +62,13 @@ export default function OrderTableContainer() {
     //FIX: check why it render 3 time on modQty click
     setSubTotal(roundNum(calcSubTotal(lineas)));
     setTax(roundNum(TAX_RATE * subTotal));
-    setTotal(roundNum(tax + subTotal));
+    if (isTax) {
+      setTax(roundNum(TAX_RATE * subTotal));
+      setTotal(roundNum(tax + subTotal));
+    } else {
+      setTax(0);
+      setTotal(roundNum(subTotal));
+    }
   }, [lineas, invoice]);
 
   return (
@@ -69,8 +76,9 @@ export default function OrderTableContainer() {
       <OrderTable
         items={lineas}
         invoice={invoice}
-        tax={TAX_RATE}
+        TAX_RATE={TAX_RATE}
         onClickHandler={onClickHandler}
+        taxState={taxState}
       />
       <Button variant="contained" onClick={postReciboHandler}>
         agregar recibo

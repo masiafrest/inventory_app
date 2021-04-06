@@ -32,6 +32,7 @@ export default function ShowVentas() {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
+        <Typography >N° Recibo: {obj.id}</Typography>
         <Typography className={classes.heading}>Ciente: {obj.cliente.nombre}</Typography>
         <Typography className={classes.heading}>Vendedor: {obj.usuario.nombre}</Typography>
         <Typography >Fecha: {dayjs(obj.created_at).format('DD-MMM-YYYY hh:mm a')}</Typography>

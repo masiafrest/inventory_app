@@ -7,8 +7,10 @@ import {
   TableCell,
   Table,
   TableBody,
+  FormControlLabel,
+  Checkbox
 } from "@material-ui/core";
-
+import { useState } from 'react'
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
 import ModQty from "../../../components/ModQty";
@@ -29,8 +31,9 @@ const ShowRows = ({ rows }) => {
   ));
 };
 
-function OrderTable({ items, invoice, tax, onClickHandler }) {
+function OrderTable({ items, invoice, TAX_RATE, onClickHandler, taxState }) {
   const [Subtotal, Taxes, Total] = invoice;
+  const [isTax, setIsTax] = taxState
   return (
     <TableContainer component={Paper}>
       <Table style={{ minWidth: 300 }} padding="default" size="small">
@@ -57,8 +60,18 @@ function OrderTable({ items, invoice, tax, onClickHandler }) {
             <TableCell align="right">{Subtotal}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={1}>Tax</TableCell>
-            <TableCell align="right">{`${(tax * 100).toFixed(0)} %`}</TableCell>
+            <TableCell colSpan={1}>   <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isTax}
+                  onChange={(e) => setIsTax(!isTax)}
+                  name="checkedB"
+                  color="primary"
+                />
+              }
+              label="Tax"
+            /></TableCell>
+            <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
             <TableCell align="right">{Taxes}</TableCell>
           </TableRow>
           <TableRow>
