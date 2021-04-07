@@ -109,7 +109,7 @@ exports.up = async function (knex) {
     references(table, tableNames.devolucion);
     table.float("a_efectivo").unsigned().nullable();
     table.integer("qty");
-    table.string("descripcion", 500);
+    table.string("devolucion", 500);
     addDefaultColumns(table);
   });
   await knex.schema.createTable(tableNames.item_log, (table) => {

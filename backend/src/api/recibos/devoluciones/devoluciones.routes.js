@@ -39,7 +39,7 @@ router.post("/", async (req, res, next) => {
             qty,
             item_id,
             salida_item_id,
-            descripcion,
+            motivo,
           } = linea;
           if (a_efectivo) {
             delete linea.a_efectivo;
