@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import VentaTable from "./components/VentaTable";
+import DevolucionTable from "./components/DevolucionTable";
 import { Button } from "@material-ui/core";
 
 //redux
@@ -76,7 +76,7 @@ export default function Devolucion() {
   return (
     <>
       <HeaderTable creditState={[isCredit, setIsCredit]} />
-      <VentaTable
+      <DevolucionTable
         items={lineas}
         invoice={[subTotal, tax, total]}
         TAX_RATE={TAX_RATE}
