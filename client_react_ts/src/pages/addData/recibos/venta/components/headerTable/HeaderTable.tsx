@@ -5,8 +5,13 @@ import { Paper } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../../../redux/rootReducer";
 import { addClienteId } from "../../../../../../redux/features/recibo/reciboSlice";
+import {
+  FormControlLabel,
+  Checkbox
+} from "@material-ui/core";
 
-export default function HeaderTable() {
+export default function HeaderTable({ creditState }) {
+  const [isCredit, setIsCredit] = creditState
   const dispatch = useDispatch();
   const [cliente] = useState([]);
 
@@ -18,14 +23,24 @@ export default function HeaderTable() {
   };
   return (
     <Paper>
-      <form>
-        <SelectsOptions
-          form={cliente}
-          onChange={onChangeHandler}
-          name="cliente"
-          url={"clientes"}
-        />
-      </form>
+      <SelectsOptions
+        form={cliente}
+        onChange={onChangeHandler}
+        name="cliente"
+        url={"clientes"}
+      />
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={isCredit}
+            onChange={(e) => setIsCredit(!isCredit)}
+            name="checkedB"
+            color="primary"
+          />
+        }
+        label="Credito"
+      />
     </Paper>
   );
 }
