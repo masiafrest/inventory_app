@@ -10,15 +10,16 @@ import {
   Checkbox
 } from "@material-ui/core";
 
-export default function HeaderTable({ creditState }) {
+export default function HeaderTable({ creditState, clienteState }) {
   const [isCredit, setIsCredit] = creditState
+  const [clienteId, setClienteId] = clienteState
   const dispatch = useDispatch();
   const [cliente] = useState([]);
 
   const onChangeHandler = (e) => {
     console.log(e.target.value);
+    setClienteId(e.target.value)
     dispatch(addClienteId(e.target.value));
-    // setCliente(e.target.value);
     console.log(cliente);
   };
   return (

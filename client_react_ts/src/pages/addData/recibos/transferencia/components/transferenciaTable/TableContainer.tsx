@@ -9,6 +9,7 @@ import { RootState } from "../../../../../../redux/rootReducer";
 import { useSelector } from "react-redux";
 
 export default function OrderTableContainer() {
+  const usuario_id = useSelector((state: RootState) => state.user.credentials.id)
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.transferencia;
 
@@ -23,7 +24,6 @@ export default function OrderTableContainer() {
   };
 
   const postReciboHandler = async () => {
-    const { usuario_id } = recibo;
     const cleanLines = lineas.map((item) => {
       const newLines = {
         item_id: item.id,

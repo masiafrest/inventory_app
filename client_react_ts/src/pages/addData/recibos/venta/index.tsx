@@ -23,9 +23,11 @@ function calcSubTotal(items: Lineas[]) {
 }
 const TAX_RATE = 0.07;
 export default function VentaRecibo() {
+  const usuario_id = useSelector((state: RootState) => state.user.credentials.id)
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
   //TODO: maybe change all this useState to a reduceState
+  const [clienteId, setClienteId] = useState()
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
@@ -37,7 +39,6 @@ export default function VentaRecibo() {
   const onClickHandler = () => history.push("/show/items");
 
   const postReciboHandler = async () => {
-    const { usuario_id, empresa_cliente_id } = recibo;
     const cleanLines = lineas.map((item) => {
       const newLines = {
         item_id: item.id,
@@ -48,7 +49,7 @@ export default function VentaRecibo() {
     });
     const ventaObj = {
       usuario_id,
-      empresa_cliente_id,
+      empresa_cliente_id: clienteId,
       sub_total: subTotal,
       tax,
       total,
@@ -75,7 +76,7 @@ export default function VentaRecibo() {
 
   return (
     <>
-      <HeaderTable creditState={[isCredit, setIsCredit]} />
+      <HeaderTable creditState={[isCredit, setIsCredit]} clienteState={[clienteId, setClienteId]} />
       <VentaTable
         items={lineas}
         invoice={[subTotal, tax, total]}

@@ -22,6 +22,7 @@ function calcSubTotal(items: Lineas[]) {
 }
 const TAX_RATE = 0.07;
 export default function Devolucion() {
+  const usuario_id = useSelector((state: RootState) => state.user.credentials.id)
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
   //TODO: maybe change all this useState to a reduceState
@@ -36,7 +37,7 @@ export default function Devolucion() {
   const onClickHandler = () => history.push("/show/items");
 
   const postReciboHandler = async () => {
-    const { usuario_id, empresa_cliente_id } = recibo;
+    const { empresa_cliente_id } = recibo;
     const cleanLines = lineas.map((item) => {
       const newLines = {
         item_id: item.id,
