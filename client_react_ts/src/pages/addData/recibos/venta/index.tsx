@@ -83,7 +83,6 @@ export default function VentaRecibo() {
         TAX_RATE={TAX_RATE}
         onClickHandler={onClickHandler}
         taxState={[isTax, setIsTax]}
-        creditState={[isCredit, setIsCredit]}
       />
       <Button variant="contained" onClick={postReciboHandler}>
         agregar recibo

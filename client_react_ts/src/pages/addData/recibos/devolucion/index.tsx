@@ -75,14 +75,13 @@ export default function Devolucion() {
 
   return (
     <>
-      <HeaderTable creditState={[isCredit, setIsCredit]} />
+      <HeaderTable />
       <DevolucionTable
         items={lineas}
         invoice={[subTotal, tax, total]}
         TAX_RATE={TAX_RATE}
         onClickHandler={onClickHandler}
         taxState={[isTax, setIsTax]}
-        creditState={[isCredit, setIsCredit]}
       />
       <Button variant="contained" onClick={postReciboHandler}>
         agregar recibo

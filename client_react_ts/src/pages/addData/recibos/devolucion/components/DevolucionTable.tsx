@@ -30,7 +30,7 @@ const ShowRows = ({ rows }) => {
   ));
 };
 
-export default function DevolucionTable({ items, invoice, TAX_RATE, onClickHandler, taxState, creditState }) {
+export default function DevolucionTable({ items, invoice, TAX_RATE, onClickHandler, taxState }) {
   const [Subtotal, Taxes, Total] = invoice;
   const [isTax, setIsTax] = taxState;
   return (

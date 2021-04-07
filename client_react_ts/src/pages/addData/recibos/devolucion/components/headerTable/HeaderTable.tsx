@@ -10,8 +10,7 @@ import {
   Checkbox
 } from "@material-ui/core";
 
-export default function HeaderTable({ creditState }) {
-  const [isCredit, setIsCredit] = creditState
+export default function HeaderTable() {
   const dispatch = useDispatch();
   const [cliente] = useState([]);
 
@@ -28,18 +27,6 @@ export default function HeaderTable({ creditState }) {
         onChange={onChangeHandler}
         name="cliente"
         url={"clientes"}
-      />
-
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={isCredit}
-            onChange={(e) => setIsCredit(!isCredit)}
-            name="checkedB"
-            color="primary"
-          />
-        }
-        label="Credito"
       />
     </Paper>
   );
