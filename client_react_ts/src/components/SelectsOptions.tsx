@@ -28,7 +28,7 @@ export default function SelectsOptions({ onChange, name, url, form }) {
       menuItemToShow.push("marca");
       menuItemToShow.push("modelo");
       break;
-    case "roles":
+    case "usuarios/roles":
       menuItemToShow.push("tipo");
       break;
     case "lugares":
