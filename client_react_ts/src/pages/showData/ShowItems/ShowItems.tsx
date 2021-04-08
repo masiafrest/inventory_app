@@ -30,7 +30,6 @@ export default function ShowItems() {
         ? src + obj.images[activeStep].url_path
         : imgPlaceholder;
     const maxSteps = obj.images.length;
-    console.log(maxSteps, obj.marca)
     return (
       <Grid item xs={12} sm={6} md={4} lg={3} key={obj.id}>
         <Card
@@ -38,11 +37,6 @@ export default function ShowItems() {
             maxWidth: 300,
           }}
         >
-          <Paper square elevation={0}>
-            <Typography>
-              {obj.marca}, {obj.modelo}
-            </Typography>
-          </Paper>
           <img key="img" src={activeImg} alt={obj.marca + "-" + obj.modelo} />
           <MobileStepper
             key="mobileStepper"
@@ -99,7 +93,7 @@ export default function ShowItems() {
   return (
     <>
       <Typography variant="h3">Items</Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} justify='center' alignContent='center' alignItems='center'>
         {cardView}
       </Grid>
       <Fab url="/add/item" />

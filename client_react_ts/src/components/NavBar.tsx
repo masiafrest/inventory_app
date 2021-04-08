@@ -59,7 +59,7 @@ function NavBar(props: any) {
             open={isDrawerOpen}
             onClose={toggleDrawer(false)}
           >
-            <NavLinkOnClick to="/">Home</NavLinkOnClick>
+            <NavLinkOnClick to="/"><Button>Home</Button></NavLinkOnClick>
             <NavLinkOnClick to="/show/items">Items</NavLinkOnClick>
             <NavLinkOnClick to="/add/venta">venta</NavLinkOnClick>
             <NavLinkOnClick to="/add/transferencia">
