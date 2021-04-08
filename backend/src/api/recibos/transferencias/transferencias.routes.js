@@ -22,6 +22,7 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
+    console.log(req.body)
     // item_id, qty, lugar_id, para hacer la transferencia
     await Transferencia.transaction(async (trx) => {
       await Promise.all(
