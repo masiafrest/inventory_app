@@ -35,6 +35,7 @@ function OrderTable({ items, onClickHandler, destinoId, onSelectHandler }) {
           destinoId={destinoId}
           onChange={onSelectHandler}
           name="lugar"
+          currLugarId={row.lugar.id}
         />
       </TableCell>
     </TableRow>

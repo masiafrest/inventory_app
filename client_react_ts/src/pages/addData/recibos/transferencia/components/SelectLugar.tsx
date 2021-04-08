@@ -2,11 +2,11 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { useHistory } from "react-router";
 import useFetchData from "../../../../../utils/hooks/useFetchData";
 
-export default function SelectLugar({ destinoId, name, onChange }) {
+export default function SelectLugar({ destinoId, name, onChange, currLugarId }) {
   const history = useHistory();
   const { data } = useFetchData("lugares");
-
-  const dataMenuItem = data.map((data) => (
+  const dataFiltered = data.filter(data => data.id !== currLugarId)
+  const dataMenuItem = dataFiltered.map((data) => (
     <MenuItem key={data.id} value={data.id}>
       {`${data.direccion}, ${data.tipo}`}
     </MenuItem>
