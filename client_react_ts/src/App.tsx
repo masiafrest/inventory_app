@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 import { localIp } from "./localIp";
 import jwtDecode from "jwt-decode";
-import { reciboPaths, addPaths, showPaths } from "./paths";
+import { addPaths, showPaths } from "./paths";
 
 //redux
 import store, { persistor } from "./redux/stores";
