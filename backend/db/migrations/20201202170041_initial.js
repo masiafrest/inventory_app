@@ -13,6 +13,7 @@ const {
 exports.up = async function (knex) {
   await Promise.all([
     knex.schema.createTable(tableNames.rol, (table) => {
+      addDefaultColumns(table)
       createTableIncrementsStringNotNullable(table);
       table.string("tipo").unique();
     }),
