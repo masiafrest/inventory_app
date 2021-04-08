@@ -72,7 +72,7 @@ export default function VentaRecibo() {
       setTax(0);
       setTotal(roundNum(subTotal));
     }
-  }, [lineas,]);
+  }, [lineas, subTotal]);
 
   return (
     <>
