@@ -14,9 +14,9 @@ export default function ModQty({ row, reciboTipo, idx }) {
   const dispatch = useDispatch();
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
 
-  const DelRow = () => {
+  const DelRow = ({ reciboTipo }) => {
     const handleClick = () => {
-      const tipoAndId = { tipo: "venta", item_id: row.id };
+      const tipoAndId = { tipo: reciboTipo, item_id: row.id };
       dispatch(deleteLinea(tipoAndId));
     };
     return (
@@ -32,7 +32,7 @@ export default function ModQty({ row, reciboTipo, idx }) {
       tipo: reciboTipo,
       qty: row.qty + num,
     };
-    if (payload.qty < 1)  payload.qty = 1  
+    if (payload.qty < 1) payload.qty = 1
     dispatch(modQty(payload));
   };
 
@@ -48,7 +48,7 @@ export default function ModQty({ row, reciboTipo, idx }) {
 
   return (
     <>
-      <DelRow />
+      <DelRow reciboTipo={reciboTipo} />
       <TextField style={{ width: 30 }} value={row.qty} onChange={onChangeHandle} />
       <IconButton size="small" onClick={() => handleArrowClick(1)}>
         <KeyboardArrowUpIcon />

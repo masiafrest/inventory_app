@@ -12,32 +12,18 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useDispatch } from "react-redux";
 import { deleteLinea } from "../../../../../../redux/features/recibo/reciboSlice";
 
+import ModQty from '../../../components/ModQty'
 import SelectLugar from "../SelectLugar";
 
-const DelRow = ({ item_id }) => {
-  const dispatch = useDispatch();
-  const handleClick = () => {
-    console.log(item_id);
-    const tipoAndId = { tipo: "transferencia", item_id };
-    dispatch(deleteLinea(tipoAndId));
-    window.location.reload();
-  };
-  return (
-    <IconButton size="small" onClick={handleClick}>
-      <DeleteIcon />
-    </IconButton>
-  );
-};
-
-//TODO: ver por q row no tiene lugar
 
 function OrderTable({ items, onClickHandler, destinoId, onSelectHandler }) {
 
-  const showRows = items.map((row) => (
+  const showRows = items.map((row, idx) => (
     <TableRow key={row.id}>
       <TableCell align="left">
-        <DelRow item_id={row.id} />
-        {row.qty}
+        {/* <DelRow item_id={row.id} /> */}
+        {/* {row.qty} */}
+        <ModQty row={row} reciboTipo="transferencia" idx={idx} />
       </TableCell>
       <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} `}</TableCell>
       <TableCell align="center">

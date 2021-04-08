@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Table from "./Table";
 import { Button } from "@material-ui/core";
+import axios from 'axios'
 
 
 //redux
@@ -37,12 +38,12 @@ export default function OrderTableContainer() {
       lineas: cleanLines,
     };
     console.log(transferObj);
-    // const res = await axios.post("/recibos/transferencia", recibo.transferencia);
-    // console.log(res);
+    const res = await axios.post("/recibos/transferencia", transferObj);
+    console.log(res);
   };
   useEffect(() => {
     setItems(lineas);
-  }, []);
+  }, [lineas]);
 
   return (
     <>
