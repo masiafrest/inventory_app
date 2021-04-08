@@ -25,12 +25,12 @@ export default function ShowItems() {
   const cardView = data.map((obj) => {
     const src = "http://" + localIp + ":5050/uploads/";
     const imgPlaceholder = "https://via.placeholder.com/200";
-    console.log(obj.images.length);
     const activeImg =
       obj.images.length > 0
         ? src + obj.images[activeStep].url_path
         : imgPlaceholder;
     const maxSteps = obj.images.length;
+    console.log(maxSteps, obj.marca)
     return (
       <Grid item xs={12} sm={6} md={4} lg={3} key={obj.id}>
         <Card
@@ -49,7 +49,6 @@ export default function ShowItems() {
             steps={maxSteps}
             position="static"
             variant="text"
-            activeStep={activeStep}
             nextButton={
               <Button
                 id="mobileSteperNextBtn"
@@ -57,7 +56,7 @@ export default function ShowItems() {
                 onClick={() =>
                   setActiveStep((prevActiveStep) => prevActiveStep + 1)
                 }
-                disabled={activeStep === maxSteps - 1}
+                disabled={activeStep === maxSteps - 1 || activeStep === 0}
               >
                 Next
               </Button>
