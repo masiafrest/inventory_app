@@ -14,7 +14,6 @@ export default function SelectsOptions({ onChange, name, url, form }) {
         console.log(res.data)
       })
       .catch((err) => console.log(err));
-
   }
   useEffect(() => {
     fetchData()

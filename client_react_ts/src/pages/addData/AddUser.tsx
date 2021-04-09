@@ -19,7 +19,7 @@ export default function AddUsuario(props: any) {
       nombre: "",
       password: "",
       telefono: "",
-      rol_id: 0,
+      rol_id: 1,
     },
     "/usuarios/addUser"
   );
