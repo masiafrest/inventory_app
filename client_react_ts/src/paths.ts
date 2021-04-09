@@ -1,7 +1,6 @@
 
 export const paths = [
   "/item",
-  "/inventario",
   "/usuario",
   "/categoria",
   "/lugar",
@@ -15,7 +14,6 @@ export const paths = [
 ];
 export const pluralPaths = [
   "/items",
-  "/inventarios",
   "/usuarios",
   "/categorias",
   "/lugares",
