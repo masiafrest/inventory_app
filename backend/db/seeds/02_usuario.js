@@ -9,7 +9,7 @@ const usuarios = [
   },
   {
     nombre: "hello",
-    password: "aA1@123",
+    password: "12345",
     rol_id: "2",
   },
 ];

@@ -14,7 +14,7 @@ const errorMessages = {
 };
 
 exports.signUp = async (req, res, next) => {
-  const {
+  let {
     nombre,
     email,
     password,
@@ -23,6 +23,7 @@ exports.signUp = async (req, res, next) => {
     telefono,
     telefono_2,
   } = req.body;
+  nombre = nombre.toLowerCase()
   try {
     const createUser = {
       ...req.body,
@@ -67,7 +68,8 @@ exports.signUp = async (req, res, next) => {
 };
 
 exports.signIn = async (req, res, next) => {
-  const { nombre, password } = req.body;
+  let { nombre, password } = req.body;
+  nombre = nombre.toLowerCase()
   try {
     const usuario = await Usuario.query().where({ nombre }).first();
     if (!usuario) {

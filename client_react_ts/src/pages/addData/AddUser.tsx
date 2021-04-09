@@ -40,8 +40,8 @@ export default function AddUsuario(props: any) {
       label={detail}
       value={data[detail]}
       onChange={handleChange}
-      // helperText={errors[detail]}
-      // error={errors[detail] ? true : false}
+    // helperText={errors[detail]}
+    // error={errors[detail] ? true : false}
     />
   ));
 
@@ -53,7 +53,7 @@ export default function AddUsuario(props: any) {
         <SelectsOptions
           form={data}
           onChange={handleChange}
-          name="roles"
+          name="rol"
           url="usuarios/roles"
         />
         <UploadAndPreviewImages

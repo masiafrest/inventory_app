@@ -30,12 +30,14 @@ export default function useForm<T>(initialState: T, url: string) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
     try {
       let formData = new FormData();
       Object.keys(data).forEach((key) => {
         formData.append(key, data[key]);
       });
+      console.log(data);
+      console.log(formData);
+
       const res = await axios.post(url, data);
       console.log(res.data);
     } catch (err) {
