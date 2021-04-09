@@ -8,11 +8,11 @@ const yupSchema = yup.object().shape({
   website_url: yup.string().url(),
   password: yup
     .string()
-    .min(6, "contraseña debe tener minimo 6 caracteres")
+    // .min(6, "contraseña debe tener minimo 6 caracteres")
     .max(500)
-    .matches(/[^A-Za-z0-9]/, "contraseña debe tener un caracter especial")
-    .matches(/[A-Z]/, "contraseña debe tener una Mayuscula")
-    .matches(/[a-z]/, "contraseña debe tener minuscula")
-    .matches(/[0-9]/, "contraseña debe tener numeros"),
+  // .matches(/[^A-Za-z0-9]/, "contraseña debe tener un caracter especial")
+  // .matches(/[A-Z]/, "contraseña debe tener una Mayuscula")
+  // .matches(/[a-z]/, "contraseña debe tener minuscula")
+  // .matches(/[0-9]/, "contraseña debe tener numeros"),
 });
 module.exports = yupSchema;
