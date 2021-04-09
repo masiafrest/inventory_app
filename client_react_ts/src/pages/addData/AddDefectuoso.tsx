@@ -1,4 +1,4 @@
-import SelectsOptions from "../../components/SelectsOptions";
+import SelectsOptions from "./components/SelectsOptions";
 import useForm from "../../utils/hooks/useForm";
 
 //MUI
@@ -33,8 +33,8 @@ export default function AddDefectuoso(props: any) {
       value={data[detail]}
       onChange={handleChange}
       fullWidth
-      // helperText={errors[detail]}
-      // error={errors[detail] ? true : false}
+    // helperText={errors[detail]}
+    // error={errors[detail] ? true : false}
     />
   ));
 

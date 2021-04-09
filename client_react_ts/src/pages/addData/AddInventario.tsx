@@ -1,5 +1,5 @@
 import useForm from "../../utils/hooks/useForm";
-import SelectsOptions from "../../components/SelectsOptions";
+import SelectsOptions from "./components/SelectsOptions";
 
 //MUI
 import Container from "@material-ui/core/Container";
@@ -53,8 +53,8 @@ export default function AddInventario(props: any) {
       value={data[detail]}
       onChange={handleChange}
       fullWidth
-      // helperText={errors[detail]}
-      // error={errors[detail] ? true : false}
+    // helperText={errors[detail]}
+    // error={errors[detail] ? true : false}
     />
   ));
 

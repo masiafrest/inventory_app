@@ -1,4 +1,4 @@
-import SelectsOptions from "../../components/SelectsOptions";
+import SelectsOptions from "./components/SelectsOptions";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 import useFormImage from "../../utils/hooks/useFormImage";
 
@@ -53,34 +53,33 @@ export default function AddCliente(props: any) {
       value={data[detail]}
       onChange={handleChange}
       fullWidth
-      // helperText={errors[detail]}
-      // error={errors[detail] ? true : false}
+    // helperText={errors[detail]}
+    // error={errors[detail] ? true : false}
     />
   ));
 
   return (
     <Container maxWidth="sm" fixed>
       <Typography variant="h2">Agregar Cliente</Typography>
-      <form noValidate onSubmit={handleSubmit}>
-        {renderTextField}
-        <SelectsOptions
-          onChange={handleChange}
-          form={data}
-          url="roles"
-          name="rol"
-        />
-        <UploadAndPreviewImages
-          previewImg={previewImg}
-          onChange={handleChange}
-        />
-        {/* {errors.general && (
+      {renderTextField}
+      <SelectsOptions
+        onChange={handleChange}
+        form={data}
+        url="roles"
+        name="rol"
+      />
+      <UploadAndPreviewImages
+        previewImg={previewImg}
+        onChange={handleChange}
+      />
+      {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}
-        <Button type="submit" variant="contained" color="primary">
-          Agregar
+      <Button variant="contained" color="primary"
+        onClick={handleSubmit}>
+        Agregar
         </Button>
-        <br></br>
-      </form>
+      <br></br>
     </Container>
   );
 }

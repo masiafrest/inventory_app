@@ -1,4 +1,4 @@
-import SelectsOptions from "../../components/SelectsOptions";
+import SelectsOptions from "./components/SelectsOptions";
 import useFormMultipleImages from "../../utils/hooks/useFormMultipleImages";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 
@@ -56,9 +56,9 @@ export default function AddItem() {
       label={detail}
       value={data[detail]}
       onChange={handleChange}
-      // fullWidth
-      // helperText={errors[detail]}
-      // error={errors[detail] ? true : false}
+    // fullWidth
+    // helperText={errors[detail]}
+    // error={errors[detail] ? true : false}
     />
   ));
 

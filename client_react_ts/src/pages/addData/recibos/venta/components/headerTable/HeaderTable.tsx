@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SelectsOptions from "../../../../../../components/SelectsOptions";
+import SelectsOptions from "../../../../components/SelectsOptions";
 import { Paper } from "@material-ui/core";
 
 import { useSelector, useDispatch } from "react-redux";

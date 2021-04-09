@@ -1,5 +1,5 @@
 import useFormImage from "../../utils/hooks/useFormImage";
-import SelectsOptions from "../../components/SelectsOptions";
+import SelectsOptions from "./components/SelectsOptions";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 
 //MUI

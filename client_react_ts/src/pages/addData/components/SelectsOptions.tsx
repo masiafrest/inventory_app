@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Grid, Select, InputLabel, MenuItem } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import Modal from './Modal'
 
 export default function SelectsOptions({ onChange, name, url, form }) {
-  const history = useHistory();
   const [data, setData] = useState([]);
-
-  useEffect(() => {
+  const [openModal, setOpenModal] = useState(false)
+  const fetchData = () => {
     axios
       .get("/" + url)
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
-        console.log(data);
+        console.log(res.data)
       })
       .catch((err) => console.log(err));
-  }, []);
 
+  }
+  useEffect(() => {
+    fetchData()
+  }, []);
   let menuItemToShow = [];
   switch (url) {
     case "categorias":
@@ -41,7 +42,7 @@ export default function SelectsOptions({ onChange, name, url, form }) {
       break;
   }
 
-  console.log(name, url, data[0]);
+  console.log(name, url, data);
   const dataMenuItem = data.map((data) => (
     <MenuItem key={data.id} value={data.id}>
       {menuItemToShow.length > 1
@@ -51,7 +52,6 @@ export default function SelectsOptions({ onChange, name, url, form }) {
   ));
 
   const name_id = `${name}_id`;
-  console.log("select options ", form);
 
   return (
     <Grid item key={`${name}-select`}>
@@ -67,11 +67,13 @@ export default function SelectsOptions({ onChange, name, url, form }) {
         {dataMenuItem}
         <MenuItem
           key={`add_${name}`}
-          onClick={() => history.push(`/add/${name}`)}
+          onClick={() => setOpenModal(true)}
         >
           agregar otra {name}
         </MenuItem>
       </Select>
+      <Modal state={[openModal, setOpenModal]} fetch={fetchData}
+        url={url} />
     </Grid>
   );
 }
