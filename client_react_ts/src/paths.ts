@@ -2,11 +2,8 @@
 export const paths = [
   "/item",
   "/usuario",
-  "/categoria",
-  "/lugar",
   "/cliente",
   "/proveedor",
-  "/rol",
   "/defectuoso",
   '/venta',
   '/transferencia',
