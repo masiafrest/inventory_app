@@ -3,12 +3,34 @@ import useFormMultipleImages from "../../utils/hooks/useFormMultipleImages";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 
 //MUI
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import { Container, Typography, TextField, Button, Grid, makeStyles } from "@material-ui/core";
+
+const detailsName = [
+  "marca",
+  "modelo",
+  "sku",
+  "color",
+  "precio",
+  "precio_min",
+  "stock",
+  "costo",
+  "descripcion",
+];
+
+const useStyles = makeStyles(theme => ({
+  marca: { width: '7em' },
+  modelo: { width: '7em' },
+  descripcion: { width: '25em' },
+  sku: { width: '7em' },
+  color: { width: '7em' },
+  precio: { width: '5em' },
+  precio_min: { width: '5em' },
+  stock: { width: '5em' },
+  costo: { width: '5em' },
+}))
 
 export default function AddItem() {
+  const classes = useStyles()
   const initialItem = {
     marca: "",
     modelo: "",
@@ -35,31 +57,22 @@ export default function AddItem() {
     handleSubmit,
   } = useFormMultipleImages<Item>(initialItem, "/items");
 
-  const itemDetails = [
-    "marca",
-    "modelo",
-    "descripcion",
-    "sku",
-    "color",
-    "precio",
-    "precio_min",
-    "stock",
-    "costo",
-  ];
+  const renderTextField = detailsName.map((name) => (
+    <Grid item >
+      <TextField
+        className={classes[name]}
+        key={name}
+        id={name}
+        name={name}
+        label={name}
+        value={data[name]}
+        onChange={handleChange}
 
-  const renderTextField = itemDetails.map((detail) => (
-    <TextField
-      style={{ width: "25em" }}
-      key={detail}
-      id={detail}
-      name={detail}
-      label={detail}
-      value={data[detail]}
-      onChange={handleChange}
-    // fullWidth
-    // helperText={errors[detail]}
-    // error={errors[detail] ? true : false}
-    />
+      // fullWidth
+      // helperText={errors[name]}
+      // error={errors[name] ? true : false}
+      />
+    </Grid>
   ));
 
   return (
@@ -68,11 +81,10 @@ export default function AddItem() {
       <form
         noValidate
         onSubmit={handleSubmit}
-        style={{
-          width: "25ch",
-        }}
       >
-        {renderTextField}
+        <Grid container spacing={2}>
+          {renderTextField}
+        </Grid>
         <SelectsOptions
           onChange={handleChange}
           name="categoria"
@@ -103,6 +115,7 @@ export default function AddItem() {
         </Button>
         <br></br>
       </form>
+
     </Container>
   );
 }
