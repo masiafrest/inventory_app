@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Grid, Select, InputLabel, MenuItem } from "@material-ui/core";
-import Modal from './Modal'
+import Modal from "./Modal";
 
-export default function SelectsOptions({ onChange, name, url, form }) {
+export default function SelectsOptions({
+  className,
+  onChange,
+  name,
+  url,
+  form,
+}) {
   const [data, setData] = useState([]);
-  const [openModal, setOpenModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
   const fetchData = () => {
     axios
       .get("/" + url)
       .then((res) => {
         setData(res.data);
-        console.log(res.data)
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
-  }
+  };
   useEffect(() => {
-    fetchData()
+    fetchData();
   }, []);
   let menuItemToShow = [];
   switch (url) {
@@ -56,6 +62,7 @@ export default function SelectsOptions({ onChange, name, url, form }) {
     <Grid item key={`${name}-select`}>
       <InputLabel id={name_id}>{name}</InputLabel>
       <Select
+        className={className}
         onChange={onChange}
         labelId={name_id}
         id={name_id}
@@ -64,15 +71,11 @@ export default function SelectsOptions({ onChange, name, url, form }) {
         fullWidth
       >
         {dataMenuItem}
-        <MenuItem
-          key={`add_${name}`}
-          onClick={() => setOpenModal(true)}
-        >
+        <MenuItem key={`add_${name}`} onClick={() => setOpenModal(true)}>
           agregar otra {name}
         </MenuItem>
       </Select>
-      <Modal state={[openModal, setOpenModal]} fetch={fetchData}
-        url={url} />
+      <Modal state={[openModal, setOpenModal]} fetch={fetchData} url={url} />
     </Grid>
   );
 }

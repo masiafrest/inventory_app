@@ -2,15 +2,13 @@ import { useState } from "react";
 import SelectsOptions from "../../../../components/SelectsOptions";
 import { Paper } from "@material-ui/core";
 
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../../../../redux/rootReducer";
+import { useDispatch } from "react-redux";
 import { addClienteId } from "../../../../../../redux/features/recibo/reciboSlice";
-import {
-  FormControlLabel,
-  Checkbox
-} from "@material-ui/core";
+import { FormControlLabel, Checkbox } from "@material-ui/core";
+import { useStyle } from "../../../../useStyle";
 
 export default function HeaderTable() {
+  const classes = useStyle();
   const dispatch = useDispatch();
   const [cliente] = useState([]);
 
@@ -23,6 +21,7 @@ export default function HeaderTable() {
   return (
     <Paper>
       <SelectsOptions
+        className={classes.selects}
         form={cliente}
         onChange={onChangeHandler}
         name="cliente"

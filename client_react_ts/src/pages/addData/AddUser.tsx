@@ -3,12 +3,17 @@ import SelectsOptions from "./components/SelectsOptions";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 
 //MUI
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+} from "@material-ui/core";
+import { useStyle } from "./useStyle";
 
-export default function AddUsuario(props: any) {
+export default function AddUsuario() {
+  const classes = useStyle();
   const {
     data,
     previewImg,
@@ -40,8 +45,8 @@ export default function AddUsuario(props: any) {
       label={detail}
       value={data[detail]}
       onChange={handleChange}
-    // helperText={errors[detail]}
-    // error={errors[detail] ? true : false}
+      // helperText={errors[detail]}
+      // error={errors[detail] ? true : false}
     />
   ));
 
@@ -51,6 +56,7 @@ export default function AddUsuario(props: any) {
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
         <SelectsOptions
+          className={classes.selects}
           form={data}
           onChange={handleChange}
           name="rol"

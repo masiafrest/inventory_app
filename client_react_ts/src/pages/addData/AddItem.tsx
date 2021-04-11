@@ -3,7 +3,14 @@ import useFormMultipleImages from "../../utils/hooks/useFormMultipleImages";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 
 //MUI
-import { Container, Typography, TextField, Button, Grid, makeStyles } from "@material-ui/core";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+} from "@material-ui/core";
+import { useStyle } from "./useStyle";
 
 const detailsName = [
   "marca",
@@ -17,20 +24,8 @@ const detailsName = [
   "descripcion",
 ];
 
-const useStyles = makeStyles(theme => ({
-  marca: { width: '7em' },
-  modelo: { width: '7em' },
-  descripcion: { width: '25em' },
-  sku: { width: '7em' },
-  color: { width: '7em' },
-  precio: { width: '5em' },
-  precio_min: { width: '5em' },
-  stock: { width: '5em' },
-  costo: { width: '5em' },
-}))
-
 export default function AddItem() {
-  const classes = useStyles()
+  const classes = useStyle();
   const initialItem = {
     marca: "",
     modelo: "",
@@ -58,7 +53,7 @@ export default function AddItem() {
   } = useFormMultipleImages<Item>(initialItem, "/items");
 
   const renderTextField = detailsName.map((name) => (
-    <Grid item >
+    <Grid item>
       <TextField
         className={classes[name]}
         key={name}
@@ -67,10 +62,10 @@ export default function AddItem() {
         label={name}
         value={data[name]}
         onChange={handleChange}
-
-      // fullWidth
-      // helperText={errors[name]}
-      // error={errors[name] ? true : false}
+        fullWidth={name === "descripcion"}
+        // fullWidth
+        // helperText={errors[name]}
+        // error={errors[name] ? true : false}
       />
     </Grid>
   ));
@@ -78,31 +73,34 @@ export default function AddItem() {
   return (
     <Container maxWidth="md" fixed>
       <Typography variant="h2">Agregar Item</Typography>
-      <form
-        noValidate
-        onSubmit={handleSubmit}
-      >
+      <form noValidate onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           {renderTextField}
         </Grid>
-        <SelectsOptions
-          onChange={handleChange}
-          name="categoria"
-          form={data}
-          url="categorias"
-        />
-        <SelectsOptions
-          form={data}
-          onChange={handleChange}
-          name="proveedor"
-          url="proveedores"
-        />
-        <SelectsOptions
-          onChange={handleChange}
-          name="lugar"
-          form={data}
-          url="lugares"
-        />
+
+        <Grid container spacing={2}>
+          <SelectsOptions
+            className={classes.selects}
+            onChange={handleChange}
+            name="categoria"
+            form={data}
+            url="categorias"
+          />
+          <SelectsOptions
+            className={classes.selects}
+            form={data}
+            onChange={handleChange}
+            name="proveedor"
+            url="proveedores"
+          />
+          <SelectsOptions
+            className={classes.selects}
+            onChange={handleChange}
+            name="lugar"
+            form={data}
+            url="lugares"
+          />
+        </Grid>
         <UploadAndPreviewImages
           previewImg={previewImg}
           onChange={handleChange}
@@ -115,7 +113,6 @@ export default function AddItem() {
         </Button>
         <br></br>
       </form>
-
     </Container>
   );
 }

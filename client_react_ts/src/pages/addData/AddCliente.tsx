@@ -3,10 +3,15 @@ import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 import useFormImage from "../../utils/hooks/useFormImage";
 
 //MUI
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+} from "@material-ui/core";
+import { useStyle } from "./useStyle";
+
 interface Cliente {
   nombre: string;
   telefono: string;
@@ -16,7 +21,9 @@ interface Cliente {
   website_url: string;
   telefono_2: string;
 }
-export default function AddCliente(props: any) {
+
+export default function AddCliente() {
+  const classes = useStyle();
   const {
     data,
     previewImg,
@@ -53,8 +60,8 @@ export default function AddCliente(props: any) {
       value={data[detail]}
       onChange={handleChange}
       fullWidth
-    // helperText={errors[detail]}
-    // error={errors[detail] ? true : false}
+      // helperText={errors[detail]}
+      // error={errors[detail] ? true : false}
     />
   ));
 
@@ -63,22 +70,19 @@ export default function AddCliente(props: any) {
       <Typography variant="h2">Agregar Cliente</Typography>
       {renderTextField}
       <SelectsOptions
+        className={classes.selects}
         onChange={handleChange}
         form={data}
         url="roles"
         name="rol"
       />
-      <UploadAndPreviewImages
-        previewImg={previewImg}
-        onChange={handleChange}
-      />
+      <UploadAndPreviewImages previewImg={previewImg} onChange={handleChange} />
       {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}
-      <Button variant="contained" color="primary"
-        onClick={handleSubmit}>
+      <Button variant="contained" color="primary" onClick={handleSubmit}>
         Agregar
-        </Button>
+      </Button>
       <br></br>
     </Container>
   );

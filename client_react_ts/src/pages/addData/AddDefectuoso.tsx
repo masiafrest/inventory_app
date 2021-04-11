@@ -2,18 +2,21 @@ import SelectsOptions from "./components/SelectsOptions";
 import useForm from "../../utils/hooks/useForm";
 
 //MUI
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-
-//Redux
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+} from "@material-ui/core";
+import { useStyle } from "./useStyle";
 
 interface Defectuoso {
   descripcion: string;
 }
 
 export default function AddDefectuoso(props: any) {
+  const classes = useStyle();
   const { data, handleSubmit, handleChange } = useForm<Defectuoso>(
     {
       descripcion: "",
@@ -33,8 +36,8 @@ export default function AddDefectuoso(props: any) {
       value={data[detail]}
       onChange={handleChange}
       fullWidth
-    // helperText={errors[detail]}
-    // error={errors[detail] ? true : false}
+      // helperText={errors[detail]}
+      // error={errors[detail] ? true : false}
     />
   ));
 
@@ -44,6 +47,7 @@ export default function AddDefectuoso(props: any) {
       <form noValidate onSubmit={handleSubmit}>
         {renderTextField}
         <SelectsOptions
+          className={classes.selects}
           form={data}
           onChange={handleChange}
           name="items"
