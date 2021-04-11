@@ -62,7 +62,6 @@ export default function AddItem() {
         label={name}
         value={data[name]}
         onChange={handleChange}
-        fullWidth={name === "descripcion"}
         // fullWidth
         // helperText={errors[name]}
         // error={errors[name] ? true : false}
@@ -71,7 +70,7 @@ export default function AddItem() {
   ));
 
   return (
-    <Container maxWidth="md" fixed>
+    <>
       <Typography variant="h2">Agregar Item</Typography>
       <form noValidate onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -113,6 +112,6 @@ export default function AddItem() {
         </Button>
         <br></br>
       </form>
-    </Container>
+    </>
   );
 }
