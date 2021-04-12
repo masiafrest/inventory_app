@@ -36,58 +36,68 @@ export default function useForm<T>(initialState: T, url: string) {
         "base64"
       );
     });
-
-  const handleImgChange = (files) => {
-    setData((value) => ({ ...value, images: files }));
+  const imgResize = async (files) => {
+    //multiple files
+    let fileObj: any = [];
+    let fileArray: any = [];
+    let fileBlobResize = [];
+    fileObj.push(files);
+    // fileArray.push(await resizeFile(files[0]));
+    for (let i = 0; i < fileObj[0].length; i++) {
+      console.log("i: ", i, "file[0]: ", fileObj[0]);
+      console.log("i: ", i, "file[0][i]", fileObj[0][i]);
+      const image = await resizeFile(fileObj[0][i]);
+      fileArray.push(image);
+      const newFile = dataURIToFile(image, fileObj[0][i].name);
+      fileBlobResize.push(newFile);
+    }
+    return { fileArray, fileBlobResize };
   };
+
+  const handleImgChange = async (files) => {
+    const { fileBlobResize } = await imgResize(files);
+    setData((value) => ({ ...value, images: fileBlobResize }));
+  };
+
   const handleChange = async (e) => {
     if (e.target.name === "images") {
-      //multiple files
-      let fileObj: any = [];
-      let fileArray: any = [];
-      let fileBlobResize = [];
-      fileObj.push(e.target.files);
-      // fileArray.push(await resizeFile(e.target.files[0]));
-      for (let i = 0; i < fileObj[0].length; i++) {
-        console.log("i: ", i, "file[0]: ", fileObj[0]);
-        console.log("i: ", i, "file[0][i]", fileObj[0][i]);
-        const image = await resizeFile(fileObj[0][i]);
-        fileArray.push(image);
-        const newFile = dataURIToFile(image, fileObj[0][i].name);
-        fileBlobResize.push(newFile);
-      }
+      const { fileArray, fileBlobResize } = await imgResize(e.target.files);
       setData((value) => ({ ...value, [e.target.name]: fileBlobResize }));
       setPreviewImg(fileArray);
     } else {
       setData((value) => ({ ...value, [e.target.name]: e.target.value }));
     }
   };
+
+  const formDataConstructor = (data) => {
+    let formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      console.log(key);
+      if (key === "images") {
+        //TODO: hacer que pueda subir mas archivo
+        formData.append("images", data[key][0]); //hay q hacer un loop para ver el length del arry y agregarlo
+        // formData.append("images", newFile);
+      } else {
+        formData.append(key, data[key]);
+      }
+    });
+    return formData;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(data);
     try {
-      let formData = new FormData();
-      //TODO: fix this doesn append
-      Object.keys(data).forEach((key) => {
-        console.log(key);
-        if (key === "images") {
-          //TODO: hacer que pueda subir mas archivo
-          // const newFile = dataURIToFile(previewImg[0]);
-          // console.log(newFile);
-          formData.append("images", data[key][0]); //hay q hacer un loop para ver el length del arry y agregarlo
-          // formData.append("images", newFile);
-        } else {
-          formData.append(key, data[key]);
-        }
-      });
-      const res = await axios.post(url, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      setData(initialState);
-      setPreviewImg("");
-      console.log(res.data);
+      const formData = formDataConstructor(data);
+      console.log(formData);
+      // const res = await axios.post(url, formData, {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // });
+      // setData(initialState);
+      // setPreviewImg("");
+      // console.log(res.data);
     } catch (err) {
       console.log(err);
     }

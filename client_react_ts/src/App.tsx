@@ -50,14 +50,16 @@ function App() {
       <PersistGate loading={null} persistor={persistor}>
         <Router>
           <NavBar />
-          <Switch>
-            <ErrorHandler>
-              <Route exact path="/signin" component={SignIn} />
-              <AuthRouth exact path={addPaths} component={AddData} />
-              <AuthRouth exact path={showPaths} component={ShowData} />
-              <AuthRouth exact path="/" component={Home} />
-            </ErrorHandler>
-          </Switch>
+          <Container>
+            <Switch>
+              <ErrorHandler>
+                <Route exact path="/signin" component={SignIn} />
+                <AuthRouth exact path={addPaths} component={AddData} />
+                <AuthRouth exact path={showPaths} component={ShowData} />
+                <AuthRouth exact path="/" component={Home} />
+              </ErrorHandler>
+            </Switch>
+          </Container>
         </Router>
       </PersistGate>
     </Provider>

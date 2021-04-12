@@ -66,16 +66,9 @@ export default function AddCliente() {
   ));
 
   return (
-    <Container maxWidth="sm" fixed>
+    <Container maxWidth="lg" fixed>
       <Typography variant="h2">Agregar Cliente</Typography>
       {renderTextField}
-      <SelectsOptions
-        className={classes.selects}
-        onChange={handleChange}
-        form={data}
-        url="roles"
-        name="rol"
-      />
       <UploadAndPreviewImages previewImg={previewImg} onChange={handleChange} />
       {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
