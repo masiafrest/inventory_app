@@ -50,7 +50,7 @@ export default function ShowItems() {
                 onClick={() =>
                   setActiveStep((prevActiveStep) => prevActiveStep + 1)
                 }
-                disabled={activeStep === maxSteps - 1 || activeStep === 0}
+                disabled={activeStep === maxSteps - 1}
               >
                 Next
               </Button>
@@ -93,7 +93,13 @@ export default function ShowItems() {
   return (
     <>
       <Typography variant="h3">Items</Typography>
-      <Grid container spacing={2} justify='center' alignContent='center' alignItems='center'>
+      <Grid
+        container
+        spacing={2}
+        justify="center"
+        alignContent="center"
+        alignItems="center"
+      >
         {cardView}
       </Grid>
       <Fab url="/add/item" />
