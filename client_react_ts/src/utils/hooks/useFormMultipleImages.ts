@@ -37,6 +37,9 @@ export default function useForm<T>(initialState: T, url: string) {
       );
     });
 
+  const handleImgChange = (files) => {
+    setData((value) => ({ ...value, images: files }));
+  };
   const handleChange = async (e) => {
     if (e.target.name === "images") {
       //multiple files
@@ -82,13 +85,13 @@ export default function useForm<T>(initialState: T, url: string) {
           "Content-Type": "multipart/form-data",
         },
       });
-      setData(initialState)
-      setPreviewImg('')
+      setData(initialState);
+      setPreviewImg("");
       console.log(res.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  return { data, previewImg, handleChange, handleSubmit };
+  return { data, previewImg, handleChange, handleSubmit, handleImgChange };
 }

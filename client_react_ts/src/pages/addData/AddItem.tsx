@@ -1,7 +1,7 @@
 import SelectsOptions from "./components/SelectsOptions";
 import useFormMultipleImages from "../../utils/hooks/useFormMultipleImages";
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
-
+import { DropzoneArea } from "material-ui-dropzone";
 //MUI
 import {
   Container,
@@ -50,6 +50,7 @@ export default function AddItem() {
     previewImg,
     handleChange,
     handleSubmit,
+    handleImgChange,
   } = useFormMultipleImages<Item>(initialItem, "/items");
 
   const renderTextField = detailsName.map((name) => (
@@ -100,10 +101,11 @@ export default function AddItem() {
             url="lugares"
           />
         </Grid>
-        <UploadAndPreviewImages
+        {/* <UploadAndPreviewImages
           previewImg={previewImg}
           onChange={handleChange}
-        />
+        /> */}
+        <DropzoneArea onChange={handleImgChange} acceptedFiles={["image/*"]} />
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}

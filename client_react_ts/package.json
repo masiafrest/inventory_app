@@ -19,6 +19,7 @@
     "dayjs": "^1.10.4",
     "dotenv": "^8.2.0",
     "jwt-decode": "^3.1.2",
+    "material-ui-dropzone": "^3.5.0",
     "path-to-regexp": "^6.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
