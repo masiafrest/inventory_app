@@ -51,14 +51,16 @@ function App() {
         <Router>
           <NavBar />
           <Container>
-            <Switch>
-              <ErrorHandler>
-                <Route exact path="/signin" component={SignIn} />
-                <AuthRouth exact path={addPaths} component={AddData} />
-                <AuthRouth exact path={showPaths} component={ShowData} />
-                <AuthRouth exact path="/" component={Home} />
-              </ErrorHandler>
-            </Switch>
+            <ErrorHandler>
+              <Switch>
+                <ErrorHandler>
+                  <Route exact path="/signin" component={SignIn} />
+                  <AuthRouth exact path={addPaths} component={AddData} />
+                  <AuthRouth exact path={showPaths} component={ShowData} />
+                  <AuthRouth exact path="/" component={Home} />
+                </ErrorHandler>
+              </Switch>
+            </ErrorHandler>
           </Container>
         </Router>
       </PersistGate>

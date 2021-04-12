@@ -17,7 +17,8 @@
     "jsx": "react-jsx",
     "noImplicitAny": false,
     "noImplicitThis": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "downlevelIteration": true
   },
   "include": ["src"],
   "exclude": ["backend"]
