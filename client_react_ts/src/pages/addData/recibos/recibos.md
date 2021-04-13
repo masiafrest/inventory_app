@@ -18,7 +18,7 @@
 ## devoluciones y nota credito
 
 1. elegir cliente
-2. enviar cliente id para buscar recibo venta id
+2. enviar cliente id y buscar en recibo venta id
 3. buscar el item a devolver en linea_venta con la venta id y el item_Id
    1. buscar en recibo devolucion donde es del cliente id
    2. buscar en linea devolucion con los recibo devoucion id y item id
