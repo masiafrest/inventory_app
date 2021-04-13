@@ -1,11 +1,11 @@
 import { useState } from "react";
-import SelectsOptions from "../../../../components/SelectsOptions";
+import SelectsOptions from "../../../components/SelectsOptions";
 import { Paper } from "@material-ui/core";
 
 import { useDispatch } from "react-redux";
-import { addClienteId } from "../../../../../../redux/features/recibo/reciboSlice";
+import { addClienteId } from "../../../../../redux/features/recibo/reciboSlice";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
-import { useStyle } from "../../../../useStyle";
+import { useStyle } from "../../../useStyle";
 
 export default function HeaderTable() {
   const classes = useStyle();

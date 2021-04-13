@@ -1,3 +1,22 @@
+## venta
+
+1. seleccionar cliete.
+2. agregar item
+3. cambiar qty
+4. si poner tax o no, credito o no
+5. si no es credito, elegir o combinar forma de pago:
+   1. nota credigo:
+      1. buscar nota de credito con id del cliente con estado no usado, pendiente
+      2. cuadro aparte para nota credito si hay con estado pendiente, si no desaparece el cuadro
+      3. cuadro de notacredito un select para elegir cual nota credito
+      4. el notacredito selected cambiara su estado a usado
+   2. efectivo
+   3. transferencia, cheque:
+      1. yappi o bancaria:
+         1. se abre un cuadro para insertar el numero de transferencia
+
+## devoluciones y nota credito
+
 1. elegir cliente
 2. enviar cliente id para buscar recibo venta id
 3. buscar el item a devolver en linea_venta con la venta id y el item_Id
@@ -25,7 +44,7 @@
       7. no hay item precio menor al sobrante se iria a nota credito,
    8. refund:
       1. hacer nota credito
-   9. nota credito: se hace en la misma pantalla mas abajo solo aparece al usar refund y otro item opciones:
+   9. nota credito: se hace en la misma pantalla mas abajo solo aparece al usar refund y otro_item opciones:
       1. tiene tabla con las siguiente col:
          1. col venta id(nullable) y devolucion id(notNullable porq para nota de credito siempre hay una devolucion)
          2. col valor del total de los item devuelto

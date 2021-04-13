@@ -3,27 +3,19 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import DevolucionTable from "./components/DevolucionTable";
 import { Button } from "@material-ui/core";
+import { calcSubTotal, roundNum } from "../utils";
 
 //redux
 import { RootState } from "../../../../redux/rootReducer";
 import { useSelector } from "react-redux";
 
+import Header from "./components/Header";
 
-import HeaderTable from "./components/headerTable/HeaderTable";
-
-function roundNum(num) {
-  return Math.round((num + Number.EPSILON) * 100) / 100;
-}
-
-function calcSubTotal(items: Lineas[]) {
-  const sub = items
-    .map(({ precio, qty }) => precio.precio * qty)
-    .reduce((sum, i) => sum + i, 0);
-  return sub;
-}
 const TAX_RATE = 0.07;
 export default function Devolucion() {
-  const usuario_id = useSelector((state: RootState) => state.user.credentials.id)
+  const usuario_id = useSelector(
+    (state: RootState) => state.user.credentials.id
+  );
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
   //TODO: maybe change all this useState to a reduceState
@@ -72,11 +64,11 @@ export default function Devolucion() {
       setTax(0);
       setTotal(roundNum(subTotal));
     }
-  }, [lineas,]);
+  }, [lineas]);
 
   return (
     <>
-      <HeaderTable />
+      <Header />
       <DevolucionTable
         items={lineas}
         invoice={[subTotal, tax, total]}

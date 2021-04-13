@@ -1,33 +1,24 @@
-
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import VentaTable from "./components/VentaTable";
 import { Button } from "@material-ui/core";
-
+import { roundNum, calcSubTotal } from "../utils";
 //redux
 import { RootState } from "../../../../redux/rootReducer";
 import { useSelector } from "react-redux";
 
-import HeaderTable from "./components/headerTable/HeaderTable";
+import Header from "./components/Header";
 
-function roundNum(num) {
-  return Math.round((num + Number.EPSILON) * 100) / 100;
-}
-
-function calcSubTotal(items: Lineas[]) {
-  const sub = items
-    .map(({ precio, qty }) => precio.precio * qty)
-    .reduce((sum, i) => sum + i, 0);
-  return sub;
-}
 const TAX_RATE = 0.07;
 export default function VentaRecibo() {
-  const usuario_id = useSelector((state: RootState) => state.user.credentials.id)
+  const usuario_id = useSelector(
+    (state: RootState) => state.user.credentials.id
+  );
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
   //TODO: maybe change all this useState to a reduceState
-  const [clienteId, setClienteId] = useState()
+  const [clienteId, setClienteId] = useState();
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
@@ -76,7 +67,10 @@ export default function VentaRecibo() {
 
   return (
     <>
-      <HeaderTable creditState={[isCredit, setIsCredit]} clienteState={[clienteId, setClienteId]} />
+      <Header
+        creditState={[isCredit, setIsCredit]}
+        clienteState={[clienteId, setClienteId]}
+      />
       <VentaTable
         items={lineas}
         invoice={[subTotal, tax, total]}
