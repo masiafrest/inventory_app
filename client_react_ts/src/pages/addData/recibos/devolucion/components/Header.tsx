@@ -21,6 +21,7 @@ export default function Header({ useStates }) {
         url={"clientes"}
         value={clientId}
       />
+      {clientId ? clientId : "selecciona un cliente"}
     </Paper>
   );
 }
