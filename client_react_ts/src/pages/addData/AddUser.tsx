@@ -57,7 +57,6 @@ export default function AddUsuario() {
         {renderTextField}
         <SelectsOptions
           className={classes.selects}
-          form={data}
           onChange={handleChange}
           name="rol"
           url="usuarios/roles"

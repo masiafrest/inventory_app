@@ -83,12 +83,10 @@ export default function AddItem() {
             className={classes.selects}
             onChange={handleChange}
             name="categoria"
-            form={data}
             url="categorias"
           />
           <SelectsOptions
             className={classes.selects}
-            form={data}
             onChange={handleChange}
             name="proveedor"
             url="proveedores"
@@ -97,7 +95,6 @@ export default function AddItem() {
             className={classes.selects}
             onChange={handleChange}
             name="lugar"
-            form={data}
             url="lugares"
           />
         </Grid>

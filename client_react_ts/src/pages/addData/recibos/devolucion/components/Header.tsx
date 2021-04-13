@@ -8,27 +8,18 @@ import { FormControlLabel, Checkbox } from "@material-ui/core";
 import { useStyle } from "../../../useStyle";
 import axios from "axios";
 
-export default function Header() {
+export default function Header({ useStates }) {
   const classes = useStyle();
-  const dispatch = useDispatch();
-  const [cliente] = useState([]);
+  const [clientId, setClientId] = useStates;
 
-  const onChangeHandler = (e) => {
-    console.log(e.target.value);
-    dispatch(addClienteId(e.target.value));
-    //enviar cliente id para buscar recibo venta_id
-
-    // setCliente(e.target.value);
-    console.log(cliente);
-  };
   return (
     <Paper>
       <SelectsOptions
         className={classes.selects}
-        form={cliente}
-        onChange={onChangeHandler}
+        onChange={(e) => setClientId(e.target.value)}
         name="cliente"
         url={"clientes"}
+        value={clientId}
       />
     </Paper>
   );

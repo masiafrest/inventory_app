@@ -48,7 +48,6 @@ export default function AddDefectuoso(props: any) {
         {renderTextField}
         <SelectsOptions
           className={classes.selects}
-          form={data}
           onChange={handleChange}
           name="items"
           url="items"

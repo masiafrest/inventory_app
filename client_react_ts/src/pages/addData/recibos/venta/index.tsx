@@ -18,7 +18,7 @@ export default function VentaRecibo() {
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
   //TODO: maybe change all this useState to a reduceState
-  const [clienteId, setClienteId] = useState();
+  const [clientId, setClientId] = useState();
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
@@ -40,7 +40,7 @@ export default function VentaRecibo() {
     });
     const ventaObj = {
       usuario_id,
-      empresa_cliente_id: clienteId,
+      empresa_cliente_id: clientId,
       sub_total: subTotal,
       tax,
       total,
@@ -69,7 +69,7 @@ export default function VentaRecibo() {
     <>
       <Header
         creditState={[isCredit, setIsCredit]}
-        clienteState={[clienteId, setClienteId]}
+        clienteState={[clientId, setClientId]}
       />
       <VentaTable
         items={lineas}
