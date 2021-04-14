@@ -39,17 +39,21 @@ export default function Header({ useStates }) {
         url={"clientes"}
         value={clientId}
       />
-      <Select
-        onChange={(e) => setSelectedItem(e.target.value)}
-        labelId={"lineas"}
-        id={"lineas"}
-        name={"lineas"}
-        value={1}
-        fullWidth
-      >
-        {menuItems}
-      </Select>
-      {lineas ? null : "lineas"}
+
+      {lineas ? (
+        <Select
+          onChange={(e) => setSelectedItem(e.target.value)}
+          labelId={"lineas"}
+          id={"lineas"}
+          name={"lineas"}
+          value={1}
+          fullWidth
+        >
+          {menuItems}
+        </Select>
+      ) : (
+        "aqui aparece un select item a devolver"
+      )}
     </Paper>
   );
 }
