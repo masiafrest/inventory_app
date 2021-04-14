@@ -11,6 +11,7 @@ const Devolucion = require("./devoluciones.model");
 const Item_log = require("../../items/logs/item_logs.model");
 const Venta = require("../ventas/ventas.model");
 const Linea_venta = require("../ventas/linea_ventas.model");
+const Linea_devolucion = require("./linea_devoluciones.model");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -30,17 +31,18 @@ router.get("/:id", async (req, res, next) => {
 router.get("/clientId/:client_id/", async (req, res, next) => {
   const { client_id } = req.params;
 
-  const useSearchLinea = async (Model) => {
-    const ids = await Model.query()
-      .where({
-        empresa_cliente_id: client_id,
-      })
-      .withGraphFetched("lineas.[item]");
-    return ids;
+  const useSearchLinea = async (Model, LineaModel) => {
+    const ids = await Model.query().where({
+      empresa_cliente_id: client_id,
+    });
+    // .withGraphFetched("lineas.[item]");
+
+    const lineas = await LineaModel.query().for(ids).withGraphFetched("item");
+    return lineas;
   };
 
-  const linea_ventas = await useSearchLinea(Venta);
-  const linea_devoluciones = await useSearchLinea(Devolucion);
+  const linea_ventas = await useSearchLinea(Venta, Linea_venta);
+  const linea_devoluciones = await useSearchLinea(Devolucion, Linea_devolucion);
 
   const lineas = {
     ventas: linea_ventas,

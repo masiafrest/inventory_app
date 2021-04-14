@@ -11,6 +11,14 @@ class Linea_devolucion extends BaseModel {
     const Garantia = require("../garantias/garantias.model");
     const Devolucion = require("./devoluciones.model");
     return {
+      item: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Item,
+        join: {
+          from: `${tableNames.item}.id`,
+          to: `${tableNames.linea_devolucion}.salida_${tableNames.item}_id`,
+        },
+      },
       itemSalida: {
         relation: BaseModel.BelongsToOneRelation,
         modelClass: Item,

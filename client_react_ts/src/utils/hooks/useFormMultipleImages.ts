@@ -55,15 +55,13 @@ export default function useForm<T>(initialState: T, url: string) {
   };
 
   const handleImgChange = async (files) => {
-    const { fileBlobResize, newFile } = await imgResize(files);
+    const { fileBlobResize } = await imgResize(files);
     setData((value) => ({ ...value, images: fileBlobResize }));
   };
 
   const handleChange = async (e) => {
     if (e.target.name === "images") {
-      const { fileArray, fileBlobResize, newFile } = await imgResize(
-        e.target.files
-      );
+      const { fileArray, fileBlobResize } = await imgResize(e.target.files);
       setData((value) => ({ ...value, [e.target.name]: fileBlobResize }));
       setPreviewImg(fileArray);
     } else {
