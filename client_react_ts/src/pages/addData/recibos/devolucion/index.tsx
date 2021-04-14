@@ -51,7 +51,7 @@ export default function Devolucion() {
   );
   //TODO: maybe change all this useState to a reduceState
 
-  const [clientId, setClientId] = useState<number>(null);
+  const [clientId, setClientId] = useState<number>();
   // TODO: select item id deb ser un item entero y no un id para ser usado en la tabla
   const [selectedItemId, setSelectedItemId] = useState<any>();
   const [lineas, setLineas] = useState<VentaYDevoluciones>();
@@ -69,7 +69,9 @@ export default function Devolucion() {
   };
 
   useEffect(() => {
-    getLineasVentaYDevolucion();
+    if (clientId) {
+      getLineasVentaYDevolucion();
+    }
     console.log("useEffect lineas", lineas);
   }, [clientId]);
 
