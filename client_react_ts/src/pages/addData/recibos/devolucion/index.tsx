@@ -17,7 +17,7 @@ export default function Devolucion() {
   );
   //TODO: maybe change all this useState to a reduceState
 
-  const [clientId, setClientId] = useState();
+  const [clientId, setClientId] = useState<number>(null);
 
   return (
     <>

@@ -7,7 +7,6 @@ const {
   getById,
 } = require("../recibos.controllers");
 
-const { cloneDeep } = require("lodash");
 const Devolucion = require("./devoluciones.model");
 const Item_log = require("../../items/logs/item_logs.model");
 const Venta = require("../ventas/ventas.model");
@@ -28,25 +27,24 @@ router.get("/:id", async (req, res, next) => {
   await getById(Devolucion, req.params.id, res, next);
 });
 
-router.get("/:client_id/:item_id", async (req, res, next) => {
-  const { client_id, item_id } = req.params;
+router.get("/clientId/:client_id/", async (req, res, next) => {
+  const { client_id } = req.params;
 
   const useSearchLinea = async (Model) => {
-    const ids = await Model.query().where({
-      empresa_cliente_id: client_id,
-    });
-    const lineas = await Model.relatedQuery("lineas")
-      .for(ids)
-      .where({ item_id });
-    return lineas;
+    const ids = await Model.query()
+      .where({
+        empresa_cliente_id: client_id,
+      })
+      .withGraphFetched("lineas.[item]");
+    return ids;
   };
 
   const linea_ventas = await useSearchLinea(Venta);
   const linea_devoluciones = await useSearchLinea(Devolucion);
 
   const lineas = {
-    venta: linea_ventas,
-    devolucion: linea_devoluciones,
+    ventas: linea_ventas,
+    devoluciones: linea_devoluciones,
   };
   res.json(lineas);
 });

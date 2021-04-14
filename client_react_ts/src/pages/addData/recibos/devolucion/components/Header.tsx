@@ -2,15 +2,28 @@ import { useState } from "react";
 import SelectsOptions from "../../../components/SelectsOptions";
 import { Paper } from "@material-ui/core";
 
-import { useDispatch } from "react-redux";
-import { addClienteId } from "../../../../../redux/features/recibo/reciboSlice";
-import { FormControlLabel, Checkbox } from "@material-ui/core";
+import { FormControlLabel, Checkbox, Select, MenuItem } from "@material-ui/core";
 import { useStyle } from "../../../useStyle";
 import axios from "axios";
 
 export default function Header({ useStates }) {
   const classes = useStyle();
   const [clientId, setClientId] = useStates;
+  const [lineas, setLineas] = useState<{ ventas: any }>()
+  const [itemIdSel, setItemIdSel] = useState<number>()
+  const [itemIdSelected, setItemIdSelected] = useState()
+
+  const getLineasVentaYDevolucion = () => {
+    axios.post(`/devolucion/${clientId}`).then(res => {
+      setLineas(res.data)
+    })
+  }
+
+  // const menuItems = lineas.ventas.map(venta => (
+  //   <MenuItem key={venta.id} value={venta.item_id}>
+  //     {`${venta.item.marca} ${venta.item.modelo}`}
+  //   </MenuItem>
+  // ))
 
   return (
     <Paper>
@@ -21,7 +34,18 @@ export default function Header({ useStates }) {
         url={"clientes"}
         value={clientId}
       />
-      {clientId ? clientId : "selecciona un cliente"}
+      <Select
+        onChange={(e) => setItemIdSelected(e.target.value)}
+        labelId={'lineas'}
+        id={'lineas'}
+        name={'lineas'}
+        value={1}
+        fullWidth
+      >
+        {/* {menuItems} */}
+      </Select>
+      {lineas ? null : 'lineas'}
+
     </Paper>
   );
 }
