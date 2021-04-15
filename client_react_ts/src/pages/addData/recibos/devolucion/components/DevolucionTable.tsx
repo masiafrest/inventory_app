@@ -13,18 +13,19 @@ import {
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
 import ModQty from "../../components/ModQty";
+import { VentaYDevoluciones, Item } from '../'
 
-const ShowRows = ({ rows }) => {
-  console.log(rows);
-  return rows.map((row, idx) => (
-    <TableRow key={row.id}>
+const ShowRows = ({ items }) => {
+  console.log(items);
+  return items.map((item, idx) => (
+    <TableRow key={item.id}>
       <TableCell align="left">
-        <ModQty row={row} reciboTipo="venta" idx={idx} />
+        <ModQty item={item} reciboTipo="venta" idx={idx} />
       </TableCell>
-      <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} id: ${row.id} `}</TableCell>
-      <TableCell align="right">{row.precio.precio.toFixed(2)}</TableCell>
+      <TableCell align="left">{`${item.marca} ${item.modelo} ${item.color} ${item.descripcion} id: ${item.id} `}</TableCell>
+      <TableCell align="right">{item.precio.precio.toFixed(2)}</TableCell>
       <TableCell align="right">
-        {(row.precio.precio * row.qty).toFixed(2)}
+        {(item.precio.precio * item.qty).toFixed(2)}
       </TableCell>
     </TableRow>
   ));
@@ -43,7 +44,7 @@ export default function DevolucionTable({ items }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {<ShowRows rows={[]} />}
+          {<ShowRows items={[]} />}
           <TableRow>
             <TableCell colSpan={4}>
               <IconButton size="small" onClick={() => "hello"}>
