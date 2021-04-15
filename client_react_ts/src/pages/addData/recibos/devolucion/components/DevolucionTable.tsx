@@ -30,7 +30,7 @@ const ShowRows = ({ rows }) => {
   ));
 };
 
-export default function DevolucionTable({}) {
+export default function DevolucionTable({ items }) {
   return (
     <TableContainer component={Paper}>
       <Table style={{ minWidth: 300 }} padding="default" size="small">

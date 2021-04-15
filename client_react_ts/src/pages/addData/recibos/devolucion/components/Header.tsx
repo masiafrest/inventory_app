@@ -10,40 +10,8 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { useStyle } from "../../../useStyle";
-export interface VentaYDevoluciones {
-  ventas?: VentasEntity[] | null;
-  devoluciones?: null[] | null;
-}
-export interface VentasEntity {
-  id: number;
-  venta_id: number;
-  item_id: number;
-  qty: number;
-  precio: number;
-  tax?: null;
-  total?: null;
-  created_at: string;
-  updated_at: string;
-  deleted_at?: null;
-  item: Item;
-}
-export interface Item {
-  id: number;
-  marca: string;
-  modelo: string;
-  color: string;
-  stock: number;
-  descripcion: string;
-  barcode: string;
-  sku: string;
-  precio_id: number;
-  categoria_id: number;
-  categoria_2_id?: null;
-  lugar_id: number;
-  created_at: string;
-  updated_at: string;
-  deleted_at?: null;
-}
+
+import { VentaYDevoluciones } from '../'
 interface UseStates {
   clientId: any;
   setClientId: any;

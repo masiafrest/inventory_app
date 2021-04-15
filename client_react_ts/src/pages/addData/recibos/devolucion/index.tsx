@@ -89,7 +89,7 @@ export default function Devolucion() {
           setLineas,
         ]}
       />
-      <DevolucionTable />
+      <DevolucionTable items={selectedItems} />
       <Button variant="contained">agregar recibo</Button>
     </>
   );
