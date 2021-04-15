@@ -53,7 +53,7 @@ export default function Devolucion() {
 
   const [clientId, setClientId] = useState<number>();
   // TODO: select item id deb ser un item entero y no un id para ser usado en la tabla
-  const [selectedItemId, setSelectedItemId] = useState<any>();
+  const [selectedItems, setSelectedItems] = useState([]);
   const [lineas, setLineas] = useState<VentaYDevoluciones>();
   const [hasLineas, setHasLineas] = useState(false);
 
@@ -81,8 +81,8 @@ export default function Devolucion() {
         useStates={[
           clientId,
           setClientId,
-          selectedItemId,
-          setSelectedItemId,
+          selectedItems,
+          setSelectedItems,
           hasLineas,
           setHasLineas,
           lineas,

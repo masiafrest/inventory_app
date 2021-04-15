@@ -60,8 +60,8 @@ export default function Header({ useStates }) {
   const [
     clientId,
     setClientId,
-    selectedItemId,
-    setSelectedItemId,
+    selectedItems,
+    setSelectedItems,
     hasLineas,
     setHasLineas,
     lineas,
@@ -70,7 +70,7 @@ export default function Header({ useStates }) {
 
   const menuItems = lineas?.ventas?.map((linea) => (
     <MenuItem
-      value={[linea.item_id, linea.id]}
+      value={[linea.item, linea.id]}
     >{`${linea.item.marca} ${linea.item.modelo} ${linea.item.descripcion}, recibo N° ${linea.venta_id}`}</MenuItem>
   ));
 
@@ -92,10 +92,9 @@ export default function Header({ useStates }) {
           <Select
             onChange={(e) => {
               const { value } = e.target;
-              const itemId = value[0];
+              const item = value[0];
               const lineaId = value[1];
-
-              setSelectedItemId(itemId);
+              setSelectedItems(selectedItems.concat(item));
 
               const newVentas = lineas.ventas.filter(
                 (lineaVenta) => lineaVenta.id !== lineaId
