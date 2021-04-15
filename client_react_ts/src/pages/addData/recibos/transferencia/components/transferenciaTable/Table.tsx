@@ -23,7 +23,7 @@ function OrderTable({ items, onClickHandler, destinoId, onSelectHandler }) {
       <TableCell align="left">
         {/* <DelRow item_id={row.id} /> */}
         {/* {row.qty} */}
-        <ModQty row={row} reciboTipo="transferencia" idx={idx} />
+        <ModQty item={row} reciboTipo="transferencia" idx={idx} />
       </TableCell>
       <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} `}</TableCell>
       <TableCell align="center">
