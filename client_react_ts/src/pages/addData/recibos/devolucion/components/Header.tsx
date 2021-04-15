@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import { useStyle } from "../../../useStyle";
 
-import { VentaYDevoluciones } from '../'
+import { VentaYDevoluciones } from "../";
 interface UseStates {
   clientId: any;
   setClientId: any;
@@ -35,12 +35,6 @@ export default function Header({ useStates }) {
     lineas,
     setLineas,
   ] = useStates;
-
-  const menuItems = lineas?.ventas?.map((linea) => (
-    <MenuItem
-      value={[linea.item, linea.id]}
-    >{`${linea.item.marca} ${linea.item.modelo} ${linea.item.descripcion}, recibo N° ${linea.venta_id}`}</MenuItem>
-  ));
 
   return (
     <Paper>
@@ -78,7 +72,11 @@ export default function Header({ useStates }) {
             name={"lineas"}
             fullWidth
           >
-            {menuItems}
+            {lineas?.ventas?.map((linea) => (
+              <MenuItem
+                value={[linea.item, linea.id]}
+              >{`${linea.item.marca} ${linea.item.modelo} ${linea.item.descripcion}, recibo N° ${linea.venta_id}`}</MenuItem>
+            ))}
           </Select>
         </>
       ) : (
