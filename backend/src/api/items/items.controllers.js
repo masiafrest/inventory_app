@@ -40,31 +40,6 @@ exports.searchQuery = async (req, res, next) => {
   }
 };
 
-exports.getByParams = async (req, res, next) => {
-  try {
-    let item;
-    const x = req.params.x;
-    async function itemGraphFetch(key, value) {
-      return await Item.query()
-        .withGraphFetched(getItemGraph)
-        .where(key, value)
-        .modify("defaultSelects")
-        .first();
-    }
-    if (isNaN(x)) {
-      item = await itemGraphFetch("marca", x);
-    } else {
-      if (x.length > 5) {
-        item = await itemGraphFetch("barcode", x);
-      }
-      item = await itemGraphFetch("id", x);
-    }
-    res.json([item]);
-  } catch (err) {
-    next(err);
-  }
-};
-
 exports.post = async (req, res, next) => {
   // const parseBody
   try {
@@ -83,6 +58,14 @@ exports.post = async (req, res, next) => {
       proveedor_id,
       costo,
     } = req.body;
+
+    const search_array = [
+      String(marca),
+      String(modelo),
+      String(descripcion),
+      String(barcode),
+      String(sku),
+    ];
     let image_url = req.files.map((file) => {
       return file.filename;
     });
@@ -93,7 +76,6 @@ exports.post = async (req, res, next) => {
       const existingItem = await Item.query()
         .where({ marca, modelo, lugar_id })
         .first();
-      let insertedItem;
       console.log(existingItem);
       //check if item exist then incoming data is item of diferent color
       if (existingItem) {
@@ -101,7 +83,7 @@ exports.post = async (req, res, next) => {
         return res.send("existe item, id: " + existingItem.id);
       }
       console.log("inserting item");
-      insertedItem = await Item.query(trx)
+      let insertedItem = await Item.query(trx)
         .insertGraph(
           {
             "#id": "item",
@@ -152,6 +134,18 @@ exports.post = async (req, res, next) => {
           }
         )
         .returning("*");
+      // .insert({
+      //   marca,
+      //   descripcion,
+      //   barcode,
+      //   modelo,
+      //   color,
+      //   sku,
+      //   stock,
+      //   lugar_id,
+      //   precio_id: 1,
+      //   categoria_id: 1,
+      // });
       const item_id = insertedItem.id;
       console.log("done insert item");
       await Promise.all(
