@@ -8,7 +8,7 @@ import {
   Table,
   TableBody,
   FormControlLabel,
-  Checkbox
+  Checkbox,
 } from "@material-ui/core";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
@@ -19,7 +19,7 @@ const ShowRows = ({ rows }) => {
   return rows.map((row, idx) => (
     <TableRow key={row.id}>
       <TableCell align="left">
-        <ModQty row={row} reciboTipo="venta" idx={idx} />
+        <ModQty item={row} reciboTipo="venta" idx={idx} />
       </TableCell>
       <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} id: ${row.id} `}</TableCell>
       <TableCell align="right">{row.precio.precio.toFixed(2)}</TableCell>
@@ -30,7 +30,13 @@ const ShowRows = ({ rows }) => {
   ));
 };
 
-export default function VentaTable({ items, invoice, TAX_RATE, onClickHandler, taxState }) {
+export default function VentaTable({
+  items,
+  invoice,
+  TAX_RATE,
+  onClickHandler,
+  taxState,
+}) {
   const [Subtotal, Taxes, Total] = invoice;
   const [isTax, setIsTax] = taxState;
   return (
@@ -70,8 +76,11 @@ export default function VentaTable({ items, invoice, TAX_RATE, onClickHandler, t
                   />
                 }
                 label="Tax"
-              /></TableCell>
-            <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
+              />
+            </TableCell>
+            <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
+              0
+            )} %`}</TableCell>
             <TableCell align="right">{Taxes}</TableCell>
           </TableRow>
           <TableRow>
@@ -83,4 +92,3 @@ export default function VentaTable({ items, invoice, TAX_RATE, onClickHandler, t
     </TableContainer>
   );
 }
-
