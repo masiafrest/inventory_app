@@ -7,13 +7,33 @@ const {
   references,
   addTwoTelephoneColumns,
 } = require("../../src/lib/tableUtils");
+
+const addItemIndex = `
+ALTER TABLE public.item ADD "search_vector" tsvector;
+CREATE FUNCTION my_trigger_function()
+RETURNS trigger AS $$
+BEGIN
+  NEW.search_vector := to_tsvector(NEW."marca" || ' ' || NEW.modelo || ' ' || NEW.descripcion || ' ' || NEW."barcode" || ' ' || NEW."sku");
+  RETURN NEW;
+END $$ LANGUAGE 'plpgsql';
+CREATE TRIGGER my_trigger
+BEFORE INSERT ON public.item
+FOR EACH ROW
+EXECUTE PROCEDURE my_trigger_function();
+CREATE INDEX idx_fts_item ON public.item USING gin(search_vector);
+`;
+
+const removeItemIndex = `
+  DROP FUNCTION IF EXISTS my_trigger_function();
+`;
+
 /**
  * @param {import('knex')} knex
  */
 exports.up = async function (knex) {
   await Promise.all([
     knex.schema.createTable(tableNames.rol, (table) => {
-      addDefaultColumns(table)
+      addDefaultColumns(table);
       createTableIncrementsStringNotNullable(table);
       table.string("tipo").unique();
     }),
@@ -92,7 +112,9 @@ exports.up = async function (knex) {
     references(table, tableNames.categoria, false, `${tableNames.categoria}_2`);
     references(table, tableNames.lugar);
     addDefaultColumns(table);
+    // table.specificType("search_vector", "tsvector");
   });
+  await knex.schema.raw(addItemIndex);
 
   await knex.schema.createTable(tableNames.usuario, (table) => {
     createTableIncrementsStringNotNullable(table, "nombre");
@@ -118,5 +140,6 @@ exports.down = async function (knex) {
     knex.schema.dropTableIfExists(tableNames.cheque),
     knex.schema.dropTableIfExists(tableNames.categoria),
     knex.schema.dropTableIfExists(tableNames.rol),
+    knex.schema.raw(removeItemIndex),
   ]);
 };

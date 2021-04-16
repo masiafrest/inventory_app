@@ -64,6 +64,7 @@ exports.post = async (req, res, next) => {
     let image_url = req.files.map((file) => {
       return file.filename;
     });
+
     // image_url = JSON.stringify(image_url);
     console.log("no existe item");
     await Item.transaction(async (trx) => {
