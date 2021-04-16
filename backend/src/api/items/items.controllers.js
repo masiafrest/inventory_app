@@ -1,6 +1,8 @@
 const Item = require("./items.model");
 const { hardDeleteById, patchById, delImg } = require("../../lib/helpers");
 const Image = require("../images.model");
+const { raw } = require("objection");
+const knex = require("knex");
 
 const getItemGraph = `[
         precio(defaultSelects),
@@ -15,6 +17,26 @@ exports.get = async (req, res, next) => {
     res.json(items);
   } catch (err) {
     next(err);
+  }
+};
+
+exports.searchQuery = async (req, res, next) => {
+  console.log(req.params);
+  const { search } = req.params;
+  console.log(search);
+  try {
+    const items = await Item.query()
+      .select("*")
+      .where(raw(`search_vector @@ to_tsquery(?)`, [search]));
+
+    // const items = knex("item").where(
+    //   knex.raw(`search_vector @@ to_tsquery(?)`, [search])
+    // );
+
+    res.send(items);
+  } catch (error) {
+    console.log(error);
+    next(error);
   }
 };
 
