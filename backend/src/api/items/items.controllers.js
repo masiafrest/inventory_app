@@ -2,7 +2,9 @@ const Item = require("./items.model");
 const { hardDeleteById, patchById, delImg } = require("../../lib/helpers");
 const Image = require("../images.model");
 const { raw } = require("objection");
-const knex = require("knex");
+const pool = require("../../../dbpg");
+const Item_log = require("./logs/item_logs.model");
+const Precio = require("../precio/precios.model");
 
 const getItemGraph = `[
         precio(defaultSelects),
@@ -40,6 +42,129 @@ exports.searchQuery = async (req, res, next) => {
   }
 };
 
+// exports.post = async (req, res, next) => {
+//   // const parseBody
+//   try {
+//     const {
+//       marca,
+//       descripcion,
+//       modelo,
+//       barcode,
+//       sku,
+//       categoria_id,
+//       stock,
+//       lugar_id,
+//       color,
+//       precio,
+//       precio_min,
+//       proveedor_id,
+//       costo,
+//     } = req.body;
+
+//     const search_array = [
+//       String(marca),
+//       String(modelo),
+//       String(descripcion),
+//       String(barcode),
+//       String(sku),
+//     ];
+//     let image_url = req.files.map((file) => {
+//       return file.filename;
+//     });
+
+//     // image_url = JSON.stringify(image_url);
+//     console.log("no existe item");
+//     await Item.transaction(async (trx) => {
+//       const existingItem = await Item.query()
+//         .where({ marca, modelo, lugar_id })
+//         .first();
+//       console.log(existingItem);
+//       //check if item exist then incoming data is item of diferent color
+//       if (existingItem) {
+//         //if item exist, check if have image or not
+//         return res.send("existe item, id: " + existingItem.id);
+//       }
+//       console.log("inserting item");
+//       let insertedItem = await Item.query(trx)
+//         .insertGraph(
+//           {
+//             "#id": "item",
+//             marca,
+//             descripcion,
+//             barcode,
+//             modelo,
+//             color,
+//             sku,
+//             stock,
+//             lugar_id,
+//             categoria: [
+//               {
+//                 id: categoria_id,
+//               },
+//             ],
+//             precio: [
+//               {
+//                 precio,
+//                 precio_min,
+//                 costo,
+//                 proveedor: [{ id: proveedor_id }],
+//                 logs: [
+//                   {
+//                     item_id: "#ref{item.id}",
+//                     usuario_id: req.userData.id,
+//                     proveedor: [{ id: proveedor_id }],
+//                   },
+//                 ],
+//               },
+//             ],
+//             logs: [
+//               {
+//                 usuario_id: req.userData.id,
+//                 ajuste: stock,
+//                 evento: "crear",
+//                 proveedor: [
+//                   {
+//                     id: proveedor_id,
+//                   },
+//                 ],
+//               },
+//             ],
+//           },
+//           {
+//             relate: true,
+//             allowRefs: true,
+//           }
+//         )
+//         .returning("*");
+//       // .insert({
+//       //   marca,
+//       //   descripcion,
+//       //   barcode,
+//       //   modelo,
+//       //   color,
+//       //   sku,
+//       //   stock,
+//       //   lugar_id,
+//       //   precio_id: 1,
+//       //   categoria_id: 1,
+//       // });
+//       const item_id = insertedItem.id;
+//       console.log("done insert item");
+//       await Promise.all(
+//         image_url.map(async (e) => {
+//           await insertedItem.$relatedQuery("images", trx).insert({
+//             url_path: e,
+//             item_id,
+//           });
+//         })
+//       );
+//       res.json(insertedItem);
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
 exports.post = async (req, res, next) => {
   // const parseBody
   try {
@@ -59,6 +184,58 @@ exports.post = async (req, res, next) => {
       costo,
     } = req.body;
 
+    let image_url = req.files.map((file) => {
+      return file.filename;
+    });
+
+    const existingItem = await Item.query()
+      .where({ marca, modelo, lugar_id })
+      .first();
+    console.log(existingItem);
+    //check if item exist then incoming data is item of diferent color
+    if (existingItem) {
+      //if item exist, check if have image or not
+      return res.send("existe item, id: " + existingItem.id);
+    }
+
+    const usuario_id = req.userData.id;
+    const proveedor = [
+      {
+        id: proveedor_id,
+      },
+    ];
+
+    // const log_id = await Item_log.query().insertGraph({
+    //   usuario_id,
+    //   ajuste: stock,
+    //   evento: "crear",
+    //   proveedor,
+    // });
+    const precio_id = await Precio.query().insertGraph({
+      precio,
+      precio_min,
+      costo,
+      // logs: [
+      //   {
+      //     usuario_id,
+      //     proveedor,
+      //   },
+      // ],
+    });
+    console.log("precio_id: ", precio_id);
+    const values = [
+      marca,
+      descripcion,
+      modelo,
+      barcode,
+      sku,
+      categoria_id,
+      stock,
+      lugar_id,
+      color,
+      costo,
+      precio_id,
+    ];
     const search_array = [
       String(marca),
       String(modelo),
@@ -66,103 +243,84 @@ exports.post = async (req, res, next) => {
       String(barcode),
       String(sku),
     ];
-    let image_url = req.files.map((file) => {
-      return file.filename;
-    });
-
-    // image_url = JSON.stringify(image_url);
-    console.log("no existe item");
-    await Item.transaction(async (trx) => {
-      const existingItem = await Item.query()
-        .where({ marca, modelo, lugar_id })
-        .first();
-      console.log(existingItem);
-      //check if item exist then incoming data is item of diferent color
-      if (existingItem) {
-        //if item exist, check if have image or not
-        return res.send("existe item, id: " + existingItem.id);
+    pool.query(
+      `INSERT INTO
+      item(marca, descripcion, modelo, barcode, sku, categoria_id, stock, lugar_id, color, created_at, updated_at)
+        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW())`,
+      values,
+      (q_err, q_res) => {
+        if (q_err) return next(q_err);
+        console.log(q_res);
       }
-      console.log("inserting item");
-      let insertedItem = await Item.query(trx)
-        .insertGraph(
-          {
-            "#id": "item",
-            marca,
-            descripcion,
-            barcode,
-            modelo,
-            color,
-            sku,
-            stock,
-            lugar_id,
-            categoria: [
-              {
-                id: categoria_id,
-              },
-            ],
-            precio: [
-              {
-                precio,
-                precio_min,
-                costo,
-                proveedor: [{ id: proveedor_id }],
-                logs: [
-                  {
-                    item_id: "#ref{item.id}",
-                    usuario_id: req.userData.id,
-                    proveedor: [{ id: proveedor_id }],
-                  },
-                ],
-              },
-            ],
-            logs: [
-              {
-                usuario_id: req.userData.id,
-                ajuste: stock,
-                evento: "crear",
-                proveedor: [
-                  {
-                    id: proveedor_id,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            relate: true,
-            allowRefs: true,
-          }
-        )
-        .returning("*");
-      // .insert({
-      //   marca,
-      //   descripcion,
-      //   barcode,
-      //   modelo,
-      //   color,
-      //   sku,
-      //   stock,
-      //   lugar_id,
-      //   precio_id: 1,
-      //   categoria_id: 1,
-      // });
-      const item_id = insertedItem.id;
-      console.log("done insert item");
-      await Promise.all(
-        image_url.map(async (e) => {
-          await insertedItem.$relatedQuery("images", trx).insert({
-            url_path: e,
-            item_id,
-          });
-        })
-      );
-      res.json(insertedItem);
-    });
+    );
+
+    // console.log("no existe item");
+    // let insertedItem = await Item.query()
+    //   .insertGraph(
+    //     {
+    //       "#id": "item",
+    //       marca,
+    //       descripcion,
+    //       barcode,
+    //       modelo,
+    //       color,
+    //       sku,
+    //       stock,
+    //       lugar_id,
+    //       categoria: [
+    //         {
+    //           id: categoria_id,
+    //         },
+    //       ],
+    //       precio: [
+    //         {
+    //           precio,
+    //           precio_min,
+    //           costo,
+    //           proveedor: [{ id: proveedor_id }],
+    //           logs: [
+    //             {
+    //               item_id: "#ref{item.id}",
+    //               usuario_id: req.userData.id,
+    //               proveedor: [{ id: proveedor_id }],
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       logs: [
+    //         {
+    //           usuario_id: req.userData.id,
+    //           ajuste: stock,
+    //           evento: "crear",
+    //           proveedor: [
+    //             {
+    //               id: proveedor_id,
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       relate: true,
+    //       allowRefs: true,
+    //     }
+    //   )
+    //   .returning("*");
+    // const item_id = insertedItem.id;
+    // console.log("done insert item");
+    // await Promise.all(
+    //   image_url.map(async (e) => {
+    //     await insertedItem.$relatedQuery("images").insert({
+    //       url_path: e,
+    //       item_id,
+    //     });
+    //   })
+    // );
+    // res.json(insertedItem);
   } catch (err) {
     next(err);
   }
 };
-
 exports.patch = (req, res, next) => {
   patchById(req, res, next, Item);
 };
