@@ -5,6 +5,8 @@ const { raw } = require("objection");
 const pool = require("../../../dbpg");
 const Item_log = require("./logs/item_logs.model");
 const Precio = require("../precio/precios.model");
+const knexConfig = require("../../../knexfile");
+const knex = require("knex")(knexConfig.development);
 
 const getItemGraph = `[
         precio(defaultSelects),
@@ -204,119 +206,112 @@ exports.post = async (req, res, next) => {
         id: proveedor_id,
       },
     ];
-
-    // const log_id = await Item_log.query().insertGraph({
-    //   usuario_id,
-    //   ajuste: stock,
-    //   evento: "crear",
-    //   proveedor,
-    // });
-    const precio_id = await Precio.query().insertGraph({
-      precio,
-      precio_min,
-      costo,
-      // logs: [
-      //   {
-      //     usuario_id,
-      //     proveedor,
-      //   },
-      // ],
-    });
-    console.log("precio_id: ", precio_id);
-    const values = [
+    const insertObj = {
       marca,
-      descripcion,
       modelo,
-      barcode,
+      descripcion,
       sku,
-      categoria_id,
+      barcode,
       stock,
       lugar_id,
       color,
-      costo,
-      precio_id,
-    ];
-    const search_array = [
-      String(marca),
-      String(modelo),
-      String(descripcion),
-      String(barcode),
-      String(sku),
-    ];
-    pool.query(
-      `INSERT INTO
-      item(marca, descripcion, modelo, barcode, sku, categoria_id, stock, lugar_id, color, created_at, updated_at)
-        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW())`,
-      values,
-      (q_err, q_res) => {
-        if (q_err) return next(q_err);
-        console.log(q_res);
-      }
-    );
+    };
+    let itemArrId;
+    await knex.transaction(async function (trx) {
+      itemArrId = await knex("item")
+        .transacting(trx)
+        .insert(
+          knex.raw(`
+     (${Object.keys(insertObj)
+       .map((e) => e)
+       .join(",")})
+values (${Object.values(insertObj)
+            .map((e) => `'${e}'`)
+            .join(",")})
+    `)
+        )
+        .returning("id");
+    });
+    await Item.transaction(async (trx) => {
+      let insertedItem = await Item.query(trx)
+        .upsertGraph(
+          {
+            "#id": "item",
+            id: itemArrId[0],
+            categoria: [
+              {
+                id: categoria_id,
+              },
+            ],
+            precio: [
+              {
+                precio,
+                precio_min,
+                costo,
+                proveedor: [{ id: proveedor_id }],
+                logs: [
+                  {
+                    item_id: "#ref{item.id}",
+                    usuario_id: req.userData.id,
+                    proveedor: [{ id: proveedor_id }],
+                  },
+                ],
+              },
+            ],
+            logs: [
+              {
+                usuario_id: req.userData.id,
+                ajuste: stock,
+                evento: "crear",
+                proveedor: [
+                  {
+                    id: proveedor_id,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            relate: true,
+            allowRefs: true,
+          }
+        )
+        .returning("*");
 
-    // console.log("no existe item");
-    // let insertedItem = await Item.query()
-    //   .insertGraph(
-    //     {
-    //       "#id": "item",
-    //       marca,
-    //       descripcion,
-    //       barcode,
-    //       modelo,
-    //       color,
-    //       sku,
-    //       stock,
-    //       lugar_id,
-    //       categoria: [
-    //         {
-    //           id: categoria_id,
-    //         },
-    //       ],
-    //       precio: [
-    //         {
-    //           precio,
-    //           precio_min,
-    //           costo,
-    //           proveedor: [{ id: proveedor_id }],
-    //           logs: [
-    //             {
-    //               item_id: "#ref{item.id}",
-    //               usuario_id: req.userData.id,
-    //               proveedor: [{ id: proveedor_id }],
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //       logs: [
-    //         {
-    //           usuario_id: req.userData.id,
-    //           ajuste: stock,
-    //           evento: "crear",
-    //           proveedor: [
-    //             {
-    //               id: proveedor_id,
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       relate: true,
-    //       allowRefs: true,
-    //     }
-    //   )
-    //   .returning("*");
-    // const item_id = insertedItem.id;
-    // console.log("done insert item");
-    // await Promise.all(
-    //   image_url.map(async (e) => {
-    //     await insertedItem.$relatedQuery("images").insert({
-    //       url_path: e,
-    //       item_id,
-    //     });
-    //   })
+      res.json(insertedItem);
+    });
+    // const item = await Item.query().findById(itemArrId[0]);
+    // console.log("item ", item);
+    // await item.$relatedQuery("logs", trx).insertGraph(
+    //   {
+    //     usuario_id,
+    //     ajuste: stock,
+    //     evento: "crear",
+    //     proveedor,
+    //   },
+    //   {
+    //     relate: true,
+    //   }
     // );
-    // res.json(insertedItem);
+
+    // const precio_id = await Precio.query().insertGraph(
+    //   {
+    //     precio,
+    //     precio_min,
+    //     costo,
+    //     logs: [
+    //       {
+    //         usuario_id,
+    //         proveedor,
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     relate: true,
+    //   }
+    // );
+    // console.log("precio_id: ", precio_id);
+    // res.json(precio_id);
   } catch (err) {
     next(err);
   }

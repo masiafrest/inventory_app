@@ -11,11 +11,13 @@ const {
 const addItemIndex = `
 ALTER TABLE public.item ADD "search_vector" tsvector;
 CREATE FUNCTION my_trigger_function()
-RETURNS trigger AS $$
+RETURNS trigger AS 
+$$
 BEGIN
   NEW.search_vector := to_tsvector(NEW."marca" || ' ' || NEW.modelo || ' ' || NEW.descripcion || ' ' || NEW."barcode" || ' ' || NEW."sku");
   RETURN NEW;
-END $$ LANGUAGE 'plpgsql';
+END $$ 
+LANGUAGE 'plpgsql';
 CREATE TRIGGER my_trigger
 BEFORE INSERT ON public.item
 FOR EACH ROW
