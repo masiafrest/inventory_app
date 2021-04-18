@@ -252,22 +252,18 @@ values (${Object.values(insertObj)
                 logs: [
                   {
                     item_id: "#ref{item.id}",
-                    usuario_id: req.userData.id,
-                    proveedor: [{ id: proveedor_id }],
+                    usuario_id,
+                    proveedor,
                   },
                 ],
               },
             ],
             logs: [
               {
-                usuario_id: req.userData.id,
+                usuario_id,
                 ajuste: stock,
                 evento: "crear",
-                proveedor: [
-                  {
-                    id: proveedor_id,
-                  },
-                ],
+                proveedor,
               },
             ],
           },
@@ -277,41 +273,18 @@ values (${Object.values(insertObj)
           }
         )
         .returning("*");
-
+      const item_id = insertedItem.id;
+      console.log("done insert item");
+      await Promise.all(
+        image_url.map(async (e) => {
+          await insertedItem.$relatedQuery("images", trx).insert({
+            url_path: e,
+            item_id,
+          });
+        })
+      );
       res.json(insertedItem);
     });
-    // const item = await Item.query().findById(itemArrId[0]);
-    // console.log("item ", item);
-    // await item.$relatedQuery("logs", trx).insertGraph(
-    //   {
-    //     usuario_id,
-    //     ajuste: stock,
-    //     evento: "crear",
-    //     proveedor,
-    //   },
-    //   {
-    //     relate: true,
-    //   }
-    // );
-
-    // const precio_id = await Precio.query().insertGraph(
-    //   {
-    //     precio,
-    //     precio_min,
-    //     costo,
-    //     logs: [
-    //       {
-    //         usuario_id,
-    //         proveedor,
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     relate: true,
-    //   }
-    // );
-    // console.log("precio_id: ", precio_id);
-    // res.json(precio_id);
   } catch (err) {
     next(err);
   }
