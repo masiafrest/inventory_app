@@ -113,6 +113,7 @@ exports.up = async function (knex) {
     references(table, tableNames.categoria, false);
     references(table, tableNames.lugar);
     addDefaultColumns(table);
+    table.string("search_item");
     // table.specificType("search_vector", "tsvector");
   });
   await knex.schema.raw(addItemIndex);

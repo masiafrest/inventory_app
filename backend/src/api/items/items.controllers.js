@@ -4,6 +4,7 @@ const Image = require("../images.model");
 const { raw } = require("objection");
 const knexConfig = require("../../../knexfile");
 const { orWhere } = require("../../db");
+const { chain } = require("lodash");
 const knex = require("knex")(knexConfig.development);
 
 const getItemGraph = `[
@@ -24,21 +25,19 @@ exports.get = async (req, res, next) => {
 
 exports.searchQuery = async (req, res, next) => {
   console.log(req.params);
-  const { search } = req.params;
-  console.log(search);
+  let { search } = req.params;
+  const searchArr = search.split(" ").map((e) => `%${e}%`.replace("'", ""));
+
   try {
-    const items = await Item.query().where((builder) =>
-      builder
-        .where("marca", "like", `%${search}%`)
-        .orWhere("descripcion", "like", `%${search}%`)
-    );
+    const items = await Item.query()
+      .withGraphFetched(getItemGraph)
+      .where((builder) =>
+        builder.where(
+          raw(`search_vector @@ to_tsquery('spanish', ?)`, searchArr.join("|"))
+        )
+      );
 
     // .where(raw(`search_vector @@ to_tsquery('spanish', ?)`, [search]));
-
-    // const items = knex("item").where(
-    //   knex.raw(`search_vector @@ to_tsquery(?)`, [search])
-    // );
-
     res.send(items);
   } catch (error) {
     console.log(error);
@@ -71,6 +70,8 @@ exports.post = async (req, res, next) => {
       id: proveedor_id,
     },
   ];
+  const search_item = [marca, modelo, descripcion, barcode, sku].join(" ");
+  console.log("searchitem: ", search_item);
   const insertObj = {
     marca,
     modelo,
@@ -81,6 +82,7 @@ exports.post = async (req, res, next) => {
     lugar_id,
     categoria_id,
     color,
+    search_item,
   };
   let itemArrId;
   try {

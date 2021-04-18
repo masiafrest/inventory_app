@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import useFetchData from "../../utils/hooks/useFetchData";
 
 import { capitalizeFirstChart, deleteSlashChart } from "../../utils/helper";
-import SearchBar from "../../components/SearchBar";
 
 const NoExiste = () => <h3>No existe</h3>;
 
@@ -18,8 +17,6 @@ export default function FetchDataContainer() {
 
   console.log(data);
   return (
-    <DataContext.Provider value={{ data, setData }}>
-      {pathname.includes("log") ? null : <SearchBar setResData={setData} />}
-    </DataContext.Provider>
+    <DataContext.Provider value={{ data, setData }}></DataContext.Provider>
   );
 }

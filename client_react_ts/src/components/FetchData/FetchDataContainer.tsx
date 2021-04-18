@@ -1,9 +1,8 @@
-import React, { createContext } from "react";
+import { createContext } from "react";
 import { useLocation } from "react-router-dom";
 import useFetchData from "../../utils/hooks/useFetchData";
 
 import { capitalizeFirstChart, deleteSlashChart } from "../../utils/helper";
-import SearchBar from "../SearchBar";
 
 import DataView from "./viewComponent/DataView";
 
@@ -21,7 +20,6 @@ export default function FetchDataContainer() {
   console.log(data);
   return (
     <DataContext.Provider value={{ data, setData }}>
-      {pathname.includes("log") ? null : <SearchBar setResData={setData} />}
       {data.toString().length > 0 ? <DataView path={path} /> : <NoExiste />}
     </DataContext.Provider>
   );

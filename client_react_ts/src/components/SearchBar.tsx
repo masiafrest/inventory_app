@@ -9,11 +9,12 @@ import FormControl from "@material-ui/core/FormControl";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 
-export default function SearchBar({ setResData }) {
+export default function SearchBar({ setResData, url }) {
   const [values, setValues] = useState("");
   const { pathname } = useLocation();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues(event.target.value);
+    console.log(values);
   };
 
   const submitHandler = async (
@@ -21,9 +22,9 @@ export default function SearchBar({ setResData }) {
   ) => {
     e.preventDefault();
     try {
-      const result: AxiosResponse = await axios.get(`${pathname}/${values}`);
+      const result: AxiosResponse = await axios.get(`${url}/${values}`);
       console.log(result);
-      setResData({ data: result.data });
+      setResData(result.data);
     } catch (error) {
       console.log("error: ", error);
     }

@@ -1,5 +1,6 @@
 import { localIp } from "../../../localIp";
 import { useState } from "react";
+import SearchBar from "../../../components/SearchBar";
 import useFetchData from "../../../utils/hooks/useFetchData";
 import Fab from "../../../components/FloatBtnAdd";
 import EditFormDialog from "../../../components/EditableField/EditFormDialog";
@@ -21,7 +22,7 @@ export default function ShowItems() {
   const url = "/items";
   const { data, setData } = useFetchData(url);
   const [activeStep, setActiveStep] = useState(0);
-
+  console.log(!data.length);
   const cardView = data.map((obj) => {
     const src = "http://" + localIp + ":5050/uploads/";
     const imgPlaceholder = "https://via.placeholder.com/200";
@@ -93,6 +94,7 @@ export default function ShowItems() {
   return (
     <>
       <Typography variant="h3">Items</Typography>
+      <SearchBar setResData={setData} url={url} />
       <Grid
         container
         spacing={2}
@@ -100,7 +102,7 @@ export default function ShowItems() {
         alignContent="center"
         alignItems="center"
       >
-        {cardView}
+        {!data.length ? "no hay item" : cardView}
       </Grid>
       <Fab url="/add/item" />
     </>

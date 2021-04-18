@@ -59,17 +59,7 @@ class Item extends BaseModel {
   static get modifiers() {
     return {
       defaultSelects(builder) {
-        builder.select(
-          "id",
-          "marca",
-          "descripcion",
-          "modelo",
-          "barcode",
-          "categoria_id",
-          "color",
-          "sku",
-          "stock"
-        );
+        builder.select("id", "marca", "descripcion");
       },
       getItemData(builder) {
         builder.select("item.sku", "item.color", "item.marca", "item.modelo");
