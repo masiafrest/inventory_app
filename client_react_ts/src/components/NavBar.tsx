@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -15,7 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
 
-function NavBar(props: any) {
+function NavBar() {
   const dispath = useDispatch();
   const user: any = useSelector((state: RootState) => state.user);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -59,7 +60,9 @@ function NavBar(props: any) {
             open={isDrawerOpen}
             onClose={toggleDrawer(false)}
           >
-            <NavLinkOnClick to="/"><Button>Home</Button></NavLinkOnClick>
+            <NavLinkOnClick to="/">
+              <Button>Home</Button>
+            </NavLinkOnClick>
             <NavLinkOnClick to="/show/items">Items</NavLinkOnClick>
             <NavLinkOnClick to="/add/venta">venta</NavLinkOnClick>
             <NavLinkOnClick to="/add/transferencia">

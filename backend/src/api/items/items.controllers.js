@@ -2,10 +2,8 @@ const Item = require("./items.model");
 const { hardDeleteById, patchById, delImg } = require("../../lib/helpers");
 const Image = require("../images.model");
 const { raw } = require("objection");
-const pool = require("../../../dbpg");
-const Item_log = require("./logs/item_logs.model");
-const Precio = require("../precio/precios.model");
 const knexConfig = require("../../../knexfile");
+const { orWhere } = require("../../db");
 const knex = require("knex")(knexConfig.development);
 
 const getItemGraph = `[
@@ -29,9 +27,13 @@ exports.searchQuery = async (req, res, next) => {
   const { search } = req.params;
   console.log(search);
   try {
-    const items = await Item.query()
-      .select("*")
-      .where(raw(`search_vector @@ to_tsquery(?)`, [search]));
+    const items = await Item.query().where((builder) =>
+      builder
+        .where("marca", "like", `%${search}%`)
+        .orWhere("descripcion", "like", `%${search}%`)
+    );
+
+    // .where(raw(`search_vector @@ to_tsquery('spanish', ?)`, [search]));
 
     // const items = knex("item").where(
     //   knex.raw(`search_vector @@ to_tsquery(?)`, [search])
@@ -77,6 +79,7 @@ exports.post = async (req, res, next) => {
     barcode,
     stock,
     lugar_id,
+    categoria_id,
     color,
   };
   let itemArrId;
@@ -163,6 +166,7 @@ values (${Object.values(insertObj)
     next(err);
   }
 };
+
 exports.patch = (req, res, next) => {
   patchById(req, res, next, Item);
 };

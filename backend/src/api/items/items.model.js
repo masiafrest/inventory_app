@@ -66,7 +66,6 @@ class Item extends BaseModel {
           "modelo",
           "barcode",
           "categoria_id",
-          "categoria_2_id",
           "color",
           "sku",
           "stock"

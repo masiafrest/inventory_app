@@ -14,7 +14,7 @@ CREATE FUNCTION my_trigger_function()
 RETURNS trigger AS 
 $$
 BEGIN
-  NEW.search_vector := to_tsvector(NEW."marca" || ' ' || NEW.modelo || ' ' || NEW.descripcion || ' ' || NEW."barcode" || ' ' || NEW."sku");
+  NEW.search_vector := to_tsvector('spanish', NEW."marca" || ' ' || NEW.modelo || ' ' || NEW.descripcion || ' ' || NEW."barcode" || ' ' || NEW."sku");
   RETURN NEW;
 END $$ 
 LANGUAGE 'plpgsql';
@@ -109,9 +109,8 @@ exports.up = async function (knex) {
     table.string("barcode");
     table.string("sku", 12);
     addUrl(table, "image_url");
-    references(table, tableNames.precio);
-    references(table, tableNames.categoria, true);
-    references(table, tableNames.categoria, false, `${tableNames.categoria}_2`);
+    references(table, tableNames.precio, false);
+    references(table, tableNames.categoria, false);
     references(table, tableNames.lugar);
     addDefaultColumns(table);
     // table.specificType("search_vector", "tsvector");
