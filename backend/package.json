@@ -10,6 +10,7 @@
     "latest": "knex migrate:latest",
     "seed": "knex seed:run",
     "rollback": "knex migrate:rollback ...",
+    "restartDb": "npm run rollback && npm run latest && npm run seed ",
     "test": "jest ...",
     "test debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand"
   },
