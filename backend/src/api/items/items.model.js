@@ -53,14 +53,6 @@ class Item extends BaseModel {
           to: `${tableNames.categoria}.id`,
         },
       },
-      categoria2: {
-        relation: BaseModel.BelongsToOneRelation,
-        modelClass: Categoria,
-        join: {
-          from: `${tableNames.item}.${tableNames.categoria}_2_id`,
-          to: `${tableNames.categoria}.id`,
-        },
-      },
     };
   }
 
