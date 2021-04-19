@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { DataContext } from "../../FetchDataContainer";
 
 import {
@@ -15,7 +15,9 @@ import {
   TableCell,
   TableHead,
 } from "@material-ui/core";
+
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
 // TODO: mejorar la forma en como muestra la informacion
 export default function Devolucion() {
   const { data } = useContext(DataContext);

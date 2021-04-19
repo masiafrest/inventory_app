@@ -12,6 +12,7 @@ export default function SelectsOptions({
 }) {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+
   const fetchData = () => {
     axios
       .get("/" + url)
@@ -21,10 +22,13 @@ export default function SelectsOptions({
       })
       .catch((err) => console.log(err));
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+
   let menuItemToShow = [];
+
   switch (url) {
     case "categorias":
     case "proveedores":

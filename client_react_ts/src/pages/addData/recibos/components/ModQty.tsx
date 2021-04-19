@@ -3,8 +3,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-import { RootState } from "../../../../redux/rootReducer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   deleteLinea,
   modQty,
@@ -12,7 +11,6 @@ import {
 
 export default function ModQty({ item, reciboTipo, idx }) {
   const dispatch = useDispatch();
-  const recibo: Recibos = useSelector((state: RootState) => state.recibo);
 
   const DelRow = ({ reciboTipo }) => {
     const handleClick = () => {

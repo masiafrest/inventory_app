@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
-import { reciboPaths, addPaths, showPaths } from "../paths";
-import { Button, Divider, Grid } from "@material-ui/core";
+import { addPaths, showPaths } from "../paths";
+import { Button, Grid } from "@material-ui/core";
 
 const Home = () => {
   const user: any = useSelector((state: RootState) => state.user);

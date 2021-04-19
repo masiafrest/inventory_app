@@ -7,13 +7,10 @@ import {
   TableCell,
   Table,
   TableBody,
-  FormControlLabel,
-  Checkbox,
 } from "@material-ui/core";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
 import ModQty from "../../components/ModQty";
-import { VentaYDevoluciones, Item } from "../";
 
 export default function DevolucionTable({ items }: { items: Item[] }) {
   const showRows = items.map((item, idx) => (

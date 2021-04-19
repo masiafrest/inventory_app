@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import SearchBar from "./SearchBar";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";

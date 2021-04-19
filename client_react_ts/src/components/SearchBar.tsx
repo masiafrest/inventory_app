@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios, { AxiosResponse } from "axios";
-import { useLocation } from "react-router-dom";
 
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -11,7 +10,6 @@ import SearchIcon from "@material-ui/icons/Search";
 
 export default function SearchBar({ setResData, url }) {
   const [values, setValues] = useState("");
-  const { pathname } = useLocation();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues(event.target.value);
     console.log(values);

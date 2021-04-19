@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
 import SelectsOptions from "../../../components/SelectsOptions";
 import { Paper } from "@material-ui/core";
 
 import {
-  FormControlLabel,
-  Checkbox,
   Select,
   InputLabel,
   MenuItem,
@@ -31,7 +28,6 @@ export default function Header({ useStates }) {
     selectedItems,
     setSelectedItems,
     hasLineas,
-    setHasLineas,
     lineas,
     setLineas,
   ] = useStates;
