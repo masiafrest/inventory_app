@@ -12,11 +12,12 @@ import {
 } from "@material-ui/core";
 import { useStyle } from "./useStyle";
 
+
 const detailsName = [
   "marca",
   "modelo",
-  "sku",
   "color",
+  "sku",
   "precio",
   "precio_min",
   "stock",
@@ -35,9 +36,9 @@ export default function AddItem() {
     color: "",
     precio: null,
     precio_min: null,
-    categoria_id: null,
+    categoria_id: 0,
     stock: null,
-    lugar_id: null,
+    lugar_id: 0,
     proveedor_id: null,
     costo: null,
   };
@@ -63,9 +64,9 @@ export default function AddItem() {
         label={name}
         value={data[name]}
         onChange={handleChange}
-        // fullWidth
-        // helperText={errors[name]}
-        // error={errors[name] ? true : false}
+      // fullWidth
+      // helperText={errors[name]}
+      // error={errors[name] ? true : false}
       />
     </Grid>
   ));
@@ -84,18 +85,21 @@ export default function AddItem() {
             onChange={handleChange}
             name="categoria"
             url="categorias"
+            value={data}
           />
           <SelectsOptions
             className={classes.selects}
             onChange={handleChange}
             name="proveedor"
             url="proveedores"
+            value={data}
           />
           <SelectsOptions
             className={classes.selects}
             onChange={handleChange}
             name="lugar"
             url="lugares"
+            value={data}
           />
         </Grid>
         {/* <UploadAndPreviewImages

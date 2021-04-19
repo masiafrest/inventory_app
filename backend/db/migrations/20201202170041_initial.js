@@ -107,7 +107,7 @@ exports.up = async function (knex) {
     table.integer("stock").notNullable().unsigned();
     table.string("descripcion");
     table.string("barcode");
-    table.string("sku", 12);
+    table.string("sku", 20);
     addUrl(table, "image_url");
     references(table, tableNames.precio, false);
     references(table, tableNames.categoria, false);

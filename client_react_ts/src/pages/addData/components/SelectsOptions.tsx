@@ -8,7 +8,7 @@ export default function SelectsOptions({
   onChange,
   name,
   url,
-  value = 0,
+  value,
 }) {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -71,7 +71,7 @@ export default function SelectsOptions({
         labelId={name_id}
         id={name_id}
         name={name_id}
-        value={value}
+        value={value[name_id]}
         fullWidth
       >
         {dataMenuItem}

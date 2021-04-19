@@ -36,8 +36,8 @@ export default function AddDefectuoso(props: any) {
       value={data[detail]}
       onChange={handleChange}
       fullWidth
-      // helperText={errors[detail]}
-      // error={errors[detail] ? true : false}
+    // helperText={errors[detail]}
+    // error={errors[detail] ? true : false}
     />
   ));
 
@@ -51,6 +51,7 @@ export default function AddDefectuoso(props: any) {
           onChange={handleChange}
           name="items"
           url="items"
+          value={data}
         />
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>

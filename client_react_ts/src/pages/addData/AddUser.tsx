@@ -45,8 +45,8 @@ export default function AddUsuario() {
       label={detail}
       value={data[detail]}
       onChange={handleChange}
-      // helperText={errors[detail]}
-      // error={errors[detail] ? true : false}
+    // helperText={errors[detail]}
+    // error={errors[detail] ? true : false}
     />
   ));
 
@@ -60,6 +60,7 @@ export default function AddUsuario() {
           onChange={handleChange}
           name="rol"
           url="usuarios/roles"
+          value={data}
         />
         <UploadAndPreviewImages
           previewImg={previewImg}

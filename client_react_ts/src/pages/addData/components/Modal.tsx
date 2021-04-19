@@ -56,8 +56,8 @@ export default function Modal({ state, url, fetch }) {
       value={data[detail]}
       onChange={handleChange}
       fullWidth
-      // helperText={errors[detail]}
-      // error={errors[detail] ? true : false}
+    // helperText={errors[detail]}
+    // error={errors[detail] ? true : false}
     />
   ));
   const handleClose = () => {
@@ -68,7 +68,7 @@ export default function Modal({ state, url, fetch }) {
     fetch();
     setOpenModal(false);
   };
-
+  const checkValues = Object.values(data).some(e => !e)
   return (
     <Dialog
       onClose={handleClose}
@@ -83,6 +83,7 @@ export default function Modal({ state, url, fetch }) {
           variant="contained"
           color="primary"
           onClick={handleClick}
+          disabled={checkValues}
         >
           aceptar
         </Button>
