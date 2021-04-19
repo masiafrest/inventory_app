@@ -68,7 +68,7 @@ export default function Modal({ state, url, fetch }) {
     fetch();
     setOpenModal(false);
   };
-  const checkValues = Object.values(data).some(e => !e)
+  const checkValues = Object.values(data).every(e => !e)
   return (
     <Dialog
       onClose={handleClose}

@@ -4,13 +4,13 @@ const bcrypt = require("bcrypt");
 const usuarios = [
   {
     nombre: "sonia",
-    password: "aA1@123",
+    password: "celloosonia",
     rol_id: "1",
   },
   {
-    nombre: "hello",
-    password: "12345",
-    rol_id: "2",
+    nombre: "julio",
+    password: "celloojulio",
+    rol_id: "3",
   },
 ];
 /**
@@ -21,7 +21,11 @@ exports.seed = async (knex) => {
   await knex(tableNames.usuario).del();
   await knex(tableNames.rol).del();
 
-  await knex(tableNames.rol).insert([{ tipo: "jefe" }, { tipo: "vendedor" }]);
+  await knex(tableNames.rol).insert([
+    { tipo: "jefe" },
+    { tipo: "vendedor" },
+    { tipo: "admin" },
+  ]);
 
   const [empresa_owner] = await knex
     .select("id")
