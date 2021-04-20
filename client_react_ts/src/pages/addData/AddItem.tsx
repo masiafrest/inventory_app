@@ -107,7 +107,7 @@ export default function AddItem() {
           previewImg={previewImg}
           onChange={handleChange}
         /> */}
-        <DropzoneArea onChange={handleImgChange} acceptedFiles={["image/*"]} />
+        <DropzoneArea onChange={handleImgChange} acceptedFiles={["image/*"]} maxFileSize={10000000} />
         {/* {errors.general && (
           <Typography variant="body2">{errors.general}</Typography>
         )} */}
