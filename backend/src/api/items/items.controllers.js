@@ -70,8 +70,6 @@ exports.post = async (req, res, next) => {
       id: proveedor_id,
     },
   ];
-  const search_item = [marca, modelo, descripcion, barcode, sku].join(" ");
-  console.log("searchitem: ", search_item);
   const insertObj = {
     marca,
     modelo,
@@ -82,7 +80,6 @@ exports.post = async (req, res, next) => {
     lugar_id,
     categoria_id,
     color,
-    search_item,
   };
   let itemArrId;
   try {

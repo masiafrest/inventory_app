@@ -9,7 +9,6 @@ import {
 import useForm from "../../../utils/hooks/useForm";
 
 export default function Modal({ state, url, fetch }) {
-  console.log("url modal: ", url);
   let [openModal, setOpenModal] = state;
 
   const initialState = {

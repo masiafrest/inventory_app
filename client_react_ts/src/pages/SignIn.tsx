@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 //MUI
 import Container from "@material-ui/core/Container";
@@ -45,7 +45,7 @@ function SignIn(props: any) {
   const handleChange = (e: any) => {
     setUserData((value) => ({
       ...value,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.toLowerCase(),
     }));
   };
 

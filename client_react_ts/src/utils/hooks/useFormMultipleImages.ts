@@ -65,8 +65,18 @@ export default function useForm<T>(initialState: T, url: string) {
       setData((value) => ({ ...value, [e.target.name]: fileBlobResize }));
       setPreviewImg(fileArray);
     } else {
-      setData((value) => ({ ...value, [e.target.name]: e.target.value }));
+      setData((value) => ({
+        ...value,
+        [e.target.name]: e.target.value.toLowerCase(),
+      }));
     }
+  };
+
+  const handleSelectChange = (e) => {
+    setData((value) => ({
+      ...value,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const formDataConstructor = (data) => {
@@ -113,5 +123,12 @@ export default function useForm<T>(initialState: T, url: string) {
     }
   };
 
-  return { data, previewImg, handleChange, handleSubmit, handleImgChange };
+  return {
+    data,
+    previewImg,
+    handleChange,
+    handleSelectChange,
+    handleSubmit,
+    handleImgChange,
+  };
 }

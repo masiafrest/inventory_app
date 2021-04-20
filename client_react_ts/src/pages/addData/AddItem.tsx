@@ -50,6 +50,7 @@ export default function AddItem() {
     data,
     previewImg,
     handleChange,
+    handleSelectChange,
     handleSubmit,
     handleImgChange,
   } = useFormMultipleImages<Item>(initialItem, "/items");
@@ -82,21 +83,21 @@ export default function AddItem() {
         <Grid container spacing={2}>
           <SelectsOptions
             className={classes.selects}
-            onChange={handleChange}
+            onChange={handleSelectChange}
             name="categoria"
             url="categorias"
             value={data}
           />
           <SelectsOptions
             className={classes.selects}
-            onChange={handleChange}
+            onChange={handleSelectChange}
             name="proveedor"
             url="proveedores"
             value={data}
           />
           <SelectsOptions
             className={classes.selects}
-            onChange={handleChange}
+            onChange={handleSelectChange}
             name="lugar"
             url="lugares"
             value={data}
