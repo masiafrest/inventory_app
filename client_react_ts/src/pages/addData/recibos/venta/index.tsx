@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import VentaTable from "./components/VentaTable";
 import { Button } from "@material-ui/core";
 import { roundNum, calcSubTotal } from "../utils";
+import ReactToPrint from 'react-to-print'
+import ComponentToPrint from '../../components/ComponentToPrint'
 //redux
 import { RootState } from "../../../../redux/rootReducer";
 import { useSelector } from "react-redux";
@@ -26,6 +28,7 @@ export default function VentaRecibo() {
   const [isCredit, setIsCredit] = useState(false);
 
   const history = useHistory();
+  const componentRef = useRef()
 
   const onClickHandler = () => history.push("/show/items");
 
@@ -64,7 +67,7 @@ export default function VentaRecibo() {
       setTotal(roundNum(subTotal));
     }
   }, [lineas, subTotal]);
-
+  //TODO debieria pasar set client data completo en ves de id solo para ser usado en print
   return (
     <>
       <Header
@@ -81,6 +84,11 @@ export default function VentaRecibo() {
       <Button variant="contained" onClick={postReciboHandler}>
         agregar recibo
       </Button>
+      <ReactToPrint
+        trigger={() => <button>imprimir</button>}
+        content={() => componentRef.current}
+      />
+      <ComponentToPrint ref={componentRef} data={[lineas,]} />
     </>
   );
 }

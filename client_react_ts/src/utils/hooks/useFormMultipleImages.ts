@@ -5,6 +5,7 @@ import Resizer from "react-image-file-resizer";
 export default function useForm<T>(initialState: T, url: string) {
   const [data, setData] = useState(initialState);
   const [previewImg, setPreviewImg] = useState("");
+  const [error, setError] = useState();
 
   const dataURIToFile = (dataURI, name) => {
     const splitDataURI = dataURI.split(",");
@@ -67,7 +68,7 @@ export default function useForm<T>(initialState: T, url: string) {
     } else {
       setData((value) => ({
         ...value,
-        [e.target.name]: e.target.value.toLowerCase(),
+        [e.target.name]: e.target.value,
       }));
     }
   };
@@ -120,6 +121,7 @@ export default function useForm<T>(initialState: T, url: string) {
       console.log(res.data);
     } catch (err) {
       console.log(err.response);
+      setError(err.response);
     }
   };
 

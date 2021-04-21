@@ -9,26 +9,26 @@ export default function ShowRoles() {
     padding: 20,
     paddingLeft: 50,
   };
-  const url = "/usuarios/roles";
+  const url = "/usuarios/";
   const { data } = useFetchData(url);
 
   const paperView = data.map((data) => (
     <Paper
-      key={data.tipo}
+      key={data.nombre}
       style={paperStyle}
       variant="elevation"
       elevation={12}
     >
-      <Grid key={data.tipo} container spacing={3} justify="center">
-        <Grid key={data.tipo} item xs={12} sm={8}>
-          {data.tipo} <EditFormDialog data={data} url={url} name={data.tipo} />
+      <Grid key={data.id} container spacing={3} justify="center">
+        <Grid key={data.id} item xs={12} sm={8}>
+          nombre: {data.nombre} rol: {data.rol}<EditFormDialog data={data} url={url} name={data.tipo} />
         </Grid>
       </Grid>
     </Paper>
   ));
   return (
     <>
-      <Typography variant="h3"> Roles</Typography>
+      <Typography variant="h3">Usuarios</Typography>
       {paperView}
       <Fab url='/add/rol' />
     </>

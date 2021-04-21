@@ -1,4 +1,5 @@
 import SelectsOptions from "../../../components/SelectsOptions";
+import SelectClientes from '../../components/SelectClientes'
 import { Paper } from "@material-ui/core";
 
 import {
@@ -34,12 +35,11 @@ export default function Header({ useStates }) {
 
   return (
     <Paper>
-      <SelectsOptions
+      <SelectClientes
         className={classes.selects}
         onChange={(e) => {
           setClientId(e.target.value);
         }}
-        name="cliente"
         url={"clientes"}
         value={clientId}
       />
