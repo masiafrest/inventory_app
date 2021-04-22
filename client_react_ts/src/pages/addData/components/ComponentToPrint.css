@@ -1,3 +1,7 @@
+.displaySource {
+  display: none;
+}
+
 @media print {
   /* reset */
 
@@ -38,7 +42,7 @@
   /* table */
 
   table {
-    font-size: 75%;
+    font-size: 100%;
     table-layout: fixed;
     width: 100%;
   }
@@ -172,7 +176,7 @@
 
   /* table meta & balance */
   table.metaBottom {
-    float: left;
+    float: right;
     width: 100%;
   }
   table.meta,
@@ -207,21 +211,17 @@
     text-align: center;
   }
 
-  table.inventory td:nth-child(1) {
-    width: 26%;
+  table.inventory th:nth-child(1) {
+    width: 12%;
   }
-  table.inventory td:nth-child(2) {
-    width: 38%;
+  table.inventory th:nth-child(2) {
+    width: 64%;
   }
-  table.inventory td:nth-child(3) {
+  table.inventory th:nth-child(3) {
     text-align: right;
     width: 12%;
   }
-  table.inventory td:nth-child(4) {
-    text-align: right;
-    width: 12%;
-  }
-  table.inventory td:nth-child(5) {
+  table.inventory th:nth-child(4) {
     text-align: right;
     width: 12%;
   }

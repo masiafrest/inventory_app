@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Grid, Select, InputLabel, MenuItem } from "@material-ui/core";
-// import Modal from "./Modal";
+import Modal from "./Modal";
 
 export default function SelectsClientes({
   className,
   onChange,
   url,
   value,
+  setClient,
 }) {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -17,6 +18,7 @@ export default function SelectsClientes({
       .get("/" + url)
       .then((res) => {
         setData(res.data);
+        // setClient(res.data[])
         console.log(res.data);
       })
       .catch((err) => console.log(err));
@@ -27,11 +29,11 @@ export default function SelectsClientes({
   }, []);
 
   const dataMenuItem = data.map((data) => (
-    <MenuItem key={data.id} value={data.id}>
-      nombre: {data.nombre}
+    <MenuItem key={data.id} value={data}>
+      {data.nombre}
     </MenuItem>
   ));
-
+  console.log(value)
   return (
     <Grid item key={`cliente-grid`}>
       <InputLabel id={'cliente-input'}>Clientes</InputLabel>
@@ -41,15 +43,15 @@ export default function SelectsClientes({
         labelId={'cliente'}
         id={'clienteSelect'}
         name={'cliente'}
-        value={value}
+        value={value?.id}
         fullWidth
       >
         {dataMenuItem}
-        {/* <MenuItem key={`add_cliente`} onClick={() => setOpenModal(true)}>
-          agregar otra {cliente}
-        </MenuItem> */}
+        <MenuItem key={`add_cliente`} onClick={() => setOpenModal(true)}>
+          agregar cliente
+        </MenuItem>
       </Select>
-      {/* <Modal state={[openModal, setOpenModal]} fetch={fetchData} url={url} /> */}
+      <Modal state={[openModal, setOpenModal]} fetch={fetchData} url={url} />
     </Grid>
   );
 }

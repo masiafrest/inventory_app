@@ -26,7 +26,7 @@ router.get("/:x", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    await yupSchema.validate(req.body, { abortEarly: false });
+    // await yupSchema.validate(req.body, { abortEarly: false });
     let cliente = await Empresa_cliente.query()
       .where("nombre", req.body.nombre)
       .first();

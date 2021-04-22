@@ -12,31 +12,15 @@ export default function Modal({ state, url, fetch }) {
   let [openModal, setOpenModal] = state;
 
   const initialState = {
-    lugares: {
-      direccion: "",
-      tipo: "",
-    },
-    categorias: { nombre: "" },
-    proveedores: {
-      nombre: "",
-      direccion: "",
-      telefono: "",
-    },
-    "usuarios/roles": {
-      tipo: "",
-    },
-    clientes: {
-      nombre: "",
-      telefono: "",
-      direccion: "",
-      email: "",
-      logo_url: "",
-      website_url: "",
-      telefono_2: "",
-    },
+    nombre: "",
+    telefono: "",
+    direccion: "",
+    email: "",
+    website_url: "",
+    telefono_2: "",
   };
 
-  const textFieldLabel = Object.keys(initialState[url]);
+  const textFieldLabel = Object.keys(initialState);
 
   const {
     data,
@@ -44,7 +28,7 @@ export default function Modal({ state, url, fetch }) {
     handleChange,
     handleSubmit,
     handleSubmitPromise,
-  } = useForm(initialState[url], `/${url}`);
+  } = useForm(initialState, `/${url}`);
 
   const renderTextField = textFieldLabel.map((detail) => (
     <TextField
@@ -67,7 +51,10 @@ export default function Modal({ state, url, fetch }) {
     fetch();
     setOpenModal(false);
   };
-  const checkValues = Object.values(data).every(e => !e)
+
+  const campoObligatorio = ['nombre', 'telefono', 'direccion']
+  const checkValues = Object.values(data)
+    .some(e => !e)
   return (
     <Dialog
       onClose={handleClose}

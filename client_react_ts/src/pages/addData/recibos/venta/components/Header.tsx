@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SelectsOptions from "../../../components/SelectsOptions";
+import SelectClientes from '../../components/SelectClientes'
 import { Paper } from "@material-ui/core";
 
 import { useDispatch } from "react-redux";
@@ -10,22 +11,22 @@ import { useStyle } from "../../../useStyle";
 export default function HeaderTable({ creditState, clienteState }) {
   const classes = useStyle();
   const [isCredit, setIsCredit] = creditState;
-  const [clientId, setClientId] = clienteState;
+  const [client, setClient] = clienteState;
   const dispatch = useDispatch();
 
   const onChangeHandler = (e) => {
     console.log(e.target.value);
-    setClientId(e.target.value);
+    setClient(e.target.value);
     dispatch(addClienteId(e.target.value));
   };
   return (
     <Paper>
-      <SelectsOptions
+      <SelectClientes
         className={classes.selects}
         onChange={onChangeHandler}
-        name="cliente"
         url={"clientes"}
-        value={clientId}
+        value={client}
+        setClient={setClient}
       />
 
       <FormControlLabel

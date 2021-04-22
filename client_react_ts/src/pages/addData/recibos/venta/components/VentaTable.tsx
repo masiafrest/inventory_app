@@ -14,22 +14,6 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 
 import ModQty from "../../components/ModQty";
 
-const ShowRows = ({ rows }) => {
-  console.log(rows);
-  return rows.map((row, idx) => (
-    <TableRow key={row.id}>
-      <TableCell align="left">
-        <ModQty item={row} reciboTipo="venta" idx={idx} />
-      </TableCell>
-      <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} id: ${row.id} `}</TableCell>
-      <TableCell align="right">{row.precio.precio.toFixed(2)}</TableCell>
-      <TableCell align="right">
-        {(row.precio.precio * row.qty).toFixed(2)}
-      </TableCell>
-    </TableRow>
-  ));
-};
-
 export default function VentaTable({
   items,
   invoice,
@@ -51,7 +35,18 @@ export default function VentaTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {<ShowRows rows={items} />}
+          {items.map((row, idx) => (
+            <TableRow key={row.id}>
+              <TableCell align="left">
+                <ModQty item={row} reciboTipo="venta" idx={idx} />
+              </TableCell>
+              <TableCell align="left">{`${row.marca} ${row.modelo} ${row.color} ${row.descripcion} id: ${row.id} `}</TableCell>
+              <TableCell align="right">{row.precio.precio.toFixed(2)}</TableCell>
+              <TableCell align="right">
+                {(row.precio.precio * row.qty).toFixed(2)}
+              </TableCell>
+            </TableRow>
+          ))}
           <TableRow>
             <TableCell colSpan={4}>
               <IconButton size="small" onClick={onClickHandler}>
@@ -62,7 +57,7 @@ export default function VentaTable({
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{Subtotal}</TableCell>
+            <TableCell align="right">{Subtotal.toFixed(2)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={1}>
@@ -81,11 +76,11 @@ export default function VentaTable({
             <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
               0
             )} %`}</TableCell>
-            <TableCell align="right">{Taxes}</TableCell>
+            <TableCell align="right">{Taxes.toFixed(2)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{Total}</TableCell>
+            <TableCell align="right">{Total.toFixed(2)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

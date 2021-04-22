@@ -20,7 +20,7 @@ export default function VentaRecibo() {
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
   //TODO: maybe change all this useState to a reduceState
-  const [clientId, setClientId] = useState();
+  const [client, setClient] = useState<any>();
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
@@ -43,7 +43,7 @@ export default function VentaRecibo() {
     });
     const ventaObj = {
       usuario_id,
-      empresa_cliente_id: clientId,
+      empresa_cliente_id: client.id,
       sub_total: subTotal,
       tax,
       total,
@@ -66,13 +66,13 @@ export default function VentaRecibo() {
       setTax(0);
       setTotal(roundNum(subTotal));
     }
-  }, [lineas, subTotal]);
+  }, [lineas, subTotal, total, isTax, tax]);
   //TODO debieria pasar set client data completo en ves de id solo para ser usado en print
   return (
     <>
       <Header
         creditState={[isCredit, setIsCredit]}
-        clienteState={[clientId, setClientId]}
+        clienteState={[client, setClient]}
       />
       <VentaTable
         items={lineas}
@@ -88,7 +88,11 @@ export default function VentaRecibo() {
         trigger={() => <button>imprimir</button>}
         content={() => componentRef.current}
       />
-      <ComponentToPrint ref={componentRef} data={[lineas,]} />
+      <ComponentToPrint ref={componentRef} lineas={lineas} client={client}
+
+        subTotal={subTotal} tax={tax} total={total}
+        TAX_RATE={TAX_RATE} isCredit={isCredit}
+      />
     </>
   );
 }

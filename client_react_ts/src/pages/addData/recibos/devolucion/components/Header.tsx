@@ -24,8 +24,8 @@ interface UseStates {
 export default function Header({ useStates }) {
   const classes = useStyle();
   const [
-    clientId,
-    setClientId,
+    client,
+    setClient,
     selectedItems,
     setSelectedItems,
     hasLineas,
@@ -38,10 +38,11 @@ export default function Header({ useStates }) {
       <SelectClientes
         className={classes.selects}
         onChange={(e) => {
-          setClientId(e.target.value);
+          setClient(e.target.value);
         }}
         url={"clientes"}
-        value={clientId}
+        value={client}
+        setClient={setClient}
       />
 
       {hasLineas ? (
