@@ -31,7 +31,6 @@ export default function AddItem() {
   const initialItem = {
     marca: "",
     modelo: "",
-    caracteritica: "",
     descripcion: "",
     sku: "",
     color: "",
@@ -58,16 +57,20 @@ export default function AddItem() {
   } = useFormMultipleImages<Item>(initialItem, "/items");
 
   const renderTextField = detailsName.map((name) => (
-    <Grid item>
+    <Grid item
+      className={classes[name]}
+    >
       <TextField
-        className={classes[name]}
+        // className={classes[name]}
         key={name}
         id={name}
         name={name}
         label={name}
         value={data[name]}
         onChange={handleChange}
-      // fullWidth
+        autoFocus={name === 'marca'}
+        fullWidth={name === 'descripcion'}
+        multiline={name === 'descripcion'}
       // helperText={errors[name]}
       // error={errors[name] ? true : false}
       />
