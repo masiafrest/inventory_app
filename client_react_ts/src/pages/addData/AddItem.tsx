@@ -22,6 +22,7 @@ const detailsName = [
   "precio_min",
   "stock",
   "costo",
+  "barcode",
   "descripcion",
 ];
 
@@ -34,13 +35,14 @@ export default function AddItem() {
     descripcion: "",
     sku: "",
     color: "",
-    precio: null,
-    precio_min: null,
+    precio: undefined,
+    precio_min: undefined,
     categoria_id: 0,
-    stock: null,
+    stock: undefined,
     lugar_id: 0,
-    proveedor_id: null,
-    costo: null,
+    proveedor_id: undefined,
+    costo: undefined,
+    barcode: 0
   };
   // const { data, previewImg, handleChange, handleSubmit } = useFormImage<Item>(
   //   initialItem,

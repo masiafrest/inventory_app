@@ -70,20 +70,20 @@ export default class ComponentToPrint extends React.Component<any> {
                         </thead>
                         <tbody>
                             {lineas.map(linea => (
-                                <tr>
+                                <tr key={'item_id' + linea?.id}>
                                     <td>
-                                        <span>{linea.qty}</span>
+                                        <span>{linea?.qty}</span>
                                     </td>
                                     <td>
-                                        <span>{linea.marca} {linea.modelo} {linea.descripcion}</span>
-                                    </td>
-                                    <td>
-                                        <span data-prefix>$</span>
-                                        <span>{linea.precio.precio.toFixed(2)}</span>
+                                        <span>{linea?.marca} {linea?.modelo} {linea?.descripcion}</span>
                                     </td>
                                     <td>
                                         <span data-prefix>$</span>
-                                        <span>{(linea.precio.precio * linea.qty).toFixed(2)}</span>
+                                        <span>{linea?.precio?.precio?.toFixed(2)}</span>
+                                    </td>
+                                    <td>
+                                        <span data-prefix>$</span>
+                                        <span>{(linea?.precio?.precio * linea?.qty).toFixed(2)}</span>
                                     </td>
                                 </tr>
 
