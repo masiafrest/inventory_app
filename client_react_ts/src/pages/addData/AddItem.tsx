@@ -9,6 +9,8 @@ import {
   TextField,
   Button,
   Grid,
+  InputAdornment,
+
 } from "@material-ui/core";
 import { useStyle } from "./useStyle";
 
@@ -18,9 +20,9 @@ const detailsName = [
   "modelo",
   "color",
   "sku",
+  "stock",
   "precio",
   "precio_min",
-  "stock",
   "costo",
   "barcode",
   "descripcion",
@@ -71,6 +73,15 @@ export default function AddItem() {
         autoFocus={name === 'marca'}
         fullWidth={name === 'descripcion'}
         multiline={name === 'descripcion'}
+        InputProps={{
+          startAdornment:
+            ['precio', 'precio_min', 'costo'].includes(name) ?
+              <InputAdornment position="start">$</InputAdornment>
+              : null
+        }}
+        required={
+          ['marca', 'modelo', 'descripcion', 'sku', 'precio'].includes(name) ?
+            true : false}
       // helperText={errors[name]}
       // error={errors[name] ? true : false}
       />

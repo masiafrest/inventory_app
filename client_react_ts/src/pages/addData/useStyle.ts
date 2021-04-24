@@ -5,7 +5,7 @@ export const useStyle = makeStyles((theme) => ({
   modelo: { width: "6em" },
   sku: { width: "9em" },
   color: { width: "6em" },
-  precio: { width: "4em" },
+  precio: { width: "5em" },
   precio_min: { width: "5em" },
   stock: { width: "5em" },
   costo: { width: "5em" },

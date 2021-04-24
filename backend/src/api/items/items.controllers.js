@@ -46,6 +46,8 @@ exports.searchQuery = async (req, res, next) => {
 };
 
 exports.post = async (req, res, next) => {
+  // campo obligatorio para q el base de dato no tire error:
+  // marca, descripcion, modelo, sku, *_id, precio
   const {
     marca,
     descripcion,
