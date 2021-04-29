@@ -18,6 +18,8 @@
     "date-fns": "^2.16.1",
     "dayjs": "^1.10.4",
     "dotenv": "^8.2.0",
+    "formik": "^2.2.6",
+    "formik-material-ui": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "material-ui-dropzone": "^3.5.0",
     "notistack": "^1.0.6",

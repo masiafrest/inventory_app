@@ -39,7 +39,7 @@ export default function AddItem() {
     precio: undefined,
     precio_min: undefined,
     categoria_id: 0,
-    stock: undefined,
+    stock: 0,
     lugar_id: 0,
     proveedor_id: undefined,
     costo: undefined,
