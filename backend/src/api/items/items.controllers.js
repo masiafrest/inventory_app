@@ -3,8 +3,6 @@ const { hardDeleteById, patchById, delImg } = require("../../lib/helpers");
 const Image = require("../images.model");
 const { raw } = require("objection");
 const knexConfig = require("../../../knexfile");
-const { orWhere } = require("../../db");
-const { chain } = require("lodash");
 const knex = require("knex")(knexConfig.development);
 
 const getItemGraph = `[
