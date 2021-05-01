@@ -1,10 +1,12 @@
 import SelectsOptions from "./components/SelectsOptions";
 import useFormMultipleImages from "../../utils/hooks/useFormMultipleImages";
+import axios from 'axios'
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
 import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 import { DropzoneArea } from "material-ui-dropzone";
+import { formDataConstructor, imgResize } from '../../utils/hooks/useFormMultipleImages/helper'
 //MUI
 import {
   Container,
@@ -30,7 +32,8 @@ const initialItem = {
   lugar_id: 0,
   proveedor_id: undefined,
   costo: undefined,
-  barcode: 0
+  barcode: 0,
+  images: undefined
 };
 
 const itemSchema = Yup.object().shape({
@@ -102,6 +105,17 @@ export default function AddItem() {
     </Grid>
   ));
 
+  const CustomDropzoneArea = ({
+    field,
+    form,
+    ...props
+  }) => (
+    <DropzoneArea
+      acceptedFiles={["image/*"]}
+      maxFileSize={10000000}
+      {...props} />
+  )
+
   return (
     <>
       <Typography variant="h2">Agregar Item</Typography>
@@ -112,9 +126,21 @@ export default function AddItem() {
         validationSchema={
           itemSchema
         }
-        onSubmit={(values, actions) => {
-          console.log('onsubmi ', actions)
+        onSubmit={async (values, actions) => {
           console.log(values)
+          const formData = formDataConstructor(values);
+          console.log(formData)
+          try {
+            const res = await axios.post('/items', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            console.log(res)
+          } catch (err) {
+            console.log(err.response)
+          }
+
           actions.setSubmitting(false)
         }}
       >
@@ -122,7 +148,16 @@ export default function AddItem() {
           (props) => (
             <Form onSubmit={props.handleSubmit}>
               {renderTextField}
-
+              <Field
+                component={CustomDropzoneArea}
+                id='images'
+                name='images'
+                label='images'
+                onChange={async (files) => {
+                  const { fileBlobResize } = await imgResize(files);
+                  props.setFieldValue('images', fileBlobResize)
+                }}
+              />
               < Button
                 type="submit"
                 disabled={props.isSubmitting}
