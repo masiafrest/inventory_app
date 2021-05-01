@@ -55,7 +55,6 @@ export default function Modal({ state, url, fetch }) {
       value={data[detail]}
       onChange={handleChange}
       fullWidth
-      type={detail === 'telefono' ? 'tel' : 'string'}
     // helperText={errors[detail]}
     // error={errors[detail] ? true : false}
     />
