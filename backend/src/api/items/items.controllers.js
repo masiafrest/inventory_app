@@ -90,6 +90,7 @@ exports.post = async (req, res, next) => {
     //check if item exist then incoming data is item of diferent color
     if (existingItem) {
       //if item exist, check if have image or not
+      res.status(409);
       return res.send("existe item, id: " + existingItem.id);
     }
 
@@ -159,6 +160,7 @@ values (${Object.values(insertObj)
           });
         })
       );
+      res.status(201);
       res.json(insertedItem);
     });
   } catch (err) {

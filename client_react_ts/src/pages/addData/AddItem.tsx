@@ -199,7 +199,6 @@ export default function AddItem() {
               >
                 Agregar
             </Button>
-              {console.log('ISSUBBMIGINT, ', props.isSubmitting)}
             </Form>
           )
         }
