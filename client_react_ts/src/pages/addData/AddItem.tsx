@@ -116,6 +116,14 @@ export default function AddItem() {
       {...props} />
   )
 
+  // const CustomSelect = ({
+  //   field,
+  //   form,
+  //   ...props
+  // }) => (
+  //   <SelectsOptions {...props} />
+  // )
+
   return (
     <>
       <Typography variant="h2">Agregar Item</Typography>
@@ -157,6 +165,20 @@ export default function AddItem() {
                   const { fileBlobResize } = await imgResize(files);
                   props.setFieldValue('images', fileBlobResize)
                 }}
+              />
+              <Field
+                component={
+                  SelectsOptions({
+                    className: classes.selects,
+                    name: 'categoria',
+                    url: 'categorias',
+                    onChange: () => { },
+                    value: {}
+                  })
+                }
+                name='categoria'
+                label='categorias'
+
               />
               < Button
                 type="submit"
