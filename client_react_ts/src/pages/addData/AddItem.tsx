@@ -2,14 +2,12 @@ import SelectsOptions from "./components/SelectsOptions";
 import useFormMultipleImages from "../../utils/hooks/useFormMultipleImages";
 import axios from 'axios'
 import * as Yup from 'yup';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FastField } from 'formik';
 import { TextField } from 'formik-material-ui';
-import UploadAndPreviewImages from "../../components/UploadAndPreviewImages";
 import { DropzoneArea } from "material-ui-dropzone";
 import { formDataConstructor, imgResize } from '../../utils/hooks/useFormMultipleImages/helper'
 //MUI
 import {
-  Container,
   Typography,
   // TextField,
   Button,
@@ -78,18 +76,6 @@ const selectsProps = [
 
 export default function AddItem() {
   const classes = useStyle();
-  // const { data, previewImg, handleChange, handleSubmit } = useFormImage<Item>(
-  //   initialItem,
-  //   "/items"
-  // );
-  const {
-    data,
-    previewImg,
-    handleChange,
-    handleSelectChange,
-    handleSubmit,
-    handleImgChange,
-  } = useFormMultipleImages<Item>(initialItem, "/items");
 
   const CustomDropzoneArea = ({
     field,
@@ -126,7 +112,6 @@ export default function AddItem() {
           } catch (err) {
             console.log(err.response)
           }
-
           actions.setSubmitting(false)
         }}
       >
@@ -139,7 +124,7 @@ export default function AddItem() {
                     key={name}
                   // className={classes[name]}
                   >
-                    <Field
+                    <FastField
                       component={TextField}
                       className={classes[name]}
                       id={name}

@@ -90,7 +90,7 @@ export default class ComponentToPrint extends React.Component<any> {
                             ))}
                         </tbody>
                     </table>
-                    <div className="center">
+                    {/* <div className="center">
                         <label className="label">
                             <input
                                 className="inputLabel"
@@ -131,7 +131,7 @@ export default class ComponentToPrint extends React.Component<any> {
               Memoria
               <span className="checkmark"></span>
                         </label>
-                    </div>
+                    </div> */}
                     <table className="balance">
                         <tr>
                             <th><span >SubTotal</span></th>
