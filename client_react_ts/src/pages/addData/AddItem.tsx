@@ -42,6 +42,10 @@ const itemSchema = Yup.object().shape({
   descripcion: Yup.string().required('requerido'),
   sku: Yup.string().required('requerido'),
   precio: Yup.number().required('requerido'),
+  stock: Yup.number(),
+  precio_min: Yup.number(),
+  costo: Yup.number(),
+  barcode: Yup.number(),
 })
 
 const detailsName = [
@@ -56,6 +60,21 @@ const detailsName = [
   "barcode",
   "descripcion",
 ];
+
+const selectsProps = [
+  {
+    name: 'categoria',
+    url: 'categorias',
+  },
+  {
+    name: 'proveedor',
+    url: 'proveedores',
+  },
+  {
+    name: 'lugar',
+    url: 'lugares',
+  },
+]
 
 export default function AddItem() {
   const classes = useStyle();
@@ -72,39 +91,6 @@ export default function AddItem() {
     handleImgChange,
   } = useFormMultipleImages<Item>(initialItem, "/items");
 
-
-
-  const renderTextField = detailsName.map((name) => (
-    <Grid item
-      key={name}
-      className={classes[name]}
-    >
-      <Field
-        component={TextField}
-        // className={classes[name]}
-        id={name}
-        name={name}
-        label={name}
-      // value={data[name]}
-      // onChange={handleChange}
-      // autoFocus={name === 'marca'}
-      // fullWidth={name === 'descripcion'}
-      // multiline={name === 'descripcion'}
-      // InputProps={{
-      //   startAdornment:
-      //     ['precio', 'precio_min', 'costo'].includes(name) ?
-      //       <InputAdornment position="start">$</InputAdornment>
-      //       : null
-      // }}
-      // required={
-      //   ['marca', 'modelo', 'descripcion', 'sku', 'precio'].includes(name) ?
-      //     true : false}
-      // helperText={errors[name]}
-      // error={errors[name] ? true : false}
-      />
-    </Grid>
-  ));
-
   const CustomDropzoneArea = ({
     field,
     form,
@@ -115,14 +101,6 @@ export default function AddItem() {
       maxFileSize={10000000}
       {...props} />
   )
-
-  // const CustomSelect = ({
-  //   field,
-  //   form,
-  //   ...props
-  // }) => (
-  //   <SelectsOptions {...props} />
-  // )
 
   return (
     <>
@@ -155,7 +133,54 @@ export default function AddItem() {
         {
           (props) => (
             <Form onSubmit={props.handleSubmit}>
-              {renderTextField}
+              <Grid container spacing={2}>
+                {detailsName.map((name) => (
+                  <Grid item
+                    key={name}
+                  // className={classes[name]}
+                  >
+                    <Field
+                      component={TextField}
+                      className={classes[name]}
+                      id={name}
+                      name={name}
+                      label={name}
+                      // value={data[name]}
+                      // onChange={handleChange}
+                      autoFocus={name === 'marca'}
+                      fullWidth={name === 'descripcion'}
+                      multiline={name === 'descripcion'}
+                      InputProps={{
+                        startAdornment:
+                          ['precio', 'precio_min', 'costo'].includes(name) ?
+                            <InputAdornment position="start">$</InputAdornment>
+                            : null
+                      }}
+                      required={
+                        ['marca', 'modelo', 'descripcion', 'sku', 'precio'].includes(name) ?
+                          true : false}
+                    // helperText={errors[name]}
+                    // error={errors[name] ? true : false}
+                    />
+                  </Grid>
+                ))
+                }
+              </Grid>
+
+              <Grid container spacing={2}>
+                {
+                  selectsProps.map(selectsProp => (
+                    <SelectsOptions
+                      className={classes.selects}
+                      onChange={props.handleChange}
+                      value={props.values}
+                      name={selectsProp.name}
+                      url={selectsProp.url}
+                    />
+                  ))
+                }
+
+              </Grid>
               <Field
                 component={CustomDropzoneArea}
                 id='images'
@@ -165,20 +190,6 @@ export default function AddItem() {
                   const { fileBlobResize } = await imgResize(files);
                   props.setFieldValue('images', fileBlobResize)
                 }}
-              />
-              <Field
-                component={
-                  SelectsOptions({
-                    className: classes.selects,
-                    name: 'categoria',
-                    url: 'categorias',
-                    onChange: () => { },
-                    value: {}
-                  })
-                }
-                name='categoria'
-                label='categorias'
-
               />
               < Button
                 type="submit"

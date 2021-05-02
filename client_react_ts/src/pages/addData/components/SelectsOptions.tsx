@@ -51,7 +51,6 @@ export default function SelectsOptions({
       break;
   }
 
-  console.log(name, url, data);
   const dataMenuItem = data.map((data) => (
     <MenuItem key={data.id} value={data.id}>
       {menuItemToShow.length > 1
