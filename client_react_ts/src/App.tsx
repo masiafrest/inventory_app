@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 import { localIp } from "./localIp";
@@ -26,6 +27,10 @@ import NavBar from "./components/NavBar";
 import AuthRouth from "./components/AuthRouth";
 import ErrorHandler from "./components/ErrorHandler";
 
+//material ui
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
 console.log("http://" + localIp + ":5050/api/v1");
 axios.defaults.baseURL = "http://" + localIp + ":5050/api/v1";
 
@@ -45,24 +50,40 @@ if (token) {
 }
 
 function App() {
+  const [darkState, setDarkState] = useState(false);
+  const palletType = darkState ? "dark" : "light";
+  const Theme = createMuiTheme({
+    palette: {
+      type: palletType,
+    },
+  });
+  const handleThemeChange = () => {
+    setDarkState(!darkState);
+  };
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Router>
-          <NavBar />
-          <Container>
-            <ErrorHandler>
-              <Switch>
-                <ErrorHandler>
-                  <Route exact path="/signin" component={SignIn} />
-                  <AuthRouth exact path={addPaths} component={AddData} />
-                  <AuthRouth exact path={showPaths} component={ShowData} />
-                  <AuthRouth exact path="/" component={Home} />
-                </ErrorHandler>
-              </Switch>
-            </ErrorHandler>
-          </Container>
-        </Router>
+        <ThemeProvider theme={Theme}>
+          <CssBaseline />
+          <Router>
+            <NavBar
+              handleThemeChange={handleThemeChange}
+              darkState={darkState}
+            />
+            <Container>
+              <ErrorHandler>
+                <Switch>
+                  <ErrorHandler>
+                    <Route exact path="/signin" component={SignIn} />
+                    <AuthRouth exact path={addPaths} component={AddData} />
+                    <AuthRouth exact path={showPaths} component={ShowData} />
+                    <AuthRouth exact path="/" component={Home} />
+                  </ErrorHandler>
+                </Switch>
+              </ErrorHandler>
+            </Container>
+          </Router>
+        </ThemeProvider>
       </PersistGate>
     </Provider>
   );

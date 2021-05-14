@@ -12,10 +12,11 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 
+import { Switch } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
 
-function NavBar() {
+function NavBar({ handleThemeChange, darkState }) {
   const dispath = useDispatch();
   const user: any = useSelector((state: RootState) => state.user);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -35,11 +36,10 @@ function NavBar() {
     </Button>
   );
 
-  const toggleDrawer = (isOpen: boolean) => (
-    e: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    setIsDrawerOpen(isOpen);
-  };
+  const toggleDrawer =
+    (isOpen: boolean) => (e: React.KeyboardEvent | React.MouseEvent) => {
+      setIsDrawerOpen(isOpen);
+    };
 
   const NavLinkOnClick = ({ to, children }) => (
     <NavLink to={to} onClick={toggleDrawer(false)}>
@@ -69,6 +69,7 @@ function NavBar() {
             </NavLinkOnClick>
             {user.authenticated ? renderLogOutButton : null}
           </Drawer>
+          <Switch checked={darkState} onChange={handleThemeChange} />
           {/* {location.pathname === "/showData" ? <SearchBar /> : null} */}
         </Toolbar>
       </AppBar>
