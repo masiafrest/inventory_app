@@ -12,7 +12,6 @@ import {
   Card,
   Grid,
 } from "@material-ui/core/";
-
 export default function CardView({ useData: { data, setData } }) {
   const [activeStep, setActiveStep] = useState(0);
   const url = "/items";
@@ -68,8 +67,9 @@ export default function CardView({ useData: { data, setData } }) {
             </Typography>
             <EditFormDialog name={"descripcion"} data={obj} url={url} />
             <Typography>
-              {`Ubicacion: ${obj.lugar.direccion}, ${obj.lugar.tipo}. | Stock: ${obj.stock}`}
+              {`Ubicacion: ${obj.lugar.direccion}, ${obj.lugar.tipo}. `}
             </Typography>
+            <Typography>{`Stock: ${obj.stock}`}</Typography>
           </CardContent>
           <CardActions>
             <DeleteBtn url={url} id={obj.id} data={data} setData={setData} />
