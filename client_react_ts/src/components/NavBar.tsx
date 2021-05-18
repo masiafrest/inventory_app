@@ -12,7 +12,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 
-import { Switch } from "@material-ui/core";
+import { Switch, Typography } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -43,7 +43,7 @@ function NavBar({ handleThemeChange, darkState }) {
 
   const NavLinkOnClick = ({ to, children }) => (
     <NavLink to={to} onClick={toggleDrawer(false)}>
-      {children}
+      <Typography variant='h3' gutterBottom> {children} </Typography>
     </NavLink>
   );
 
@@ -60,7 +60,7 @@ function NavBar({ handleThemeChange, darkState }) {
             onClose={toggleDrawer(false)}
           >
             <NavLinkOnClick to="/">
-              <Button>Home</Button>
+              Home
             </NavLinkOnClick>
             <NavLinkOnClick to="/show/items">Items</NavLinkOnClick>
             <NavLinkOnClick to="/add/venta">venta</NavLinkOnClick>
