@@ -15,12 +15,12 @@ interface RootUserCredentialsState {
 //recibo
 interface Recibos {
   usuario_id: number;
-  empresa_cliente_id: number;
   venta: Venta;
   transferencia: Transferencia;
 }
 
 interface Venta {
+  empresa_cliente_id: number;
   lineas: Lineas[];
 }
 interface Transferencia {
@@ -40,7 +40,7 @@ interface Lineas {
   //transferencia
   item_id?: number;
   destino_lugar_id?: number;
-  lugar: {id: number; tipo:string; direccion: string}
+  lugar: { id: number; tipo: string; direccion: string };
 }
 
 interface Precio {

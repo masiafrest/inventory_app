@@ -17,7 +17,11 @@ export default function HeaderTable({ creditState, clienteState }) {
   const onChangeHandler = (e) => {
     console.log(e.target.value);
     setClient(e.target.value);
-    dispatch(addClienteId(e.target.value));
+    const header = {
+      empresa_cliente_id: e.target.value,
+      tipo: 'venta'
+    }
+    dispatch(addClienteId(header));
   };
   return (
     <Paper>

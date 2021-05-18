@@ -2,9 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 //TODO: agregar recibo venta transferencia
 const initialState: Recibos = {
-  empresa_cliente_id: null,
   usuario_id: null,
   venta: {
+    empresa_cliente_id: null,
     lineas: [],
   },
   transferencia: {
@@ -29,13 +29,16 @@ const reciboSlice = createSlice({
     },
     addClienteId: (state, action) => {
       console.log(action.payload);
-      state.empresa_cliente_id = action.payload;
+      const { empresa_cliente_id, reciboTipo } = action.payload;
+      if (reciboTipo === "venta") {
+        state.venta.empresa_cliente_id = empresa_cliente_id.id;
+      }
     },
     modQty: (state, action) => {
       console.log(action.payload);
       const tipoRecibo = action.payload.tipo;
       let { idx, qty } = action.payload;
-      if (qty < 0) qty = 0
+      if (qty < 0) qty = 0;
       state[tipoRecibo].lineas[idx].qty = qty;
     },
     pushLinea: (state, action: PayloadAction<Lineas & Tipo>) => {

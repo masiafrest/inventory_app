@@ -6,6 +6,7 @@ import { Button } from "@material-ui/core";
 import { roundNum, calcSubTotal } from "../utils";
 import ReactToPrint from 'react-to-print'
 import ComponentToPrint from '../../components/ComponentToPrint'
+import { useSnackbar } from "notistack";
 //redux
 import { RootState } from "../../../../redux/rootReducer";
 import { useSelector } from "react-redux";
@@ -28,6 +29,7 @@ export default function VentaRecibo() {
   const [isCredit, setIsCredit] = useState(false);
 
   const history = useHistory();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const componentRef = useRef()
 
   const onClickHandler = () => history.push("/show/items");
@@ -51,8 +53,19 @@ export default function VentaRecibo() {
       lineas: cleanLines,
     };
     console.log(ventaObj);
-    const res = await axios.post("/recibos/venta/", ventaObj);
-    console.log(res);
+    try {
+      const res = await axios.post("/recibos/venta/", ventaObj);
+      enqueueSnackbar("data guardado", {
+        variant: "success",
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err.response);
+      enqueueSnackbar("error ", {
+        variant: "error",
+      });
+
+    }
   };
 
   useEffect(() => {
