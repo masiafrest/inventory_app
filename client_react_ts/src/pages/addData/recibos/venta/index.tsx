@@ -21,7 +21,7 @@ export default function VentaRecibo() {
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
   //TODO: maybe change all this useState to a reduceState
-  const [client, setClient] = useState<any>();
+  const [client, setClient] = useState<any>(null);
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
@@ -80,6 +80,7 @@ export default function VentaRecibo() {
       setTotal(roundNum(subTotal));
     }
   }, [lineas, subTotal, total, isTax, tax]);
+  const btnDisabled = lineas.length === 0 || client === null
   //TODO debieria pasar set client data completo en ves de id solo para ser usado en print
   return (
     <>
@@ -94,9 +95,13 @@ export default function VentaRecibo() {
         onClickHandler={onClickHandler}
         taxState={[isTax, setIsTax]}
       />
-      <Button variant="contained" onClick={postReciboHandler}>
+      <Button variant="contained" onClick={postReciboHandler}
+        disabled={btnDisabled}
+      >
         agregar recibo
       </Button>
+      { btnDisabled && <span>agregar cliente y item</span>}
+
       <ReactToPrint
         trigger={() => <button>imprimir</button>}
         content={() => componentRef.current}
