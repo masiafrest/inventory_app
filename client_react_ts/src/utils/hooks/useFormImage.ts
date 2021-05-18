@@ -1,22 +1,14 @@
-import axios from "axios";
 import { useState } from "react";
+import axios from "axios";
+import { useSnackbar } from "notistack";
 
 export default function useForm<T>(initialState: T, url: string) {
   const [data, setData] = useState(initialState);
   const [previewImg, setPreviewImg] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e) => {
     if (e.target.name === "images") {
-      //multiple files
-      // let fileObj: any = [];
-      // let fileArray: any = [];
-      // fileObj.push(e.target.files);
-      // for (let i = 0; i < fileObj[0].length; i++) {
-      //   fileArray.push(URL.createObjectURL(fileObj[0][i]));
-      // }
-      // setData((value) => ({ ...value, images: fileArray }));
-
-      //single file
       const file = URL.createObjectURL(e.target.files[0]);
       setData((value) => ({ ...value, [e.target.name]: e.target.files }));
       setPreviewImg([file]);
@@ -37,10 +29,16 @@ export default function useForm<T>(initialState: T, url: string) {
       });
       console.log(data);
       console.log(formData);
-
       const res = await axios.post(url, data);
+
+      enqueueSnackbar("datos guardado", {
+        variant: "success",
+      });
       console.log(res.data);
     } catch (err) {
+      enqueueSnackbar("error", {
+        variant: "error",
+      });
       console.log(err);
     }
   };
