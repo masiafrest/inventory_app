@@ -70,6 +70,7 @@ async function delImg(paths) {
         try {
           fs.unlinkSync(imgPath);
           //file removed
+          console.log(imgPath, "archivo eliminado");
         } catch (err) {
           console.error(err);
         }
@@ -79,19 +80,6 @@ async function delImg(paths) {
     } catch (err) {
       console.error(err);
     }
-    // fs.existsSync(imgPath, (err) => {
-    //   if (err) {
-    //     console.log("The file does not exist.");
-    //   } else {
-    //     console.log("The file exists.");
-    //     fs.unlinkSync(imgPath, (err) => {
-    //       if (err) {
-    //         console.log("no se borro");
-    //       }
-    //       console.log("existoso");
-    //     });
-    //   }
-    // });
   });
   console.log("delImg");
 }
