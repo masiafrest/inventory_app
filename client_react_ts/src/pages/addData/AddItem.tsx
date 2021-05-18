@@ -1,11 +1,16 @@
 import SelectsOptions from "./components/SelectsOptions";
 import useFormMultipleImages from "../../utils/hooks/useFormMultipleImages";
-import axios from 'axios'
-import * as Yup from 'yup';
-import { Formik, Form, Field, FastField } from 'formik';
-import { TextField } from 'formik-material-ui';
+import axios from "axios";
+import * as Yup from "yup";
+import { Formik, Form, Field, FastField } from "formik";
+import { TextField } from "formik-material-ui";
 import { DropzoneArea } from "material-ui-dropzone";
-import { formDataConstructor, imgResize } from '../../utils/hooks/useFormMultipleImages/helper'
+import {
+  formDataConstructor,
+  imgResize,
+} from "../../utils/hooks/useFormMultipleImages/helper";
+
+import { useSnackbar } from "notistack";
 //MUI
 import {
   Typography,
@@ -13,7 +18,6 @@ import {
   Button,
   Grid,
   InputAdornment,
-
 } from "@material-ui/core";
 import { useStyle } from "./useStyle";
 
@@ -31,20 +35,20 @@ const initialItem = {
   proveedor_id: undefined,
   costo: undefined,
   barcode: 0,
-  images: undefined
+  images: undefined,
 };
 
 const itemSchema = Yup.object().shape({
-  marca: Yup.string().required('requerido'),
-  modelo: Yup.string().required('requerido'),
-  descripcion: Yup.string().required('requerido'),
-  sku: Yup.string().required('requerido'),
-  precio: Yup.number().required('requerido'),
+  marca: Yup.string().required("requerido"),
+  modelo: Yup.string().required("requerido"),
+  descripcion: Yup.string().required("requerido"),
+  sku: Yup.string().required("requerido"),
+  precio: Yup.number().required("requerido"),
   stock: Yup.number(),
   precio_min: Yup.number(),
   costo: Yup.number(),
   barcode: Yup.number(),
-})
+});
 
 const detailsName = [
   "marca",
@@ -61,134 +65,145 @@ const detailsName = [
 
 const selectsProps = [
   {
-    name: 'categoria',
-    url: 'categorias',
+    name: "categoria",
+    url: "categorias",
   },
   {
-    name: 'proveedor',
-    url: 'proveedores',
+    name: "proveedor",
+    url: "proveedores",
   },
   {
-    name: 'lugar',
-    url: 'lugares',
+    name: "lugar",
+    url: "lugares",
   },
-]
+];
 
 export default function AddItem() {
   const classes = useStyle();
-
-  const CustomDropzoneArea = ({
-    field,
-    form,
-    ...props
-  }) => (
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const CustomDropzoneArea = ({ field, form, ...props }) => (
     <DropzoneArea
       acceptedFiles={["image/*"]}
       maxFileSize={10000000}
-      {...props} />
-  )
+      {...props}
+    />
+  );
 
   return (
     <>
       <Typography variant="h2">Agregar Item</Typography>
       <Formik
-        initialValues={
-          initialItem
-        }
-        validationSchema={
-          itemSchema
-        }
+        initialValues={initialItem}
+        validationSchema={itemSchema}
         onSubmit={async (values, actions) => {
-          console.log(values)
+          console.log(values);
           const formData = formDataConstructor(values);
-          console.log(formData)
+          console.log(formData);
           try {
-            const res = await axios.post('/items', formData, {
+            const res = await axios.post("/items", formData, {
               headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            console.log(res)
+                "Content-Type": "multipart/form-data",
+              },
+            });
+            enqueueSnackbar("data guardado", {
+              variant: "success",
+            });
+            console.log(res);
           } catch (err) {
-            console.log(err.response)
+            const { response: { data, status } } = err
+            if (status === 409) {
+              enqueueSnackbar(data, {
+                variant: "error",
+              });
+            } else {
+              enqueueSnackbar("error", {
+                variant: "error",
+              });
+            }
+            console.log(err.response);
           }
-          actions.setSubmitting(false)
+          actions.setSubmitting(false);
         }}
       >
-        {
-          (props) => (
-            <Form onSubmit={props.handleSubmit}>
-              <Grid container spacing={2}>
-                {detailsName.map((name) => (
-                  <Grid item
-                    key={name}
-                  // className={classes[name]}
-                  >
-                    <FastField
-                      component={TextField}
-                      className={classes[name]}
-                      id={name}
-                      name={name}
-                      label={name}
-                      // value={data[name]}
-                      // onChange={handleChange}
-                      autoFocus={name === 'marca'}
-                      fullWidth={name === 'descripcion'}
-                      multiline={name === 'descripcion'}
-                      InputProps={{
-                        startAdornment:
-                          ['precio', 'precio_min', 'costo'].includes(name) ?
-                            <InputAdornment position="start">$</InputAdornment>
-                            : null
-                      }}
-                      required={
-                        ['marca', 'modelo', 'descripcion', 'sku', 'precio'].includes(name) ?
-                          true : false}
-                    // helperText={errors[name]}
-                    // error={errors[name] ? true : false}
-                    />
-                  </Grid>
-                ))
-                }
-              </Grid>
+        {(props) => (
+          <Form onSubmit={props.handleSubmit}>
+            <Grid container spacing={2}>
+              {detailsName.map((name) => (
+                <Grid
+                  item
+                  key={name}
+                // className={classes[name]}
+                >
+                  <FastField
+                    component={TextField}
+                    className={classes[name]}
+                    id={name}
+                    name={name}
+                    label={name}
+                    // value={data[name]}
+                    // onChange={handleChange}
+                    autoFocus={name === "marca"}
+                    fullWidth={name === "descripcion"}
+                    multiline={name === "descripcion"}
+                    InputProps={{
+                      startAdornment: [
+                        "precio",
+                        "precio_min",
+                        "costo",
+                      ].includes(name) ? (
+                        <InputAdornment position="start">$</InputAdornment>
+                      ) : null,
+                    }}
+                    required={
+                      [
+                        "marca",
+                        "modelo",
+                        "descripcion",
+                        "sku",
+                        "precio",
+                      ].includes(name)
+                        ? true
+                        : false
+                    }
+                  // helperText={errors[name]}
+                  // error={errors[name] ? true : false}
+                  />
+                </Grid>
+              ))}
+            </Grid>
 
-              <Grid container spacing={2}>
-                {
-                  selectsProps.map(selectsProp => (
-                    <SelectsOptions
-                      className={classes.selects}
-                      onChange={props.handleChange}
-                      value={props.values}
-                      name={selectsProp.name}
-                      url={selectsProp.url}
-                    />
-                  ))
-                }
-
-              </Grid>
-              <Field
-                component={CustomDropzoneArea}
-                id='images'
-                name='images'
-                label='images'
-                onChange={async (files) => {
-                  const { fileBlobResize } = await imgResize(files);
-                  props.setFieldValue('images', fileBlobResize)
-                }}
-              />
-              < Button
-                type="submit"
-                disabled={props.isSubmitting}
-                variant="contained"
-                color="primary"
-              >
-                Agregar
+            <Grid container spacing={2}>
+              {selectsProps.map((selectsProp) => (
+                <SelectsOptions
+                  className={classes.selects}
+                  onChange={props.handleChange}
+                  value={props.values}
+                  name={selectsProp.name}
+                  url={selectsProp.url}
+                />
+              ))}
+            </Grid>
+            <Field
+              component={CustomDropzoneArea}
+              id="images"
+              name="images"
+              label="images"
+              onChange={async (files) => {
+                const { fileBlobResize } = await imgResize(files);
+                props.setFieldValue("images", fileBlobResize);
+              }}
+            />
+            <Button
+              type="submit"
+              disabled={props.isSubmitting}
+              variant="contained"
+              color="primary"
+            >
+              Agregar
             </Button>
-            </Form>
-          )
-        }
+          </Form>
+        )}
       </Formik>
-
     </>
   );
 }
