@@ -21,12 +21,13 @@ export default function VentaRecibo() {
   const recibo: Recibos = useSelector((state: RootState) => state.recibo);
   const { lineas } = recibo.venta;
   //TODO: maybe change all this useState to a reduceState
-  const [client, setClient] = useState<any>(null);
+  const [client, setClient] = useState<any>(recibo.venta.empresa_cliente_id && null);
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
   const [isTax, setIsTax] = useState(true);
-  const [isCredit, setIsCredit] = useState(false);
+  const [credito, setCredito] = useState(false);
+  const [pagado, setPagado] = useState(true)
 
   const history = useHistory();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -49,8 +50,9 @@ export default function VentaRecibo() {
       sub_total: subTotal,
       tax,
       total,
-      credito: isCredit,
+      credito,
       lineas: cleanLines,
+      pagado
     };
     console.log(ventaObj);
     try {
@@ -85,8 +87,9 @@ export default function VentaRecibo() {
   return (
     <>
       <Header
-        creditState={[isCredit, setIsCredit]}
+        creditState={[credito, setCredito]}
         clienteState={[client, setClient]}
+        pagadoState={[pagado, setPagado]}
       />
       <VentaTable
         items={lineas}
@@ -109,7 +112,7 @@ export default function VentaRecibo() {
       <ComponentToPrint ref={componentRef} lineas={lineas} client={client}
 
         subTotal={subTotal} tax={tax} total={total}
-        TAX_RATE={TAX_RATE} isCredit={isCredit}
+        TAX_RATE={TAX_RATE} isCredit={credito}
       />
     </>
   );

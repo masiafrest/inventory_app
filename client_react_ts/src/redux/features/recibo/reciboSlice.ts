@@ -30,7 +30,10 @@ const reciboSlice = createSlice({
     addClienteId: (state, action) => {
       console.log(action.payload);
       const { empresa_cliente_id, reciboTipo } = action.payload;
+      console.log(".......................");
+      console.log(empresa_cliente_id, reciboTipo);
       if (reciboTipo === "venta") {
+        console.log("---------------------");
         state.venta.empresa_cliente_id = empresa_cliente_id.id;
       }
     },

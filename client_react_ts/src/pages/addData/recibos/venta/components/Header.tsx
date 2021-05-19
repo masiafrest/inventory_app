@@ -8,10 +8,11 @@ import { addClienteId } from "../../../../../redux/features/recibo/reciboSlice";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
 import { useStyle } from "../../../useStyle";
 
-export default function HeaderTable({ creditState, clienteState }) {
+export default function HeaderTable({ creditState, clienteState, pagadoState }) {
   const classes = useStyle();
   const [isCredit, setIsCredit] = creditState;
   const [client, setClient] = clienteState;
+  const [isPagado, setIsPagado] = pagadoState;
   const dispatch = useDispatch();
 
   const onChangeHandler = (e) => {
@@ -19,7 +20,7 @@ export default function HeaderTable({ creditState, clienteState }) {
     setClient(e.target.value);
     const header = {
       empresa_cliente_id: e.target.value,
-      tipo: 'venta'
+      reciboTipo: 'venta'
     }
     dispatch(addClienteId(header));
   };
@@ -38,11 +39,22 @@ export default function HeaderTable({ creditState, clienteState }) {
           <Checkbox
             checked={isCredit}
             onChange={(e) => setIsCredit(!isCredit)}
-            name="checkedB"
+            name="credito"
             color="primary"
           />
         }
         label="Credito"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={isPagado}
+            onChange={(e) => setIsPagado(!isPagado)}
+            name="pagado"
+            color="primary"
+          />
+        }
+        label="Pagado"
       />
     </Paper>
   );
