@@ -11,10 +11,14 @@ const getItemGraph = `[
         , categoria(defaultSelects), images(defaultSelects)]`;
 
 exports.get = async (req, res, next) => {
+  console.log(req.query);
+  const { skip, take } = req.query;
+  console.log(skip, take);
   try {
     const items = await Item.query()
       .withGraphFetched(getItemGraph)
-      .modify("defaultSelects");
+      .modify("defaultSelects")
+      .page(skip, take);
     res.json(items);
   } catch (err) {
     next(err);
